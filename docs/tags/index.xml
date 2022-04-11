@@ -6,10 +6,55 @@
     <description>Recent content in Tags on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 Apr 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhangsiming-blyq.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>apiserver</title>
+      <link>https://zhangsiming-blyq.github.io/tags/apiserver/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/apiserver/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>controller-manager</title>
+      <link>https://zhangsiming-blyq.github.io/tags/controller-manager/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/controller-manager/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>etcd</title>
+      <link>https://zhangsiming-blyq.github.io/tags/etcd/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/etcd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://zhangsiming-blyq.github.io/tags/kubernetes/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scheduler</title>
+      <link>https://zhangsiming-blyq.github.io/tags/scheduler/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/scheduler/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>about</title>
@@ -35,15 +80,6 @@
       <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/tags/containerd/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>https://zhangsiming-blyq.github.io/tags/kubernetes/</link>
-      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/tags/kubernetes/</guid>
       <description></description>
     </item>
     

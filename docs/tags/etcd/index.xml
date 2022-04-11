@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 百里英骐</title>
-    <link>https://zhangsiming-blyq.github.io/post/</link>
-    <description>Recent content in Posts on 百里英骐</description>
+    <title>etcd on 百里英骐</title>
+    <link>https://zhangsiming-blyq.github.io/tags/etcd/</link>
+    <description>Recent content in etcd on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 11 Apr 2022 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zhangsiming-blyq.github.io/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,16 +19,6 @@
       <guid>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</guid>
       <description>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
  一、Prometheus 如何自动发现 Kubernetes Metrics 接口?  prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.</description>
-    </item>
-    
-    <item>
-      <title>浅谈 containerd</title>
-      <link>https://zhangsiming-blyq.github.io/post/containerd/</link>
-      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/post/containerd/</guid>
-      <description>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
- 一、安装使用 ctr 管理 containerd # Install Dependent Libraries $ sudo apt-get update $ sudo apt-get install libseccomp2 # 下载 # 目前是下载的1.</description>
     </item>
     
   </channel>
