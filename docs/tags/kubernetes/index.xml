@@ -18,7 +18,7 @@
       
       <guid>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</guid>
       <description>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
- 一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.</description>
+ 一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</description>
     </item>
     
     <item>
