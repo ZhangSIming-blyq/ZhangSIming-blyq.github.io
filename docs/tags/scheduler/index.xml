@@ -18,7 +18,11 @@
       
       <guid>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</guid>
       <description>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
- 一、Prometheus 如何自动发现 Kubernetes Metrics 接口?  prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.</description>
+ 一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&amp;quot;relabel_configs&amp;quot;中的具体目标, 进行不断拉取(拉取间隔为&amp;quot;scrape_interval&amp;rdquo;)
+ 配置权限：  k8s 中 RBAC 支持授权资源对象的权限，比如可以 get、list、watch 集群中的 pod，还支持直接赋予对象访问 api 路径的权限，比如获取/healthz, /api 等, 官方对于 non_resource_urls 的解释如下：
+non_resource_urls - (Optional) NonResourceURLs is a set of partial urls that a user should have access to. *s are allowed, but only as the full, final step in the path Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply to API resources (such as &amp;ldquo;pods&amp;rdquo; or &amp;ldquo;secrets&amp;rdquo;) or non-resource URL paths (such as &amp;ldquo;/api&amp;rdquo;), but not both.
+既然 prometheus 要主动抓取指标，就必须对他使用的 serviceaccount 提前进行 RBAC 授权：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29  # clusterrole.</description>
     </item>
     
   </channel>

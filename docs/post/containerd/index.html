@@ -86,29 +86,66 @@
 <p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。</p>
 </blockquote>
 <h3 id="一安装使用-ctr-管理-containerd">一、安装使用 ctr 管理 containerd</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Install Dependent Libraries</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#998;font-style:italic"># Install Dependent Libraries</span>
 $ sudo apt-get update
 $ sudo apt-get install libseccomp2
 
-<span style="color:#75715e"># 下载</span>
-<span style="color:#75715e"># 目前是下载的1.5.2</span>
-$ wget https://github.com/containerd/containerd/releases/download/v<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>/cri-containerd-cni-<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>-linux-amd64.tar.gz
+<span style="color:#998;font-style:italic"># 下载</span>
+<span style="color:#998;font-style:italic"># 目前是下载的1.5.2</span>
+$ wget https://github.com/containerd/containerd/releases/download/v<span style="color:#d14">${</span><span style="color:#008080">VERSION</span><span style="color:#d14">}</span>/cri-containerd-cni-<span style="color:#d14">${</span><span style="color:#008080">VERSION</span><span style="color:#d14">}</span>-linux-amd64.tar.gz
 
-<span style="color:#75715e"># 安装</span>
-$ sudo tar --no-overwrite-dir -C / -xzf cri-containerd-cni-<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>-linux-amd64.tar.gz
-<span style="color:#75715e"># 初始化containerd配置</span>
+<span style="color:#998;font-style:italic"># 安装</span>
+$ sudo tar --no-overwrite-dir -C / -xzf cri-containerd-cni-<span style="color:#d14">${</span><span style="color:#008080">VERSION</span><span style="color:#d14">}</span>-linux-amd64.tar.gz
+<span style="color:#998;font-style:italic"># 初始化containerd配置</span>
 $ containerd config default &gt; /etc/containerd/config.toml
-<span style="color:#75715e"># 修改默认的sandbox_image</span>
+<span style="color:#998;font-style:italic"># 修改默认的sandbox_image</span>
 $ vim /etc/containerd/config.toml
 ...
-sandbox_image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;registry.cn-beijing.aliyuncs.com/shannonai-k8s/pause:3.1&#34;</span>
+<span style="color:#008080">sandbox_image</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;registry.cn-beijing.aliyuncs.com/shannonai-k8s/pause:3.1&#34;</span>
 ...
 
-<span style="color:#75715e"># 启动服务</span>
+<span style="color:#998;font-style:italic"># 启动服务</span>
 sudo systemctl daemon-reload
 sudo systemctl start containerd
 
-<span style="color:#75715e"># 查看版本</span>
+<span style="color:#998;font-style:italic"># 查看版本</span>
 $ ctr version
 Client:
   Version:  1.4.3
@@ -119,90 +156,181 @@ Server:
   Version:  1.4.3
   Revision: 269548fa27e0089a8b8278fc4fc781d7f65a939b
   UUID: b7e3b0e7-8a36-4105-a198-470da2be02f2
-</code></pre></div><h3 id="二containerd-使用">二、containerd 使用</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="二containerd-使用">二、containerd 使用</h3>
 <h4 id="21-运行一个-busybox-镜像">2.1 运行一个 busybox 镜像：</h4>
 <ul>
 <li>demo:</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 拉取镜像</span>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#998;font-style:italic"># 拉取镜像</span>
 $ ctr -n k8s.io i pull docker.io/library/busybox:latest
-<span style="color:#75715e"># 创建一个container(此时还未运行)</span>
+<span style="color:#998;font-style:italic"># 创建一个container(此时还未运行)</span>
 $ ctr -n k8s.io container create docker.io/library/busybox:latest busybox
-<span style="color:#75715e"># 创建一个task</span>
+<span style="color:#998;font-style:italic"># 创建一个task</span>
 $ ctr -n k8s.io task start -d busybox
 
-<span style="color:#75715e"># 上述步骤也可以简写成如下</span>
+<span style="color:#998;font-style:italic"># 上述步骤也可以简写成如下</span>
 $ ctr -n k8s.io run -d docker.io/library/busybox:latest busybox
-</code></pre></div><blockquote>
-<p>查看容器在宿主机的 pid，及状态:</p>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io task ls
+</code></pre></td></tr></table>
+</div>
+</div><p>查看容器在宿主机的 pid，及状态:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io task ls
 TASK       PID     STATUS
-busybox    <span style="color:#ae81ff">2356</span>    RUNNING
-</code></pre></div><blockquote>
-<p>进入容器：</p>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t exec --exec-id $RANDOM -t busybox sh
-</code></pre></div><blockquote>
-<p>杀死移除容器：</p>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t kill -s SIGKILL busybox
-$ ctr -n k8s.io t rm busybox
+busybox    <span style="color:#099">2356</span>    RUNNING
+</code></pre></td></tr></table>
+</div>
+</div><p>进入容器：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t exec --exec-id <span style="color:#008080">$RANDOM</span> -t busybox sh
+</code></pre></td></tr></table>
+</div>
+</div><p>杀死移除容器：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t <span style="color:#0086b3">kill </span>-s SIGKILL busybox
+$ ctr -n k8s.io t <span style="color:#0086b3">rm </span>busybox
 WARN[0000] task busybox exit with non-zero exit code 137
-</code></pre></div><h4 id="22-其他-ctr-命令">2.2 其他 ctr 命令</h4>
-<ul>
-<li>镜像标记</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i tag A B
-<span style="color:#75715e"># 若新镜像reference 已存在, 需要先删除新reference, 或者如下方式强制替换</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="22-其他-ctr-命令">2.2 其他 ctr 命令</h4>
+<p>镜像标记:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i tag A B
+<span style="color:#998;font-style:italic"># 若新镜像reference 已存在, 需要先删除新reference, 或者如下方式强制替换</span>
 $ ctr -n k8s.io i tag --force A B
-</code></pre></div><ul>
-<li>删除镜像</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i rm A
-</code></pre></div><ul>
-<li>拉取镜像</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i pull -k A
-</code></pre></div><ul>
-<li>查看镜像</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i ls
-</code></pre></div><ul>
-<li>推送镜像</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i push -k A
-</code></pre></div><ul>
-<li>导出镜像</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i export A.tar A
-</code></pre></div><ul>
-<li>导入镜像</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i import A.tar
-</code></pre></div><ul>
-<li>读取日志</li>
-</ul>
-<blockquote>
-<p>导出到文件中进行读取:</p>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io run --log-uri file:///var/log/xx.log
-</code></pre></div><h3 id="三containerd--docker">三、containerd + docker</h3>
-<blockquote>
+</code></pre></td></tr></table>
+</div>
+</div><p>删除镜像:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i rm A
+</code></pre></td></tr></table>
+</div>
+</div><p>拉取镜像:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i pull -k A
+</code></pre></td></tr></table>
+</div>
+</div><p>查看镜像:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i <span style="color:#0086b3">ls
+</span></code></pre></td></tr></table>
+</div>
+</div><p>推送镜像:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i push -k A
+</code></pre></td></tr></table>
+</div>
+</div><p>导出镜像:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i <span style="color:#0086b3">export</span> A.tar A
+</code></pre></td></tr></table>
+</div>
+</div><p>导入镜像:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i import A.tar
+</code></pre></td></tr></table>
+</div>
+</div><p>读取日志:
+导出到文件中进行读取:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io run --log-uri file:///var/log/xx.log
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="三containerd--docker">三、containerd + docker</h3>
 <p>安装新版本的 docker-ce 默认，采用 containerd(&ndash;containerd=/run/containerd/containerd.sock)</p>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status docker
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status docker
 ● docker.service - Docker Application Container Engine
-   Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/docker.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
-   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since 四 2021-06-10 15:46:44 CST; 1h 46min ago
+   Loaded: loaded <span style="color:#000;font-weight:bold">(</span>/lib/systemd/system/docker.service; enabled; vendor preset: enabled<span style="color:#000;font-weight:bold">)</span>
+   Active: active <span style="color:#000;font-weight:bold">(</span>running<span style="color:#000;font-weight:bold">)</span> since 四 2021-06-10 15:46:44 CST; 1h 46min ago
      Docs: https://docs.docker.com
- Main PID: <span style="color:#ae81ff">4965</span> <span style="color:#f92672">(</span>dockerd<span style="color:#f92672">)</span>
+ Main PID: <span style="color:#099">4965</span> <span style="color:#000;font-weight:bold">(</span>dockerd<span style="color:#000;font-weight:bold">)</span>
    CGroup: /system.slice/docker.service
            ├─1830 docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/e0a50564d9a23a85240f54f3bf
-           ├─4965 /usr/bin/dockerd -H fd:// --containerd<span style="color:#f92672">=</span>/run/containerd/containerd.sock
-           ├─5402 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port <span style="color:#ae81ff">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#ae81ff">80</span>
-           └─5417 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port <span style="color:#ae81ff">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#ae81ff">80</span>
-</code></pre></div><h4 id="注意">注意：</h4>
+           ├─4965 /usr/bin/dockerd -H fd:// --containerd<span style="color:#000;font-weight:bold">=</span>/run/containerd/containerd.sock
+           ├─5402 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port <span style="color:#099">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#099">80</span>
+           └─5417 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port <span style="color:#099">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#099">80</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="注意">注意：</h4>
 <ol>
 <li>ctr 直接跑起来一个容器只有 lo 网卡，也就是无法与外网通信；如果想连接外网，<a href="https://mp.weixin.qq.com/s/A9zU7gZH0liLjc-e-dhk8A">请参考</a></li>
 </ol>
@@ -370,6 +498,7 @@ $ ctr -n k8s.io i tag --force A B
     <section class="widget">
         <h3 class="widget-title">其它</h3>
         <ul class="widget-list">
+            <li><a href="https://zhangsiming-blyq.github.io/index.xml">文章 RSS</a></li>
         </ul>
     </section>
 </div>
