@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BaileysRock on 百里英骐</title>
+    <link>https://zhangsiming-blyq.github.io/blog/tags/BaileysRock/</link>
+    <description>Recent content in BaileysRock on 百里英骐</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Apr 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zhangsiming-blyq.github.io/blog/tags/BaileysRock/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于我</title>
+      <link>https://zhangsiming-blyq.github.io/blog/about/</link>
+      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/blog/about/</guid>
+      <description>专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等
+我的名字  百里英骐：人生玩的第一款游戏随机到的名字，遂用之至今; BaileysRock的来源则有一段故事:   百利甜酒的发原地在英国。那里有一位著名的调酒师，调酒师的太太是一名出色的女性，他们彼此深爱着对方。有一天，很不幸，调酒师的太太死于一次意外。调酒师从此悲伤，过着孤单的生活。直到一次出行的飞机上，调酒师遇到了一位像极了他前妻的空姐。他仿佛重获新生，一切生命的希望再一次点燃。那以后，调酒师疯狂的追求着那位空姐。但是空姐并不能接受调酒师的爱，空姐对调酒师说，有时候人的心会被蒙住，你对你前妻的思念和对我的爱完全是不同的情感，就像是奶和威士忌永远无法混在一起。调酒师听完空姐的话，默默的走开。他用了一年的时间，终于将奶和威士忌相溶，而且加了蜂蜜使味道也混为一体，并起了一个好听的名字(BaileysRock)，以此证明他对空姐的爱。当他知道空姐终于肯品尝这第一杯BaileysRock时，忍不住在杯里流下了一滴眼泪。后来百利甜被空姐带上飞机，传播到世界各地，她对每一个喜欢喝百利甜的人说，“这杯酒，我等了一年”。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

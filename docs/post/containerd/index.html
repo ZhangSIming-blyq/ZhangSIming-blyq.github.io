@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>浅谈 containerd | 百里英骐</title>
+    <meta property="og:title" content="浅谈 containerd - 百里英骐">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-04-10T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-04-10T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
+    <meta name="description" content="浅谈 containerd">
+        <meta name="author" content="BaileysRock">
+        
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/blog/post/containerd/">
+    <link rel="shortcut icon" href='/blog/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/blog/css/normalize.css'>
+    <link rel="stylesheet" href='/blog/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zhangsiming-blyq.github.io/blog/">
+                        百里英骐
+                    </a>
+                
+                <p class="description">专注于云原生、kubernetes、golang、python、linux、sre与自动化运维、软件架构等</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://zhangsiming-blyq.github.io/blog/">首页</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/blog/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/blog/about/" title="关于">关于</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/blog/is404/" title="点我展示404">点我展示404</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">浅谈 containerd</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年4月10日
+        </date>
+        
+        
+        
+        <div class="post-content">
+            <blockquote>
+<p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。</p>
+</blockquote>
+<h3 id="一安装使用-ctr-管理-containerd">一、安装使用 ctr 管理 containerd</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># Install Dependent Libraries</span>
+$ sudo apt-get update
+$ sudo apt-get install libseccomp2
+
+<span style="color:#75715e"># 下载</span>
+<span style="color:#75715e"># 目前是下载的1.5.2</span>
+$ wget https://github.com/containerd/containerd/releases/download/v<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>/cri-containerd-cni-<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>-linux-amd64.tar.gz
+
+<span style="color:#75715e"># 安装</span>
+$ sudo tar --no-overwrite-dir -C / -xzf cri-containerd-cni-<span style="color:#e6db74">${</span>VERSION<span style="color:#e6db74">}</span>-linux-amd64.tar.gz
+<span style="color:#75715e"># 初始化containerd配置</span>
+$ containerd config default &gt; /etc/containerd/config.toml
+<span style="color:#75715e"># 修改默认的sandbox_image</span>
+$ vim /etc/containerd/config.toml
+...
+sandbox_image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;registry.cn-beijing.aliyuncs.com/shannonai-k8s/pause:3.1&#34;</span>
+...
+
+<span style="color:#75715e"># 启动服务</span>
+sudo systemctl daemon-reload
+sudo systemctl start containerd
+
+<span style="color:#75715e"># 查看版本</span>
+$ ctr version
+Client:
+  Version:  1.4.3
+  Revision: 269548fa27e0089a8b8278fc4fc781d7f65a939b
+  Go version: go1.13.15
+
+Server:
+  Version:  1.4.3
+  Revision: 269548fa27e0089a8b8278fc4fc781d7f65a939b
+  UUID: b7e3b0e7-8a36-4105-a198-470da2be02f2
+</code></pre></div><h3 id="二containerd-使用">二、containerd 使用</h3>
+<h4 id="21-运行一个-busybox-镜像">2.1 运行一个 busybox 镜像：</h4>
+<ul>
+<li>demo:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># 拉取镜像</span>
+$ ctr -n k8s.io i pull docker.io/library/busybox:latest
+<span style="color:#75715e"># 创建一个container(此时还未运行)</span>
+$ ctr -n k8s.io container create docker.io/library/busybox:latest busybox
+<span style="color:#75715e"># 创建一个task</span>
+$ ctr -n k8s.io task start -d busybox
+
+<span style="color:#75715e"># 上述步骤也可以简写成如下</span>
+$ ctr -n k8s.io run -d docker.io/library/busybox:latest busybox
+</code></pre></div><blockquote>
+<p>查看容器在宿主机的 pid，及状态:</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io task ls
+TASK       PID     STATUS
+busybox    <span style="color:#ae81ff">2356</span>    RUNNING
+</code></pre></div><blockquote>
+<p>进入容器：</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t exec --exec-id $RANDOM -t busybox sh
+</code></pre></div><blockquote>
+<p>杀死移除容器：</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t kill -s SIGKILL busybox
+$ ctr -n k8s.io t rm busybox
+WARN[0000] task busybox exit with non-zero exit code 137
+</code></pre></div><h4 id="22-其他-ctr-命令">2.2 其他 ctr 命令</h4>
+<ul>
+<li>镜像标记</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i tag A B
+<span style="color:#75715e"># 若新镜像reference 已存在, 需要先删除新reference, 或者如下方式强制替换</span>
+$ ctr -n k8s.io i tag --force A B
+</code></pre></div><ul>
+<li>删除镜像</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i rm A
+</code></pre></div><ul>
+<li>拉取镜像</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i pull -k A
+</code></pre></div><ul>
+<li>查看镜像</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i ls
+</code></pre></div><ul>
+<li>推送镜像</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i push -k A
+</code></pre></div><ul>
+<li>导出镜像</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i export A.tar A
+</code></pre></div><ul>
+<li>导入镜像</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i import A.tar
+</code></pre></div><ul>
+<li>读取日志</li>
+</ul>
+<blockquote>
+<p>导出到文件中进行读取:</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io run --log-uri file:///var/log/xx.log
+</code></pre></div><h3 id="三containerd--docker">三、containerd + docker</h3>
+<blockquote>
+<p>安装新版本的 docker-ce 默认，采用 containerd(&ndash;containerd=/run/containerd/containerd.sock)</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status docker
+● docker.service - Docker Application Container Engine
+   Loaded: loaded <span style="color:#f92672">(</span>/lib/systemd/system/docker.service; enabled; vendor preset: enabled<span style="color:#f92672">)</span>
+   Active: active <span style="color:#f92672">(</span>running<span style="color:#f92672">)</span> since 四 2021-06-10 15:46:44 CST; 1h 46min ago
+     Docs: https://docs.docker.com
+ Main PID: <span style="color:#ae81ff">4965</span> <span style="color:#f92672">(</span>dockerd<span style="color:#f92672">)</span>
+   CGroup: /system.slice/docker.service
+           ├─1830 docker-containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/e0a50564d9a23a85240f54f3bf
+           ├─4965 /usr/bin/dockerd -H fd:// --containerd<span style="color:#f92672">=</span>/run/containerd/containerd.sock
+           ├─5402 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port <span style="color:#ae81ff">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#ae81ff">80</span>
+           └─5417 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port <span style="color:#ae81ff">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#ae81ff">80</span>
+</code></pre></div><h4 id="注意">注意：</h4>
+<ol>
+<li>ctr 直接跑起来一个容器只有 lo 网卡，也就是无法与外网通信；如果想连接外网，<a href="https://mp.weixin.qq.com/s/A9zU7gZH0liLjc-e-dhk8A">请参考</a></li>
+</ol>
+<p>其他参考链接:<br>
+<a href="https://mp.weixin.qq.com/s/A9zU7gZH0liLjc-e-dhk8A">https://mp.weixin.qq.com/s/A9zU7gZH0liLjc-e-dhk8A</a><br>
+<a href="https://blog.csdn.net/tongzidane/article/details/114587138">https://blog.csdn.net/tongzidane/article/details/114587138</a><br>
+<a href="https://github.com/containerd/containerd/blob/master/docs/cri/installation.md">https://github.com/containerd/containerd/blob/master/docs/cri/installation.md</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/blog/about/">关于我</a></li>
+        
+        <li><a href="/blog/archives/">归档</a></li>
+        
+        <li><a href="/blog/search/">搜索</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/blog/tags/kubernetes'>kubernetes</a></li>
+                
+                <li><a href='/blog/tags/containerd'>containerd</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= ""
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://zhangsiming-blyq.github.io/blog/">百里英骐 By BaileysRock</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/blog/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://zhangsiming-blyq.github.io/blog/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zhangsiming-blyq.github.io/blog/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/blog/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/blog/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/blog/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://zhangsiming-blyq.github.io/blog/tags/BaileysRock/">BaileysRock</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/blog/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/blog/tags/containerd/">containerd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/blog/tags/kubernetes/">kubernetes</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zhangsiming-blyq.github.io/blog/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

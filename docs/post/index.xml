@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 百里英骐</title>
+    <link>https://zhangsiming-blyq.github.io/blog/post/</link>
+    <description>Recent content in Posts on 百里英骐</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 Apr 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zhangsiming-blyq.github.io/blog/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>浅谈 containerd</title>
+      <link>https://zhangsiming-blyq.github.io/blog/post/containerd/</link>
+      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/blog/post/containerd/</guid>
+      <description>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
+ 一、安装使用 ctr 管理 containerd # Install Dependent Libraries $ sudo apt-get update $ sudo apt-get install libseccomp2 # 下载 # 目前是下载的1.</description>
+    </item>
+    
+  </channel>
+</rss>
