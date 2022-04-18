@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>python yield详解</title>
+      <link>https://zhangsiming-blyq.github.io/post/python-yield/</link>
+      <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/python-yield/</guid>
+      <description>讲解python中迭代器、生成器、以及yield字段的常见使用场景。
+ Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
+ __iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器  lst = [1, 2, 3] print(type(lst)) new_iter = lst.</description>
+    </item>
+    
+    <item>
       <title>Study Less Study Smart</title>
       <link>https://zhangsiming-blyq.github.io/post/study_less_study_smart/</link>
       <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
