@@ -209,141 +209,141 @@
 <li>支持NewStack()创建</li>
 <li>支持Push(), Pop(), Peek(), Len(), Push支持任意类型(取值出来断言)</li>
 </ol>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">package</span> main
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
 
-<span style="color:#000;font-weight:bold">import</span> <span style="color:#d14">&#34;sync&#34;</span>
+<span style="color:#007020;font-weight:bold">import</span> <span style="color:#4070a0">&#34;sync&#34;</span>
 
-<span style="color:#000;font-weight:bold">type</span> (
-	Stack <span style="color:#000;font-weight:bold">struct</span> {
-		top    <span style="color:#000;font-weight:bold">*</span>node
-		length <span style="color:#458;font-weight:bold">int</span>
-		lock   <span style="color:#000;font-weight:bold">*</span>sync.RWMutex
+<span style="color:#007020;font-weight:bold">type</span> (
+	Stack <span style="color:#007020;font-weight:bold">struct</span> {
+		top    <span style="color:#666">*</span>node
+		length <span style="color:#902000">int</span>
+		lock   <span style="color:#666">*</span>sync.RWMutex
 	}
-	node <span style="color:#000;font-weight:bold">struct</span> {
-		value <span style="color:#000;font-weight:bold">interface</span>{}
-		prev  <span style="color:#000;font-weight:bold">*</span>node
+	node <span style="color:#007020;font-weight:bold">struct</span> {
+		value <span style="color:#007020;font-weight:bold">interface</span>{}
+		prev  <span style="color:#666">*</span>node
 	}
 )
 
-<span style="color:#998;font-style:italic">// Create a new stack
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">NewStack</span>() <span style="color:#000;font-weight:bold">*</span>Stack {
-	<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">&amp;</span>Stack{<span style="color:#000;font-weight:bold">nil</span>, <span style="color:#099">0</span>, <span style="color:#000;font-weight:bold">&amp;</span>sync.RWMutex{}}
+<span style="color:#60a0b0;font-style:italic">// Create a new stack
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">NewStack</span>() <span style="color:#666">*</span>Stack {
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>Stack{<span style="color:#007020;font-weight:bold">nil</span>, <span style="color:#40a070">0</span>, <span style="color:#666">&amp;</span>sync.RWMutex{}}
 }
 
-<span style="color:#998;font-style:italic">// Return the number of items in the stack
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (this <span style="color:#000;font-weight:bold">*</span>Stack) <span style="color:#900;font-weight:bold">Len</span>() <span style="color:#458;font-weight:bold">int</span> {
-	<span style="color:#000;font-weight:bold">return</span> this.length
+<span style="color:#60a0b0;font-style:italic">// Return the number of items in the stack
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (this <span style="color:#666">*</span>Stack) <span style="color:#06287e">Len</span>() <span style="color:#902000">int</span> {
+	<span style="color:#007020;font-weight:bold">return</span> this.length
 }
 
-<span style="color:#998;font-style:italic">// View the top item on the stack
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (this <span style="color:#000;font-weight:bold">*</span>Stack) <span style="color:#900;font-weight:bold">Peek</span>() <span style="color:#000;font-weight:bold">interface</span>{} {
-	<span style="color:#000;font-weight:bold">if</span> this.length <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span> {
-		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+<span style="color:#60a0b0;font-style:italic">// View the top item on the stack
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (this <span style="color:#666">*</span>Stack) <span style="color:#06287e">Peek</span>() <span style="color:#007020;font-weight:bold">interface</span>{} {
+	<span style="color:#007020;font-weight:bold">if</span> this.length <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+		<span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
 	}
-	<span style="color:#000;font-weight:bold">return</span> this.top.value
+	<span style="color:#007020;font-weight:bold">return</span> this.top.value
 }
 
-<span style="color:#998;font-style:italic">// Pop the top item of the stack and return it
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (this <span style="color:#000;font-weight:bold">*</span>Stack) <span style="color:#900;font-weight:bold">Pop</span>() <span style="color:#000;font-weight:bold">interface</span>{} {
-	this.lock.<span style="color:#900;font-weight:bold">Lock</span>()
-	<span style="color:#000;font-weight:bold">defer</span> this.lock.<span style="color:#900;font-weight:bold">Unlock</span>()
-	<span style="color:#000;font-weight:bold">if</span> this.length <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span> {
-		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+<span style="color:#60a0b0;font-style:italic">// Pop the top item of the stack and return it
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (this <span style="color:#666">*</span>Stack) <span style="color:#06287e">Pop</span>() <span style="color:#007020;font-weight:bold">interface</span>{} {
+	this.lock.<span style="color:#06287e">Lock</span>()
+	<span style="color:#007020;font-weight:bold">defer</span> this.lock.<span style="color:#06287e">Unlock</span>()
+	<span style="color:#007020;font-weight:bold">if</span> this.length <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+		<span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
 	}
-	n <span style="color:#000;font-weight:bold">:=</span> this.top
+	n <span style="color:#666">:=</span> this.top
 	this.top = n.prev
-	this.length<span style="color:#000;font-weight:bold">--</span>
-	<span style="color:#000;font-weight:bold">return</span> n.value
+	this.length<span style="color:#666">--</span>
+	<span style="color:#007020;font-weight:bold">return</span> n.value
 }
 
-<span style="color:#998;font-style:italic">// Push a value onto the top of the stack
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">func</span> (this <span style="color:#000;font-weight:bold">*</span>Stack) <span style="color:#900;font-weight:bold">Push</span>(value <span style="color:#000;font-weight:bold">interface</span>{}) {
-	this.lock.<span style="color:#900;font-weight:bold">Lock</span>()
-	<span style="color:#000;font-weight:bold">defer</span> this.lock.<span style="color:#900;font-weight:bold">Unlock</span>()
-	n <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">&amp;</span>node{value, this.top}
+<span style="color:#60a0b0;font-style:italic">// Push a value onto the top of the stack
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (this <span style="color:#666">*</span>Stack) <span style="color:#06287e">Push</span>(value <span style="color:#007020;font-weight:bold">interface</span>{}) {
+	this.lock.<span style="color:#06287e">Lock</span>()
+	<span style="color:#007020;font-weight:bold">defer</span> this.lock.<span style="color:#06287e">Unlock</span>()
+	n <span style="color:#666">:=</span> <span style="color:#666">&amp;</span>node{value, this.top}
 	this.top = n
-	this.length<span style="color:#000;font-weight:bold">++</span>
+	this.length<span style="color:#666">++</span>
 }
 </code></pre></div><p>具有GetMin()方法的栈代码实现：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">package</span> main
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
 
-<span style="color:#000;font-weight:bold">import</span> (
-	<span style="color:#d14">&#34;fmt&#34;</span>
+<span style="color:#007020;font-weight:bold">import</span> (
+	<span style="color:#4070a0">&#34;fmt&#34;</span>
 )
 
-<span style="color:#000;font-weight:bold">type</span> GetMinStack <span style="color:#000;font-weight:bold">struct</span> {
-	stackData <span style="color:#000;font-weight:bold">*</span>Stack
-	stackMin  <span style="color:#000;font-weight:bold">*</span>Stack
+<span style="color:#007020;font-weight:bold">type</span> GetMinStack <span style="color:#007020;font-weight:bold">struct</span> {
+	stackData <span style="color:#666">*</span>Stack
+	stackMin  <span style="color:#666">*</span>Stack
 }
 
-<span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">NewGetMinStack</span>() <span style="color:#000;font-weight:bold">*</span>GetMinStack {
-	<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">&amp;</span>GetMinStack{
-		stackData: <span style="color:#900;font-weight:bold">NewStack</span>(),
-		stackMin:  <span style="color:#900;font-weight:bold">NewStack</span>(),
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">NewGetMinStack</span>() <span style="color:#666">*</span>GetMinStack {
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>GetMinStack{
+		stackData: <span style="color:#06287e">NewStack</span>(),
+		stackMin:  <span style="color:#06287e">NewStack</span>(),
 	}
 }
 
-<span style="color:#000;font-weight:bold">func</span> (mstack <span style="color:#000;font-weight:bold">*</span>GetMinStack) <span style="color:#900;font-weight:bold">Push</span>(newNumber <span style="color:#458;font-weight:bold">int</span>) {
-	<span style="color:#000;font-weight:bold">if</span> mstack.stackMin.length <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span> {
-		mstack.stackMin.<span style="color:#900;font-weight:bold">Push</span>(newNumber)
-	} <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> newNumber <span style="color:#000;font-weight:bold">&lt;=</span> mstack.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>) {
-		mstack.stackMin.<span style="color:#900;font-weight:bold">Push</span>(newNumber)
+<span style="color:#007020;font-weight:bold">func</span> (mstack <span style="color:#666">*</span>GetMinStack) <span style="color:#06287e">Push</span>(newNumber <span style="color:#902000">int</span>) {
+	<span style="color:#007020;font-weight:bold">if</span> mstack.stackMin.length <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+		mstack.stackMin.<span style="color:#06287e">Push</span>(newNumber)
+	} <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> newNumber <span style="color:#666">&lt;=</span> mstack.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>) {
+		mstack.stackMin.<span style="color:#06287e">Push</span>(newNumber)
 	}
-	mstack.stackData.<span style="color:#900;font-weight:bold">Push</span>(newNumber)
+	mstack.stackData.<span style="color:#06287e">Push</span>(newNumber)
 }
 
-<span style="color:#000;font-weight:bold">func</span> (mstack <span style="color:#000;font-weight:bold">*</span>GetMinStack) <span style="color:#900;font-weight:bold">Pop</span>() <span style="color:#458;font-weight:bold">int</span> {
-	<span style="color:#000;font-weight:bold">if</span> mstack.stackMin.length <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span> {
-		fmt.<span style="color:#900;font-weight:bold">Errorf</span>(<span style="color:#d14">&#34;Your stack is empty.&#34;</span>)
-		<span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
+<span style="color:#007020;font-weight:bold">func</span> (mstack <span style="color:#666">*</span>GetMinStack) <span style="color:#06287e">Pop</span>() <span style="color:#902000">int</span> {
+	<span style="color:#007020;font-weight:bold">if</span> mstack.stackMin.length <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;Your stack is empty.&#34;</span>)
+		<span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>
 	}
-	value <span style="color:#000;font-weight:bold">:=</span> mstack.stackData.<span style="color:#900;font-weight:bold">Pop</span>()
-	<span style="color:#000;font-weight:bold">if</span> value <span style="color:#000;font-weight:bold">==</span> mstack.<span style="color:#900;font-weight:bold">GetMin</span>() {
-		mstack.stackMin.<span style="color:#900;font-weight:bold">Pop</span>()
+	value <span style="color:#666">:=</span> mstack.stackData.<span style="color:#06287e">Pop</span>()
+	<span style="color:#007020;font-weight:bold">if</span> value <span style="color:#666">==</span> mstack.<span style="color:#06287e">GetMin</span>() {
+		mstack.stackMin.<span style="color:#06287e">Pop</span>()
 	}
-	<span style="color:#000;font-weight:bold">return</span> value.(<span style="color:#458;font-weight:bold">int</span>)
+	<span style="color:#007020;font-weight:bold">return</span> value.(<span style="color:#902000">int</span>)
 }
 
-<span style="color:#000;font-weight:bold">func</span> (mstack <span style="color:#000;font-weight:bold">*</span>GetMinStack) <span style="color:#900;font-weight:bold">GetMin</span>() <span style="color:#000;font-weight:bold">interface</span>{} {
-	<span style="color:#000;font-weight:bold">if</span> mstack.stackMin.length <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span> {
-		fmt.<span style="color:#900;font-weight:bold">Errorf</span>(<span style="color:#d14">&#34;Your stack is empty.&#34;</span>)
-		<span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
-	} <span style="color:#000;font-weight:bold">else</span> {
-		<span style="color:#000;font-weight:bold">return</span> mstack.stackMin.<span style="color:#900;font-weight:bold">Peek</span>()
+<span style="color:#007020;font-weight:bold">func</span> (mstack <span style="color:#666">*</span>GetMinStack) <span style="color:#06287e">GetMin</span>() <span style="color:#007020;font-weight:bold">interface</span>{} {
+	<span style="color:#007020;font-weight:bold">if</span> mstack.stackMin.length <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;Your stack is empty.&#34;</span>)
+		<span style="color:#007020;font-weight:bold">return</span> <span style="color:#40a070">0</span>
+	} <span style="color:#007020;font-weight:bold">else</span> {
+		<span style="color:#007020;font-weight:bold">return</span> mstack.stackMin.<span style="color:#06287e">Peek</span>()
 	}
 }
 </code></pre></div><h2 id="运行效果">运行效果</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">main</span>() {
-	test <span style="color:#000;font-weight:bold">:=</span> <span style="color:#900;font-weight:bold">NewGetMinStack</span>()
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	test.<span style="color:#900;font-weight:bold">Push</span>(<span style="color:#099">9</span>)
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Push 9&#34;</span>, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	test.<span style="color:#900;font-weight:bold">Push</span>(<span style="color:#099">7</span>)
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Push 7&#34;</span>, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	test.<span style="color:#900;font-weight:bold">Push</span>(<span style="color:#099">11</span>)
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Push 11&#34;</span>, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	test.<span style="color:#900;font-weight:bold">Push</span>(<span style="color:#099">8</span>)
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Push 8&#34;</span>, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	topvalue <span style="color:#000;font-weight:bold">:=</span> test.<span style="color:#900;font-weight:bold">Pop</span>()
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Pop&#34;</span>, topvalue, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	topvalue = test.<span style="color:#900;font-weight:bold">Pop</span>()
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Pop&#34;</span>, topvalue, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	topvalue = test.<span style="color:#900;font-weight:bold">Pop</span>()
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Pop&#34;</span>, topvalue, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
-	topvalue = test.<span style="color:#900;font-weight:bold">Pop</span>()
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Pop&#34;</span>, topvalue, <span style="color:#d14">&#34;Min is&#34;</span>, test.<span style="color:#900;font-weight:bold">GetMin</span>().(<span style="color:#458;font-weight:bold">int</span>))
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
+	test <span style="color:#666">:=</span> <span style="color:#06287e">NewGetMinStack</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	test.<span style="color:#06287e">Push</span>(<span style="color:#40a070">9</span>)
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Push 9&#34;</span>, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	test.<span style="color:#06287e">Push</span>(<span style="color:#40a070">7</span>)
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Push 7&#34;</span>, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	test.<span style="color:#06287e">Push</span>(<span style="color:#40a070">11</span>)
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Push 11&#34;</span>, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	test.<span style="color:#06287e">Push</span>(<span style="color:#40a070">8</span>)
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Push 8&#34;</span>, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	topvalue <span style="color:#666">:=</span> test.<span style="color:#06287e">Pop</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Pop&#34;</span>, topvalue, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	topvalue = test.<span style="color:#06287e">Pop</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Pop&#34;</span>, topvalue, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	topvalue = test.<span style="color:#06287e">Pop</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Pop&#34;</span>, topvalue, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
+	topvalue = test.<span style="color:#06287e">Pop</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;Pop&#34;</span>, topvalue, <span style="color:#4070a0">&#34;Min is&#34;</span>, test.<span style="color:#06287e">GetMin</span>().(<span style="color:#902000">int</span>))
 }
 </code></pre></div><p>运行结果:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ go run *.go  
-Min is <span style="color:#099">0</span>
-Push <span style="color:#099">9</span> Min is <span style="color:#099">9</span>
-Push <span style="color:#099">7</span> Min is <span style="color:#099">7</span>
-Push <span style="color:#099">11</span> Min is <span style="color:#099">7</span>
-Push <span style="color:#099">8</span> Min is <span style="color:#099">7</span>
-Pop <span style="color:#099">8</span> Min is <span style="color:#099">7</span>
-Pop <span style="color:#099">11</span> Min is <span style="color:#099">7</span>
-Pop <span style="color:#099">7</span> Min is <span style="color:#099">9</span>
-Pop <span style="color:#099">9</span> Min is <span style="color:#099">0</span>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ go run *.go  
+Min is <span style="color:#40a070">0</span>
+Push <span style="color:#40a070">9</span> Min is <span style="color:#40a070">9</span>
+Push <span style="color:#40a070">7</span> Min is <span style="color:#40a070">7</span>
+Push <span style="color:#40a070">11</span> Min is <span style="color:#40a070">7</span>
+Push <span style="color:#40a070">8</span> Min is <span style="color:#40a070">7</span>
+Pop <span style="color:#40a070">8</span> Min is <span style="color:#40a070">7</span>
+Pop <span style="color:#40a070">11</span> Min is <span style="color:#40a070">7</span>
+Pop <span style="color:#40a070">7</span> Min is <span style="color:#40a070">9</span>
+Pop <span style="color:#40a070">9</span> Min is <span style="color:#40a070">0</span>
 </code></pre></div><blockquote>
 <p>无论栈中有多少数据，每次压入、弹出的时候都是和stackMin顶部数据做一次比较，最小值永远在stackMin顶部，时间复杂度为O(1), 满足题目要求。</p>
 </blockquote>

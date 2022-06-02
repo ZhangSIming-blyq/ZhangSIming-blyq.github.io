@@ -206,23 +206,23 @@
 <p>k8s 中 RBAC 支持授权资源对象的权限，比如可以 get、list、watch 集群中的 pod，还支持直接赋予对象访问 api 路径的权限，比如获取/healthz, /api 等, 官方对于 non_resource_urls 的解释如下：</p>
 <p><strong>non_resource_urls</strong> - (Optional) NonResourceURLs is a set of partial urls that a user should have access to. *s are allowed, but only as the full, final step in the path Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply to API resources (such as &ldquo;pods&rdquo; or &ldquo;secrets&rdquo;) or non-resource URL paths (such as &ldquo;/api&rdquo;), but not both.</p>
 <p>既然 prometheus 要主动抓取指标，就必须对他使用的 serviceaccount 提前进行 RBAC 授权：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># clusterrole.yaml</span>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># clusterrole.yaml</span>
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: monitor
 rules:
-- apiGroups: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;&#34;</span><span style="color:#000;font-weight:bold">]</span>
+- apiGroups: <span style="color:#666">[</span><span style="color:#4070a0">&#34;&#34;</span><span style="color:#666">]</span>
   resources:
   - nodes
   - pods
   - endpoints
   - services
-  verbs: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;get&#34;</span>, <span style="color:#d14">&#34;list&#34;</span>, <span style="color:#d14">&#34;watch&#34;</span><span style="color:#000;font-weight:bold">]</span>
-- nonResourceURLs: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;/metrics&#34;</span><span style="color:#000;font-weight:bold">]</span>
-  verbs: <span style="color:#000;font-weight:bold">[</span><span style="color:#d14">&#34;get&#34;</span><span style="color:#000;font-weight:bold">]</span>
+  verbs: <span style="color:#666">[</span><span style="color:#4070a0">&#34;get&#34;</span>, <span style="color:#4070a0">&#34;list&#34;</span>, <span style="color:#4070a0">&#34;watch&#34;</span><span style="color:#666">]</span>
+- nonResourceURLs: <span style="color:#666">[</span><span style="color:#4070a0">&#34;/metrics&#34;</span><span style="color:#666">]</span>
+  verbs: <span style="color:#666">[</span><span style="color:#4070a0">&#34;get&#34;</span><span style="color:#666">]</span>
 
-<span style="color:#998;font-style:italic"># clusterrolebinding</span>
+<span style="color:#60a0b0;font-style:italic"># clusterrolebinding</span>
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -239,7 +239,7 @@ subjects:
 <li>获取 apiserver 自身的 metric 信息：</li>
 </ul>
 <p>prometheus 中配置&quot;scrape_config&rdquo;, 或者 prometheus-operator 中配置&quot;additionalScrapeConfigs&rdquo;, 配置获取 default 命名空间下的 kubernetes endpoints</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- job_name: <span style="color:#d14">&#39;kubernetes-apiservers&#39;</span>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- job_name: <span style="color:#4070a0">&#39;kubernetes-apiservers&#39;</span>
       kubernetes_sd_configs:
       - role: endpoints
       scheme: https
@@ -247,54 +247,54 @@ subjects:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       relabel_configs:
-        - source_labels: <span style="color:#000;font-weight:bold">[</span>__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name<span style="color:#000;font-weight:bold">]</span>
+        - source_labels: <span style="color:#666">[</span>__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name<span style="color:#666">]</span>
           action: keep
           regex: default;kubernetes;https
 </code></pre></div><ul>
 <li>获取 controller-manager、scheduler 的 metric 信息：</li>
 </ul>
 <p>controller-manager 和 scheduler 因为自身暴露 metric 接口，需要修改对应 manifests 下的静态 pod 文件，添加匹配的 annotations 即可完成抓取：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># prometheus端配置</span>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># prometheus端配置</span>
 kubernetes_sd_configs:
       - role: pod
       relabel_configs:
-      - source_labels: <span style="color:#000;font-weight:bold">[</span>__meta_kubernetes_pod_annotation_prometheus_io_scrape<span style="color:#000;font-weight:bold">]</span>
-        action: <span style="color:#d14">&#34;keep&#34;</span>
-        regex: <span style="color:#d14">&#34;true&#34;</span>
-      - source_labels: <span style="color:#000;font-weight:bold">[</span>__address__, __meta_kubernetes_pod_annotation_prometheus_io_port<span style="color:#000;font-weight:bold">]</span>
+      - source_labels: <span style="color:#666">[</span>__meta_kubernetes_pod_annotation_prometheus_io_scrape<span style="color:#666">]</span>
+        action: <span style="color:#4070a0">&#34;keep&#34;</span>
+        regex: <span style="color:#4070a0">&#34;true&#34;</span>
+      - source_labels: <span style="color:#666">[</span>__address__, __meta_kubernetes_pod_annotation_prometheus_io_port<span style="color:#666">]</span>
         action: replace
-        regex: <span style="color:#000;font-weight:bold">([</span>^:<span style="color:#000;font-weight:bold">]</span>+<span style="color:#000;font-weight:bold">)(</span>?::<span style="color:#d14">\d</span>+<span style="color:#000;font-weight:bold">)</span>?;<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">\d</span>+<span style="color:#000;font-weight:bold">)</span>
-        replacement: <span style="color:#008080">$1</span>:<span style="color:#008080">$2</span>
+        regex: <span style="color:#666">([</span>^:<span style="color:#666">]</span>+<span style="color:#666">)(</span>?::<span style="color:#4070a0;font-weight:bold">\d</span>+<span style="color:#666">)</span>?;<span style="color:#666">(</span><span style="color:#4070a0;font-weight:bold">\d</span>+<span style="color:#666">)</span>
+        replacement: <span style="color:#bb60d5">$1</span>:<span style="color:#bb60d5">$2</span>
         target_label: __address__
-      - source_labels: <span style="color:#000;font-weight:bold">[</span>__meta_kubernetes_pod_annotation_prometheus_io_path<span style="color:#000;font-weight:bold">]</span>
+      - source_labels: <span style="color:#666">[</span>__meta_kubernetes_pod_annotation_prometheus_io_path<span style="color:#666">]</span>
         action: replace
         target_label: __metrics_path__
-        regex: <span style="color:#d14">&#34;(.+)&#34;</span>
+        regex: <span style="color:#4070a0">&#34;(.+)&#34;</span>
       - action: labelmap
-        regex: __meta_kubernetes_pod_label_<span style="color:#000;font-weight:bold">(</span>.+<span style="color:#000;font-weight:bold">)</span>
-      - source_labels: <span style="color:#000;font-weight:bold">[</span>__meta_kubernetes_namespace<span style="color:#000;font-weight:bold">]</span>
+        regex: __meta_kubernetes_pod_label_<span style="color:#666">(</span>.+<span style="color:#666">)</span>
+      - source_labels: <span style="color:#666">[</span>__meta_kubernetes_namespace<span style="color:#666">]</span>
         action: replace
         target_label: kubernetes_namespace
-      - source_labels: <span style="color:#000;font-weight:bold">[</span>__meta_kubernetes_pod_name<span style="color:#000;font-weight:bold">]</span>
+      - source_labels: <span style="color:#666">[</span>__meta_kubernetes_pod_name<span style="color:#666">]</span>
         action: replace
         target_label: kubernetes_pod_name
 
-<span style="color:#998;font-style:italic"># controller-manager配置:</span>
+<span style="color:#60a0b0;font-style:italic"># controller-manager配置:</span>
 metadata:
   annotations:
-    prometheus_io_scrape: <span style="color:#d14">&#34;true&#34;</span>
-    prometheus.io/port: <span style="color:#d14">&#34;10252&#34;</span>
+    prometheus_io_scrape: <span style="color:#4070a0">&#34;true&#34;</span>
+    prometheus.io/port: <span style="color:#4070a0">&#34;10252&#34;</span>
 
-<span style="color:#998;font-style:italic"># scheduler配置：</span>
+<span style="color:#60a0b0;font-style:italic"># scheduler配置：</span>
 metadata:
   annotations:
-    prometheus_io_scrape: <span style="color:#d14">&#34;true&#34;</span>
-    prometheus.io/port: <span style="color:#d14">&#34;10251&#34;</span>
+    prometheus_io_scrape: <span style="color:#4070a0">&#34;true&#34;</span>
+    prometheus.io/port: <span style="color:#4070a0">&#34;10251&#34;</span>
 </code></pre></div><ul>
 <li>获取 etcd 的 metric 信息：</li>
 </ul>
 <p>etcd 是跑在物理机上的，所以我们先创建对应的 endpoints 绑定好 service，然后采用 servicemonitor 的方式去匹配获取 etcd 的监控指标：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># service.yaml</span>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># service.yaml</span>
 apiVersion: v1
 kind: Service
 metadata:
@@ -307,10 +307,10 @@ spec:
   clusterIP: None
   ports:
   - name: port
-    port: <span style="color:#099">2379</span>
+    port: <span style="color:#40a070">2379</span>
     protocol: TCP
 
-<span style="color:#998;font-style:italic"># endpoint.yaml</span>
+<span style="color:#60a0b0;font-style:italic"># endpoint.yaml</span>
 apiVersion: v1
 kind: Endpoints
 metadata:
@@ -325,10 +325,10 @@ subsets:
   - ip: xx.xx.xx.xx
   ports:
   - name: port
-    port: <span style="color:#099">2379</span>
+    port: <span style="color:#40a070">2379</span>
     protocol: TCP
 
-<span style="color:#998;font-style:italic"># servicemonitor.yaml(需要配置好相关的证书)</span>
+<span style="color:#60a0b0;font-style:italic"># servicemonitor.yaml(需要配置好相关的证书)</span>
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -347,7 +347,7 @@ spec:
       caFile: /ca.pem
       certFile: /server.pem
       keyFile: /server-key.pem
-      insecureSkipVerify: <span style="color:#0086b3">true</span>
+      insecureSkipVerify: <span style="color:#007020">true</span>
   selector:
     matchLabels:
       k8s-app: etcd
@@ -355,7 +355,7 @@ spec:
     matchNames:
     - kube-system
 
-<span style="color:#998;font-style:italic"># 最后附上etcd secret的创建方法，将etcd证书挂载进入提供连接使用</span>
+<span style="color:#60a0b0;font-style:italic"># 最后附上etcd secret的创建方法，将etcd证书挂载进入提供连接使用</span>
 apiVersion: v1
 data:
   ca.pem: xx

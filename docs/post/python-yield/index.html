@@ -201,85 +201,85 @@
 <li>__iter__()方法：返回迭代器对象本身</li>
 <li>__next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器</li>
 </ol>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lst <span style="color:#000;font-weight:bold">=</span> [<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>]
-<span style="color:#000;font-weight:bold">print</span>(<span style="color:#0086b3">type</span>(lst))
-new_iter <span style="color:#000;font-weight:bold">=</span> lst<span style="color:#000;font-weight:bold">.</span>__iter__()
-<span style="color:#000;font-weight:bold">print</span>(<span style="color:#0086b3">type</span>(new_iter))
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lst <span style="color:#666">=</span> [<span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>]
+<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(lst))
+new_iter <span style="color:#666">=</span> lst<span style="color:#666">.</span>__iter__()
+<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(new_iter))
 
-<span style="color:#998;font-style:italic"># Output</span>
-<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#458;font-weight:bold">list</span><span style="color:#d14">&#39;&gt;</span>
-<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#458;font-weight:bold">list_iterator</span><span style="color:#d14">&#39;&gt;</span>
+<span style="color:#60a0b0;font-style:italic"># Output</span>
+<span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">class</span> <span style="">&#39;</span><span style="color:#0e84b5;font-weight:bold">list</span><span style="color:#4070a0">&#39;&gt;</span>
+<span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">class</span> <span style="">&#39;</span><span style="color:#0e84b5;font-weight:bold">list_iterator</span><span style="color:#4070a0">&#39;&gt;</span>
 </code></pre></div><p>for循环实际上就是通过__iter__()获取iterators，然后进行__next__()取值，直到StopIteration</p>
 <h2 id="generatorsyield">Generators&amp;yield</h2>
 <p>Generators是一种特殊的迭代器(iterators)。<strong>如果函数中任意位置存在yield字段，当你调用函数，函数不会直接执行，而是会返回一个生成器(generators)</strong>。另外生成器(generators)还支持生成器表达式（类似于列表，只是将[]换成了()）</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">test</span>():
-    <span style="color:#000;font-weight:bold">print</span>(<span style="color:#d14">&#34;for test&#34;</span>)
-    <span style="color:#000;font-weight:bold">yield</span> <span style="color:#099">0</span>
-gen1 <span style="color:#000;font-weight:bold">=</span> test()
-<span style="color:#000;font-weight:bold">print</span>(<span style="color:#0086b3">type</span>(gen1))
-gen2 <span style="color:#000;font-weight:bold">=</span> (x<span style="color:#000;font-weight:bold">*</span>x <span style="color:#000;font-weight:bold">for</span> x <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">0</span>, <span style="color:#099">3</span>))
-<span style="color:#000;font-weight:bold">print</span>(<span style="color:#0086b3">type</span>(gen2))
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">test</span>():
+    <span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;for test&#34;</span>)
+    <span style="color:#007020;font-weight:bold">yield</span> <span style="color:#40a070">0</span>
+gen1 <span style="color:#666">=</span> test()
+<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(gen1))
+gen2 <span style="color:#666">=</span> (x<span style="color:#666">*</span>x <span style="color:#007020;font-weight:bold">for</span> x <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">3</span>))
+<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(gen2))
 
-<span style="color:#998;font-style:italic"># Output</span>
-<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#458;font-weight:bold">generator</span><span style="color:#d14">&#39;&gt;</span>
-<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#000;font-weight:bold">class</span> <span style="color:#a61717;background-color:#e3d2d2">&#39;</span><span style="color:#458;font-weight:bold">generator</span><span style="color:#d14">&#39;&gt;</span>
+<span style="color:#60a0b0;font-style:italic"># Output</span>
+<span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">class</span> <span style="">&#39;</span><span style="color:#0e84b5;font-weight:bold">generator</span><span style="color:#4070a0">&#39;&gt;</span>
+<span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">class</span> <span style="">&#39;</span><span style="color:#0e84b5;font-weight:bold">generator</span><span style="color:#4070a0">&#39;&gt;</span>
 </code></pre></div><ul>
 <li>yield</li>
 </ul>
 <p>区别于迭代器(iterators)会把所有的内容<strong>全部储存到内存</strong>中，生成器(generators)会随着__next__()的不断调用分配内存</p>
 <p>每次生成器(generators)会运行到yield字段，然后将生成器(generators)状态保存返回；下次调用__next__()会继续从当前位置继续，到达下一个yield字段。一直到StopIteration停止。看一下下面例子：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">test</span>():
-    <span style="color:#000;font-weight:bold">print</span>(<span style="color:#d14">&#34;start&#34;</span>)
-    <span style="color:#000;font-weight:bold">yield</span> <span style="color:#099">0</span>
-    <span style="color:#000;font-weight:bold">print</span>(<span style="color:#d14">&#34;end&#34;</span>)
-    <span style="color:#000;font-weight:bold">yield</span> <span style="color:#099">1</span>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">test</span>():
+    <span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;start&#34;</span>)
+    <span style="color:#007020;font-weight:bold">yield</span> <span style="color:#40a070">0</span>
+    <span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;end&#34;</span>)
+    <span style="color:#007020;font-weight:bold">yield</span> <span style="color:#40a070">1</span>
 
-gen1 <span style="color:#000;font-weight:bold">=</span> test()
-<span style="color:#000;font-weight:bold">print</span>(gen1<span style="color:#000;font-weight:bold">.</span>__next__())
-<span style="color:#000;font-weight:bold">print</span>(gen1<span style="color:#000;font-weight:bold">.</span>__next__())
+gen1 <span style="color:#666">=</span> test()
+<span style="color:#007020;font-weight:bold">print</span>(gen1<span style="color:#666">.</span>__next__())
+<span style="color:#007020;font-weight:bold">print</span>(gen1<span style="color:#666">.</span>__next__())
 
-<span style="color:#000;font-weight:bold">print</span>(<span style="color:#d14">&#34;&#34;</span>)
-gen2 <span style="color:#000;font-weight:bold">=</span> (x<span style="color:#000;font-weight:bold">*</span>x <span style="color:#000;font-weight:bold">for</span> x <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">0</span>, <span style="color:#099">3</span>))
-<span style="color:#000;font-weight:bold">print</span>(gen2<span style="color:#000;font-weight:bold">.</span>__next__())
-<span style="color:#000;font-weight:bold">print</span>(gen2<span style="color:#000;font-weight:bold">.</span>__next__())
-<span style="color:#000;font-weight:bold">print</span>(gen2<span style="color:#000;font-weight:bold">.</span>__next__())
-<span style="color:#000;font-weight:bold">print</span>(gen2<span style="color:#000;font-weight:bold">.</span>__next__())
+<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;&#34;</span>)
+gen2 <span style="color:#666">=</span> (x<span style="color:#666">*</span>x <span style="color:#007020;font-weight:bold">for</span> x <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">3</span>))
+<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
 
-<span style="color:#998;font-style:italic"># Output</span>
+<span style="color:#60a0b0;font-style:italic"># Output</span>
 start
-<span style="color:#099">0</span>
+<span style="color:#40a070">0</span>
 end
-<span style="color:#099">1</span>
+<span style="color:#40a070">1</span>
 
-<span style="color:#099">0</span>
-<span style="color:#099">1</span>
-<span style="color:#099">4</span>
+<span style="color:#40a070">0</span>
+<span style="color:#40a070">1</span>
+<span style="color:#40a070">4</span>
 Traceback (most recent call last):
-  File <span style="color:#d14">&#34;/home/vagrant/aa.py&#34;</span>, line <span style="color:#099">16</span>, <span style="color:#000;font-weight:bold">in</span> <span style="color:#000;font-weight:bold">&lt;</span>module<span style="color:#000;font-weight:bold">&gt;</span>
-    <span style="color:#000;font-weight:bold">print</span>(gen2<span style="color:#000;font-weight:bold">.</span>__next__())
-<span style="color:#900;font-weight:bold">StopIteration</span>
+  File <span style="color:#4070a0">&#34;/home/vagrant/aa.py&#34;</span>, line <span style="color:#40a070">16</span>, <span style="color:#007020;font-weight:bold">in</span> <span style="color:#666">&lt;</span>module<span style="color:#666">&gt;</span>
+    <span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020">StopIteration</span>
 </code></pre></div><h2 id="example">example</h2>
 <p>我们有一批数据100条存在一个list中，想分为10个10个一组 ，分别处理：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">chunks</span>(lst, n):
-    <span style="color:#d14">&#34;&#34;&#34;Yield successive n-sized chunks from lst.&#34;&#34;&#34;</span>
-    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">0</span>, <span style="color:#0086b3">len</span>(lst), n):
-        <span style="color:#000;font-weight:bold">yield</span> lst[i:i <span style="color:#000;font-weight:bold">+</span> n]
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">chunks</span>(lst, n):
+    <span style="color:#4070a0">&#34;&#34;&#34;Yield successive n-sized chunks from lst.&#34;&#34;&#34;</span>
+    <span style="color:#007020;font-weight:bold">for</span> i <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#007020">len</span>(lst), n):
+        <span style="color:#007020;font-weight:bold">yield</span> lst[i:i <span style="color:#666">+</span> n]
 
-origin_lst <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">list</span>(<span style="color:#0086b3">range</span>(<span style="color:#099">0</span>, <span style="color:#099">100</span>))
-<span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> chunks(origin_lst, <span style="color:#099">10</span>):
-    <span style="color:#000;font-weight:bold">print</span>(i)
+origin_lst <span style="color:#666">=</span> <span style="color:#007020">list</span>(<span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">100</span>))
+<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#007020;font-weight:bold">in</span> chunks(origin_lst, <span style="color:#40a070">10</span>):
+    <span style="color:#007020;font-weight:bold">print</span>(i)
 
-<span style="color:#998;font-style:italic"># Output</span>
-[<span style="color:#099">0</span>, <span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>, <span style="color:#099">4</span>, <span style="color:#099">5</span>, <span style="color:#099">6</span>, <span style="color:#099">7</span>, <span style="color:#099">8</span>, <span style="color:#099">9</span>]
-[<span style="color:#099">10</span>, <span style="color:#099">11</span>, <span style="color:#099">12</span>, <span style="color:#099">13</span>, <span style="color:#099">14</span>, <span style="color:#099">15</span>, <span style="color:#099">16</span>, <span style="color:#099">17</span>, <span style="color:#099">18</span>, <span style="color:#099">19</span>]
-[<span style="color:#099">20</span>, <span style="color:#099">21</span>, <span style="color:#099">22</span>, <span style="color:#099">23</span>, <span style="color:#099">24</span>, <span style="color:#099">25</span>, <span style="color:#099">26</span>, <span style="color:#099">27</span>, <span style="color:#099">28</span>, <span style="color:#099">29</span>]
-[<span style="color:#099">30</span>, <span style="color:#099">31</span>, <span style="color:#099">32</span>, <span style="color:#099">33</span>, <span style="color:#099">34</span>, <span style="color:#099">35</span>, <span style="color:#099">36</span>, <span style="color:#099">37</span>, <span style="color:#099">38</span>, <span style="color:#099">39</span>]
-[<span style="color:#099">40</span>, <span style="color:#099">41</span>, <span style="color:#099">42</span>, <span style="color:#099">43</span>, <span style="color:#099">44</span>, <span style="color:#099">45</span>, <span style="color:#099">46</span>, <span style="color:#099">47</span>, <span style="color:#099">48</span>, <span style="color:#099">49</span>]
-[<span style="color:#099">50</span>, <span style="color:#099">51</span>, <span style="color:#099">52</span>, <span style="color:#099">53</span>, <span style="color:#099">54</span>, <span style="color:#099">55</span>, <span style="color:#099">56</span>, <span style="color:#099">57</span>, <span style="color:#099">58</span>, <span style="color:#099">59</span>]
-[<span style="color:#099">60</span>, <span style="color:#099">61</span>, <span style="color:#099">62</span>, <span style="color:#099">63</span>, <span style="color:#099">64</span>, <span style="color:#099">65</span>, <span style="color:#099">66</span>, <span style="color:#099">67</span>, <span style="color:#099">68</span>, <span style="color:#099">69</span>]
-[<span style="color:#099">70</span>, <span style="color:#099">71</span>, <span style="color:#099">72</span>, <span style="color:#099">73</span>, <span style="color:#099">74</span>, <span style="color:#099">75</span>, <span style="color:#099">76</span>, <span style="color:#099">77</span>, <span style="color:#099">78</span>, <span style="color:#099">79</span>]
-[<span style="color:#099">80</span>, <span style="color:#099">81</span>, <span style="color:#099">82</span>, <span style="color:#099">83</span>, <span style="color:#099">84</span>, <span style="color:#099">85</span>, <span style="color:#099">86</span>, <span style="color:#099">87</span>, <span style="color:#099">88</span>, <span style="color:#099">89</span>]
-[<span style="color:#099">90</span>, <span style="color:#099">91</span>, <span style="color:#099">92</span>, <span style="color:#099">93</span>, <span style="color:#099">94</span>, <span style="color:#099">95</span>, <span style="color:#099">96</span>, <span style="color:#099">97</span>, <span style="color:#099">98</span>, <span style="color:#099">99</span>]
+<span style="color:#60a0b0;font-style:italic"># Output</span>
+[<span style="color:#40a070">0</span>, <span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>, <span style="color:#40a070">4</span>, <span style="color:#40a070">5</span>, <span style="color:#40a070">6</span>, <span style="color:#40a070">7</span>, <span style="color:#40a070">8</span>, <span style="color:#40a070">9</span>]
+[<span style="color:#40a070">10</span>, <span style="color:#40a070">11</span>, <span style="color:#40a070">12</span>, <span style="color:#40a070">13</span>, <span style="color:#40a070">14</span>, <span style="color:#40a070">15</span>, <span style="color:#40a070">16</span>, <span style="color:#40a070">17</span>, <span style="color:#40a070">18</span>, <span style="color:#40a070">19</span>]
+[<span style="color:#40a070">20</span>, <span style="color:#40a070">21</span>, <span style="color:#40a070">22</span>, <span style="color:#40a070">23</span>, <span style="color:#40a070">24</span>, <span style="color:#40a070">25</span>, <span style="color:#40a070">26</span>, <span style="color:#40a070">27</span>, <span style="color:#40a070">28</span>, <span style="color:#40a070">29</span>]
+[<span style="color:#40a070">30</span>, <span style="color:#40a070">31</span>, <span style="color:#40a070">32</span>, <span style="color:#40a070">33</span>, <span style="color:#40a070">34</span>, <span style="color:#40a070">35</span>, <span style="color:#40a070">36</span>, <span style="color:#40a070">37</span>, <span style="color:#40a070">38</span>, <span style="color:#40a070">39</span>]
+[<span style="color:#40a070">40</span>, <span style="color:#40a070">41</span>, <span style="color:#40a070">42</span>, <span style="color:#40a070">43</span>, <span style="color:#40a070">44</span>, <span style="color:#40a070">45</span>, <span style="color:#40a070">46</span>, <span style="color:#40a070">47</span>, <span style="color:#40a070">48</span>, <span style="color:#40a070">49</span>]
+[<span style="color:#40a070">50</span>, <span style="color:#40a070">51</span>, <span style="color:#40a070">52</span>, <span style="color:#40a070">53</span>, <span style="color:#40a070">54</span>, <span style="color:#40a070">55</span>, <span style="color:#40a070">56</span>, <span style="color:#40a070">57</span>, <span style="color:#40a070">58</span>, <span style="color:#40a070">59</span>]
+[<span style="color:#40a070">60</span>, <span style="color:#40a070">61</span>, <span style="color:#40a070">62</span>, <span style="color:#40a070">63</span>, <span style="color:#40a070">64</span>, <span style="color:#40a070">65</span>, <span style="color:#40a070">66</span>, <span style="color:#40a070">67</span>, <span style="color:#40a070">68</span>, <span style="color:#40a070">69</span>]
+[<span style="color:#40a070">70</span>, <span style="color:#40a070">71</span>, <span style="color:#40a070">72</span>, <span style="color:#40a070">73</span>, <span style="color:#40a070">74</span>, <span style="color:#40a070">75</span>, <span style="color:#40a070">76</span>, <span style="color:#40a070">77</span>, <span style="color:#40a070">78</span>, <span style="color:#40a070">79</span>]
+[<span style="color:#40a070">80</span>, <span style="color:#40a070">81</span>, <span style="color:#40a070">82</span>, <span style="color:#40a070">83</span>, <span style="color:#40a070">84</span>, <span style="color:#40a070">85</span>, <span style="color:#40a070">86</span>, <span style="color:#40a070">87</span>, <span style="color:#40a070">88</span>, <span style="color:#40a070">89</span>]
+[<span style="color:#40a070">90</span>, <span style="color:#40a070">91</span>, <span style="color:#40a070">92</span>, <span style="color:#40a070">93</span>, <span style="color:#40a070">94</span>, <span style="color:#40a070">95</span>, <span style="color:#40a070">96</span>, <span style="color:#40a070">97</span>, <span style="color:#40a070">98</span>, <span style="color:#40a070">99</span>]
 </code></pre></div><p>参考链接：</p>
 <ol>
 <li><a href="https://blog.csdn.net/Yuyh131/article/details/83310486">https://blog.csdn.net/Yuyh131/article/details/83310486</a></li>
