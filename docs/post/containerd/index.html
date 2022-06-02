@@ -70,7 +70,119 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
-    
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一安装使用-ctr-管理-containerd">一、安装使用 ctr 管理 containerd</a></li>
+    <li><a href="#二containerd-使用">二、containerd 使用</a>
+      <ul>
+        <li><a href="#21-运行一个-busybox-镜像">2.1 运行一个 busybox 镜像：</a></li>
+        <li><a href="#22-其他-ctr-命令">2.2 其他 ctr 命令</a></li>
+      </ul>
+    </li>
+    <li><a href="#三containerd--docker">三、containerd + docker</a>
+      <ul>
+        <li><a href="#注意">注意：</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
     <article class="post">
         <header>
             <h1 class="post-title">浅谈 containerd</h1>
@@ -94,7 +206,7 @@
             <blockquote>
 <p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。</p>
 </blockquote>
-<h3 id="一安装使用-ctr-管理-containerd">一、安装使用 ctr 管理 containerd</h3>
+<h2 id="一安装使用-ctr-管理-containerd">一、安装使用 ctr 管理 containerd</h2>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#998;font-style:italic"># Install Dependent Libraries</span>
 $ sudo apt-get update
 $ sudo apt-get install libseccomp2
@@ -128,8 +240,8 @@ Server:
   Version:  1.4.3
   Revision: 269548fa27e0089a8b8278fc4fc781d7f65a939b
   UUID: b7e3b0e7-8a36-4105-a198-470da2be02f2
-</code></pre></div><h3 id="二containerd-使用">二、containerd 使用</h3>
-<h4 id="21-运行一个-busybox-镜像">2.1 运行一个 busybox 镜像：</h4>
+</code></pre></div><h2 id="二containerd-使用">二、containerd 使用</h2>
+<h3 id="21-运行一个-busybox-镜像">2.1 运行一个 busybox 镜像：</h3>
 <ul>
 <li>demo:</li>
 </ul>
@@ -152,7 +264,7 @@ busybox    <span style="color:#099">2356</span>    RUNNING
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t <span style="color:#0086b3">kill </span>-s SIGKILL busybox
 $ ctr -n k8s.io t <span style="color:#0086b3">rm </span>busybox
 WARN[0000] task busybox exit with non-zero exit code 137
-</code></pre></div><h4 id="22-其他-ctr-命令">2.2 其他 ctr 命令</h4>
+</code></pre></div><h3 id="22-其他-ctr-命令">2.2 其他 ctr 命令</h3>
 <p>镜像标记:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i tag A B
 <span style="color:#998;font-style:italic"># 若新镜像reference 已存在, 需要先删除新reference, 或者如下方式强制替换</span>
@@ -172,7 +284,7 @@ $ ctr -n k8s.io i tag --force A B
 </code></pre></div><p>读取日志:
 导出到文件中进行读取:</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io run --log-uri file:///var/log/xx.log
-</code></pre></div><h3 id="三containerd--docker">三、containerd + docker</h3>
+</code></pre></div><h2 id="三containerd--docker">三、containerd + docker</h2>
 <p>安装新版本的 docker-ce 默认，采用 containerd(&ndash;containerd=/run/containerd/containerd.sock)</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status docker
 ● docker.service - Docker Application Container Engine
@@ -185,7 +297,7 @@ $ ctr -n k8s.io i tag --force A B
            ├─4965 /usr/bin/dockerd -H fd:// --containerd<span style="color:#000;font-weight:bold">=</span>/run/containerd/containerd.sock
            ├─5402 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port <span style="color:#099">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#099">80</span>
            └─5417 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port <span style="color:#099">8082</span> -container-ip 172.17.0.2 -container-port <span style="color:#099">80</span>
-</code></pre></div><h4 id="注意">注意：</h4>
+</code></pre></div><h3 id="注意">注意：</h3>
 <ol>
 <li>ctr 直接跑起来一个容器只有 lo 网卡，也就是无法与外网通信；如果想连接外网，<a href="https://mp.weixin.qq.com/s/A9zU7gZH0liLjc-e-dhk8A">请参考</a></li>
 </ol>
@@ -242,6 +354,9 @@ $ ctr -n k8s.io i tag --force A B
       </script>
     </div>
     
+    
+    
+
 </div>
 
                     <footer id="footer">
@@ -298,15 +413,15 @@ $ ctr -n k8s.io i tag --force A B
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解">python yield详解</a>
-    </li>
-    
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/study_less_study_smart/" title="Study Less Study Smart">Study Less Study Smart</a>
-    </li>
-    
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/time_management/" title="Time Management">Time Management</a>
     </li>
     
     <li>
@@ -330,17 +445,19 @@ $ ctr -n k8s.io i tag --force A B
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/finance/">finance (1)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
-    
-    <li><a href="https://zhangsiming-blyq.github.io/categories/study_methods/">study_methods (2)</a></li>
     
 </ul>
     </section>
@@ -352,6 +469,8 @@ $ ctr -n k8s.io i tag --force A B
     <a href="https://zhangsiming-blyq.github.io/tags/BaileysRock/">BaileysRock</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     
@@ -365,15 +484,13 @@ $ ctr -n k8s.io i tag --force A B
     
     <a href="https://zhangsiming-blyq.github.io/tags/fund/">fund</a>
     
+    <a href="https://zhangsiming-blyq.github.io/tags/golang/">golang</a>
+    
     <a href="https://zhangsiming-blyq.github.io/tags/kubernetes/">kubernetes</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/python/">python</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/scheduler/">scheduler</a>
-    
-    <a href="https://zhangsiming-blyq.github.io/tags/study/">study</a>
-    
-    <a href="https://zhangsiming-blyq.github.io/tags/time/">time</a>
     
 </div>
     </section>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>kubernetes on 百里英骐</title>
-    <link>https://zhangsiming-blyq.github.io/categories/kubernetes/</link>
-    <description>Recent content in kubernetes on 百里英骐</description>
+    <title>golang on 百里英骐</title>
+    <link>https://zhangsiming-blyq.github.io/tags/golang/</link>
+    <description>Recent content in golang on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 28 May 2022 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zhangsiming-blyq.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -21,16 +21,6 @@
  使用client-go watch接口 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
 使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
 pod, err := mycluster.</description>
-    </item>
-    
-    <item>
-      <title>prometheus 监测 kubernetes 控制平面</title>
-      <link>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</link>
-      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</guid>
-      <description>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
- 一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</description>
     </item>
     
   </channel>

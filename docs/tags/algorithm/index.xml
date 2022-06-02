@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithm on 百里英骐</title>
+    <link>https://zhangsiming-blyq.github.io/tags/algorithm/</link>
+    <description>Recent content in algorithm on 百里英骐</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 02 Jun 2022 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://zhangsiming-blyq.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>【算法系列】设计一个有getMin功能的栈</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/1/</link>
+      <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/1/</guid>
+      <description>题目要求  pop、push、getMin操作的时间复杂度都是O(1) 设计的栈类型可以使用现成的栈结构  解题思路  使用两个栈，starkData和stackMin 每次压入starkData时候同时比较和stackMin顶部数据大小，小于stackMin顶部数据就将新的最小值压入栈  golang实现 golang内置数据结构不包括栈，定义一个栈:</description>
+    </item>
+    
+  </channel>
+</rss>

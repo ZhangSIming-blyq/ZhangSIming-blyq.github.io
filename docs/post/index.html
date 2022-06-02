@@ -72,6 +72,61 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年6月2日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            题目要求  pop、push、getMin操作的时间复杂度都是O(1) 设计的栈类型可以使用现成的栈结构  解题思路  使用两个栈，starkData和stackMin 每次压入starkData时候同时比较和stackMin顶部数据大小，小于stackMin顶部数据就将新的最小值压入栈  golang实现 golang内置数据结构不包括栈，定义一个栈:……
+        </div>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/1/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年5月28日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/golang'>golang</a></span>
+            
+            <span class="meta-category"><a href='/categories/kubernetes'>kubernetes</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+ 使用client-go watch接口 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
+pod, err := mycluster.……
+        </div>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/retrywatcher/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解">python yield详解</a>
             </h1>
         </header>
@@ -92,56 +147,6 @@
  __iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器  lst = [1, 2, 3] print(type(lst)) new_iter = lst.……
         </div>
         <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/python-yield/">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/time_management/" title="Time Management">Time Management</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年4月12日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/study_methods'>study_methods</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            Randy Pausch Lecture: Time Management, can search in Youtube.……
-        </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/time_management/">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/study_less_study_smart/" title="Study Less Study Smart">Study Less Study Smart</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年4月12日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/study_methods'>study_methods</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            Marty Lobdell Lecture: Study Less Study Smart, can search in Youtube……
-        </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/study_less_study_smart/">阅读全文</a></p>
     </article>
     
     
@@ -276,15 +281,15 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解">python yield详解</a>
-    </li>
-    
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/study_less_study_smart/" title="Study Less Study Smart">Study Less Study Smart</a>
-    </li>
-    
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/time_management/" title="Time Management">Time Management</a>
     </li>
     
     <li>
@@ -308,17 +313,19 @@
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/finance/">finance (1)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
-    
-    <li><a href="https://zhangsiming-blyq.github.io/categories/study_methods/">study_methods (2)</a></li>
     
 </ul>
     </section>
@@ -330,6 +337,8 @@
     <a href="https://zhangsiming-blyq.github.io/tags/BaileysRock/">BaileysRock</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     
@@ -343,15 +352,13 @@
     
     <a href="https://zhangsiming-blyq.github.io/tags/fund/">fund</a>
     
+    <a href="https://zhangsiming-blyq.github.io/tags/golang/">golang</a>
+    
     <a href="https://zhangsiming-blyq.github.io/tags/kubernetes/">kubernetes</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/python/">python</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/scheduler/">scheduler</a>
-    
-    <a href="https://zhangsiming-blyq.github.io/tags/study/">study</a>
-    
-    <a href="https://zhangsiming-blyq.github.io/tags/time/">time</a>
     
 </div>
     </section>

@@ -6,10 +6,31 @@
     <description>Recent content in Posts on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jun 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>【算法系列】设计一个有getMin功能的栈</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/1/</link>
+      <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/1/</guid>
+      <description>题目要求  pop、push、getMin操作的时间复杂度都是O(1) 设计的栈类型可以使用现成的栈结构  解题思路  使用两个栈，starkData和stackMin 每次压入starkData时候同时比较和stackMin顶部数据大小，小于stackMin顶部数据就将新的最小值压入栈  golang实现 golang内置数据结构不包括栈，定义一个栈:</description>
+    </item>
+    
+    <item>
+      <title>client-go watch接口隔一段时间自动退出怎么办？</title>
+      <link>https://zhangsiming-blyq.github.io/post/retrywatcher/</link>
+      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/retrywatcher/</guid>
+      <description>在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+ 使用client-go watch接口 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
+pod, err := mycluster.</description>
+    </item>
     
     <item>
       <title>python yield详解</title>
@@ -20,24 +41,6 @@
       <description>讲解python中迭代器、生成器、以及yield字段的常见使用场景。
  Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
  __iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器  lst = [1, 2, 3] print(type(lst)) new_iter = lst.</description>
-    </item>
-    
-    <item>
-      <title>Study Less Study Smart</title>
-      <link>https://zhangsiming-blyq.github.io/post/study_less_study_smart/</link>
-      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/post/study_less_study_smart/</guid>
-      <description>Marty Lobdell Lecture: Study Less Study Smart, can search in Youtube</description>
-    </item>
-    
-    <item>
-      <title>Time Management</title>
-      <link>https://zhangsiming-blyq.github.io/post/time_management/</link>
-      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/post/time_management/</guid>
-      <description>Randy Pausch Lecture: Time Management, can search in Youtube.</description>
     </item>
     
     <item>

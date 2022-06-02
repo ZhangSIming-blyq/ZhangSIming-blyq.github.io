@@ -6,10 +6,37 @@
     <description>Recent content in Categories on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jun 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhangsiming-blyq.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>algorithm</title>
+      <link>https://zhangsiming-blyq.github.io/categories/algorithm/</link>
+      <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/categories/algorithm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://zhangsiming-blyq.github.io/categories/golang/</link>
+      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://zhangsiming-blyq.github.io/categories/kubernetes/</link>
+      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/categories/kubernetes/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>python</title>
@@ -21,29 +48,11 @@
     </item>
     
     <item>
-      <title>study_methods</title>
-      <link>https://zhangsiming-blyq.github.io/categories/study_methods/</link>
-      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/categories/study_methods/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>finance</title>
       <link>https://zhangsiming-blyq.github.io/categories/finance/</link>
       <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/categories/finance/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>https://zhangsiming-blyq.github.io/categories/kubernetes/</link>
-      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/categories/kubernetes/</guid>
       <description></description>
     </item>
     

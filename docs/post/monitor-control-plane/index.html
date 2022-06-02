@@ -70,7 +70,113 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
-    
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一prometheus-如何自动发现-kubernetes-metrics-接口">一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</a></li>
+    <li><a href="#二我该重点关注哪些-control-plane-指标">二、我该重点关注哪些 control plane 指标？</a>
+      <ul>
+        <li><a href="#参考链接">参考链接:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
     <article class="post">
         <header>
             <h1 class="post-title">prometheus 监测 kubernetes 控制平面</h1>
@@ -92,7 +198,7 @@
             <blockquote>
 <p>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。</p>
 </blockquote>
-<h3 id="一prometheus-如何自动发现-kubernetes-metrics-接口">一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</h3>
+<h2 id="一prometheus-如何自动发现-kubernetes-metrics-接口">一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</h2>
 <p>prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&quot;relabel_configs&quot;中的具体目标, 进行不断拉取(拉取间隔为&quot;scrape_interval&rdquo;)</p>
 <ul>
 <li>配置权限：</li>
@@ -263,7 +369,7 @@ type: Opaque
 </code></pre></div><p>
         <img class="mx-auto" alt="image-20210812154811854" src="/monitor-control-plane/image-20210812154811854.png" />   
     </p>
-<h3 id="二我该重点关注哪些-control-plane-指标">二、我该重点关注哪些 control plane 指标？</h3>
+<h2 id="二我该重点关注哪些-control-plane-指标">二、我该重点关注哪些 control plane 指标？</h2>
 <ul>
 <li>apiserver: 其中计算延迟可以采用&quot;percentiles&quot;而不是平均数去更好的展示延迟出现情况</li>
 </ul>
@@ -305,7 +411,7 @@ type: Opaque
 <blockquote>
 <p>最后采用的 kubernetes 维护界面由：apiserver 专用仪表盘、etcd 仪表盘、综合控制平面仪表盘和证书监控组成；并且在维护使用过程中根据不同参数，不断调整, 够用就行。</p>
 </blockquote>
-<h4 id="参考链接">参考链接:</h4>
+<h3 id="参考链接">参考链接:</h3>
 <p><a href="https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cluster_role">https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/cluster_role</a><br>
 <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/">https://prometheus.io/docs/prometheus/latest/configuration/configuration/</a><br>
 <a href="https://www.datadoghq.com/blog/kubernetes-control-plane-monitoring/">https://www.datadoghq.com/blog/kubernetes-control-plane-monitoring/</a><br>
@@ -370,6 +476,9 @@ type: Opaque
       </script>
     </div>
     
+    
+    
+
 </div>
 
                     <footer id="footer">
@@ -426,15 +535,15 @@ type: Opaque
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解">python yield详解</a>
-    </li>
-    
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/study_less_study_smart/" title="Study Less Study Smart">Study Less Study Smart</a>
-    </li>
-    
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/time_management/" title="Time Management">Time Management</a>
     </li>
     
     <li>
@@ -458,17 +567,19 @@ type: Opaque
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/finance/">finance (1)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
-    
-    <li><a href="https://zhangsiming-blyq.github.io/categories/study_methods/">study_methods (2)</a></li>
     
 </ul>
     </section>
@@ -480,6 +591,8 @@ type: Opaque
     <a href="https://zhangsiming-blyq.github.io/tags/BaileysRock/">BaileysRock</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     
@@ -493,15 +606,13 @@ type: Opaque
     
     <a href="https://zhangsiming-blyq.github.io/tags/fund/">fund</a>
     
+    <a href="https://zhangsiming-blyq.github.io/tags/golang/">golang</a>
+    
     <a href="https://zhangsiming-blyq.github.io/tags/kubernetes/">kubernetes</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/python/">python</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/scheduler/">scheduler</a>
-    
-    <a href="https://zhangsiming-blyq.github.io/tags/study/">study</a>
-    
-    <a href="https://zhangsiming-blyq.github.io/tags/time/">time</a>
     
 </div>
     </section>

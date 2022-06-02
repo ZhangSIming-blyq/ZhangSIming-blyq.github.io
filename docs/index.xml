@@ -12,6 +12,27 @@
     
     
     <item>
+      <title>【算法系列】设计一个有getMin功能的栈</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/1/</link>
+      <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/1/</guid>
+      <description>题目要求  pop、push、getMin操作的时间复杂度都是O(1) 设计的栈类型可以使用现成的栈结构  解题思路  使用两个栈，starkData和stackMin 每次压入starkData时候同时比较和stackMin顶部数据大小，小于stackMin顶部数据就将新的最小值压入栈  golang实现 golang内置数据结构不包括栈，定义一个栈:</description>
+    </item>
+    
+    <item>
+      <title>client-go watch接口隔一段时间自动退出怎么办？</title>
+      <link>https://zhangsiming-blyq.github.io/post/retrywatcher/</link>
+      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/retrywatcher/</guid>
+      <description>在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+ 使用client-go watch接口 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
+pod, err := mycluster.</description>
+    </item>
+    
+    <item>
       <title>python yield详解</title>
       <link>https://zhangsiming-blyq.github.io/post/python-yield/</link>
       <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
@@ -20,24 +41,6 @@
       <description>讲解python中迭代器、生成器、以及yield字段的常见使用场景。
  Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
  __iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器  lst = [1, 2, 3] print(type(lst)) new_iter = lst.</description>
-    </item>
-    
-    <item>
-      <title>Study Less Study Smart</title>
-      <link>https://zhangsiming-blyq.github.io/post/study_less_study_smart/</link>
-      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/post/study_less_study_smart/</guid>
-      <description>Marty Lobdell Lecture: Study Less Study Smart, can search in Youtube</description>
-    </item>
-    
-    <item>
-      <title>Time Management</title>
-      <link>https://zhangsiming-blyq.github.io/post/time_management/</link>
-      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/post/time_management/</guid>
-      <description>Randy Pausch Lecture: Time Management, can search in Youtube.</description>
     </item>
     
     <item>
@@ -67,8 +70,7 @@
       
       <guid>https://zhangsiming-blyq.github.io/about/</guid>
       <description>专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等
-我的名字  百里英骐：人生玩的第一款游戏随机到的名字，遂用之至今; BaileysRock的来源则有一段故事:   百利甜酒的发原地在英国。那里有一位著名的调酒师，调酒师的太太是一名出色的女性，他们彼此深爱着对方。有一天，很不幸，调酒师的太太死于一次意外。调酒师从此悲伤，过着孤单的生活。直到一次出行的飞机上，调酒师遇到了一位像极了他前妻的空姐。他仿佛重获新生，一切生命的希望再一次点燃。那以后，调酒师疯狂的追求着那位空姐。但是空姐并不能接受调酒师的爱，空姐对调酒师说，有时候人的心会被蒙住，你对你前妻的思念和对我的爱完全是不同的情感，就像是奶和威士忌永远无法混在一起。调酒师听完空姐的话，默默的走开。他用了一年的时间，终于将奶和威士忌相溶，而且加了蜂蜜使味道也混为一体，并起了一个好听的名字(BaileysRock)，以此证明他对空姐的爱。当他知道空姐终于肯品尝这第一杯BaileysRock时，忍不住在杯里流下了一滴眼泪。后来百利甜被空姐带上飞机，传播到世界各地，她对每一个喜欢喝百利甜的人说，“这杯酒，我等了一年”。
-  备注 本站所有内容本着传播正能量，促进互相学习的基本原则, 可能会引用一些互联网上公开的内容。 如有侵权，请联系1030728296@qq.</description>
+百里英骐  喜欢的明星  备注 本站所有内容本着传播正能量，促进互相学习的基本原则, 可能会引用一些互联网上公开的内容。 如有侵权，请联系1030728296@qq.com，立马删~</description>
     </item>
     
     <item>

@@ -3,13 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://zhangsiming-blyq.github.io/tags/algorithm/</loc>
+    <lastmod>2022-06-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/categories/algorithm/</loc>
+    <lastmod>2022-06-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zhangsiming-blyq.github.io/categories/</loc>
-    <lastmod>2022-04-18T00:00:00+00:00</lastmod>
+    <lastmod>2022-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://zhangsiming-blyq.github.io/post/</loc>
-    <lastmod>2022-04-18T00:00:00+00:00</lastmod>
+    <lastmod>2022-06-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/tags/</loc>
+    <lastmod>2022-06-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/post/algorithm/1/</loc>
+    <lastmod>2022-06-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/post/retrywatcher/</loc>
+    <lastmod>2022-05-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/tags/golang/</loc>
+    <lastmod>2022-05-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/categories/golang/</loc>
+    <lastmod>2022-05-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
+    <lastmod>2022-05-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
+    <lastmod>2022-05-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -25,36 +70,6 @@
   <url>
     <loc>https://zhangsiming-blyq.github.io/post/python-yield/</loc>
     <lastmod>2022-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/tags/</loc>
-    <lastmod>2022-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/tags/study/</loc>
-    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/post/study_less_study_smart/</loc>
-    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/categories/study_methods/</loc>
-    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/tags/time/</loc>
-    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/post/time_management/</loc>
-    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -84,16 +99,6 @@
   
   <url>
     <loc>https://zhangsiming-blyq.github.io/tags/fund/</loc>
-    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
-    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url>
   
