@@ -6,10 +6,20 @@
     <description>Recent content in algorithm on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jun 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jun 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://zhangsiming-blyq.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>【算法系列】由两个栈组成的队列</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/2/</link>
+      <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/2/</guid>
+      <description>题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
+解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据在压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</description>
+    </item>
     
     <item>
       <title>【算法系列】设计一个有getMin功能的栈</title>
