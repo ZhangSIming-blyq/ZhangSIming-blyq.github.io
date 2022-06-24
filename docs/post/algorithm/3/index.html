@@ -7,20 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
 
-    <title>关于我 | 百里英骐</title>
-    <meta property="og:title" content="关于我 - 百里英骐">
+    <title>【算法系列】如何仅用递归函数和栈操作逆序一个栈 | 百里英骐</title>
+    <meta property="og:title" content="【算法系列】如何仅用递归函数和栈操作逆序一个栈 - 百里英骐">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2022-04-10T00:00:00&#43;08:00'>
+    <meta property="article:published_time" content='2022-06-05T00:00:00&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2022-04-10T00:00:00&#43;08:00'>
+    <meta property="article:modified_time" content='2022-06-05T00:00:00&#43;08:00'>
         
     <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
-    <meta name="description" content="专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等">
+    <meta name="description" content="【算法系列】如何仅用递归函数和栈操作逆序一个栈">
+        <meta name="author" content="BaileysRock">
         
-    <meta name="author" content="BaileysRock">
-    <meta property="og:url" content="https://zhangsiming-blyq.github.io/about/">
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/3/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -49,11 +49,11 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="" href="https://zhangsiming-blyq.github.io/">首页</a>
+                    <a class="current" href="https://zhangsiming-blyq.github.io/">首页</a>
                     
                     <a  href="https://zhangsiming-blyq.github.io/archives/" title="归档">归档</a>
                     
-                    <a class="current" href="https://zhangsiming-blyq.github.io/about/" title="关于">关于</a>
+                    <a  href="https://zhangsiming-blyq.github.io/about/" title="关于">关于</a>
                     
                     <a  href="https://zhangsiming-blyq.github.io/is404/" title="点我展示404">点我展示404</a>
                     
@@ -136,9 +136,10 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#百里英骐">百里英骐</a></li>
-    <li><a href="#喜欢的明星">喜欢的明星</a></li>
-    <li><a href="#备注">备注</a></li>
+    <li><a href="#题目要求">题目要求</a></li>
+    <li><a href="#解题思路">解题思路</a></li>
+    <li><a href="#golang实现">golang实现</a></li>
+    <li><a href="#运行效果">运行效果</a></li>
   </ul>
 </nav>
     </div>
@@ -176,27 +177,82 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">关于我</h1>
+            <h1 class="post-title">【算法系列】如何仅用递归函数和栈操作逆序一个栈</h1>
         </header>
         <date class="post-meta meta-date">
-            2022年4月10日
+            2022年6月5日
         </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
+            
+        </div>
         
         
         
         <div class="post-content">
-            <p><strong>专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等</strong></p>
-<h2 id="百里英骐">百里英骐</h2>
-<p>
-        <img class="mx-auto" alt="baileys" src="/bailiyingqi.jpg" />   
-    </p>
-<h2 id="喜欢的明星">喜欢的明星</h2>
-<p>
-        <img class="mx-auto" alt="masichun" src="/masichun.jpg" />   
-    </p>
-<h2 id="备注">备注</h2>
-<p>本站所有内容本着传播正能量，促进互相学习的基本原则, 可能会引用一些互联网上公开的内容。
-如有侵权，请联系1030728296@qq.com，立马删~</p>
+            <h2 id="题目要求">题目要求</h2>
+<p>一个栈依次压入1、2、3、4、5，那么从栈顶到栈底分别为5、4、3、2、1。将这个栈转置后，从栈顶到栈底为1、2、3、4、5，也就是实现栈元素的逆序，但是只能用递归函数来实现，不能用其他数据结构。</p>
+<h2 id="解题思路">解题思路</h2>
+<ol>
+<li>一个函数实现返回栈内数据，用于返回栈底元素，当栈空的时候停止
+
+        <img class="mx-auto" alt="" src="/gar.png" />   
+    </li>
+<li>另一个函数接受栈底元素并将每一个的数据重新压入栈中，即可实现逆序
+
+        <img class="mx-auto" alt="" src="/reverse.png" />   
+    </li>
+</ol>
+<h2 id="golang实现">golang实现</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
+
+<span style="color:#007020;font-weight:bold">import</span> <span style="color:#4070a0">&#34;fmt&#34;</span>
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">getAndRemoveLastElement</span>(stack <span style="color:#666">*</span>Stack) <span style="color:#902000">int</span> {
+	result <span style="color:#666">:=</span> stack.<span style="color:#06287e">Pop</span>()
+	<span style="color:#007020;font-weight:bold">if</span> stack.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+		<span style="color:#007020;font-weight:bold">return</span> result.(<span style="color:#902000">int</span>)
+	} <span style="color:#007020;font-weight:bold">else</span> {
+		last <span style="color:#666">:=</span> <span style="color:#06287e">getAndRemoveLastElement</span>(stack)
+		stack.<span style="color:#06287e">Push</span>(result)
+		<span style="color:#007020;font-weight:bold">return</span> last
+	}
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">reverse</span>(stack <span style="color:#666">*</span>Stack) {
+	<span style="color:#007020;font-weight:bold">if</span> stack.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+		<span style="color:#007020;font-weight:bold">return</span>
+	} <span style="color:#007020;font-weight:bold">else</span> {
+		garFuncReturn <span style="color:#666">:=</span> <span style="color:#06287e">getAndRemoveLastElement</span>(stack)
+		<span style="color:#06287e">reverse</span>(stack)
+		stack.<span style="color:#06287e">Push</span>(garFuncReturn)
+	}
+}
+</code></pre></div><h2 id="运行效果">运行效果</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
+	testStack <span style="color:#666">:=</span> <span style="color:#06287e">NewStack</span>()
+	<span style="color:#06287e">reverse</span>(testStack)
+	<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#40a070">1</span>; i <span style="color:#666">&lt;=</span> <span style="color:#40a070">5</span>; i<span style="color:#666">++</span> {
+		testStack.<span style="color:#06287e">Push</span>(i)
+	}
+	<span style="color:#06287e">reverse</span>(testStack)
+	<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#40a070">1</span>; i <span style="color:#666">&lt;=</span> <span style="color:#40a070">5</span>; i<span style="color:#666">++</span> {
+		fmt.<span style="color:#06287e">Println</span>(testStack.<span style="color:#06287e">Pop</span>())
+	}
+}
+</code></pre></div><p>运行结果：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run *.go 
+<span style="color:#40a070">1</span>
+<span style="color:#40a070">2</span>
+<span style="color:#40a070">3</span>
+<span style="color:#40a070">4</span>
+<span style="color:#40a070">5</span>
+</code></pre></div><blockquote>
+<p>实现起来比较简单，重点是需要画调用栈图，将每一层变量是什么值梳理清楚，什么时候向上弹出，这个用笔画一下就容易多了。</p>
+</blockquote>
 
         </div>
 
@@ -209,11 +265,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/containerd/">浅谈 containerd</a></li>
+        <li><a href="/post/algorithm/2/">【算法系列】由两个栈组成的队列</a></li>
         
-        <li><a href="/archives/">归档</a></li>
+        <li><a href="/post/algorithm/1/">【算法系列】设计一个有getMin功能的栈</a></li>
         
-        <li><a href="/search/">搜索</a></li>
+        <li><a href="/post/retrywatcher/">client-go watch接口隔一段时间自动退出怎么办？</a></li>
+        
+        <li><a href="/post/python-yield/">python yield详解</a></li>
+        
+        <li><a href="/post/monitor-control-plane/">prometheus 监测 kubernetes 控制平面</a></li>
         
     </ul>
 </div>
@@ -223,9 +283,7 @@
             
             <ul class="clearfix">
                 
-                <li><a href='/tags/about'>about</a></li>
-                
-                <li><a href='/tags/BaileysRock'>BaileysRock</a></li>
+                <li><a href='/tags/algorithm'>algorithm</a></li>
                 
             </ul>
             

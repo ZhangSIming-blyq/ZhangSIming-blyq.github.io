@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>【算法系列】猫狗队列 | 百里英骐</title>
+    <meta property="og:title" content="【算法系列】猫狗队列 - 百里英骐">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-06-07T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-06-07T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
+    <meta name="description" content="【算法系列】猫狗队列">
+        <meta name="author" content="BaileysRock">
+        
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/4/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zhangsiming-blyq.github.io/">
+                        百里英骐
+                    </a>
+                
+                <p class="description">专注于云原生、kubernetes、golang、python、linux、sre与自动化运维、软件架构等</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://zhangsiming-blyq.github.io/">首页</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/about/" title="关于">关于</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/is404/" title="点我展示404">点我展示404</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#题目要求">题目要求</a></li>
+    <li><a href="#解题思路">解题思路</a></li>
+    <li><a href="#golang实现">golang实现</a></li>
+    <li><a href="#运行效果">运行效果</a></li>
+    <li><a href="#补充-使用golang链表实现queue">补充: 使用golang链表实现queue</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">【算法系列】猫狗队列</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年6月7日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h2 id="题目要求">题目要求</h2>
+<p>狗和猫都实现了Pet接口，可以用getPetType()查看对应的动物类型; NewDog()、NewCat()可以分别新建狗猫对象。</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> Pet <span style="color:#007020;font-weight:bold">interface</span> {
+	<span style="color:#06287e">getPetType</span>() <span style="color:#902000">string</span>
+}
+
+<span style="color:#007020;font-weight:bold">type</span> fatherPet <span style="color:#007020;font-weight:bold">struct</span> {
+	Type <span style="color:#902000">string</span>
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (fp <span style="color:#666">*</span>fatherPet) <span style="color:#06287e">getPetType</span>() <span style="color:#902000">string</span> {
+	<span style="color:#007020;font-weight:bold">return</span> fp.Type
+}
+
+<span style="color:#007020;font-weight:bold">type</span> Dog <span style="color:#007020;font-weight:bold">struct</span> {
+	fatherPet
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">NewDog</span>() <span style="color:#666">*</span>Dog {
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;new dog&#34;</span>)
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>Dog{fatherPet{Type: <span style="color:#4070a0">&#34;dog&#34;</span>}}
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (dog <span style="color:#666">*</span>Dog) <span style="color:#06287e">getPetType</span>() <span style="color:#902000">string</span> {
+	<span style="color:#007020;font-weight:bold">return</span> dog.fatherPet.Type
+}
+
+<span style="color:#007020;font-weight:bold">type</span> Cat <span style="color:#007020;font-weight:bold">struct</span> {
+	fatherPet
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">NewCat</span>() <span style="color:#666">*</span>Cat {
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;new cat&#34;</span>)
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>Cat{fatherPet{Type: <span style="color:#4070a0">&#34;cat&#34;</span>}}
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (cat <span style="color:#666">*</span>Cat) <span style="color:#06287e">getPetType</span>() <span style="color:#902000">string</span> {
+	<span style="color:#007020;font-weight:bold">return</span> cat.fatherPet.Type
+}
+</code></pre></div><p>实现一种狗猫队列的结构，要求如下：</p>
+<ol>
+<li>用户可以调用add方法将cat类或dog类的实例放入队列中；</li>
+<li>用户可以调用pollAll方法，将队列中所有的实例按照队列的先后顺序依次弹出；</li>
+<li>用户可以调用pollDog方法，将队列中dog类的实例按照进队列的先后顺序依次弹出；</li>
+<li>用户可以调用pollCat方法，将队列中cat类的实例按照进队列的先后顺序依次弹出；</li>
+<li>用户可以调用isEmpty方法，检查队列中是否还有dog或cat的实例；</li>
+<li>用户可以调用isDogEmpty方法，检查队列中是否有dog类的实例；</li>
+<li>用户可以调用isCatEmpty方法，检查队列中是否有cat类的实例。</li>
+</ol>
+<h2 id="解题思路">解题思路</h2>
+<p>依照题意，需要确定队列中可能有dog也可能有cat，用两个队列分别保存dog和cat实例；至于如何判断dog队列的元素是更早入队列还是cat队列的元素是更早入队列需要<strong>有一个字段用来存储入队列time(全局唯一)</strong>，这里可以封装一个struct来保存pet和time；<br>
+那么接下来如果想要看dog，就看dogqueue，如果想看cat就看catqueue；如果想看总队列的顺序，<strong>取dogqueue和catqueue二者最新元素的time进行比较得出在总队列的顺序</strong>。</p>
+<h2 id="golang实现">golang实现</h2>
+<p>新创建一个准备放入队列的struct，包括Pet对象和Time字段：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> TimePet <span style="color:#007020;font-weight:bold">struct</span> {
+	Pet  Pet
+	Time <span style="color:#902000">int</span>
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">NewTimePet</span>(pet Pet, time <span style="color:#902000">int</span>) <span style="color:#666">*</span>TimePet {
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>TimePet{
+		Pet:  pet,
+		Time: time,
+	}
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (tp <span style="color:#666">*</span>TimePet) <span style="color:#06287e">getPet</span>() Pet {
+	<span style="color:#007020;font-weight:bold">return</span> tp.Pet
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (tp <span style="color:#666">*</span>TimePet) <span style="color:#06287e">getTime</span>() <span style="color:#902000">int</span> {
+	<span style="color:#007020;font-weight:bold">return</span> tp.Time
+}
+</code></pre></div><p>那么dogcatqueue主体包括逻辑如下：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> DogCatQueue <span style="color:#007020;font-weight:bold">struct</span> {
+	DogQueue <span style="color:#666">*</span>customQueue
+	CatQueue <span style="color:#666">*</span>customQueue
+	Time     <span style="color:#902000">int</span>
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">NewDogCatQueue</span>() <span style="color:#666">*</span>DogCatQueue {
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>DogCatQueue{
+		DogQueue: <span style="color:#06287e">newCustomQueue</span>(),
+		CatQueue: <span style="color:#06287e">newCustomQueue</span>(),
+		<span style="color:#60a0b0;font-style:italic">// 全局唯一的Time, 用于标识总顺序
+</span><span style="color:#60a0b0;font-style:italic"></span>		Time:     <span style="color:#40a070">0</span>,
+	}
+}
+
+<span style="color:#60a0b0;font-style:italic">// 添加的时候比较简单，狗进狗队列，猫进猫队列即可
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">add</span>(pet Pet) {
+	<span style="color:#007020;font-weight:bold">if</span> pet.<span style="color:#06287e">getPetType</span>() <span style="color:#666">==</span> <span style="color:#4070a0">&#34;dog&#34;</span> {
+		dcqueue.Time<span style="color:#666">++</span>
+		dcqueue.DogQueue.<span style="color:#06287e">Enqueue</span>(<span style="color:#06287e">NewTimePet</span>(pet, dcqueue.Time))
+	} <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> pet.<span style="color:#06287e">getPetType</span>() <span style="color:#666">==</span> <span style="color:#4070a0">&#34;cat&#34;</span> {
+		dcqueue.Time<span style="color:#666">++</span>
+		dcqueue.CatQueue.<span style="color:#06287e">Enqueue</span>(<span style="color:#06287e">NewTimePet</span>(pet, dcqueue.Time))
+	} <span style="color:#007020;font-weight:bold">else</span> {
+		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;err, not dog or cat&#34;</span>)
+	}
+}
+
+<span style="color:#60a0b0;font-style:italic">// pollAll的时候需要对比狗队列和猫队列最新元素的Time谁小，谁小表示谁先进的队列
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">pollAll</span>() Pet {
+	<span style="color:#007020;font-weight:bold">if</span> !dcqueue.<span style="color:#06287e">isDogQueueEmpty</span>() <span style="color:#666">&amp;&amp;</span> !dcqueue.<span style="color:#06287e">isCatQueueEmpty</span>() {
+		<span style="color:#007020;font-weight:bold">if</span> dcqueue.DogQueue.<span style="color:#06287e">Front</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getTime</span>() &lt; dcqueue.CatQueue.<span style="color:#06287e">Front</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getTime</span>() {
+			<span style="color:#007020;font-weight:bold">return</span> dcqueue.DogQueue.<span style="color:#06287e">Dequeue</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getPet</span>()
+		} <span style="color:#007020;font-weight:bold">else</span> {
+			<span style="color:#007020;font-weight:bold">return</span> dcqueue.CatQueue.<span style="color:#06287e">Dequeue</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getPet</span>()
+		}
+	} <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> !dcqueue.<span style="color:#06287e">isDogQueueEmpty</span>() {
+		<span style="color:#007020;font-weight:bold">return</span> dcqueue.DogQueue.<span style="color:#06287e">Dequeue</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getPet</span>()
+	} <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> !dcqueue.<span style="color:#06287e">isCatQueueEmpty</span>() {
+		<span style="color:#007020;font-weight:bold">return</span> dcqueue.CatQueue.<span style="color:#06287e">Dequeue</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getPet</span>()
+	} <span style="color:#007020;font-weight:bold">else</span> {
+		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;err, dogcatqueue is empty&#34;</span>)
+		<span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
+	}
+}
+
+<span style="color:#60a0b0;font-style:italic">// pollDog直接从狗队列删除即可
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">pollDog</span>() Pet {
+	<span style="color:#007020;font-weight:bold">if</span> !dcqueue.<span style="color:#06287e">isDogQueueEmpty</span>() {
+		fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;delete latest dog&#34;</span>)
+		<span style="color:#007020;font-weight:bold">return</span> dcqueue.DogQueue.<span style="color:#06287e">Dequeue</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getPet</span>()
+	} <span style="color:#007020;font-weight:bold">else</span> {
+		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;err, dogcatqueue don&#39;t have dog&#34;</span>)
+		<span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
+	}
+}
+
+<span style="color:#60a0b0;font-style:italic">// 同理
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">pollCat</span>() Pet {
+	<span style="color:#007020;font-weight:bold">if</span> !dcqueue.<span style="color:#06287e">isCatQueueEmpty</span>() {
+		fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;delete latest cat&#34;</span>)
+		<span style="color:#007020;font-weight:bold">return</span> dcqueue.CatQueue.<span style="color:#06287e">Dequeue</span>().(<span style="color:#666">*</span>TimePet).<span style="color:#06287e">getPet</span>()
+	} <span style="color:#007020;font-weight:bold">else</span> {
+		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;err, dogcatqueue don&#39;t have cat&#34;</span>)
+		<span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
+	}
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">isEmpty</span>() <span style="color:#902000">bool</span> {
+	<span style="color:#007020;font-weight:bold">return</span> dcqueue.DogQueue.<span style="color:#06287e">Empty</span>() <span style="color:#666">&amp;&amp;</span> dcqueue.CatQueue.<span style="color:#06287e">Empty</span>()
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">isDogQueueEmpty</span>() <span style="color:#902000">bool</span> {
+	<span style="color:#007020;font-weight:bold">return</span> dcqueue.DogQueue.<span style="color:#06287e">Empty</span>()
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">isCatQueueEmpty</span>() <span style="color:#902000">bool</span> {
+	<span style="color:#007020;font-weight:bold">return</span> dcqueue.CatQueue.<span style="color:#06287e">Empty</span>()
+}
+</code></pre></div><h2 id="运行效果">运行效果</h2>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
+	testqueue <span style="color:#666">:=</span> <span style="color:#06287e">NewDogCatQueue</span>()
+	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
+	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>()
+	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>()
+	testqueue.<span style="color:#06287e">pollDog</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>()
+	testqueue.<span style="color:#06287e">pollCat</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>()
+	testqueue.<span style="color:#06287e">pollDog</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>()
+	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
+	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
+	testqueue.<span style="color:#06287e">pollAll</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>()
+	testqueue.<span style="color:#06287e">pollAll</span>()
+	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
+	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
+	testqueue.<span style="color:#06287e">pollAll</span>()
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
+	fmt.<span style="color:#06287e">Println</span>()
+}
+</code></pre></div><p>运行结果：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run *.go 
+new dog
+new dog
+DogCatQueue has dog?  <span style="color:#007020">true</span>
+DogCatQueue has cat?  <span style="color:#007020">false</span>
+DogCatQueue has pet?  <span style="color:#007020">true</span>
+
+new cat
+DogCatQueue has dog?  <span style="color:#007020">true</span>
+DogCatQueue has cat?  <span style="color:#007020">true</span>
+DogCatQueue has pet?  <span style="color:#007020">true</span>
+
+delete latest dog
+DogCatQueue has dog?  <span style="color:#007020">true</span>
+DogCatQueue has cat?  <span style="color:#007020">true</span>
+DogCatQueue has pet?  <span style="color:#007020">true</span>
+
+delete latest cat
+DogCatQueue has dog?  <span style="color:#007020">true</span>
+DogCatQueue has cat?  <span style="color:#007020">false</span>
+DogCatQueue has pet?  <span style="color:#007020">true</span>
+
+delete latest dog
+DogCatQueue has dog?  <span style="color:#007020">false</span>
+DogCatQueue has cat?  <span style="color:#007020">false</span>
+DogCatQueue has pet?  <span style="color:#007020">false</span>
+
+new dog
+new cat
+DogCatQueue has dog?  <span style="color:#007020">false</span>
+DogCatQueue has cat?  <span style="color:#007020">true</span>
+DogCatQueue has pet?  <span style="color:#007020">true</span>
+
+new cat
+new dog
+DogCatQueue has dog?  <span style="color:#007020">true</span>
+DogCatQueue has cat?  <span style="color:#007020">false</span>
+DogCatQueue has pet?  <span style="color:#007020">true</span>
+</code></pre></div><blockquote>
+<p>篇幅不短，但是难度极低，注意题目要求不要修改原有数据结构，定义一个包括Time的新的结构体即可~</p>
+</blockquote>
+<h2 id="补充-使用golang链表实现queue">补充: 使用golang链表实现queue</h2>
+<p>其实使用slice也可以实现，但是如果slice满了以后就会对底层数组进行一次拷贝, 使用链表则没有这个问题, 实现如下(接受interface{}作为队列元素)：</p>
+<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
+
+<span style="color:#007020;font-weight:bold">import</span> (
+	<span style="color:#4070a0">&#34;container/list&#34;</span>
+)
+
+<span style="color:#007020;font-weight:bold">type</span> customQueue <span style="color:#007020;font-weight:bold">struct</span> {
+	queue <span style="color:#666">*</span>list.List
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">newCustomQueue</span>() <span style="color:#666">*</span>customQueue {
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>customQueue{queue: list.<span style="color:#06287e">New</span>()}
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (c <span style="color:#666">*</span>customQueue) <span style="color:#06287e">Enqueue</span>(value <span style="color:#007020;font-weight:bold">interface</span>{}) {
+	c.queue.<span style="color:#06287e">PushBack</span>(value)
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (c <span style="color:#666">*</span>customQueue) <span style="color:#06287e">Dequeue</span>() <span style="color:#007020;font-weight:bold">interface</span>{} {
+	<span style="color:#007020;font-weight:bold">if</span> c.queue.<span style="color:#06287e">Len</span>() &gt; <span style="color:#40a070">0</span> {
+		ele <span style="color:#666">:=</span> c.queue.<span style="color:#06287e">Front</span>()
+		c.queue.<span style="color:#06287e">Remove</span>(ele)
+		<span style="color:#007020;font-weight:bold">return</span> ele.Value
+	}
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (c <span style="color:#666">*</span>customQueue) <span style="color:#06287e">Front</span>() <span style="color:#007020;font-weight:bold">interface</span>{} {
+	<span style="color:#007020;font-weight:bold">if</span> c.queue.<span style="color:#06287e">Len</span>() &gt; <span style="color:#40a070">0</span> {
+		<span style="color:#007020;font-weight:bold">return</span> c.queue.<span style="color:#06287e">Front</span>().Value
+	}
+	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#007020;font-weight:bold">nil</span>
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (c <span style="color:#666">*</span>customQueue) <span style="color:#06287e">Size</span>() <span style="color:#902000">int</span> {
+	<span style="color:#007020;font-weight:bold">return</span> c.queue.<span style="color:#06287e">Len</span>()
+}
+
+<span style="color:#007020;font-weight:bold">func</span> (c <span style="color:#666">*</span>customQueue) <span style="color:#06287e">Empty</span>() <span style="color:#902000">bool</span> {
+	<span style="color:#007020;font-weight:bold">return</span> c.queue.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span>
+}
+</code></pre></div><p>参考链接：</p>
+<p><a href="https://www.delftstack.com/zh/howto/go/queue-implementation-in-golang/">https://www.delftstack.com/zh/howto/go/queue-implementation-in-golang/</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/algorithm/3/">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a></li>
+        
+        <li><a href="/post/algorithm/2/">【算法系列】由两个栈组成的队列</a></li>
+        
+        <li><a href="/post/algorithm/1/">【算法系列】设计一个有getMin功能的栈</a></li>
+        
+        <li><a href="/post/retrywatcher/">client-go watch接口隔一段时间自动退出怎么办？</a></li>
+        
+        <li><a href="/post/python-yield/">python yield详解</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/algorithm'>algorithm</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "ZhangSIming-blyq/blogcommit"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+    
+    
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://zhangsiming-blyq.github.io/">百里英骐 By BaileysRock</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://zhangsiming-blyq.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zhangsiming-blyq.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列">【算法系列】猫狗队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解">python yield详解</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/monitor-control-plane/" title="prometheus 监测 kubernetes 控制平面">prometheus 监测 kubernetes 控制平面</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记">指数基金投资指南摘记</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (4)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/finance/">finance (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/BaileysRock/">BaileysRock</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/containerd/">containerd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/controller-manager/">controller-manager</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/etcd/">etcd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/finance/">finance</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/fund/">fund</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/golang/">golang</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/kubernetes/">kubernetes</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/python/">python</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/scheduler/">scheduler</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zhangsiming-blyq.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
