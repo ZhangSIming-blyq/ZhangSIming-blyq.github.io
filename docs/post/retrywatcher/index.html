@@ -215,7 +215,7 @@
 <h3 id="1-如何watch">1. 如何watch</h3>
 <p>由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;</p>
 <p>使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">pod, err <span style="color:#666">:=</span> mycluster.Clusterclientset.<span style="color:#06287e">CoreV1</span>().<span style="color:#06287e">Pods</span>(appNamespace).<span style="color:#06287e">Watch</span>(context.<span style="color:#06287e">TODO</span>(), metav1.ListOptions{LabelSelector: label})
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">pod, err <span style="color:#666">:=</span> mycluster.Clusterclientset.<span style="color:#06287e">CoreV1</span>().<span style="color:#06287e">Pods</span>(appNamespace).<span style="color:#06287e">Watch</span>(context.<span style="color:#06287e">TODO</span>(), metav1.ListOptions{LabelSelector: label})
 <span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
     log.<span style="color:#06287e">Error</span>(err)
 }
@@ -229,7 +229,7 @@ event, ok <span style="color:#666">:=</span> <span style="color:#666">&lt;-</spa
 <p>在使用过程中，watch操作持续一段时间就会自动断开</p>
 <h3 id="2-排查">2. 排查</h3>
 <p>我们进入watch包里面找到streamwatcher.go，其中节选了一些重要片段：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> StreamWatcher <span style="color:#007020;font-weight:bold">struct</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> StreamWatcher <span style="color:#007020;font-weight:bold">struct</span> {
 	sync.Mutex
 	source   Decoder
 	reporter Reporter
@@ -290,7 +290,7 @@ event, ok <span style="color:#666">:=</span> <span style="color:#666">&lt;-</spa
 <p>也就是说如果接受数据解码的时候(sw.source.Decode()), 如果解码失败，那么StreamWatcher就被关闭了，那自然数据通道也就关闭了，造成”watch一段时间之后自动关闭的现象”。</p>
 <h2 id="解决办法1forinfor">解决办法(1)：forinfor</h2>
 <p>那么既然是这种情况会导致watch断开，那么我们首先想到的就是暴力恢复这个StreamWatcher，代码实现如下：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">for</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">for</span> {
 	pod, err <span style="color:#666">:=</span> mycluster.Clusterclientset.<span style="color:#06287e">CoreV1</span>().<span style="color:#06287e">Pods</span>(appNamespace).<span style="color:#06287e">Watch</span>(context.<span style="color:#06287e">TODO</span>(), metav1.ListOptions{LabelSelector: label})
 	<span style="color:#007020;font-weight:bold">if</span> err <span style="color:#666">!=</span> <span style="color:#007020;font-weight:bold">nil</span> {
 		log.<span style="color:#06287e">Error</span>(err)
@@ -309,7 +309,7 @@ loopier:
 </code></pre></div><p>我们定义一层for嵌套，因为在上述退出的时候会先defer close(sw.result)，所以我们接受数据的通道也就是上面代码里的pod.ResultChan()就会关闭，然后我们加一个错误处理，<strong>等待5s之后，break掉这个loopier循环，让外层的for循环继续新建StreamWatcher继续监听数据</strong>。以此达到持续监听的效果，好处是实现简单，坏处是缺少错误判断，不能针对错误类型分别处理，对于一直出错的场景也只是无脑重启。</p>
 <h2 id="解决办法2retrywatcher">解决办法(2)：retrywatcher</h2>
 <p>在官方代码下client-go/tools/watch/retrywatcher.go中其实官方给了一个标准解法，用于解决watch异常退出的问题，下面我们看下这种实现方式：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> RetryWatcher <span style="color:#007020;font-weight:bold">struct</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> RetryWatcher <span style="color:#007020;font-weight:bold">struct</span> {
 	lastResourceVersion <span style="color:#902000">string</span>
 	watcherClient       cache.Watcher
 	resultChan          <span style="color:#007020;font-weight:bold">chan</span> watch.Event
@@ -342,7 +342,7 @@ loopier:
 }
 </code></pre></div><p>和普通的StreamWatcher很类似，这里面RetryWatcher多了一些结构体字段；lastResourceVersion、minRestartDelay用于出错之后重启Watcher的RV保存，以及重试时间；传入initialResourceVersion和watcherClient(cache.Watcher)即可创建一个RetryWatcher;</p>
 <p>同理，RetryWatcher也是在创建对象的同时就开始go rw.receive()接受数据。</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> (rw <span style="color:#666">*</span>RetryWatcher) <span style="color:#06287e">receive</span>() {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> (rw <span style="color:#666">*</span>RetryWatcher) <span style="color:#06287e">receive</span>() {
 	<span style="color:#007020;font-weight:bold">defer</span> <span style="color:#007020">close</span>(rw.doneChan)
 	<span style="color:#007020;font-weight:bold">defer</span> <span style="color:#007020">close</span>(rw.resultChan)
 
@@ -386,7 +386,7 @@ loopier:
 </ol>
 <p><strong>而如果接受的done为false，则会正常等待time.Sleep(retryAfter)之后，进行重试，实现RetryWatcher！</strong></p>
 <p>接下来就看下这个rw.doReceive()，也就是RetryWatcher的接收处理数据部分, 同时会根据err类型判断是否应该重试：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> (rw <span style="color:#666">*</span>RetryWatcher) <span style="color:#06287e">doReceive</span>() (<span style="color:#902000">bool</span>, time.Duration) {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> (rw <span style="color:#666">*</span>RetryWatcher) <span style="color:#06287e">doReceive</span>() (<span style="color:#902000">bool</span>, time.Duration) {
 	watcher, err <span style="color:#666">:=</span> rw.watcherClient.<span style="color:#06287e">Watch</span>(metav1.ListOptions{
 		ResourceVersion:     rw.lastResourceVersion,
 		AllowWatchBookmarks: <span style="color:#007020;font-weight:bold">true</span>,
@@ -460,19 +460,19 @@ loopier:
 <h2 id="个人版retrywatcher代码实现">个人版RetryWatcher代码实现：</h2>
 <p>说了那么多，那么具体要怎么使用这个RetryWatcher呢？我个人做了一个妥协方案可以参考：</p>
 <p>还记得RetryWatcher中定义的watcherClient类型吗，需要是cache.Watcher，然后我们看client-go/tools/cache里面定义的cache.Watcher接口，定义如下：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> Watcher <span style="color:#007020;font-weight:bold">interface</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> Watcher <span style="color:#007020;font-weight:bold">interface</span> {
 	<span style="color:#60a0b0;font-style:italic">// Watch should begin a watch at the specified version.
 </span><span style="color:#60a0b0;font-style:italic"></span>	<span style="color:#06287e">Watch</span>(options metav1.ListOptions) (watch.Interface, <span style="color:#902000">error</span>)
 }
 </code></pre></div><p>也就是实现了Watch(xxxx)这个方法的就是符合的cache.Watcher; 而最开始我们代码正好是通过MyCluster.Clusterclientset.CoreV1().Pods()返回的接口v1.PodInterface中调用的Watch(xxxxx), 那么直接用“MyCluster.Clusterclientset.CoreV1().Pods()”来生成RetryWatcher是不是就行了！</p>
 <p>我们来看一下这个接口类型：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> PodInterface <span style="color:#007020;font-weight:bold">interface</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> PodInterface <span style="color:#007020;font-weight:bold">interface</span> {
 	<span style="color:#666">...</span>
 	<span style="color:#06287e">Watch</span>(ctx context.Context, opts metav1.ListOptions) (watch.Interface, <span style="color:#902000">error</span>)
 	<span style="color:#666">...</span>
 }
 </code></pre></div><p>答案是不行… 下面这个多了一个ctx参数 🥶，但是我们就是想从Clientset这里用怎么办，自己实现一个符合的结构吧：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> PodListWatch <span style="color:#007020;font-weight:bold">struct</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">type</span> PodListWatch <span style="color:#007020;font-weight:bold">struct</span> {
 	MyCluster    <span style="color:#666">*</span>initk8s.MyCluster
 	AppNamespace <span style="color:#902000">string</span>
 }
@@ -481,7 +481,7 @@ loopier:
 	<span style="color:#007020;font-weight:bold">return</span> p.MyCluster.Clusterclientset.<span style="color:#06287e">CoreV1</span>().<span style="color:#06287e">Pods</span>(p.AppNamespace).<span style="color:#06287e">Watch</span>(context.<span style="color:#06287e">TODO</span>(), options)
 }
 </code></pre></div><p>这个PodListWatch的Watch(xxxx)方法正好满足cache.Watcher, 单后watch的方式还是按照我们原先Clientset的，然后生成RetryWatcher的方式如下：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">ResourceWatcher</span>(mycluster <span style="color:#666">*</span>initk8s.MyCluster, appNamespace <span style="color:#902000">string</span>) {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">ResourceWatcher</span>(mycluster <span style="color:#666">*</span>initk8s.MyCluster, appNamespace <span style="color:#902000">string</span>) {
 	podWatcher <span style="color:#666">:=</span> PodListWatch{MyCluster: mycluster, AppNamespace: appNamespace}
 	<span style="color:#60a0b0;font-style:italic">// generate new retrywatcher, use podRetryWatcher.ResultChan() to keep a chronic watch operation
 </span><span style="color:#60a0b0;font-style:italic"></span>	podRetryWatcher, err <span style="color:#666">:=</span> retrywatcher.<span style="color:#06287e">NewRetryWatcher</span>(label, podWatcher)

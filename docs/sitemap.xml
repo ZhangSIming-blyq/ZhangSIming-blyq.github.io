@@ -1,183 +1,111 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://zhangsiming-blyq.github.io/tags/algorithm/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/algorithm/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/4/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/</loc>
+    <lastmod>2022-06-07T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/3/</loc>
     <lastmod>2022-06-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/2/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/1/</loc>
     <lastmod>2022-06-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/retrywatcher/</loc>
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/golang/</loc>
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/golang/</loc>
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/python/</loc>
     <lastmod>2022-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/python/</loc>
     <lastmod>2022-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/python-yield/</loc>
     <lastmod>2022-04-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/apiserver/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/controller-manager/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/etcd/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/finance/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/finance/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/fund/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/scheduler/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/indexfund/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/about/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/BaileysRock/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/containerd/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/containerd/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/docker/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/about/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/containerd/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://zhangsiming-blyq.github.io/</loc>
-    <lastmod>2022-04-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/archives/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/search/</loc>
   </url>
-  
 </urlset>

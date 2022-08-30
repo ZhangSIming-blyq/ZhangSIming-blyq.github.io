@@ -6,11 +6,7 @@
     <description>Recent content in python on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Apr 2022 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://zhangsiming-blyq.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 18 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>python yield详解</title>
       <link>https://zhangsiming-blyq.github.io/post/python-yield/</link>

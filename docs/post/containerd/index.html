@@ -207,7 +207,7 @@
 <p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。</p>
 </blockquote>
 <h2 id="一安装使用-ctr-管理-containerd">一、安装使用 ctr 管理 containerd</h2>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#60a0b0;font-style:italic"># Install Dependent Libraries</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#60a0b0;font-style:italic"># Install Dependent Libraries</span>
 $ sudo apt-get update
 $ sudo apt-get install libseccomp2
 
@@ -245,7 +245,7 @@ Server:
 <ul>
 <li>demo:</li>
 </ul>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#60a0b0;font-style:italic"># 拉取镜像</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#60a0b0;font-style:italic"># 拉取镜像</span>
 $ ctr -n k8s.io i pull docker.io/library/busybox:latest
 <span style="color:#60a0b0;font-style:italic"># 创建一个container(此时还未运行)</span>
 $ ctr -n k8s.io container create docker.io/library/busybox:latest busybox
@@ -255,38 +255,38 @@ $ ctr -n k8s.io task start -d busybox
 <span style="color:#60a0b0;font-style:italic"># 上述步骤也可以简写成如下</span>
 $ ctr -n k8s.io run -d docker.io/library/busybox:latest busybox
 </code></pre></div><p>查看容器在宿主机的 pid，及状态:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io task ls
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io task ls
 TASK       PID     STATUS
 busybox    <span style="color:#40a070">2356</span>    RUNNING
 </code></pre></div><p>进入容器：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t exec --exec-id <span style="color:#bb60d5">$RANDOM</span> -t busybox sh
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t exec --exec-id <span style="color:#bb60d5">$RANDOM</span> -t busybox sh
 </code></pre></div><p>杀死移除容器：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t <span style="color:#007020">kill </span>-s SIGKILL busybox
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io t <span style="color:#007020">kill </span>-s SIGKILL busybox
 $ ctr -n k8s.io t <span style="color:#007020">rm </span>busybox
-WARN[0000] task busybox exit with non-zero exit code 137
+WARN[0000] task busybox exit with <span style="color:#007020">non-zero</span> exit code 137
 </code></pre></div><h3 id="22-其他-ctr-命令">2.2 其他 ctr 命令</h3>
 <p>镜像标记:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i tag A B
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i tag A B
 <span style="color:#60a0b0;font-style:italic"># 若新镜像reference 已存在, 需要先删除新reference, 或者如下方式强制替换</span>
 $ ctr -n k8s.io i tag --force A B
 </code></pre></div><p>删除镜像:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i rm A
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i rm A
 </code></pre></div><p>拉取镜像:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i pull -k A
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i pull -k A
 </code></pre></div><p>查看镜像:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i <span style="color:#007020">ls
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">$ ctr -n k8s.io i <span style="color:#007020">ls
 </span></code></pre></div><p>推送镜像:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i push -k A
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i push -k A
 </code></pre></div><p>导出镜像:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i <span style="color:#007020">export</span> A.tar A
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i <span style="color:#007020">export</span> A.tar A
 </code></pre></div><p>导入镜像:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i import A.tar
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io i import A.tar
 </code></pre></div><p>读取日志:
 导出到文件中进行读取:</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io run --log-uri file:///var/log/xx.log
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ctr -n k8s.io run --log-uri file:///var/log/xx.log
 </code></pre></div><h2 id="三containerd--docker">三、containerd + docker</h2>
 <p>安装新版本的 docker-ce 默认，采用 containerd(&ndash;containerd=/run/containerd/containerd.sock)</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status docker
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ systemctl status docker
 ● docker.service - Docker Application Container Engine
    Loaded: loaded <span style="color:#666">(</span>/lib/systemd/system/docker.service; enabled; vendor preset: enabled<span style="color:#666">)</span>
    Active: active <span style="color:#666">(</span>running<span style="color:#666">)</span> since 四 2021-06-10 15:46:44 CST; 1h 46min ago

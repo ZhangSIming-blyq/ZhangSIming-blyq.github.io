@@ -205,7 +205,7 @@
     </p>
 <h2 id="golang实现">golang实现</h2>
 <p>需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
 
 <span style="color:#007020;font-weight:bold">import</span> <span style="color:#4070a0">&#34;fmt&#34;</span>
 
@@ -249,7 +249,7 @@
 	<span style="color:#007020;font-weight:bold">return</span> value
 }
 </code></pre></div><h2 id="运行效果">运行效果</h2>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
 	test <span style="color:#666">:=</span> <span style="color:#06287e">NewTwoStackQueue</span>()
 	test.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
 	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
@@ -265,7 +265,7 @@
 	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
 }
 </code></pre></div><p>运行结果：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#40a070">1</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#40a070">1</span>
 <span style="color:#40a070">1</span>
 <span style="color:#40a070">1</span>
 <span style="color:#40a070">2</span>

@@ -201,10 +201,10 @@
 <li>__iter__()方法：返回迭代器对象本身</li>
 <li>__next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器</li>
 </ol>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lst <span style="color:#666">=</span> [<span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>]
-<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(lst))
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lst <span style="color:#666">=</span> [<span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>]
+<span style="color:#007020">print</span>(<span style="color:#007020">type</span>(lst))
 new_iter <span style="color:#666">=</span> lst<span style="color:#666">.</span>__iter__()
-<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(new_iter))
+<span style="color:#007020">print</span>(<span style="color:#007020">type</span>(new_iter))
 
 <span style="color:#60a0b0;font-style:italic"># Output</span>
 <span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">class</span> <span style="">&#39;</span><span style="color:#0e84b5;font-weight:bold">list</span><span style="color:#4070a0">&#39;&gt;</span>
@@ -212,13 +212,13 @@ new_iter <span style="color:#666">=</span> lst<span style="color:#666">.</span>_
 </code></pre></div><p>for循环实际上就是通过__iter__()获取iterators，然后进行__next__()取值，直到StopIteration</p>
 <h2 id="generatorsyield">Generators&amp;yield</h2>
 <p>Generators是一种特殊的迭代器(iterators)。<strong>如果函数中任意位置存在yield字段，当你调用函数，函数不会直接执行，而是会返回一个生成器(generators)</strong>。另外生成器(generators)还支持生成器表达式（类似于列表，只是将[]换成了()）</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">test</span>():
-    <span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;for test&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">test</span>():
+    <span style="color:#007020">print</span>(<span style="color:#4070a0">&#34;for test&#34;</span>)
     <span style="color:#007020;font-weight:bold">yield</span> <span style="color:#40a070">0</span>
 gen1 <span style="color:#666">=</span> test()
-<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(gen1))
+<span style="color:#007020">print</span>(<span style="color:#007020">type</span>(gen1))
 gen2 <span style="color:#666">=</span> (x<span style="color:#666">*</span>x <span style="color:#007020;font-weight:bold">for</span> x <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">3</span>))
-<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#007020">type</span>(gen2))
+<span style="color:#007020">print</span>(<span style="color:#007020">type</span>(gen2))
 
 <span style="color:#60a0b0;font-style:italic"># Output</span>
 <span style="color:#666">&lt;</span><span style="color:#007020;font-weight:bold">class</span> <span style="">&#39;</span><span style="color:#0e84b5;font-weight:bold">generator</span><span style="color:#4070a0">&#39;&gt;</span>
@@ -228,22 +228,22 @@ gen2 <span style="color:#666">=</span> (x<span style="color:#666">*</span>x <spa
 </ul>
 <p>区别于迭代器(iterators)会把所有的内容<strong>全部储存到内存</strong>中，生成器(generators)会随着__next__()的不断调用分配内存</p>
 <p>每次生成器(generators)会运行到yield字段，然后将生成器(generators)状态保存返回；下次调用__next__()会继续从当前位置继续，到达下一个yield字段。一直到StopIteration停止。看一下下面例子：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">test</span>():
-    <span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;start&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">test</span>():
+    <span style="color:#007020">print</span>(<span style="color:#4070a0">&#34;start&#34;</span>)
     <span style="color:#007020;font-weight:bold">yield</span> <span style="color:#40a070">0</span>
-    <span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;end&#34;</span>)
+    <span style="color:#007020">print</span>(<span style="color:#4070a0">&#34;end&#34;</span>)
     <span style="color:#007020;font-weight:bold">yield</span> <span style="color:#40a070">1</span>
 
 gen1 <span style="color:#666">=</span> test()
-<span style="color:#007020;font-weight:bold">print</span>(gen1<span style="color:#666">.</span>__next__())
-<span style="color:#007020;font-weight:bold">print</span>(gen1<span style="color:#666">.</span>__next__())
+<span style="color:#007020">print</span>(gen1<span style="color:#666">.</span>__next__())
+<span style="color:#007020">print</span>(gen1<span style="color:#666">.</span>__next__())
 
-<span style="color:#007020;font-weight:bold">print</span>(<span style="color:#4070a0">&#34;&#34;</span>)
+<span style="color:#007020">print</span>(<span style="color:#4070a0">&#34;&#34;</span>)
 gen2 <span style="color:#666">=</span> (x<span style="color:#666">*</span>x <span style="color:#007020;font-weight:bold">for</span> x <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">3</span>))
-<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
-<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
-<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
-<span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020">print</span>(gen2<span style="color:#666">.</span>__next__())
+<span style="color:#007020">print</span>(gen2<span style="color:#666">.</span>__next__())
 
 <span style="color:#60a0b0;font-style:italic"># Output</span>
 start
@@ -256,18 +256,18 @@ end
 <span style="color:#40a070">4</span>
 Traceback (most recent call last):
   File <span style="color:#4070a0">&#34;/home/vagrant/aa.py&#34;</span>, line <span style="color:#40a070">16</span>, <span style="color:#007020;font-weight:bold">in</span> <span style="color:#666">&lt;</span>module<span style="color:#666">&gt;</span>
-    <span style="color:#007020;font-weight:bold">print</span>(gen2<span style="color:#666">.</span>__next__())
+    <span style="color:#007020">print</span>(gen2<span style="color:#666">.</span>__next__())
 <span style="color:#007020">StopIteration</span>
 </code></pre></div><h2 id="example">example</h2>
 <p>我们有一批数据100条存在一个list中，想分为10个10个一组 ，分别处理：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">chunks</span>(lst, n):
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020;font-weight:bold">def</span> <span style="color:#06287e">chunks</span>(lst, n):
     <span style="color:#4070a0">&#34;&#34;&#34;Yield successive n-sized chunks from lst.&#34;&#34;&#34;</span>
     <span style="color:#007020;font-weight:bold">for</span> i <span style="color:#007020;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#007020">len</span>(lst), n):
         <span style="color:#007020;font-weight:bold">yield</span> lst[i:i <span style="color:#666">+</span> n]
 
 origin_lst <span style="color:#666">=</span> <span style="color:#007020">list</span>(<span style="color:#007020">range</span>(<span style="color:#40a070">0</span>, <span style="color:#40a070">100</span>))
 <span style="color:#007020;font-weight:bold">for</span> i <span style="color:#007020;font-weight:bold">in</span> chunks(origin_lst, <span style="color:#40a070">10</span>):
-    <span style="color:#007020;font-weight:bold">print</span>(i)
+    <span style="color:#007020">print</span>(i)
 
 <span style="color:#60a0b0;font-style:italic"># Output</span>
 [<span style="color:#40a070">0</span>, <span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>, <span style="color:#40a070">4</span>, <span style="color:#40a070">5</span>, <span style="color:#40a070">6</span>, <span style="color:#40a070">7</span>, <span style="color:#40a070">8</span>, <span style="color:#40a070">9</span>]

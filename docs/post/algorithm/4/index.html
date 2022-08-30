@@ -196,7 +196,7 @@
         <div class="post-content">
             <h2 id="题目要求">题目要求</h2>
 <p>狗和猫都实现了Pet接口，可以用getPetType()查看对应的动物类型; NewDog()、NewCat()可以分别新建狗猫对象。</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> Pet <span style="color:#007020;font-weight:bold">interface</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> Pet <span style="color:#007020;font-weight:bold">interface</span> {
 	<span style="color:#06287e">getPetType</span>() <span style="color:#902000">string</span>
 }
 
@@ -248,7 +248,7 @@
 那么接下来如果想要看dog，就看dogqueue，如果想看cat就看catqueue；如果想看总队列的顺序，<strong>取dogqueue和catqueue二者最新元素的time进行比较得出在总队列的顺序</strong>。</p>
 <h2 id="golang实现">golang实现</h2>
 <p>新创建一个准备放入队列的struct，包括Pet对象和Time字段：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> TimePet <span style="color:#007020;font-weight:bold">struct</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> TimePet <span style="color:#007020;font-weight:bold">struct</span> {
 	Pet  Pet
 	Time <span style="color:#902000">int</span>
 }
@@ -268,7 +268,7 @@
 	<span style="color:#007020;font-weight:bold">return</span> tp.Time
 }
 </code></pre></div><p>那么dogcatqueue主体包括逻辑如下：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> DogCatQueue <span style="color:#007020;font-weight:bold">struct</span> {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">type</span> DogCatQueue <span style="color:#007020;font-weight:bold">struct</span> {
 	DogQueue <span style="color:#666">*</span>customQueue
 	CatQueue <span style="color:#666">*</span>customQueue
 	Time     <span style="color:#902000">int</span>
@@ -348,7 +348,7 @@
 	<span style="color:#007020;font-weight:bold">return</span> dcqueue.CatQueue.<span style="color:#06287e">Empty</span>()
 }
 </code></pre></div><h2 id="运行效果">运行效果</h2>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
 	testqueue <span style="color:#666">:=</span> <span style="color:#06287e">NewDogCatQueue</span>()
 	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
 	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
@@ -393,7 +393,7 @@
 	fmt.<span style="color:#06287e">Println</span>()
 }
 </code></pre></div><p>运行结果：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run *.go 
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run *.go 
 new dog
 new dog
 DogCatQueue has dog?  <span style="color:#007020">true</span>
@@ -436,7 +436,7 @@ DogCatQueue has pet?  <span style="color:#007020">true</span>
 </blockquote>
 <h2 id="补充-使用golang链表实现queue">补充: 使用golang链表实现queue</h2>
 <p>其实使用slice也可以实现，但是如果slice满了以后就会对底层数组进行一次拷贝, 使用链表则没有这个问题, 实现如下(接受interface{}作为队列元素)：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
 
 <span style="color:#007020;font-weight:bold">import</span> (
 	<span style="color:#4070a0">&#34;container/list&#34;</span>

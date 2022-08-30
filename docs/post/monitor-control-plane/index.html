@@ -199,14 +199,14 @@
 <p>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。</p>
 </blockquote>
 <h2 id="一prometheus-如何自动发现-kubernetes-metrics-接口">一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</h2>
-<p>prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&quot;relabel_configs&quot;中的具体目标, 进行不断拉取(拉取间隔为&quot;scrape_interval&rdquo;)</p>
+<p>prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&quot;relabel_configs&quot;中的具体目标, 进行不断拉取(拉取间隔为&quot;scrape_interval&quot;)</p>
 <ul>
 <li>配置权限：</li>
 </ul>
 <p>k8s 中 RBAC 支持授权资源对象的权限，比如可以 get、list、watch 集群中的 pod，还支持直接赋予对象访问 api 路径的权限，比如获取/healthz, /api 等, 官方对于 non_resource_urls 的解释如下：</p>
 <p><strong>non_resource_urls</strong> - (Optional) NonResourceURLs is a set of partial urls that a user should have access to. *s are allowed, but only as the full, final step in the path Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding. Rules can either apply to API resources (such as &ldquo;pods&rdquo; or &ldquo;secrets&rdquo;) or non-resource URL paths (such as &ldquo;/api&rdquo;), but not both.</p>
 <p>既然 prometheus 要主动抓取指标，就必须对他使用的 serviceaccount 提前进行 RBAC 授权：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># clusterrole.yaml</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># clusterrole.yaml</span>
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -238,8 +238,8 @@ subjects:
 </code></pre></div><ul>
 <li>获取 apiserver 自身的 metric 信息：</li>
 </ul>
-<p>prometheus 中配置&quot;scrape_config&rdquo;, 或者 prometheus-operator 中配置&quot;additionalScrapeConfigs&rdquo;, 配置获取 default 命名空间下的 kubernetes endpoints</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- job_name: <span style="color:#4070a0">&#39;kubernetes-apiservers&#39;</span>
+<p>prometheus 中配置&quot;scrape_config&quot;, 或者 prometheus-operator 中配置&quot;additionalScrapeConfigs&quot;, 配置获取 default 命名空间下的 kubernetes endpoints</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- job_name: <span style="color:#4070a0">&#39;kubernetes-apiservers&#39;</span>
       kubernetes_sd_configs:
       - role: endpoints
       scheme: https
@@ -254,7 +254,7 @@ subjects:
 <li>获取 controller-manager、scheduler 的 metric 信息：</li>
 </ul>
 <p>controller-manager 和 scheduler 因为自身暴露 metric 接口，需要修改对应 manifests 下的静态 pod 文件，添加匹配的 annotations 即可完成抓取：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># prometheus端配置</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># prometheus端配置</span>
 kubernetes_sd_configs:
       - role: pod
       relabel_configs:
@@ -294,7 +294,7 @@ metadata:
 <li>获取 etcd 的 metric 信息：</li>
 </ul>
 <p>etcd 是跑在物理机上的，所以我们先创建对应的 endpoints 绑定好 service，然后采用 servicemonitor 的方式去匹配获取 etcd 的监控指标：</p>
-<div class="highlight"><pre style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># service.yaml</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># service.yaml</span>
 apiVersion: v1
 kind: Service
 metadata:
