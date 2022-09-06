@@ -6,7 +6,17 @@
     <description>Recent content on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 10 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ansible-playbook 详解</title>
+      <link>https://zhangsiming-blyq.github.io/post/ansible-playbook/</link>
+      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/ansible-playbook/</guid>
+      <description>Ansible 是一个开源的基于 OpenSSH 的自动化配置管理工具。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。
+ 一、ansible 简介  Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。基于这样的目标，Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。Ansible 适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境。</description>
+    </item>
+    
     <item>
       <title>【算法系列】猫狗队列</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/4/</link>

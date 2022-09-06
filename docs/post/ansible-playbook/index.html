@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>ansible-playbook 详解 | 百里英骐</title>
+    <meta property="og:title" content="ansible-playbook 详解 - 百里英骐">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-07-10T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-07-10T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
+    <meta name="description" content="ansible-playbook 详解">
+        <meta name="author" content="BaileysRock">
+        
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/ansible-playbook/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zhangsiming-blyq.github.io/">
+                        百里英骐
+                    </a>
+                
+                <p class="description">专注于云原生、kubernetes、golang、python、linux、sre与自动化运维、软件架构等</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://zhangsiming-blyq.github.io/">首页</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/about/" title="关于">关于</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/is404/" title="点我展示404">点我展示404</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一ansible-简介">一、ansible 简介</a>
+      <ul>
+        <li><a href="#11-ansible-变量优先级如下">1.1 ansible 变量优先级如下</a></li>
+        <li><a href="#12-变量的作用范围scoping-variables">1.2 变量的作用范围(Scoping variables)</a></li>
+        <li><a href="#13-ansible-目录结构最佳实践">1.3 ansible 目录结构最佳实践</a></li>
+        <li><a href="#14-ansible-playbook-roles-初始化行为规划">1.4 ansible-playbook roles 初始化行为规划</a></li>
+        <li><a href="#15-ansible-playbook-执行顺序">1.5 ansible-playbook 执行顺序</a></li>
+      </ul>
+    </li>
+    <li><a href="#二kubespray-部署集群-playbook-解读">二、kubespray 部署集群 playbook 解读</a>
+      <ul>
+        <li><a href="#12-实际操作使用-ansible-playbook-部署单节点集群">1.2 实际操作使用 ansible-playbook 部署单节点集群</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">ansible-playbook 详解</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年7月10日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/ansible'>ansible</a></span>
+            
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <blockquote>
+<p>Ansible 是一个开源的基于 OpenSSH 的<strong>自动化配置管理工具</strong>。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。</p>
+</blockquote>
+<h2 id="一ansible-简介">一、ansible 简介</h2>
+<blockquote>
+<p>Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。基于这样的目标，Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。Ansible <strong>适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境</strong>。</p>
+</blockquote>
+<h3 id="11-ansible-变量优先级如下">1.1 ansible 变量优先级如下</h3>
+<ol>
+<li>command line values (eg &ldquo;-u user&rdquo;)</li>
+<li>role defaults</li>
+<li>inventory file or script group vars</li>
+<li>inventory group_vars/all</li>
+<li>playbook group_vars/all</li>
+<li>inventory group_vars/*</li>
+<li>playbook group_vars/*</li>
+<li>inventory file or script host vars</li>
+<li>inventory host_vars/*: inventory 下面的 hosts_vars 目录下的变量优先级大于 group_vars 目录下的</li>
+<li>playbook host_vars/*</li>
+<li>host facts / cached set_facts</li>
+<li>play vars</li>
+<li>play vars_prompt</li>
+<li>play vars_files: vars_files 优先级大于同级别的 vars 字段(play 内定义)</li>
+<li>role vars (defined in role/vars/main.yml): role 里面的 vars 目录下的定义变量</li>
+<li>block vars (only for tasks in block)</li>
+<li>task vars (only for the task): task 里面的 vars 字段优先级别比较高(本 task)</li>
+<li>include_vars</li>
+<li>set_facts / registered vars: 比较常用 set_facts 更改一些后面要使用的变量，全局生效；registered vars 一般连续的 task 用的比较多</li>
+<li>role (and include_role) params</li>
+<li>include params</li>
+<li>extra vars (always win precedence): 执行 ansible-playbook 命令时候传入的 extra vars 级别最高，高于一切</li>
+</ol>
+<h3 id="12-变量的作用范围scoping-variables">1.2 变量的作用范围(Scoping variables)</h3>
+<ol>
+<li>Global: this is set by config, environment variables and the command line</li>
+<li>Play: each play and contained structures, vars entries (vars; vars_files; vars_prompt), role defaults and vars.</li>
+<li>Host: variables directly associated to a host, like inventory, include_vars, facts or registered task outputs</li>
+</ol>
+<blockquote>
+<p>Ansible 1.2 及以上的版本中,group_vars/ 和 host_vars/ 目錄可放在 inventory 目錄下,或是 playbook 目錄下. 如果兩個目錄下都存在,那麼 playbook 目錄下的配置會覆蓋 inventory 目錄的配置(对应解释上分 4-10 条变量优先级)</p>
+</blockquote>
+<h3 id="13-ansible-目录结构最佳实践">1.3 ansible 目录结构最佳实践</h3>
+<ul>
+<li>结构如下：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">├── playbooks.yml
+├── inventory<span style="color:#666">(</span>inventory下可以任意加子目录进行分组<span style="color:#666">)</span>
+|   ├── group_vars ├── all ├── *.yml
+|   |              ├── *.yml
+|   |              └── *
+|   ├── host_vars
+|   |
+│   └── hosts.ini
+|
+├── roles
+│   ├── common
+│   │   ├── files
+│   │   ├── handlers
+│   │   ├── meta
+│   │   ├── templates
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   └── vars
+|   |
+│   ├── others
+│       ├── files
+│       ├── handlers
+│       ├── meta
+│       ├── templates
+│       ├── tasks
+│       │   └── main.yml
+│       └── vars
+└── *.yml
+</code></pre></div><ol>
+<li>使用 roles 管理不同的安装模块</li>
+<li>使用 inventory/host.ini 管理操作主机，对不同主机进行分组</li>
+<li>使用 group_vars 管理基本的默认变量，playbook 中使用 set_facts 设置需要的变量，默认不想被修改的变量写在 roles/vars/main.yml</li>
+<li>每个 task 都要写 name</li>
+<li>tags 写在 role 阶段</li>
+</ol>
+<h3 id="14-ansible-playbook-roles-初始化行为规划">1.4 ansible-playbook roles 初始化行为规划</h3>
+<ol>
+<li>如果角色 /xxx/tasks/main.yaml 存在，则其中列出的任务将添加到任务中，否则将不会添加任务中</li>
+<li>如果角色 /xxx/handlers/main.yaml 存在，则其中列出的处理程序将添加到任务中，否则将不会添加任务中</li>
+<li>如果角色 /xxx/vars/main.yml 存在，则其中列出的处理程序将添加到任务中，否则将不会添加任务中</li>
+<li>如果角色 /xxx/defaults/main.yml 存在，则其中列出的处理程序将添加到任务中，否则将不会添加任务中</li>
+<li>如果角色 /xxx/meta/main.yml 存在，则其中列出的任何角色依赖项将添加到角色列表（1.3 及更高版本）</li>
+<li>任何副本，脚本，模板或包含任务（在角色中）都可以引用 roles / x / {files，templates，tasks} /（dir 取决于任务）中的文件，而无需相对或绝对地路径化它们</li>
+</ol>
+<h3 id="15-ansible-playbook-执行顺序">1.5 ansible-playbook 执行顺序</h3>
+<ol>
+<li>pre_tasks 游戏中定义的任何内容</li>
+<li>列出的每个角色将依次执行。将首先运行角色中定义的任何角色依赖项，但需遵循标记过滤和条件。roles meta/main.yml</li>
+<li>tasks 游戏中定义的任何内容</li>
+<li>post_tasks 游戏中定义的任何内容</li>
+</ol>
+<h2 id="二kubespray-部署集群-playbook-解读">二、kubespray 部署集群 playbook 解读</h2>
+<p>github 地址：https://github.com/kubernetes-sigs/kubespray</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ gc https://github.com/kubernetes-sigs/kubespray
+$ <span style="color:#007020">cd</span> kubespray
+
+<span style="color:#60a0b0;font-style:italic"># 查看部署集群playbook</span>
+$ cat cluster.yml
+---
+<span style="color:#60a0b0;font-style:italic"># 检查ansible版本</span>
+- name: Check ansible version
+  import_playbook: ansible_version.yml
+
+<span style="color:#60a0b0;font-style:italic"># 检查inventory中组的版本，进行适配旧版本的group名称</span>
+- name: Ensure compatibility with old groups
+  import_playbook: legacy_groups.yml
+
+<span style="color:#60a0b0;font-style:italic"># 堡垒机配置(没有跳过)</span>
+- hosts: bastion<span style="color:#666">[</span>0<span style="color:#666">]</span>
+  gather_facts: False
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: bastion-ssh-config, tags: <span style="color:#666">[</span><span style="color:#4070a0">&#34;localhost&#34;</span>, <span style="color:#4070a0">&#34;bastion&#34;</span><span style="color:#666">]</span> <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># 默认linear,每个主机的单个task执行完成会等待其他都完成后再执行下个任务，设置free可不等待其他主机，继续往下执行(看起来会比较乱)</span>
+<span style="color:#60a0b0;font-style:italic"># linear策略即线性执行策略，线性执行策略指主机组内所有主机完成一个任务后才继续下一个任务的执行，在执行一个任务时，如果某个主机先执行完则会等待其他主机执行结束。说直白点就是第一个任务在指定的主机都执行完，再进行第二个任务的执行，第二个任务在指定的主机都执行完后，再进行第三个任务的执行…… 以此类推。</span>
+<span style="color:#60a0b0;font-style:italic"># free策略即自由策略，即在一个play执行完之前，每个主机都各顾各的尽可能快的完成play里的所有任务，而不会因为其他主机没执行完任务而等待，不受线性执行策略那样的约束。所以这种策略的执行结果给人感觉是无序的甚至是杂乱无章的，而且每次执行结果的task显示顺序很可能不一样</span>
+
+<span style="color:#60a0b0;font-style:italic"># 此阶段对于etcd的每一个节点一个一个的进行kubespray-defaults(设置一些fallback_ip、noproxy的set_fact), bootstrap-os(装一些yum源，基础包，改一些主机名等操作)</span>
+- hosts: k8s_cluster:etcd
+  strategy: linear
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  gather_facts: <span style="color:#007020">false</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: bootstrap-os, tags: bootstrap-os<span style="color:#666">}</span>
+
+- name: Gather facts
+  tags: always
+  import_playbook: facts.yml
+
+<span style="color:#60a0b0;font-style:italic"># 此阶段对于etcd的每一个节点一个一个的进行kubespray-defaults(设置一些fallback_ip、noproxy的set_fact)、kubernetes/preinstall(预先配置一些环境，比如禁用SWAP、配置替换resolvconf，设置一些cni的bin路径等、创建/检查一些安装目录、期间对于特定文件触发handler重启相关服务、配置systemd-resolved、修改/etc/hosts文件等)、container-engine(选择容器runtime，进行安装、配置、reload等)、</span>
+<span style="color:#60a0b0;font-style:italic"># download(模块用于下载所有有需要的镜像，先在ansible执行机缓存，之后再下载所有需要的二进制包，包括kubeadm需要的、kubernetes集群需要的等等)</span>
+- hosts: k8s_cluster:etcd
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes/preinstall, tags: preinstall <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: <span style="color:#4070a0">&#34;container-engine&#34;</span>, tags: <span style="color:#4070a0">&#34;container-engine&#34;</span>, when: deploy_container_engine|default<span style="color:#666">(</span><span style="color:#007020">true</span><span style="color:#666">)</span> <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: download, tags: download, when: <span style="color:#4070a0">&#34;not skip_downloads&#34;</span> <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># 此阶段开始执行etcd role，先进行kubespray-defaults(设置一些fallback_ip、noproxy的set_fact)、再进行etcd(检查、创建etcd证书，部署etcd集群，添加etcd节点，检查etcd状态，创建etcd执行用户等...)</span>
+- hosts: etcd
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - role: etcd
+      tags: etcd
+      vars:
+        etcd_cluster_setup: <span style="color:#007020">true</span>
+        etcd_events_cluster_setup: <span style="color:#4070a0">&#34;{{ etcd_events_cluster_enabled }}&#34;</span>
+      when: not etcd_kubeadm_enabled| default<span style="color:#666">(</span><span style="color:#007020">false</span><span style="color:#666">)</span>
+
+<span style="color:#60a0b0;font-style:italic"># 设置etcd_cluster_setup、etcd_events_cluster_setup为 false，主要是将k8s cluster中的机器，分发配置信息etcd的证书, 用于后续与etcd集群交互</span>
+- hosts: k8s_cluster
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - role: etcd
+      tags: etcd
+      vars:
+        etcd_cluster_setup: <span style="color:#007020">false</span>
+        etcd_events_cluster_setup: <span style="color:#007020">false</span>
+      when: not etcd_kubeadm_enabled| default<span style="color:#666">(</span><span style="color:#007020">false</span><span style="color:#666">)</span>
+
+<span style="color:#60a0b0;font-style:italic"># 此阶段执行kubernetes/nodes role，先进行kubespray-defaults(设置一些fallback_ip、noproxy的set_fact), 再进行kubernetes/node(检查docker cgroup, 配置一些参数等、拷贝一些数据，比如cni目录下的，等等、通过镜像挂载的方式配置安装kubelet、部署apiserver的负载均衡、确保预留nodePort端口范围，通过sysctl修改内核参数、确认kube-proxy ipvs需要的内核模块已开启)</span>
+- hosts: k8s_cluster
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes/node, tags: node <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># 此阶段部署配置kube_control_plane机器，先进行kubespray-defaults(设置一些fallback_ip、noproxy的set_fact)、</span>
+<span style="color:#60a0b0;font-style:italic"># kubernetes/control-plane(删除control-plane静态文件，删除旧的master容器、下载好kubectl命令行工具、配置kubectl命令行工具自动补全、在kubeadm-setup.yml初始化Initialize first master，创建kubeadm的24h token，然后include_tasks: kubeadm-secondary.yml添加其他的master到集群中、检查etcd证书过期时间等后续检查、更新apiserver客户端的连接地址为fix后的api负载均衡地址、renew集群的证书们, 使用kubeadm renew的方式)</span>
+<span style="color:#60a0b0;font-style:italic"># kubernetes/client(建立/etc/kubernetes架构目录，拷贝kubeconfig到node并配置好ansible执行机上面的k8s client环境)</span>
+<span style="color:#60a0b0;font-style:italic"># kubernetes-apps/cluster_roles(通过配置好的kubectl执行，Apply workaround to allow all nodes with cert O=system:nodes to register, 这样之后的所有node加入申请都会自动审批通过...)</span>
+- hosts: kube_control_plane
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes/control-plane, tags: master <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes/client, tags: client <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes-apps/cluster_roles, tags: cluster-roles <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># 此阶段部署配置cluster里面的其他普通node节点，先进行kubespray-defaults(设置一些fallback_ip、noproxy的set_fact)、</span>
+<span style="color:#60a0b0;font-style:italic"># 之后kubernetes/kubeadm(检查kubelet配置文件是否存在、检查kubelet的ca.crt证书是否存在、创建kubeadm join的token、更新kubelet中的地址为负载均衡的apiserver地址、重启kube-proxy的pods)、</span>
+<span style="color:#60a0b0;font-style:italic"># kubernetes/node-label(根据变量中的{{ role_node_labels + inventory_node_labels }}给node打上对应的标签，通过kubectl label nodes)</span>
+<span style="color:#60a0b0;font-style:italic"># network_plugin(根据变量决定要部署哪种网络插件，举例cilium的话就是check.yml检查cilium参数，install.yml渲染安装cilium需要的yaml文件到node、apply.yml执行kubectl部署网络插件到集群中)</span>
+- hosts: k8s_cluster
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes/kubeadm, tags: kubeadm<span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes/node-label, tags: node-label <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: network_plugin, tags: network <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># 如果网络插件部署的是calico，还需要到宿主机上面执行一些操作，这里我们选择cilium就跳过了</span>
+- hosts: calico_rr
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: network_plugin/calico/rr, tags: <span style="color:#666">[</span><span style="color:#4070a0">&#39;network&#39;</span>, <span style="color:#4070a0">&#39;calico_rr&#39;</span><span style="color:#666">]</span> <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># windows master的额外配置，这里跳过, 一般不用</span>
+- hosts: kube_control_plane<span style="color:#666">[</span>0<span style="color:#666">]</span>
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: win_nodes/kubernetes_patch, tags: <span style="color:#666">[</span><span style="color:#4070a0">&#34;master&#34;</span>, <span style="color:#4070a0">&#34;win_nodes&#34;</span><span style="color:#666">]</span> <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># 这阶段就是在kube_control_plane也就是有权限kubectl的机器上面安装后续应用了，不是每个role都需要走，比如是否部署ingress_controller就由&#34;ingress_nginx_enabled&#34;管理，kubernetes-apps下有个meta/main.yml文件，根据参数选择安装不同的app，流程无非就是下载包，或者传输yaml文件之后kubectl apply</span>
+- hosts: kube_control_plane
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes-apps/external_cloud_controller, tags: external-cloud-controller <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes-apps/network_plugin, tags: network <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes-apps/policy_controller, tags: policy-controller <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes-apps/ingress_controller, tags: ingress-controller <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes-apps/external_provisioner, tags: external-provisioner <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes-apps, tags: apps <span style="color:#666">}</span>
+
+<span style="color:#60a0b0;font-style:italic"># 这阶段是最后收尾阶段完善集群的dns，host文件，resolv文件里面的格式化对应项等, 至此kubernetes集群通过ansible kubespray安装完毕</span>
+- hosts: k8s_cluster
+  gather_facts: False
+  any_errors_fatal: <span style="color:#4070a0">&#34;{{ any_errors_fatal | default(true) }}&#34;</span>
+  environment: <span style="color:#4070a0">&#34;{{ proxy_disable_env }}&#34;</span>
+  roles:
+    - <span style="color:#666">{</span> role: kubespray-defaults <span style="color:#666">}</span>
+    - <span style="color:#666">{</span> role: kubernetes/preinstall, when: <span style="color:#4070a0">&#34;dns_mode != &#39;none&#39; and resolvconf_mode == &#39;host_resolvconf&#39;&#34;</span>, tags: resolvconf, dns_late: <span style="color:#007020">true</span> <span style="color:#666">}</span>
+</code></pre></div><h3 id="12-实际操作使用-ansible-playbook-部署单节点集群">1.2 实际操作使用 ansible-playbook 部署单节点集群</h3>
+<p>部署参考文档：https://kubespray.io/#/、https://kubespray.io/#/docs/downloads</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install python3-pip
+$ <span style="color:#007020">cd</span> kubespray
+$ sudo pip3 install -r requirements.txt
+<span style="color:#60a0b0;font-style:italic"># 看下面两个文件有没有要删除的东西</span>
+$ vim inventory/mycluster/group_vars/all/all.yml
+$ vim inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yml
+<span style="color:#60a0b0;font-style:italic"># download缓存相关配置可以查看链接：https://kubespray.io/#/docs/downloads</span>
+<span style="color:#60a0b0;font-style:italic"># 配置免密sudo，配置免密ssh节点</span>
+$ vim /etc/sudoers
+vagrant <span style="color:#bb60d5">ALL</span><span style="color:#666">=</span>NOPASSWD:ALL
+
+<span style="color:#60a0b0;font-style:italic"># 开始部署集群</span>
+$ ansible-playbook -i inventory/k8sdemo/inventory.ini  --become --become-user<span style="color:#666">=</span>root cluster.yml
+<span style="color:#60a0b0;font-style:italic"># 部署结果无报错</span>
+...
+PLAY RECAP *******************************************************************************************************************************************************
+localhost                  : <span style="color:#bb60d5">ok</span><span style="color:#666">=</span><span style="color:#40a070">4</span>    <span style="color:#bb60d5">changed</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">unreachable</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">failed</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">skipped</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">rescued</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">ignored</span><span style="color:#666">=</span><span style="color:#40a070">0</span>
+node1                      : <span style="color:#bb60d5">ok</span><span style="color:#666">=</span><span style="color:#40a070">650</span>  <span style="color:#bb60d5">changed</span><span style="color:#666">=</span><span style="color:#40a070">177</span>  <span style="color:#bb60d5">unreachable</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">failed</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">skipped</span><span style="color:#666">=</span><span style="color:#40a070">1031</span> <span style="color:#bb60d5">rescued</span><span style="color:#666">=</span><span style="color:#40a070">0</span>    <span style="color:#bb60d5">ignored</span><span style="color:#666">=</span><span style="color:#40a070">2</span>
+...
+<span style="color:#60a0b0;font-style:italic"># 查看集群状态</span>
+$ kubectl get nodes
+NAME    STATUS   ROLES                  AGE     VERSION
+node1   Ready    control-plane,master   3m49s   v1.22.2
+$ kubectl get cs
+Warning: v1 ComponentStatus is deprecated in v1.19+
+NAME                 STATUS    MESSAGE             ERROR
+scheduler            Healthy   ok
+controller-manager   Healthy   ok
+etcd-0               Healthy   <span style="color:#666">{</span><span style="color:#4070a0">&#34;health&#34;</span>:<span style="color:#4070a0">&#34;true&#34;</span><span style="color:#666">}</span>
+$ kubectl get pods -A
+NAMESPACE     NAME                              READY   STATUS    RESTARTS   AGE
+kube-system   cilium-dtgnn                      1/1     Running   <span style="color:#40a070">0</span>          3m16s
+kube-system   cilium-operator-66576fd87-bklpc   1/1     Running   <span style="color:#40a070">0</span>          3m15s
+kube-system   coredns-8474476ff8-85qkx          1/1     Running   <span style="color:#40a070">0</span>          3m9s
+kube-system   coredns-8474476ff8-xtmst          0/1     Pending   <span style="color:#40a070">0</span>          2m45s
+kube-system   dns-autoscaler-7df78bfcfb-gsqjb   1/1     Running   <span style="color:#40a070">0</span>          3m5s
+kube-system   kube-apiserver-node1              1/1     Running   <span style="color:#40a070">0</span>          4m
+kube-system   kube-controller-manager-node1     1/1     Running   <span style="color:#40a070">1</span>          4m
+kube-system   kube-proxy-h2lgj                  1/1     Running   <span style="color:#40a070">0</span>          3m16s
+kube-system   kube-scheduler-node1              1/1     Running   <span style="color:#40a070">1</span>          4m
+kube-system   nodelocaldns-xnvv7                1/1     Running   <span style="color:#40a070">0</span>          3m4s
+</code></pre></div><p>参考链接：<br>
+<a href="https://www.yxingxing.net/archives/ansible-20200214-var">ansible 变量详解</a><br>
+<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable">ansible 变量优先级官方原文</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/algorithm/4/">【算法系列】猫狗队列</a></li>
+        
+        <li><a href="/post/algorithm/3/">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a></li>
+        
+        <li><a href="/post/algorithm/2/">【算法系列】由两个栈组成的队列</a></li>
+        
+        <li><a href="/post/algorithm/1/">【算法系列】设计一个有getMin功能的栈</a></li>
+        
+        <li><a href="/post/retrywatcher/">client-go watch接口隔一段时间自动退出怎么办？</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/ansible'>ansible</a></li>
+                
+                <li><a href='/tags/linux'>linux</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "ZhangSIming-blyq/blogcommit"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+    
+    
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://zhangsiming-blyq.github.io/">百里英骐 By BaileysRock</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://zhangsiming-blyq.github.io/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zhangsiming-blyq.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列">【算法系列】猫狗队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解">python yield详解</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/monitor-control-plane/" title="prometheus 监测 kubernetes 控制平面">prometheus 监测 kubernetes 控制平面</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记">指数基金投资指南摘记</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (4)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/finance/">finance (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/BaileysRock/">BaileysRock</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/containerd/">containerd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/controller-manager/">controller-manager</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/etcd/">etcd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/finance/">finance</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/fund/">fund</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/golang/">golang</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/kubernetes/">kubernetes</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/linux/">linux</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/python/">python</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/scheduler/">scheduler</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zhangsiming-blyq.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
