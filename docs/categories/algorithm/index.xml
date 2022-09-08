@@ -34,7 +34,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/2/</guid>
       <description>题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
-解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据在压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</description>
+解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</description>
     </item>
     
     <item>
