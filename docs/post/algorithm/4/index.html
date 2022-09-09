@@ -139,7 +139,7 @@
     <li><a href="#题目要求">题目要求</a></li>
     <li><a href="#解题思路">解题思路</a></li>
     <li><a href="#golang实现">golang实现</a></li>
-    <li><a href="#运行效果">运行效果</a></li>
+    <li><a href="#测试用例">测试用例</a></li>
     <li><a href="#补充-使用golang链表实现queue">补充: 使用golang链表实现queue</a></li>
   </ul>
 </nav>
@@ -347,90 +347,142 @@
 <span style="color:#007020;font-weight:bold">func</span> (dcqueue <span style="color:#666">*</span>DogCatQueue) <span style="color:#06287e">isCatQueueEmpty</span>() <span style="color:#902000">bool</span> {
 	<span style="color:#007020;font-weight:bold">return</span> dcqueue.CatQueue.<span style="color:#06287e">Empty</span>()
 }
-</code></pre></div><h2 id="运行效果">运行效果</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
-	testqueue <span style="color:#666">:=</span> <span style="color:#06287e">NewDogCatQueue</span>()
-	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
-	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>()
-	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>()
-	testqueue.<span style="color:#06287e">pollDog</span>()
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>()
-	testqueue.<span style="color:#06287e">pollCat</span>()
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>()
-	testqueue.<span style="color:#06287e">pollDog</span>()
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>()
-	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
-	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
-	testqueue.<span style="color:#06287e">pollAll</span>()
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>()
-	testqueue.<span style="color:#06287e">pollAll</span>()
-	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
-	testqueue.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
-	testqueue.<span style="color:#06287e">pollAll</span>()
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has dog? &#34;</span>, !testqueue.<span style="color:#06287e">isDogQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has cat? &#34;</span>, !testqueue.<span style="color:#06287e">isCatQueueEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>(<span style="color:#4070a0">&#34;DogCatQueue has pet? &#34;</span>, !testqueue.<span style="color:#06287e">isEmpty</span>())
-	fmt.<span style="color:#06287e">Println</span>()
+</code></pre></div><h2 id="测试用例">测试用例</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
+
+<span style="color:#007020;font-weight:bold">import</span> (
+	<span style="color:#4070a0">&#34;testing&#34;</span>
+
+	<span style="color:#4070a0">&#34;github.com/stretchr/testify/assert&#34;</span>
+)
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">TestDogCatQueue</span>(t <span style="color:#666">*</span>testing.T) {
+	<span style="color:#60a0b0;font-style:italic">// define a getmin stack
+</span><span style="color:#60a0b0;font-style:italic"></span>	tests <span style="color:#666">:=</span> []<span style="color:#007020;font-weight:bold">struct</span> {
+		<span style="color:#60a0b0;font-style:italic">// 名字
+</span><span style="color:#60a0b0;font-style:italic"></span>		name <span style="color:#902000">string</span>
+
+		<span style="color:#60a0b0;font-style:italic">// 输入部分
+</span><span style="color:#60a0b0;font-style:italic"></span>		val <span style="color:#007020;font-weight:bold">func</span>(tq <span style="color:#666">*</span>DogCatQueue) []<span style="color:#902000">bool</span>
+
+		<span style="color:#60a0b0;font-style:italic">// 输出部分
+</span><span style="color:#60a0b0;font-style:italic"></span>		wantRes []<span style="color:#902000">bool</span>
+	}{
+		{
+			name: <span style="color:#4070a0">&#34;operate1&#34;</span>,
+			val:  operate1,
+			<span style="color:#60a0b0;font-style:italic">// transpose once, then return to the original order of last-in first-out
+</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []<span style="color:#902000">bool</span>{<span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">false</span>, <span style="color:#007020;font-weight:bold">false</span>},
+		},
+		{
+			name: <span style="color:#4070a0">&#34;operate2&#34;</span>,
+			val:  operate2,
+			<span style="color:#60a0b0;font-style:italic">// transpose once, then return to the original order of last-in first-out
+</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []<span style="color:#902000">bool</span>{<span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">false</span>, <span style="color:#007020;font-weight:bold">false</span>},
+		},
+		{
+			name: <span style="color:#4070a0">&#34;operate3&#34;</span>,
+			val:  operate3,
+			<span style="color:#60a0b0;font-style:italic">// transpose once, then return to the original order of last-in first-out
+</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []<span style="color:#902000">bool</span>{<span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">true</span>},
+		},
+		{
+			name: <span style="color:#4070a0">&#34;operate4&#34;</span>,
+			val:  operate4,
+			<span style="color:#60a0b0;font-style:italic">// transpose once, then return to the original order of last-in first-out
+</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []<span style="color:#902000">bool</span>{<span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">true</span>},
+		},
+		{
+			name: <span style="color:#4070a0">&#34;operate5&#34;</span>,
+			val:  operate5,
+			<span style="color:#60a0b0;font-style:italic">// transpose once, then return to the original order of last-in first-out
+</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []<span style="color:#902000">bool</span>{<span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">true</span>, <span style="color:#007020;font-weight:bold">true</span>},
+		},
+	}
+	<span style="color:#007020;font-weight:bold">for</span> _, tt <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> tests {
+		<span style="color:#60a0b0;font-style:italic">// new TwoStackQueue
+</span><span style="color:#60a0b0;font-style:italic"></span>		tq <span style="color:#666">:=</span> <span style="color:#06287e">NewDogCatQueue</span>()
+		<span style="color:#60a0b0;font-style:italic">// add test cases
+</span><span style="color:#60a0b0;font-style:italic"></span>		<span style="color:#06287e">adddogcat</span>(tq)
+		t.<span style="color:#06287e">Run</span>(tt.name, <span style="color:#007020;font-weight:bold">func</span>(t <span style="color:#666">*</span>testing.T) {
+			res <span style="color:#666">:=</span> tt.<span style="color:#06287e">val</span>(tq)
+			assert.<span style="color:#06287e">Equal</span>(t, tt.wantRes, res)
+		})
+	}
 }
-</code></pre></div><p>运行结果：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run *.go 
-new dog
-new dog
-DogCatQueue has dog?  <span style="color:#007020">true</span>
-DogCatQueue has cat?  <span style="color:#007020">false</span>
-DogCatQueue has pet?  <span style="color:#007020">true</span>
 
-new cat
-DogCatQueue has dog?  <span style="color:#007020">true</span>
-DogCatQueue has cat?  <span style="color:#007020">true</span>
-DogCatQueue has pet?  <span style="color:#007020">true</span>
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">adddogcat</span>(tq <span style="color:#666">*</span>DogCatQueue) {
+	tq.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
+	tq.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
+	tq.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
+	tq.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewCat</span>())
+	tq.<span style="color:#06287e">add</span>(<span style="color:#06287e">NewDog</span>())
+}
 
-delete latest dog
-DogCatQueue has dog?  <span style="color:#007020">true</span>
-DogCatQueue has cat?  <span style="color:#007020">true</span>
-DogCatQueue has pet?  <span style="color:#007020">true</span>
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">operate1</span>(tq <span style="color:#666">*</span>DogCatQueue) (queStatus []<span style="color:#902000">bool</span>) {
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	queStatus = []<span style="color:#902000">bool</span>{tq.<span style="color:#06287e">isCatQueueEmpty</span>(), tq.<span style="color:#06287e">isDogQueueEmpty</span>(), tq.<span style="color:#06287e">isEmpty</span>()}
+	<span style="color:#007020;font-weight:bold">return</span> queStatus
+}
 
-delete latest cat
-DogCatQueue has dog?  <span style="color:#007020">true</span>
-DogCatQueue has cat?  <span style="color:#007020">false</span>
-DogCatQueue has pet?  <span style="color:#007020">true</span>
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">operate2</span>(tq <span style="color:#666">*</span>DogCatQueue) (queStatus []<span style="color:#902000">bool</span>) {
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	queStatus = []<span style="color:#902000">bool</span>{tq.<span style="color:#06287e">isCatQueueEmpty</span>(), tq.<span style="color:#06287e">isDogQueueEmpty</span>(), tq.<span style="color:#06287e">isEmpty</span>()}
+	<span style="color:#007020;font-weight:bold">return</span> queStatus
+}
 
-delete latest dog
-DogCatQueue has dog?  <span style="color:#007020">false</span>
-DogCatQueue has cat?  <span style="color:#007020">false</span>
-DogCatQueue has pet?  <span style="color:#007020">false</span>
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">operate3</span>(tq <span style="color:#666">*</span>DogCatQueue) (queStatus []<span style="color:#902000">bool</span>) {
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollDog</span>()
+	queStatus = []<span style="color:#902000">bool</span>{tq.<span style="color:#06287e">isCatQueueEmpty</span>(), tq.<span style="color:#06287e">isDogQueueEmpty</span>(), tq.<span style="color:#06287e">isEmpty</span>()}
+	<span style="color:#007020;font-weight:bold">return</span> queStatus
+}
 
-new dog
-new cat
-DogCatQueue has dog?  <span style="color:#007020">false</span>
-DogCatQueue has cat?  <span style="color:#007020">true</span>
-DogCatQueue has pet?  <span style="color:#007020">true</span>
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">operate4</span>(tq <span style="color:#666">*</span>DogCatQueue) (queStatus []<span style="color:#902000">bool</span>) {
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollAll</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollAll</span>()
+	queStatus = []<span style="color:#902000">bool</span>{tq.<span style="color:#06287e">isCatQueueEmpty</span>(), tq.<span style="color:#06287e">isDogQueueEmpty</span>(), tq.<span style="color:#06287e">isEmpty</span>()}
+	<span style="color:#007020;font-weight:bold">return</span> queStatus
+}
 
-new cat
-new dog
-DogCatQueue has dog?  <span style="color:#007020">true</span>
-DogCatQueue has cat?  <span style="color:#007020">false</span>
-DogCatQueue has pet?  <span style="color:#007020">true</span>
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">operate5</span>(tq <span style="color:#666">*</span>DogCatQueue) (queStatus []<span style="color:#902000">bool</span>) {
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollCat</span>()
+	tq.<span style="color:#06287e">pollDog</span>()
+	tq.<span style="color:#06287e">pollDog</span>()
+	queStatus = []<span style="color:#902000">bool</span>{tq.<span style="color:#06287e">isCatQueueEmpty</span>(), tq.<span style="color:#06287e">isDogQueueEmpty</span>(), tq.<span style="color:#06287e">isEmpty</span>()}
+	<span style="color:#007020;font-weight:bold">return</span> queStatus
+}
+</code></pre></div><p>测试结果</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go <span style="color:#007020">test</span> -run ^TestDogCatQueue$ . -v                                                    
+<span style="color:#666">===</span> RUN   <span style="color:#bb60d5">TestDogCatQueue</span>
+<span style="color:#666">===</span> RUN   TestDogCatQueue/operate1
+<span style="color:#666">===</span> RUN   TestDogCatQueue/operate2
+<span style="color:#666">===</span> RUN   TestDogCatQueue/operate3
+<span style="color:#666">===</span> RUN   TestDogCatQueue/operate4
+<span style="color:#666">===</span> RUN   TestDogCatQueue/operate5
+--- PASS: TestDogCatQueue <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestDogCatQueue/operate1 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestDogCatQueue/operate2 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestDogCatQueue/operate3 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestDogCatQueue/operate4 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestDogCatQueue/operate5 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+PASS
+ok      dogcatqueue     0.008s
 </code></pre></div><blockquote>
 <p>篇幅不短，但是难度极低，注意题目要求不要修改原有数据结构，定义一个包括Time的新的结构体即可~</p>
 </blockquote>
@@ -589,6 +641,10 @@ DogCatQueue has pet?  <span style="color:#007020">true</span>
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
     </li>
     
@@ -624,10 +680,6 @@ DogCatQueue has pet?  <span style="color:#007020">true</span>
         <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记">指数基金投资指南摘记</a>
     </li>
     
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -641,6 +693,8 @@ DogCatQueue has pet?  <span style="color:#007020">true</span>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/apigateway/">apigateway (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
@@ -651,7 +705,7 @@ DogCatQueue has pet?  <span style="color:#007020">true</span>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
     
@@ -669,6 +723,8 @@ DogCatQueue has pet?  <span style="color:#007020">true</span>
     <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apigateway/">apigateway</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     

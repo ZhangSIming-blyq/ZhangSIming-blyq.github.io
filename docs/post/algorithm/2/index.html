@@ -139,7 +139,7 @@
     <li><a href="#题目要求">题目要求</a></li>
     <li><a href="#解题思路">解题思路</a></li>
     <li><a href="#golang实现">golang实现</a></li>
-    <li><a href="#运行效果">运行效果</a></li>
+    <li><a href="#测试用例">测试用例</a></li>
   </ul>
 </nav>
     </div>
@@ -198,7 +198,7 @@
 <h2 id="解题思路">解题思路</h2>
 <ol>
 <li>栈的特点是后进先出、队列的特点是先进先出</li>
-<li>一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据在压入弹出栈顺序就恢复回来了</li>
+<li>一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了</li>
 </ol>
 <p>
         <img class="mx-auto" alt="stack2" src="/stack2.png" />   
@@ -248,29 +248,101 @@
 	value <span style="color:#666">:=</span> tsq.stackPop.<span style="color:#06287e">Peek</span>()
 	<span style="color:#007020;font-weight:bold">return</span> value
 }
-</code></pre></div><h2 id="运行效果">运行效果</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
-	test <span style="color:#666">:=</span> <span style="color:#06287e">NewTwoStackQueue</span>()
-	test.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
-	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
-	test.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
-	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
-	test.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
-	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
-	test.<span style="color:#06287e">poll</span>()
-	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
-	test.<span style="color:#06287e">poll</span>()
-	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
-	test.<span style="color:#06287e">poll</span>()
-	fmt.<span style="color:#06287e">Println</span>(test.<span style="color:#06287e">peek</span>())
+</code></pre></div><h2 id="测试用例">测试用例</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
+
+<span style="color:#007020;font-weight:bold">import</span> (
+	<span style="color:#4070a0">&#34;testing&#34;</span>
+
+	<span style="color:#4070a0">&#34;github.com/stretchr/testify/assert&#34;</span>
+)
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">TestTwoStackQueue</span>(t <span style="color:#666">*</span>testing.T) {
+	<span style="color:#60a0b0;font-style:italic">// define a getmin stack
+</span><span style="color:#60a0b0;font-style:italic"></span>	tests <span style="color:#666">:=</span> []<span style="color:#007020;font-weight:bold">struct</span> {
+		<span style="color:#60a0b0;font-style:italic">// 名字
+</span><span style="color:#60a0b0;font-style:italic"></span>		name <span style="color:#902000">string</span>
+
+		<span style="color:#60a0b0;font-style:italic">// 输入部分
+</span><span style="color:#60a0b0;font-style:italic"></span>		val <span style="color:#007020;font-weight:bold">func</span>(tsq <span style="color:#666">*</span>TwoStackQueue)
+
+		<span style="color:#60a0b0;font-style:italic">// 输出部分
+</span><span style="color:#60a0b0;font-style:italic"></span>		wantRes <span style="color:#007020;font-weight:bold">interface</span>{}
+	}{
+		{
+			name:    <span style="color:#4070a0">&#34;push&#34;</span>,
+			val:     push,
+			wantRes: <span style="color:#40a070">1</span>,
+		},
+		{
+			name:    <span style="color:#4070a0">&#34;push and poll1&#34;</span>,
+			val:     pushpoll1,
+			wantRes: <span style="color:#40a070">3</span>,
+		},
+		{
+			name:    <span style="color:#4070a0">&#34;push and poll2&#34;</span>,
+			val:     pushpoll2,
+			wantRes: <span style="color:#40a070">2</span>,
+		},
+		{
+			name:    <span style="color:#4070a0">&#34;push and poll3&#34;</span>,
+			val:     pushpoll3,
+			wantRes: <span style="color:#007020;font-weight:bold">nil</span>,
+		},
+	}
+	<span style="color:#007020;font-weight:bold">for</span> _, tt <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> tests {
+		<span style="color:#60a0b0;font-style:italic">// new TwoStackQueue
+</span><span style="color:#60a0b0;font-style:italic"></span>		tsq <span style="color:#666">:=</span> <span style="color:#06287e">NewTwoStackQueue</span>()
+		t.<span style="color:#06287e">Run</span>(tt.name, <span style="color:#007020;font-weight:bold">func</span>(t <span style="color:#666">*</span>testing.T) {
+			tt.<span style="color:#06287e">val</span>(tsq)
+			res <span style="color:#666">:=</span> tsq.<span style="color:#06287e">peek</span>()
+			assert.<span style="color:#06287e">Equal</span>(t, tt.wantRes, res)
+		})
+	}
 }
-</code></pre></div><p>运行结果：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#40a070">1</span>
-<span style="color:#40a070">1</span>
-<span style="color:#40a070">1</span>
-<span style="color:#40a070">2</span>
-<span style="color:#40a070">3</span>
-&lt;nil&gt;
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">push</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">pushpoll1</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
+	tsq.<span style="color:#06287e">poll</span>()
+	tsq.<span style="color:#06287e">poll</span>()
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">pushpoll2</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
+	tsq.<span style="color:#06287e">poll</span>()
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">pushpoll3</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
+	tsq.<span style="color:#06287e">poll</span>()
+	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
+	tsq.<span style="color:#06287e">poll</span>()
+	tsq.<span style="color:#06287e">poll</span>()
+}
+</code></pre></div><p>测试结果：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go <span style="color:#007020">test</span> -run ^TestTwoStackQueue$ . -v
+<span style="color:#666">===</span> RUN   <span style="color:#bb60d5">TestTwoStackQueue</span>
+<span style="color:#666">===</span> RUN   TestTwoStackQueue/push
+<span style="color:#666">===</span> RUN   TestTwoStackQueue/push_and_poll1
+<span style="color:#666">===</span> RUN   TestTwoStackQueue/push_and_poll2
+<span style="color:#666">===</span> RUN   TestTwoStackQueue/push_and_poll3
+--- PASS: TestTwoStackQueue <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestTwoStackQueue/push <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestTwoStackQueue/push_and_poll1 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestTwoStackQueue/push_and_poll2 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestTwoStackQueue/push_and_poll3 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+PASS
 </code></pre></div><blockquote>
 <p>符合队列的特性，在add(1)、add(2)、add(3)的时候peek总是看到1，后面只有移除了1才能看到2，按照顺序直至队列取空。</p>
 </blockquote>
@@ -384,6 +456,10 @@
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
     </li>
     
@@ -419,10 +495,6 @@
         <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记">指数基金投资指南摘记</a>
     </li>
     
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -436,6 +508,8 @@
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/apigateway/">apigateway (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
@@ -446,7 +520,7 @@
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
     
@@ -464,6 +538,8 @@
     <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apigateway/">apigateway</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     

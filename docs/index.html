@@ -71,6 +71,34 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年7月18日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            
+            <span class="meta-category"><a href='/categories/apigateway'>apigateway</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
+ 一、kong 1.1 安装 # 安装kong $ helm repo add kong https://charts.……
+        </div>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/apigateway/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
             </h1>
         </header>
@@ -167,7 +195,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
         
         <div class="post-content">
             题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
-解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据在压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。……
+解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。……
         </div>
         <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/2/">阅读全文</a></p>
     </article>
@@ -308,36 +336,28 @@ pod, err := mycluster.……
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年4月10日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='/categories/containerd'>containerd</a></span>
-            
-            <span class="meta-category"><a href='/categories/docker'>docker</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
- 一、安装使用 ctr 管理 containerd # Install Dependent Libraries $ sudo apt-get update $ sudo apt-get install libseccomp2 # 下载 # 目前是下载的1.……
-        </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/containerd/">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
+
+<ol class="page-navigator">
+    
+
+    
+    <li  class="current">
+        <a href="https://zhangsiming-blyq.github.io/">1</a>
+    </li>
+    
+    <li >
+        <a href="https://zhangsiming-blyq.github.io/page/2/">2</a>
+    </li>
+    
+
+    
+    <li class="next">
+        <a href="https://zhangsiming-blyq.github.io/page/2/">下一页</a>
+    </li>
+    
+</ol>
 
 
 
@@ -386,6 +406,10 @@ pod, err := mycluster.……
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
     </li>
     
@@ -421,10 +445,6 @@ pod, err := mycluster.……
         <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记">指数基金投资指南摘记</a>
     </li>
     
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -438,6 +458,8 @@ pod, err := mycluster.……
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/apigateway/">apigateway (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
@@ -448,7 +470,7 @@ pod, err := mycluster.……
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
     
@@ -466,6 +488,8 @@ pod, err := mycluster.……
     <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apigateway/">apigateway</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     

@@ -6,22 +6,31 @@
     <description>Recent content in Categories on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>ansible</title>
-      <link>https://zhangsiming-blyq.github.io/categories/ansible/</link>
-      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
+      <title>apigateway</title>
+      <link>https://zhangsiming-blyq.github.io/categories/apigateway/</link>
+      <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/categories/ansible/</guid>
+      <guid>https://zhangsiming-blyq.github.io/categories/apigateway/</guid>
       <description></description>
     </item>
     
     <item>
       <title>linux</title>
       <link>https://zhangsiming-blyq.github.io/categories/linux/</link>
-      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ansible</title>
+      <link>https://zhangsiming-blyq.github.io/categories/ansible/</link>
+      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/categories/ansible/</guid>
       <description></description>
     </item>
     

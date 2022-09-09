@@ -143,7 +143,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
         
         <div class="post-content">
             题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
-解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据在压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。……
+解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。……
             <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/2/">阅读全文</a></p>
         </div>
     </article>
@@ -223,6 +223,10 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
     </li>
     
@@ -258,10 +262,6 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
         <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记">指数基金投资指南摘记</a>
     </li>
     
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd">浅谈 containerd</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -275,6 +275,8 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/apigateway/">apigateway (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
@@ -285,7 +287,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
     
@@ -303,6 +305,8 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
     <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apigateway/">apigateway</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     

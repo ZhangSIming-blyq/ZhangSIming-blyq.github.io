@@ -6,7 +6,17 @@
     <description>Recent content in Posts on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>API网关对比</title>
+      <link>https://zhangsiming-blyq.github.io/post/apigateway/</link>
+      <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/apigateway/</guid>
+      <description>kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
+ 一、kong 1.1 安装 # 安装kong $ helm repo add kong https://charts.</description>
+    </item>
+    
     <item>
       <title>ansible-playbook 详解</title>
       <link>https://zhangsiming-blyq.github.io/post/ansible-playbook/</link>
@@ -44,7 +54,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/2/</guid>
       <description>题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
-解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据在压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</description>
+解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</description>
     </item>
     
     <item>

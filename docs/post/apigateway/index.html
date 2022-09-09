@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>API网关对比 | 百里英骐</title>
+    <meta property="og:title" content="API网关对比 - 百里英骐">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-07-18T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-07-18T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
+    <meta name="description" content="API网关对比">
+        <meta name="author" content="BaileysRock">
+        
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/apigateway/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zhangsiming-blyq.github.io/">
+                        百里英骐
+                    </a>
+                
+                <p class="description">专注于云原生、kubernetes、golang、python、linux、sre与自动化运维、软件架构等</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://zhangsiming-blyq.github.io/">首页</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/about/" title="关于">关于</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/is404/" title="点我展示404">点我展示404</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一kong">一、kong</a>
+      <ul>
+        <li><a href="#11-安装">1.1 安装</a></li>
+        <li><a href="#12-配置通过kong访问服务">1.2 配置通过kong访问服务</a></li>
+        <li><a href="#13-consumers-and-plugin">1.3 consumers and plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#二apisix">二、apisix</a>
+      <ul>
+        <li><a href="#21-安装">2.1 安装</a></li>
+        <li><a href="#22-配置通过apisix访问服务">2.2 配置通过apisix访问服务</a></li>
+        <li><a href="#13-consumers-and-plugin-1">1.3 consumers and plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#三kong-对比-apisix">三、kong 对比 apisix</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">API网关对比</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年7月18日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            
+            <span class="meta-category"><a href='/categories/apigateway'>apigateway</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <blockquote>
+<p>kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。</p>
+</blockquote>
+<h2 id="一kong">一、kong</h2>
+<h3 id="11-安装">1.1 安装</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># 安装kong</span>
+$ helm repo add kong https://charts.konghq.com
+$ helm repo update
+$ helm fetch kong/kong
+$ tar xf kong-2.5.0.tgz
+$ <span style="color:#007020">cd</span> kong
+$ ls
+CHANGELOG.md  Chart.yaml  FAQs.md  README.md  UPGRADE.md  charts  ci  crds  example-values  requirements.lock  requirements.yaml  templates  values.yaml
+...需要配置
+1. postgresql作为存储
+2. 允许plain text调用admin API
+
+<span style="color:#60a0b0;font-style:italic"># 安装konga</span>
+$ gc https://github.com/pantsel/konga.git
+$ ls konga
+Chart.yaml  templates  values.yaml
+...需要配置
+1. 获取postgresql的secret写入连接信息
+
+<span style="color:#60a0b0;font-style:italic"># 部署</span>
+$ helm install kong .
+$ helm install konga .
+$ kp
+NAME                         READY   STATUS    RESTARTS   AGE
+kong-kong-85d4dfd88b-hjkwt   2/2     Running   <span style="color:#40a070">2</span>          111s
+kong-postgresql-0            1/1     Running   <span style="color:#40a070">0</span>          15m
+konga-5b8c899c9-9zbd6        1/1     Running   <span style="color:#40a070">0</span>          14m
+vagrant@node1:~/kong/kong$ ks
+NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span style="color:#666">(</span>S<span style="color:#666">)</span>          AGE
+kong-kong-admin            NodePort    172.30.46.68     &lt;none&gt;        8001:31055/TCP   15m
+kong-postgresql            ClusterIP   172.30.194.189   &lt;none&gt;        5432/TCP         15m
+kong-postgresql-headless   ClusterIP   None             &lt;none&gt;        5432/TCP         15m
+konga                      NodePort    172.30.111.78    &lt;none&gt;        80:32001/TCP     14m
+</code></pre></div><p>访问konga UI：localhost:32001</p>
+<p>
+        <img class="mx-auto" alt="image-20211025125252521" src="/apigateway/image-20211025125252521.png" />   
+    </p>
+<p>配置kong admin连接地址：http://kong-kong-admin.kong.svc.cluster.local:8001/</p>
+<h3 id="12-配置通过kong访问服务">1.2 配置通过kong访问服务</h3>
+<p>配置service；service在kong中表示实际要访问的服务，这里配置协议、域名、端口、路径、重试等</p>
+<p>
+        <img class="mx-auto" alt="image-20211029110527785" src="/apigateway/image-20211029110527785.png" />   
+    </p>
+<p>route必须在service创建，这里创建一个多path路由，并指定规定代理的Host</p>
+<p>
+        <img class="mx-auto" alt="image-20211029110544449" src="/apigateway/image-20211029110544449.png" />   
+    </p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># 测试访问</span>
+$ curl -XGET http://172.16.166.149:8000/api/test/ -H <span style="color:#4070a0">&#34;Host: www.kongtest.com&#34;</span> -H <span style="color:#4070a0">&#34;name: siming&#34;</span> -I
+HTTP/1.1 <span style="color:#40a070">200</span> OK
+Content-Type: text/html; <span style="color:#bb60d5">charset</span><span style="color:#666">=</span>UTF-8
+Content-Length: <span style="color:#40a070">2381</span>
+Connection: keep-alive
+Accept-Ranges: bytes
+Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+Date: Fri, <span style="color:#40a070">29</span> Oct <span style="color:#40a070">2021</span> 03:05:59 GMT
+Etag: <span style="color:#4070a0">&#34;588604c8-94d&#34;</span>
+Last-Modified: Mon, <span style="color:#40a070">23</span> Jan <span style="color:#40a070">2017</span> 13:27:36 GMT
+Pragma: no-cache
+Server: bfe/1.0.8.18
+Set-Cookie: <span style="color:#bb60d5">BDORZ</span><span style="color:#666">=</span>27315; max-age<span style="color:#666">=</span>86400; <span style="color:#bb60d5">domain</span><span style="color:#666">=</span>.baidu.com; <span style="color:#bb60d5">path</span><span style="color:#666">=</span>/
+X-Kong-Upstream-Latency: <span style="color:#40a070">31</span>
+X-Kong-Proxy-Latency: <span style="color:#40a070">109</span>
+Via: kong/2.6.0
+</code></pre></div><h3 id="13-consumers-and-plugin">1.3 consumers and plugin</h3>
+<p>consumers抽象表示一组相同的请求，plugin可以实现认证、限流等多种控制功能，这里展示一个jwt认证插件</p>
+<ol>
+<li>在route中的plugin里面enable jwt认证，配置获取jwt的token方式为从uri param &ldquo;jwt&quot;中获取，并且jwt的校验key为client_id</li>
+</ol>
+<p>
+        <img class="mx-auto" alt="image-20211029144825581" src="/apigateway/image-20211029144825581.png" />   
+    </p>
+<ol start="2">
+<li>jwt可以再jwt官网(<a href="https://jwt.io/">https://jwt.io/</a>)生成，填写对应的加密方式和PAYLOAD(之前route里面约定的key)</li>
+</ol>
+<p>
+        <img class="mx-auto" alt="image-20211029144905571" src="/apigateway/image-20211029144905571.png" />   
+    </p>
+<ol start="3">
+<li>然后把上面的信息填入consumers的jwt plugin中(key的名字，加密算法，公钥)并保存</li>
+</ol>
+<p>
+        <img class="mx-auto" alt="image-20211029144948828" src="/apigateway/image-20211029144948828.png" />   
+    </p>
+<ol start="4">
+<li>测试访问</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -XGET http://172.16.166.149:8000/api/test/?username<span style="color:#666">=</span>zhangsiming -H <span style="color:#4070a0">&#34;Host: www.kongtest.com&#34;</span> -H <span style="color:#4070a0">&#34;name: siming&#34;</span>
+<span style="color:#666">{</span><span style="color:#4070a0">&#34;message&#34;</span>:<span style="color:#4070a0">&#34;Unauthorized&#34;</span><span style="color:#666">}</span>
+
+$ curl -XGET http://172.16.166.149:8000/api/test/?jwt<span style="color:#666">=</span>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJzaW1pbmcifQ.OciIJI2HRNa6CteoCn3D87q7pjJZ3u7vrXp0TaKWTuCgwyUJfCoC2c1RSKTz0Eg2GjOrP-u74hVMhBPZzCK1T9ChEOlFqmmS-CnKmh_jlC8RPeGJ2AhJDk7yOos176xgu11jt14nFVFAKzaTaKI4YkmXJ7eTx7TB3WYG0HpNDAgIl6q3UluHERMO-5DT4n3-ev5xHCe-H6InHmGzKkR2t02_lUbbR7EDz2M_YDWJu8enXgBeyHKIoE7ewE0rO66yIm-3UHqHfUJd4BQ5ii73xd8IuhcAgFgTuZ6ffXotxAHuBdoPCEN-qRxcI_dhEXxmiKCNg1QPX1FBpRcbG9uOaw -H <span style="color:#4070a0">&#34;Host: www.kongtest.com&#34;</span> -H <span style="color:#4070a0">&#34;name: siming&#34;</span> -I
+HTTP/1.1 <span style="color:#40a070">200</span> OK
+Content-Type: text/html; <span style="color:#bb60d5">charset</span><span style="color:#666">=</span>UTF-8
+Content-Length: <span style="color:#40a070">2381</span>
+Connection: keep-alive
+Accept-Ranges: bytes
+Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+Date: Fri, <span style="color:#40a070">29</span> Oct <span style="color:#40a070">2021</span> 06:51:27 GMT
+Etag: <span style="color:#4070a0">&#34;588604c8-94d&#34;</span>
+Last-Modified: Mon, <span style="color:#40a070">23</span> Jan <span style="color:#40a070">2017</span> 13:27:36 GMT
+Pragma: no-cache
+Server: bfe/1.0.8.18
+Set-Cookie: <span style="color:#bb60d5">BDORZ</span><span style="color:#666">=</span>27315; max-age<span style="color:#666">=</span>86400; <span style="color:#bb60d5">domain</span><span style="color:#666">=</span>.baidu.com; <span style="color:#bb60d5">path</span><span style="color:#666">=</span>/
+X-Kong-Upstream-Latency: <span style="color:#40a070">39</span>
+X-Kong-Proxy-Latency: <span style="color:#40a070">1</span>
+Via: kong/2.6.0
+</code></pre></div><h2 id="二apisix">二、apisix</h2>
+<h3 id="21-安装">2.1 安装</h3>
+<p>区别于kong、apisix官方自带web UI</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ helm repo add apisix https://charts.apiseven.com
+$ helm repo update
+$ helm fetch apisix/apisix
+$ helm fetch apisix/apisix-dashboard
+
+$ kp
+NAME                                READY   STATUS    RESTARTS   AGE
+apisix-5d5665c8f-sbjhr              1/1     Running   <span style="color:#40a070">0</span>          17m
+apisix-dashboard-59fb575657-zt26r   1/1     Running   <span style="color:#40a070">0</span>          6m
+apisix-etcd-0                       0/1     Running   <span style="color:#40a070">0</span>          13s
+apisix-etcd-1                       1/1     Running   <span style="color:#40a070">0</span>          93s
+apisix-etcd-2                       1/1     Running   <span style="color:#40a070">0</span>          2m55s
+</code></pre></div><p>部署好了访问dashboard，默认账号密码是admin/admin</p>
+<p>
+        <img class="mx-auto" alt="image-20211029155003886" src="/apigateway/image-20211029155003886.png" />   
+    </p>
+<h3 id="22-配置通过apisix访问服务">2.2 配置通过apisix访问服务</h3>
+<p>这里与kong的概念稍有不同：</p>
+<ol>
+<li>upstream：类似kong的sevice，表示由apisix代为调用的上游服务，支持配置负载均衡权重</li>
+<li>route：和kong概念相同，可以配置访问apisix的具体路径，方式等</li>
+<li>service：route的配置模板，在service中配置了可以直接在route中复用(不用也行)</li>
+</ol>
+<p>这里配置一个service，配置要以&quot;www.testapisix.com&quot;域名访问apisix才认为路由匹配，且上游服务为test</p>
+<p>
+        <img class="mx-auto" alt="image-20211101160336015" src="/apigateway/image-20211101160336015.png" />   
+    </p>
+<p>
+        <img class="mx-auto" alt="image-20211101160429558" src="/apigateway/image-20211101160429558.png" />   
+    </p>
+<p>这里配置上游服务为访问www.baidu.com，负载均衡机制为rr</p>
+<p>
+        <img class="mx-auto" alt="image-20211101160539082" src="/apigateway/image-20211101160539082.png" />   
+    </p>
+<p>
+        <img class="mx-auto" alt="image-20211101160600539" src="/apigateway/image-20211101160600539.png" />   
+    </p>
+<p>这里配置route：</p>
+<ol>
+<li>直接复用service配置，所以host部分不需要配置Host；</li>
+<li>配置请求apisix的path，支持通配符</li>
+<li>URI Override类似kong的strip host，代理的时候变更uri部分</li>
+<li>最后还可以附加自定义的Header要求</li>
+</ol>
+<p>
+        <img class="mx-auto" alt="image-20211101160618974" src="/apigateway/image-20211101160618974.png" />   
+    </p>
+<p>
+        <img class="mx-auto" alt="image-20211101160654663" src="/apigateway/image-20211101160654663.png" />   
+    </p>
+<p>
+        <img class="mx-auto" alt="image-20211101160750405" src="/apigateway/image-20211101160750405.png" />   
+    </p>
+<p>测试访问</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -XGET http://172.16.166.158:9080/api/test/ -H <span style="color:#4070a0">&#34;Host: www.testapisix.com&#34;</span> -H <span style="color:#4070a0">&#34;test: name&#34;</span> -I
+HTTP/1.1 <span style="color:#40a070">200</span> OK
+Content-Type: text/html; <span style="color:#bb60d5">charset</span><span style="color:#666">=</span>utf-8
+Content-Length: <span style="color:#40a070">2381</span>
+Connection: keep-alive
+Accept-Ranges: bytes
+Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+Date: Mon, <span style="color:#40a070">01</span> Nov <span style="color:#40a070">2021</span> 08:10:41 GMT
+Etag: <span style="color:#4070a0">&#34;588604c8-94d&#34;</span>
+Last-Modified: Mon, <span style="color:#40a070">23</span> Jan <span style="color:#40a070">2017</span> 13:27:36 GMT
+Pragma: no-cache
+Set-Cookie: <span style="color:#bb60d5">BDORZ</span><span style="color:#666">=</span>27315; max-age<span style="color:#666">=</span>86400; <span style="color:#bb60d5">domain</span><span style="color:#666">=</span>.baidu.com; <span style="color:#bb60d5">path</span><span style="color:#666">=</span>/
+Server: APISIX/2.10.0
+</code></pre></div><h3 id="13-consumers-and-plugin-1">1.3 consumers and plugin</h3>
+<p>apisix支持自己生成jwt token，这里演示jwt token认证插件<br>
+consumer中添加plugin配置，编辑json协商&quot;key&rdquo;: &ldquo;唯一的值&rdquo;，然后公钥私钥，加密方式，之后保存</p>
+<p>
+        <img class="mx-auto" alt="image-20211101160814217" src="/apigateway/image-20211101160814217.png" />   
+    </p>
+<p>
+        <img class="mx-auto" alt="image-20211101160923625" src="/apigateway/image-20211101160923625.png" />   
+    </p>
+<p>在service(或者route)开启jwt plugin</p>
+<p>
+        <img class="mx-auto" alt="image-20211101161000725" src="/apigateway/image-20211101161000725.png" />   
+    </p>
+<p>测试访问</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -XGET http://172.16.166.158:9080/api/test/more/ -H <span style="color:#4070a0">&#34;Host: www.testapisix.com&#34;</span> -H <span style="color:#4070a0">&#34;test: name&#34;</span> -I
+HTTP/1.1 <span style="color:#40a070">401</span> Unauthorized
+Date: Mon, <span style="color:#40a070">01</span> Nov <span style="color:#40a070">2021</span> 08:10:17 GMT
+Content-Type: text/plain; <span style="color:#bb60d5">charset</span><span style="color:#666">=</span>utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Server: APISIX/2.10.0
+
+<span style="color:#60a0b0;font-style:italic"># 获取apisix生成的jwt token</span>
+$ curl -XGET http://172.16.166.158:9080/apisix/plugin/jwt/sign?key<span style="color:#666">=</span>zhangsiming
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1YyI6WyItLS0tLUJFR0lOIFBVQkxJQyBLRVktLS0tLVxuTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF1MVNVMUxmVkxQSENvek14SDJNb1xuNGxnT0VlUHpObTB0UmdlTGV6VjZmZkF0MGd1blZUTHc3b25MUm5ycTBcL0l6Vzd5V1I3UWtybUJMN2pUS0VuNXVcbitxS2hid0tmQnN0SXMrYk1ZMlprcDE4Z25UeEtMeG9TMnRGY3pHa1BMUGdpenNrdWVtTWdoUm5pV2FvTGN5ZWhcbmtkM3FxR0VsdldcL1ZETDVBYVdUZzBuTFZralJvOXorNDBSUXp1VmFFOEFrQUZteFp6b3czeCtWSllLZGp5a2tKXG4waVQ5d0NTMERSVFh1MjY5VjI2NFZmXC8zanZyZWRaaUtSa2d3bEw5eE5Bd3hYRmcweFwvWEZ3MDA1VVdWUklrZGdcbmNLV1RqcEJQMmRQd1ZaNFdXQys5YUdWZCtHeW4xbzBDTGVsZjRyRWpHb1hiQUFFZ0FxZUdVeHJjSWxialhmYmNcbm13SURBUUFCXG4tLS0tLUVORCBQVUJMSUMgS0VZLS0tLS1cbiJdfQ.eyJleHAiOjE2MzU4NDA2MjksImtleSI6InpoYW5nc2ltaW5nIn0.UErqUg229bwy5ZgYwEibtawT1CpwVP_UKIm-C7-XtMYUjhM6-lE695zFP31s7hp3SsS2PvoZtAEhCgd_fmZXx92EGGL87XYI0xbJ5uWweKettmxkc0cLFWwEL6MNOmqyoaW9gNDtd28K_M1dpzAwZdzz2GNr2e_G1UTrxlQUNorJEg9THIrkLjvrs7NAuvRuSnGd93G4tcXy1G6m0pCAg-Z4oehJS4vMpicmwedQbob0GytBM9Ef_r2gSj8IVVW8MMLWkA-TkPWuMx2nWeK1DdB4-l5I2f4Iu1It17rZqn6VX2ARnN_AFyG5ahT22pIGtdw71Od320hUUDH3I1rmtQ
+
+<span style="color:#60a0b0;font-style:italic"># 通过jwt token访问</span>
+$ curl -XGET http://172.16.166.158:9080/api/test/?jwt<span style="color:#666">=</span>eyJ0eXAiOiJKV1QiLCJ4NWMiOlsiLS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS1cbk1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBdTFTVTFMZlZMUEhDb3pNeEgyTW9cbjRsZ09FZVB6Tm0wdFJnZUxlelY2ZmZBdDBndW5WVEx3N29uTFJucnEwXC9Jelc3eVdSN1Frcm1CTDdqVEtFbjV1XG4rcUtoYndLZkJzdElzK2JNWTJaa3AxOGduVHhLTHhvUzJ0RmN6R2tQTFBnaXpza3VlbU1naFJuaVdhb0xjeWVoXG5rZDNxcUdFbHZXXC9WREw1QWFXVGcwbkxWa2pSbzl6KzQwUlF6dVZhRThBa0FGbXhaem93M3grVkpZS2RqeWtrSlxuMGlUOXdDUzBEUlRYdTI2OVYyNjRWZlwvM2p2cmVkWmlLUmtnd2xMOXhOQXd4WEZnMHhcL1hGdzAwNVVXVlJJa2RnXG5jS1dUanBCUDJkUHdWWjRXV0MrOWFHVmQrR3luMW8wQ0xlbGY0ckVqR29YYkFBRWdBcWVHVXhyY0lsYmpYZmJjXG5td0lEQVFBQlxuLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tXG4iXSwiYWxnIjoiUlMyNTYifQ.eyJleHAiOjE2MzU4MzkwNjcsImtleSI6InpoYW5nc2ltaW5nIn0.UR6UnkdAuELK_YP3Kk6V4D4CxoPzTSw5lAx-64As_p68tyUQsp7cuR0MvCLEZ1LtSpF5VlJ1-4fUreAbNAzJQs_FBgDvkUcm4SkdqO_Ss4b0xDiXbF771oJeVybKQA-3fDd_4ieEjCyfsFkg1urgzc_tj96NBiW0YOV98RNJzf9adYZI2MLU_QbEqSEH-f9m0ArTlFLEBnVDOQls3JSc6dWobVbkZZ1kE12YeEq0zCdjEFoUEqy3f6rojobgBFmzvG7xQqn4Jd0o3d5iXBcGbMNn19X_Jo5z47zPI8tCN9ZfHWPtc8ts3HYx_2DmBPZAlEeY3Gs2izPdCHt38evEoA -H <span style="color:#4070a0">&#34;Host: www.testapisix.com&#34;</span> -H <span style="color:#4070a0">&#34;test: name&#34;</span> -I
+HTTP/1.1 <span style="color:#40a070">200</span> OK
+Content-Type: text/html; <span style="color:#bb60d5">charset</span><span style="color:#666">=</span>utf-8
+Content-Length: <span style="color:#40a070">2381</span>
+Connection: keep-alive
+Accept-Ranges: bytes
+Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform
+Date: Mon, <span style="color:#40a070">01</span> Nov <span style="color:#40a070">2021</span> 08:10:41 GMT
+Etag: <span style="color:#4070a0">&#34;588604c8-94d&#34;</span>
+Last-Modified: Mon, <span style="color:#40a070">23</span> Jan <span style="color:#40a070">2017</span> 13:27:36 GMT
+Pragma: no-cache
+Set-Cookie: <span style="color:#bb60d5">BDORZ</span><span style="color:#666">=</span>27315; max-age<span style="color:#666">=</span>86400; <span style="color:#bb60d5">domain</span><span style="color:#666">=</span>.baidu.com; <span style="color:#bb60d5">path</span><span style="color:#666">=</span>/
+Server: APISIX/2.10.0
+</code></pre></div><p><strong>注意</strong>，apisix支持的两种jwt访问方式：</p>
+<ol>
+<li>uri param：?jwt=xxxxx</li>
+<li>Header: -H &ldquo;Authorization: xxxx&rdquo;</li>
+</ol>
+<h2 id="三kong-对比-apisix">三、kong 对比 apisix</h2>
+<ol>
+<li>apisix配置更新生效时间0.2毫秒，事件通知；kong需要定期轮询5s左右</li>
+<li>单核QPS(开启限流和prometheus插件)，apisix18000，kong1700</li>
+<li>并且支持用户自定义负载均衡算法，自带维护dashboard，支持指定时间窗口的限速等</li>
+</ol>
+<p><strong>参考链接</strong>：</p>
+<p><a href="https://github.com/apache/apisix">GitHub - apache/apisix: The Cloud-Native API Gateway</a> <br>
+<a href="https://www.bookstack.cn/read/apache-apisix-1.4-zh/3c2c20b1d2e1d791.md">插件 - 插件热加载 - 《Apache APISIX v1.4 使用教程》 - 书栈网 · BookStack</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/ansible-playbook/">ansible-playbook 详解</a></li>
+        
+        <li><a href="/post/algorithm/4/">【算法系列】猫狗队列</a></li>
+        
+        <li><a href="/post/algorithm/3/">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a></li>
+        
+        <li><a href="/post/algorithm/2/">【算法系列】由两个栈组成的队列</a></li>
+        
+        <li><a href="/post/algorithm/1/">【算法系列】设计一个有getMin功能的栈</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/linux'>linux</a></li>
+                
+                <li><a href='/tags/apigateway'>apigateway</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "ZhangSIming-blyq/blogcommit"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+    
+    
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://zhangsiming-blyq.github.io/">百里英骐 By BaileysRock</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://zhangsiming-blyq.github.io/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zhangsiming-blyq.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列">【算法系列】猫狗队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解">python yield详解</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/monitor-control-plane/" title="prometheus 监测 kubernetes 控制平面">prometheus 监测 kubernetes 控制平面</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记">指数基金投资指南摘记</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (4)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/apigateway/">apigateway (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/finance/">finance (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/BaileysRock/">BaileysRock</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apigateway/">apigateway</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/containerd/">containerd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/controller-manager/">controller-manager</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/etcd/">etcd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/finance/">finance</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/fund/">fund</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/golang/">golang</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/kubernetes/">kubernetes</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/linux/">linux</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/python/">python</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/scheduler/">scheduler</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zhangsiming-blyq.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
