@@ -6,7 +6,17 @@
     <description>Recent content in algorithm on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【算法系列】用一个栈实现另一个栈的排序</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/5/</link>
+      <pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/5/</guid>
+      <description>题目要求 一个栈中元素的类型为整型，现在想将该栈从顶到底按从小到大的顺序排序，只允许申请一个栈。除此之外，可以申请新的变量，但不能申请额外的数据结构。如何完成排序？
+解题思路  申请一个新的help栈，不断从原有栈中获取数据, 去跟新的help栈的栈顶数据相比; 如果符合排序要求，就push到help栈中 如果不符合排序要求，就从help栈中pop出栈顶数据，push到原栈中，直至符合排序要求 最终原栈被清空，help栈是全部排好序的栈，重新一股脑写回来即完成栈排序  golang实现 package main // SortStark stark top --&amp;gt; stark bottom(from small to big) func SortStark(stk *Stack) { helpStack := NewStack() // 1.</description>
+    </item>
+    
     <item>
       <title>【算法系列】猫狗队列</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/4/</link>

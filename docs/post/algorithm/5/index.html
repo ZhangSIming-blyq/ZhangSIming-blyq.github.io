@@ -7,20 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
 
-    <title>【算法系列】如何仅用递归函数和栈操作逆序一个栈 | 百里英骐</title>
-    <meta property="og:title" content="【算法系列】如何仅用递归函数和栈操作逆序一个栈 - 百里英骐">
+    <title>【算法系列】用一个栈实现另一个栈的排序 | 百里英骐</title>
+    <meta property="og:title" content="【算法系列】用一个栈实现另一个栈的排序 - 百里英骐">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2022-06-05T00:00:00&#43;08:00'>
+    <meta property="article:published_time" content='2022-08-01T00:00:00&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2022-06-05T00:00:00&#43;08:00'>
+    <meta property="article:modified_time" content='2022-08-01T00:00:00&#43;08:00'>
         
     <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
-    <meta name="description" content="【算法系列】如何仅用递归函数和栈操作逆序一个栈">
+    <meta name="description" content="【算法系列】用一个栈实现另一个栈的排序">
         <meta name="author" content="BaileysRock">
         
-    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/3/">
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/5/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -177,10 +177,10 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">【算法系列】如何仅用递归函数和栈操作逆序一个栈</h1>
+            <h1 class="post-title">【算法系列】用一个栈实现另一个栈的排序</h1>
         </header>
         <date class="post-meta meta-date">
-            2022年6月5日
+            2022年8月1日
         </date>
         
         <div class="post-meta">
@@ -196,41 +196,33 @@
         
         <div class="post-content">
             <h2 id="题目要求">题目要求</h2>
-<p>一个栈依次压入1、2、3、4、5，那么从栈顶到栈底分别为5、4、3、2、1。将这个栈转置后，从栈顶到栈底为1、2、3、4、5，也就是实现栈元素的逆序，但是只能用递归函数来实现，不能用其他数据结构。</p>
+<p>一个栈中元素的类型为<strong>整型</strong>，现在想将该栈从顶到底按从<strong>小到大</strong>的顺序排序，只允许申请一个栈。除此之外，可以申请新的变量，但不能申请额外的数据结构。如何完成排序？</p>
 <h2 id="解题思路">解题思路</h2>
 <ol>
-<li>一个函数实现返回栈内数据，用于返回栈底元素，当栈空的时候停止
-
-        <img class="mx-auto" alt="" src="/gar.png" />   
-    </li>
-<li>另一个函数接受栈底元素并将每一个的数据重新压入栈中，即可实现逆序
-
-        <img class="mx-auto" alt="" src="/reverse.png" />   
-    </li>
+<li>申请一个新的help栈，不断从原有栈中获取数据, 去跟新的help栈的栈顶数据相比; 如果符合排序要求，就push到help栈中</li>
+<li>如果不符合排序要求，就从help栈中pop出栈顶数据，push到原栈中，直至符合排序要求</li>
+<li>最终原栈被清空，help栈是全部排好序的栈，重新一股脑写回来即完成栈排序</li>
 </ol>
 <h2 id="golang实现">golang实现</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
 
-<span style="color:#007020;font-weight:bold">import</span> <span style="color:#4070a0">&#34;fmt&#34;</span>
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">getAndRemoveLastElement</span>(stack <span style="color:#666">*</span>Stack) <span style="color:#902000">int</span> {
-	result <span style="color:#666">:=</span> stack.<span style="color:#06287e">Pop</span>()
-	<span style="color:#007020;font-weight:bold">if</span> stack.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
-		<span style="color:#007020;font-weight:bold">return</span> result.(<span style="color:#902000">int</span>)
-	} <span style="color:#007020;font-weight:bold">else</span> {
-		last <span style="color:#666">:=</span> <span style="color:#06287e">getAndRemoveLastElement</span>(stack)
-		stack.<span style="color:#06287e">Push</span>(result)
-		<span style="color:#007020;font-weight:bold">return</span> last
+<span style="color:#60a0b0;font-style:italic">// SortStark stark top --&gt; stark bottom(from small to big)
+</span><span style="color:#60a0b0;font-style:italic"></span><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">SortStark</span>(stk <span style="color:#666">*</span>Stack) {
+	helpStack <span style="color:#666">:=</span> <span style="color:#06287e">NewStack</span>()
+	<span style="color:#60a0b0;font-style:italic">// 1. while go through target stack until stack is empty
+</span><span style="color:#60a0b0;font-style:italic"></span>	<span style="color:#007020;font-weight:bold">for</span> stk.<span style="color:#06287e">Len</span>() &gt; <span style="color:#40a070">0</span> {
+		cur <span style="color:#666">:=</span> stk.<span style="color:#06287e">Pop</span>()
+		<span style="color:#60a0b0;font-style:italic">// 2. if cur &lt; peek, push helpStack.pop() to target stack until cur &gt; peek or helpStack is empty
+</span><span style="color:#60a0b0;font-style:italic"></span>		<span style="color:#007020;font-weight:bold">for</span> (helpStack.<span style="color:#06287e">Len</span>() &gt; <span style="color:#40a070">0</span>) <span style="color:#666">&amp;&amp;</span> (cur.(<span style="color:#902000">int</span>) &lt; helpStack.<span style="color:#06287e">Peek</span>().(<span style="color:#902000">int</span>)) {
+			stk.<span style="color:#06287e">Push</span>(helpStack.<span style="color:#06287e">Pop</span>())
+		}
+		<span style="color:#60a0b0;font-style:italic">// 3. if helkStack is not empty, compare cur with helpStack&#39;s peek value
+</span><span style="color:#60a0b0;font-style:italic"></span>		<span style="color:#60a0b0;font-style:italic">// 4. while cur &gt; peek, push cur to helpStack
+</span><span style="color:#60a0b0;font-style:italic"></span>		helpStack.<span style="color:#06287e">Push</span>(cur)
 	}
-}
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">reverse</span>(stack <span style="color:#666">*</span>Stack) {
-	<span style="color:#007020;font-weight:bold">if</span> stack.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
-		<span style="color:#007020;font-weight:bold">return</span>
-	} <span style="color:#007020;font-weight:bold">else</span> {
-		garFuncReturn <span style="color:#666">:=</span> <span style="color:#06287e">getAndRemoveLastElement</span>(stack)
-		<span style="color:#06287e">reverse</span>(stack)
-		stack.<span style="color:#06287e">Push</span>(garFuncReturn)
+	<span style="color:#60a0b0;font-style:italic">// 5. push back helpStack to target stack
+</span><span style="color:#60a0b0;font-style:italic"></span>	<span style="color:#007020;font-weight:bold">for</span> helpStack.<span style="color:#06287e">Len</span>() &gt; <span style="color:#40a070">0</span> {
+		stk.<span style="color:#06287e">Push</span>(helpStack.<span style="color:#06287e">Pop</span>())
 	}
 }
 </code></pre></div><h2 id="测试用例">测试用例</h2>
@@ -242,63 +234,54 @@
 	<span style="color:#4070a0">&#34;github.com/stretchr/testify/assert&#34;</span>
 )
 
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">TestReverseStack</span>(t <span style="color:#666">*</span>testing.T) {
-	<span style="color:#60a0b0;font-style:italic">// define a getmin stack
-</span><span style="color:#60a0b0;font-style:italic"></span>	tests <span style="color:#666">:=</span> []<span style="color:#007020;font-weight:bold">struct</span> {
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">TestSortStark</span>(t <span style="color:#666">*</span>testing.T) {
+	tests <span style="color:#666">:=</span> []<span style="color:#007020;font-weight:bold">struct</span> {
 		<span style="color:#60a0b0;font-style:italic">// 名字
 </span><span style="color:#60a0b0;font-style:italic"></span>		name <span style="color:#902000">string</span>
 
 		<span style="color:#60a0b0;font-style:italic">// 输入部分
-</span><span style="color:#60a0b0;font-style:italic"></span>		val <span style="color:#007020;font-weight:bold">func</span>(stk <span style="color:#666">*</span>Stack)
+</span><span style="color:#60a0b0;font-style:italic"></span>		val <span style="color:#666">*</span>Stack
 
 		<span style="color:#60a0b0;font-style:italic">// 输出部分
-</span><span style="color:#60a0b0;font-style:italic"></span>		wantRes []any
+</span><span style="color:#60a0b0;font-style:italic"></span>		wantRes []<span style="color:#902000">int</span>
 	}{
 		{
-			name: <span style="color:#4070a0">&#34;push&#34;</span>,
-			val:  push,
+			name: <span style="color:#4070a0">&#34;sortstark&#34;</span>,
+			val:  <span style="color:#06287e">NewStack</span>(),
 			<span style="color:#60a0b0;font-style:italic">// transpose once, then return to the original order of last-in first-out
-</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []any{<span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>, <span style="color:#40a070">4</span>, <span style="color:#40a070">5</span>},
+</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []<span style="color:#902000">int</span>{<span style="color:#40a070">0</span>, <span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>, <span style="color:#40a070">5</span>, <span style="color:#40a070">8</span>},
 		},
 	}
 	<span style="color:#007020;font-weight:bold">for</span> _, tt <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> tests {
-		<span style="color:#60a0b0;font-style:italic">// new TwoStackQueue
-</span><span style="color:#60a0b0;font-style:italic"></span>		stk <span style="color:#666">:=</span> <span style="color:#06287e">NewStack</span>()
 		t.<span style="color:#06287e">Run</span>(tt.name, <span style="color:#007020;font-weight:bold">func</span>(t <span style="color:#666">*</span>testing.T) {
-			tt.<span style="color:#06287e">val</span>(stk)
-			<span style="color:#06287e">reverse</span>(stk)
-			res <span style="color:#666">:=</span> <span style="color:#06287e">popall</span>(stk)
+			<span style="color:#60a0b0;font-style:italic">// test case
+</span><span style="color:#60a0b0;font-style:italic"></span>			stk <span style="color:#666">:=</span> tt.val
+			stk.<span style="color:#06287e">Push</span>(<span style="color:#40a070">2</span>)
+			stk.<span style="color:#06287e">Push</span>(<span style="color:#40a070">8</span>)
+			stk.<span style="color:#06287e">Push</span>(<span style="color:#40a070">1</span>)
+			stk.<span style="color:#06287e">Push</span>(<span style="color:#40a070">5</span>)
+			stk.<span style="color:#06287e">Push</span>(<span style="color:#40a070">0</span>)
+			stk.<span style="color:#06287e">Push</span>(<span style="color:#40a070">3</span>)
+			<span style="color:#06287e">SortStark</span>(stk)
+			res <span style="color:#666">:=</span> []<span style="color:#902000">int</span>{}
+			<span style="color:#007020;font-weight:bold">for</span> stk.length &gt; <span style="color:#40a070">0</span> {
+				res = <span style="color:#007020">append</span>(res, tt.val.<span style="color:#06287e">Pop</span>().(<span style="color:#902000">int</span>))
+			}
 			assert.<span style="color:#06287e">Equal</span>(t, tt.wantRes, res)
 		})
 	}
 }
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">push</span>(stk <span style="color:#666">*</span>Stack) {
-	<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#40a070">1</span>; i <span style="color:#666">&lt;=</span> <span style="color:#40a070">5</span>; i<span style="color:#666">++</span> {
-		stk.<span style="color:#06287e">Push</span>(i)
-	}
-}
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">popall</span>(stk <span style="color:#666">*</span>Stack) (resultList []any) {
-	<span style="color:#007020;font-weight:bold">for</span> {
-		<span style="color:#007020;font-weight:bold">if</span> stk.length <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
-			<span style="color:#007020;font-weight:bold">break</span>
-		}
-		resultList = <span style="color:#007020">append</span>(resultList, stk.<span style="color:#06287e">Pop</span>())
-	}
-	<span style="color:#007020;font-weight:bold">return</span> resultList
-}
 </code></pre></div><p>测试结果</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go <span style="color:#007020">test</span> -run ^TestReverseStack$ . -v 
-<span style="color:#666">===</span> RUN   <span style="color:#bb60d5">TestReverseStack</span>
-<span style="color:#666">===</span> RUN   TestReverseStack/push
---- PASS: TestReverseStack <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
-    --- PASS: TestReverseStack/push <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go <span style="color:#007020">test</span> -run ^TestSortStark$ . -v 
+<span style="color:#666">===</span> RUN   <span style="color:#bb60d5">TestSortStark</span>
+<span style="color:#666">===</span> RUN   TestSortStark/sortstark
+--- PASS: TestSortStark <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestSortStark/sortstark <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
 PASS
-ok      starkreverse    0.008s
 
+Process finished with the <span style="color:#007020">exit</span> code <span style="color:#40a070">0</span>
 </code></pre></div><blockquote>
-<p>实现起来比较简单，重点是需要画调用栈图，将每一层变量是什么值梳理清楚，什么时候向上弹出，这个用笔画一下就容易多了。</p>
+<p>测试没有问题，成功完成排序</p>
 </blockquote>
 
         </div>
@@ -312,15 +295,15 @@ ok      starkreverse    0.008s
     <h2>See Also</h2>
     <ul class="listing">
         
+        <li><a href="/post/algorithm/4/">【算法系列】猫狗队列</a></li>
+        
+        <li><a href="/post/algorithm/3/">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a></li>
+        
         <li><a href="/post/algorithm/2/">【算法系列】由两个栈组成的队列</a></li>
         
         <li><a href="/post/algorithm/1/">【算法系列】设计一个有getMin功能的栈</a></li>
         
-        <li><a href="/post/retrywatcher/">client-go watch接口隔一段时间自动退出怎么办？</a></li>
-        
-        <li><a href="/post/python-yield/">python yield详解</a></li>
-        
-        <li><a href="/post/monitor-control-plane/">prometheus 监测 kubernetes 控制平面</a></li>
+        <li><a href="/post/apigateway/">API网关对比</a></li>
         
     </ul>
 </div>

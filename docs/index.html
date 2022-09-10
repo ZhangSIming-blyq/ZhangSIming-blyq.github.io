@@ -71,6 +71,34 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序" target="_blank">【算法系列】用一个栈实现另一个栈的排序</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年8月1日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category">
+                <a href='/categories/algorithm' target="_blank">algorithm</a>
+            </span>
+            
+        </div>
+        
+        <div class="post-content">
+            题目要求 一个栈中元素的类型为整型，现在想将该栈从顶到底按从小到大的顺序排序，只允许申请一个栈。除此之外，可以申请新的变量，但不能申请额外的数据结构。如何完成排序？
+解题思路  申请一个新的help栈，不断从原有栈中获取数据, 去跟新的help栈的栈顶数据相比; 如果符合排序要求，就push到help栈中 如果不符合排序要求，就从help栈中pop出栈顶数据，push到原栈中，直至符合排序要求 最终原栈被清空，help栈是全部排好序的栈，重新一股脑写回来即完成栈排序  golang实现 package main // SortStark stark top --&gt; stark bottom(from small to big) func SortStark(stk *Stack) { helpStack := NewStack() // 1.……
+        </div>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" target="_blank">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比" target="_blank">API网关对比</a>
             </h1>
         </header>
@@ -334,34 +362,6 @@ pod, err := mycluster.……
     
     
     
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记" target="_blank">指数基金投资指南摘记</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年4月11日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/finance' target="_blank">finance</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            股神巴菲特说：“通过定期投资指数基金，一个什么都不懂的业余投资者竟然往往能够战胜大部分专业投资者；指数基金追踪指数，对基金经理没有过多依赖；每个指数基金会同时投资几十只甚至上百只股票，可以最大化分散投资者的非市场风险；而且在所有同类基金里，指数基金的费率也是最低的。”
- 宽基指数基金  上证50指数：上交所选出沪市规模最大、流动性最好、最具有代表性的50只股票组成样本股，反应沪市最具影响力的一批优秀大盘企业的整体状况 沪深300指数：由中证指数公司开发，从上交所和深交所挑选规模最大、流动性最好的300只股票，国内股市最具代表性的指数 中证500指数：将全部沪深300指数的300家公司排除，然后将最近一年日均总市值排名前300名的企业也排除，剩下的公司中选择日均总市值排名前500名的企业，作为中证500指数 创业板指数：放在深交所下面的，给达不到主板上市条件的小企业开放的门槛更低的市场；创业板综指指的是所有创业板上市公司的股价平均表现；创业板指数是反应创业板最主要的100家企业的平均表现  以上四种指数按照市值加权，股票规模越大，指数中权重越高。……
-        </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/indexfund/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
 
 
 
@@ -434,6 +434,10 @@ pod, err := mycluster.……
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序" target="_blank">【算法系列】用一个栈实现另一个栈的排序</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比" target="_blank">API网关对比</a>
     </li>
     
@@ -469,10 +473,6 @@ pod, err := mycluster.……
         <a href="https://zhangsiming-blyq.github.io/post/monitor-control-plane/" title="prometheus 监测 kubernetes 控制平面" target="_blank">prometheus 监测 kubernetes 控制平面</a>
     </li>
     
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记" target="_blank">指数基金投资指南摘记</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -482,7 +482,7 @@ pod, err := mycluster.……
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (4)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (5)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
     
