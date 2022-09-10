@@ -139,7 +139,7 @@
     <li><a href="#题目要求">题目要求</a></li>
     <li><a href="#解题思路">解题思路</a></li>
     <li><a href="#golang实现">golang实现</a></li>
-    <li><a href="#运行效果">运行效果</a></li>
+    <li><a href="#测试用例">测试用例</a></li>
   </ul>
 </nav>
     </div>
@@ -233,25 +233,70 @@
 		stack.<span style="color:#06287e">Push</span>(garFuncReturn)
 	}
 }
-</code></pre></div><h2 id="运行效果">运行效果</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">main</span>() {
-	testStack <span style="color:#666">:=</span> <span style="color:#06287e">NewStack</span>()
-	<span style="color:#06287e">reverse</span>(testStack)
-	<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#40a070">1</span>; i <span style="color:#666">&lt;=</span> <span style="color:#40a070">5</span>; i<span style="color:#666">++</span> {
-		testStack.<span style="color:#06287e">Push</span>(i)
+</code></pre></div><h2 id="测试用例">测试用例</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
+
+<span style="color:#007020;font-weight:bold">import</span> (
+	<span style="color:#4070a0">&#34;testing&#34;</span>
+
+	<span style="color:#4070a0">&#34;github.com/stretchr/testify/assert&#34;</span>
+)
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">TestReverseStack</span>(t <span style="color:#666">*</span>testing.T) {
+	<span style="color:#60a0b0;font-style:italic">// define a getmin stack
+</span><span style="color:#60a0b0;font-style:italic"></span>	tests <span style="color:#666">:=</span> []<span style="color:#007020;font-weight:bold">struct</span> {
+		<span style="color:#60a0b0;font-style:italic">// 名字
+</span><span style="color:#60a0b0;font-style:italic"></span>		name <span style="color:#902000">string</span>
+
+		<span style="color:#60a0b0;font-style:italic">// 输入部分
+</span><span style="color:#60a0b0;font-style:italic"></span>		val <span style="color:#007020;font-weight:bold">func</span>(stk <span style="color:#666">*</span>Stack)
+
+		<span style="color:#60a0b0;font-style:italic">// 输出部分
+</span><span style="color:#60a0b0;font-style:italic"></span>		wantRes []any
+	}{
+		{
+			name: <span style="color:#4070a0">&#34;push&#34;</span>,
+			val:  push,
+			<span style="color:#60a0b0;font-style:italic">// transpose once, then return to the original order of last-in first-out
+</span><span style="color:#60a0b0;font-style:italic"></span>			wantRes: []any{<span style="color:#40a070">1</span>, <span style="color:#40a070">2</span>, <span style="color:#40a070">3</span>, <span style="color:#40a070">4</span>, <span style="color:#40a070">5</span>},
+		},
 	}
-	<span style="color:#06287e">reverse</span>(testStack)
-	<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#40a070">1</span>; i <span style="color:#666">&lt;=</span> <span style="color:#40a070">5</span>; i<span style="color:#666">++</span> {
-		fmt.<span style="color:#06287e">Println</span>(testStack.<span style="color:#06287e">Pop</span>())
+	<span style="color:#007020;font-weight:bold">for</span> _, tt <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> tests {
+		<span style="color:#60a0b0;font-style:italic">// new TwoStackQueue
+</span><span style="color:#60a0b0;font-style:italic"></span>		stk <span style="color:#666">:=</span> <span style="color:#06287e">NewStack</span>()
+		t.<span style="color:#06287e">Run</span>(tt.name, <span style="color:#007020;font-weight:bold">func</span>(t <span style="color:#666">*</span>testing.T) {
+			tt.<span style="color:#06287e">val</span>(stk)
+			<span style="color:#06287e">reverse</span>(stk)
+			res <span style="color:#666">:=</span> <span style="color:#06287e">popall</span>(stk)
+			assert.<span style="color:#06287e">Equal</span>(t, tt.wantRes, res)
+		})
 	}
 }
-</code></pre></div><p>运行结果：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run *.go 
-<span style="color:#40a070">1</span>
-<span style="color:#40a070">2</span>
-<span style="color:#40a070">3</span>
-<span style="color:#40a070">4</span>
-<span style="color:#40a070">5</span>
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">push</span>(stk <span style="color:#666">*</span>Stack) {
+	<span style="color:#007020;font-weight:bold">for</span> i <span style="color:#666">:=</span> <span style="color:#40a070">1</span>; i <span style="color:#666">&lt;=</span> <span style="color:#40a070">5</span>; i<span style="color:#666">++</span> {
+		stk.<span style="color:#06287e">Push</span>(i)
+	}
+}
+
+<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">popall</span>(stk <span style="color:#666">*</span>Stack) (resultList []any) {
+	<span style="color:#007020;font-weight:bold">for</span> {
+		<span style="color:#007020;font-weight:bold">if</span> stk.length <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
+			<span style="color:#007020;font-weight:bold">break</span>
+		}
+		resultList = <span style="color:#007020">append</span>(resultList, stk.<span style="color:#06287e">Pop</span>())
+	}
+	<span style="color:#007020;font-weight:bold">return</span> resultList
+}
+</code></pre></div><p>测试结果</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go <span style="color:#007020">test</span> -run ^TestReverseStack$ . -v 
+<span style="color:#666">===</span> RUN   <span style="color:#bb60d5">TestReverseStack</span>
+<span style="color:#666">===</span> RUN   TestReverseStack/push
+--- PASS: TestReverseStack <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+    --- PASS: TestReverseStack/push <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
+PASS
+ok      starkreverse    0.008s
+
 </code></pre></div><blockquote>
 <p>实现起来比较简单，重点是需要画调用栈图，将每一层变量是什么值梳理清楚，什么时候向上弹出，这个用笔画一下就容易多了。</p>
 </blockquote>
@@ -441,6 +486,10 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
 <ul class="widget-list">
     
     <li>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比" target="_blank">API网关对比</a>
+    </li>
+    
+    <li>
         <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解" target="_blank">ansible-playbook 详解</a>
     </li>
     
@@ -476,10 +525,6 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
         <a href="https://zhangsiming-blyq.github.io/post/indexfund/" title="指数基金投资指南摘记" target="_blank">指数基金投资指南摘记</a>
     </li>
     
-    <li>
-        <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="浅谈 containerd" target="_blank">浅谈 containerd</a>
-    </li>
-    
 </ul>
     </section>
 
@@ -493,6 +538,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
     
+    <li><a href="https://zhangsiming-blyq.github.io/categories/apigateway/">apigateway (1)</a></li>
+    
     <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
@@ -503,7 +550,7 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (2)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (1)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
     
@@ -521,6 +568,8 @@ div.highlight:hover .copy-code,pre:hover .copy-code {
     <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apigateway/">apigateway</a>
     
     <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
     
