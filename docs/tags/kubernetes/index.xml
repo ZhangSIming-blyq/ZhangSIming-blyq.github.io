@@ -6,7 +6,18 @@
     <description>Recent content in kubernetes on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>浅谈kubernetes ingress机制</title>
+      <link>https://zhangsiming-blyq.github.io/post/ingress-mechanism/</link>
+      <pubDate>Thu, 25 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/ingress-mechanism/</guid>
+      <description>ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。
+ 一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
+# 实验中选择的是&amp;#34;iptables模式的kube-proxy&amp;#34; # 首先关闭kube-proxy $ sudo systemctl stop kube-proxy # 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 $ ks NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE example-test NodePort 10.</description>
+    </item>
+    
     <item>
       <title>client-go watch接口隔一段时间自动退出怎么办？</title>
       <link>https://zhangsiming-blyq.github.io/post/retrywatcher/</link>

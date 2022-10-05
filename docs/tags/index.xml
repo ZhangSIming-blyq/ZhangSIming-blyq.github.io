@@ -6,7 +6,25 @@
     <description>Recent content in Tags on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>kubernetes</title>
+      <link>https://zhangsiming-blyq.github.io/tags/kubernetes/</link>
+      <pubDate>Thu, 25 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>algorithm</title>
+      <link>https://zhangsiming-blyq.github.io/tags/algorithm/</link>
+      <pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>apigateway</title>
       <link>https://zhangsiming-blyq.github.io/tags/apigateway/</link>
@@ -35,29 +53,11 @@
     </item>
     
     <item>
-      <title>algorithm</title>
-      <link>https://zhangsiming-blyq.github.io/tags/algorithm/</link>
-      <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/tags/algorithm/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>golang</title>
       <link>https://zhangsiming-blyq.github.io/tags/golang/</link>
       <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>https://zhangsiming-blyq.github.io/tags/kubernetes/</link>
-      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/tags/kubernetes/</guid>
       <description></description>
     </item>
     
@@ -148,6 +148,15 @@
       <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/tags/containerd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>footprints</title>
+      <link>https://zhangsiming-blyq.github.io/tags/footprints/</link>
+      <pubDate>Tue, 22 Apr 1997 11:58:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/tags/footprints/</guid>
       <description></description>
     </item>
     

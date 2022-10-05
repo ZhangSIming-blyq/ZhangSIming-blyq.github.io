@@ -2,6 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://zhangsiming-blyq.github.io/categories/</loc>
+    <lastmod>2022-08-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
+    <lastmod>2022-08-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
+    <lastmod>2022-08-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/</loc>
+    <lastmod>2022-08-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/</loc>
+    <lastmod>2022-08-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/ingress-mechanism/</loc>
+    <lastmod>2022-08-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/</loc>
+    <lastmod>2022-08-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/algorithm/</loc>
+    <lastmod>2022-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/algorithm/</loc>
+    <lastmod>2022-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/algorithm/5/</loc>
+    <lastmod>2022-08-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/apigateway/</loc>
     <lastmod>2022-07-18T00:00:00+00:00</lastmod>
   </url><url>
@@ -11,22 +41,10 @@
     <loc>https://zhangsiming-blyq.github.io/post/apigateway/</loc>
     <lastmod>2022-07-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/</loc>
-    <lastmod>2022-07-18T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/linux/</loc>
     <lastmod>2022-07-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/linux/</loc>
-    <lastmod>2022-07-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/post/</loc>
-    <lastmod>2022-07-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/</loc>
-    <lastmod>2022-07-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/</loc>
     <lastmod>2022-07-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/ansible/</loc>
@@ -37,12 +55,6 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/ansible-playbook/</loc>
     <lastmod>2022-07-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/algorithm/</loc>
-    <lastmod>2022-06-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/algorithm/</loc>
-    <lastmod>2022-06-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/4/</loc>
     <lastmod>2022-06-07T00:00:00+00:00</lastmod>
@@ -63,12 +75,6 @@
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/golang/</loc>
-    <lastmod>2022-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
-    <lastmod>2022-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/python/</loc>
@@ -127,6 +133,12 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/containerd/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/footprints/</loc>
+    <lastmod>1997-04-22T11:58:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/footprints/</loc>
+    <lastmod>1997-04-22T11:58:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/archives/</loc>
   </url><url>

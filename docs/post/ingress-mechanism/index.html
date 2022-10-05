@@ -7,20 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
 
-    <title>【算法系列】由两个栈组成的队列 | 百里英骐</title>
-    <meta property="og:title" content="【算法系列】由两个栈组成的队列 - 百里英骐">
+    <title>浅谈kubernetes ingress机制 | 百里英骐</title>
+    <meta property="og:title" content="浅谈kubernetes ingress机制 - 百里英骐">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2022-06-04T00:00:00&#43;08:00'>
+    <meta property="article:published_time" content='2022-08-25T00:00:00&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2022-06-04T00:00:00&#43;08:00'>
+    <meta property="article:modified_time" content='2022-08-25T00:00:00&#43;08:00'>
         
     <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
-    <meta name="description" content="【算法系列】由两个栈组成的队列">
+    <meta name="description" content="浅谈kubernetes ingress机制">
         <meta name="author" content="BaileysRock">
         
-    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/2/">
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/ingress-mechanism/">
     <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -136,10 +136,8 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#题目要求">题目要求</a></li>
-    <li><a href="#解题思路">解题思路</a></li>
-    <li><a href="#golang实现">golang实现</a></li>
-    <li><a href="#测试用例">测试用例</a></li>
+    <li><a href="#一验证试验">一、验证试验</a></li>
+    <li><a href="#二结论">二、结论</a></li>
   </ul>
 </nav>
     </div>
@@ -177,175 +175,108 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">【算法系列】由两个栈组成的队列</h1>
+            <h1 class="post-title">浅谈kubernetes ingress机制</h1>
         </header>
         <date class="post-meta meta-date">
-            2022年6月4日
+            2022年8月25日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
+            <span class="meta-category"><a href='/categories/kubernetes'>kubernetes</a></span>
             
         </div>
         
         
         
         <div class="post-content">
-            <h2 id="题目要求">题目要求</h2>
-<p>编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek</p>
-<h2 id="解题思路">解题思路</h2>
-<ol>
-<li>栈的特点是后进先出、队列的特点是先进先出</li>
-<li>一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了</li>
-</ol>
-<p>
-        <img class="mx-auto" alt="stack2" src="/stack2.png" />   
-    </p>
-<h2 id="golang实现">golang实现</h2>
-<p>需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
-
-<span style="color:#007020;font-weight:bold">import</span> <span style="color:#4070a0">&#34;fmt&#34;</span>
-
-<span style="color:#007020;font-weight:bold">type</span> TwoStackQueue <span style="color:#007020;font-weight:bold">struct</span> {
-	stackPush <span style="color:#666">*</span>Stack
-	stackPop  <span style="color:#666">*</span>Stack
-}
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">NewTwoStackQueue</span>() <span style="color:#666">*</span>TwoStackQueue {
-	<span style="color:#007020;font-weight:bold">return</span> <span style="color:#666">&amp;</span>TwoStackQueue{
-		stackPush: <span style="color:#06287e">NewStack</span>(),
-		stackPop:  <span style="color:#06287e">NewStack</span>(),
-	}
-}
-
-<span style="color:#007020;font-weight:bold">func</span> (tsq <span style="color:#666">*</span>TwoStackQueue) <span style="color:#06287e">add</span>(data <span style="color:#007020;font-weight:bold">interface</span>{}) {
-	tsq.stackPush.<span style="color:#06287e">Push</span>(data)
-}
-
-<span style="color:#007020;font-weight:bold">func</span> (tsq <span style="color:#666">*</span>TwoStackQueue) <span style="color:#06287e">poll</span>() <span style="color:#007020;font-weight:bold">interface</span>{} {
-	<span style="color:#007020;font-weight:bold">if</span> tsq.stackPop.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> <span style="color:#666">&amp;&amp;</span> tsq.stackPush.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
-		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;TwoStackQueue is empty&#34;</span>)
-	} <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> tsq.stackPop.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
-		<span style="color:#007020;font-weight:bold">for</span> tsq.stackPush.<span style="color:#06287e">Len</span>() <span style="color:#666">!=</span> <span style="color:#40a070">0</span> {
-			tsq.stackPop.<span style="color:#06287e">Push</span>(tsq.stackPush.<span style="color:#06287e">Pop</span>())
-		}
-	}
-	value <span style="color:#666">:=</span> tsq.stackPop.<span style="color:#06287e">Pop</span>()
-	<span style="color:#007020;font-weight:bold">return</span> value
-}
-
-<span style="color:#007020;font-weight:bold">func</span> (tsq <span style="color:#666">*</span>TwoStackQueue) <span style="color:#06287e">peek</span>() <span style="color:#007020;font-weight:bold">interface</span>{} {
-	<span style="color:#007020;font-weight:bold">if</span> tsq.stackPop.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> <span style="color:#666">&amp;&amp;</span> tsq.stackPush.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
-		fmt.<span style="color:#06287e">Errorf</span>(<span style="color:#4070a0">&#34;TwoStackQueue is empty&#34;</span>)
-	} <span style="color:#007020;font-weight:bold">else</span> <span style="color:#007020;font-weight:bold">if</span> tsq.stackPop.<span style="color:#06287e">Len</span>() <span style="color:#666">==</span> <span style="color:#40a070">0</span> {
-		<span style="color:#007020;font-weight:bold">for</span> tsq.stackPush.<span style="color:#06287e">Len</span>() <span style="color:#666">!=</span> <span style="color:#40a070">0</span> {
-			tsq.stackPop.<span style="color:#06287e">Push</span>(tsq.stackPush.<span style="color:#06287e">Pop</span>())
-		}
-	}
-	value <span style="color:#666">:=</span> tsq.stackPop.<span style="color:#06287e">Peek</span>()
-	<span style="color:#007020;font-weight:bold">return</span> value
-}
-</code></pre></div><h2 id="测试用例">测试用例</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#007020;font-weight:bold">package</span> main
-
-<span style="color:#007020;font-weight:bold">import</span> (
-	<span style="color:#4070a0">&#34;testing&#34;</span>
-
-	<span style="color:#4070a0">&#34;github.com/stretchr/testify/assert&#34;</span>
-)
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">TestTwoStackQueue</span>(t <span style="color:#666">*</span>testing.T) {
-	<span style="color:#60a0b0;font-style:italic">// define a getmin stack
-</span><span style="color:#60a0b0;font-style:italic"></span>	tests <span style="color:#666">:=</span> []<span style="color:#007020;font-weight:bold">struct</span> {
-		<span style="color:#60a0b0;font-style:italic">// 名字
-</span><span style="color:#60a0b0;font-style:italic"></span>		name <span style="color:#902000">string</span>
-
-		<span style="color:#60a0b0;font-style:italic">// 输入部分
-</span><span style="color:#60a0b0;font-style:italic"></span>		val <span style="color:#007020;font-weight:bold">func</span>(tsq <span style="color:#666">*</span>TwoStackQueue)
-
-		<span style="color:#60a0b0;font-style:italic">// 输出部分
-</span><span style="color:#60a0b0;font-style:italic"></span>		wantRes <span style="color:#007020;font-weight:bold">interface</span>{}
-	}{
-		{
-			name:    <span style="color:#4070a0">&#34;push&#34;</span>,
-			val:     push,
-			wantRes: <span style="color:#40a070">1</span>,
-		},
-		{
-			name:    <span style="color:#4070a0">&#34;push and poll1&#34;</span>,
-			val:     pushpoll1,
-			wantRes: <span style="color:#40a070">3</span>,
-		},
-		{
-			name:    <span style="color:#4070a0">&#34;push and poll2&#34;</span>,
-			val:     pushpoll2,
-			wantRes: <span style="color:#40a070">2</span>,
-		},
-		{
-			name:    <span style="color:#4070a0">&#34;push and poll3&#34;</span>,
-			val:     pushpoll3,
-			wantRes: <span style="color:#007020;font-weight:bold">nil</span>,
-		},
-	}
-	<span style="color:#007020;font-weight:bold">for</span> _, tt <span style="color:#666">:=</span> <span style="color:#007020;font-weight:bold">range</span> tests {
-		<span style="color:#60a0b0;font-style:italic">// new TwoStackQueue
-</span><span style="color:#60a0b0;font-style:italic"></span>		tsq <span style="color:#666">:=</span> <span style="color:#06287e">NewTwoStackQueue</span>()
-		t.<span style="color:#06287e">Run</span>(tt.name, <span style="color:#007020;font-weight:bold">func</span>(t <span style="color:#666">*</span>testing.T) {
-			tt.<span style="color:#06287e">val</span>(tsq)
-			res <span style="color:#666">:=</span> tsq.<span style="color:#06287e">peek</span>()
-			assert.<span style="color:#06287e">Equal</span>(t, tt.wantRes, res)
-		})
-	}
-}
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">push</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
-}
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">pushpoll1</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
-	tsq.<span style="color:#06287e">poll</span>()
-	tsq.<span style="color:#06287e">poll</span>()
-}
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">pushpoll2</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
-	tsq.<span style="color:#06287e">poll</span>()
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
-}
-
-<span style="color:#007020;font-weight:bold">func</span> <span style="color:#06287e">pushpoll3</span>(tsq <span style="color:#666">*</span>TwoStackQueue) {
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">1</span>)
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">2</span>)
-	tsq.<span style="color:#06287e">poll</span>()
-	tsq.<span style="color:#06287e">add</span>(<span style="color:#40a070">3</span>)
-	tsq.<span style="color:#06287e">poll</span>()
-	tsq.<span style="color:#06287e">poll</span>()
-}
-</code></pre></div><p>测试结果：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go <span style="color:#007020">test</span> -run ^TestTwoStackQueue$ . -v
-<span style="color:#666">===</span> RUN   <span style="color:#bb60d5">TestTwoStackQueue</span>
-<span style="color:#666">===</span> RUN   TestTwoStackQueue/push
-<span style="color:#666">===</span> RUN   TestTwoStackQueue/push_and_poll1
-<span style="color:#666">===</span> RUN   TestTwoStackQueue/push_and_poll2
-<span style="color:#666">===</span> RUN   TestTwoStackQueue/push_and_poll3
---- PASS: TestTwoStackQueue <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
-    --- PASS: TestTwoStackQueue/push <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
-    --- PASS: TestTwoStackQueue/push_and_poll1 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
-    --- PASS: TestTwoStackQueue/push_and_poll2 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
-    --- PASS: TestTwoStackQueue/push_and_poll3 <span style="color:#666">(</span>0.00s<span style="color:#666">)</span>
-PASS
-</code></pre></div><blockquote>
-<p>符合队列的特性，在add(1)、add(2)、add(3)的时候peek总是看到1，后面只有移除了1才能看到2，按照顺序直至队列取空。</p>
+            <blockquote>
+<p>ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。</p>
 </blockquote>
+<h2 id="一验证试验">一、验证试验</h2>
+<p>从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># 实验中选择的是&#34;iptables模式的kube-proxy&#34;</span>
+<span style="color:#60a0b0;font-style:italic"># 首先关闭kube-proxy</span>
+$ sudo systemctl stop kube-proxy
+
+<span style="color:#60a0b0;font-style:italic"># 查看服务，ClusterIP的端口是8080，NodePort的端口是30948</span>
+$ ks
+NAME           TYPE       CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#666">(</span>S<span style="color:#666">)</span>                                     AGE
+example-test   NodePort   10.0.0.226   &lt;none&gt;        8080:30948/TCP                              18h
+traefik        NodePort   10.0.0.85    &lt;none&gt;        9000:30001/TCP,80:30002/TCP,443:31990/TCP   19h
+
+<span style="color:#60a0b0;font-style:italic"># 查看与&#34;10.0.0.226&#34;有关的iptables条目，得知访问&#34;10.0.0.226&#34;且目的端口是&#34;8080&#34;的流量会发送给KUBE-SVC-KNYNFDNL67C7KAZZ链</span>
+$ sudo iptables -S -t nat | grep 10.0.0.226
+-A KUBE-SERVICES ! -s 10.0.0.0/24 -d 10.0.0.226/32 -p tcp -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080 cluster IP&#34;</span> -m tcp --dport <span style="color:#40a070">8080</span> -j KUBE-MARK-MASQ
+-A KUBE-SERVICES -d 10.0.0.226/32 -p tcp -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080 cluster IP&#34;</span> -m tcp --dport <span style="color:#40a070">8080</span> -j KUBE-SVC-KNYNFDNL67C7KAZZ
+
+<span style="color:#60a0b0;font-style:italic"># 查看KUBE-SVC-KNYNFDNL67C7KAZZ链发现，采用的是&#34;--probability&#34;策略，进行后端两个pod的负载均衡</span>
+$ sudo iptables -S -t nat | grep KUBE-SVC-KNYNFDNL67C7KAZZ
+-N KUBE-SVC-KNYNFDNL67C7KAZZ
+-A KUBE-NODEPORTS -p tcp -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080&#34;</span> -m tcp --dport <span style="color:#40a070">30948</span> -j KUBE-SVC-KNYNFDNL67C7KAZZ
+-A KUBE-SERVICES -d 10.0.0.226/32 -p tcp -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080 cluster IP&#34;</span> -m tcp --dport <span style="color:#40a070">8080</span> -j KUBE-SVC-KNYNFDNL67C7KAZZ
+-A KUBE-SVC-KNYNFDNL67C7KAZZ -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080&#34;</span> -m statistic --mode random --probability 0.50000000000 -j KUBE-SEP-O6MCO5C4JB4A4VEJ
+-A KUBE-SVC-KNYNFDNL67C7KAZZ -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080&#34;</span> -j KUBE-SEP-KREF3VGT6NHFYTVH
+
+<span style="color:#60a0b0;font-style:italic"># 我们再看后面转发的&#34;KUBE-SEP-KREF3VGT6NHFYTVH&#34;, 得知这一步就发送给了真实的pod</span>
+$ sudo iptables -t nat -L KUBE-SEP-KREF3VGT6NHFYTVH --line-numbers
+Chain KUBE-SEP-KREF3VGT6NHFYTVH <span style="color:#666">(</span><span style="color:#40a070">1</span> references<span style="color:#666">)</span>
+num  target     prot opt <span style="color:#007020">source</span>               destination
+<span style="color:#40a070">1</span>    KUBE-MARK-MASQ  all  --  10.244.2.4           anywhere             /* traffic-dispatcher/example-test:port-8080 */
+<span style="color:#40a070">2</span>    DNAT       tcp  --  anywhere             anywhere             /* traffic-dispatcher/example-test:port-8080 */ tcp to:10.244.2.4:8080
+
+<span style="color:#60a0b0;font-style:italic"># 现在我们要模拟不能走kube-proxy添加的规则访问到服务，于是我们删除刚刚&#34;50%/50%&#34;规则进行负载均衡转发的那两条规则(kube-proxy本质就是负载均衡)</span>
+$ sudo iptables -t nat -L KUBE-SVC-KNYNFDNL67C7KAZZ --line-numbers
+Chain KUBE-SVC-KNYNFDNL67C7KAZZ <span style="color:#666">(</span><span style="color:#40a070">2</span> references<span style="color:#666">)</span>
+num  target     prot opt <span style="color:#007020">source</span>               destination
+<span style="color:#40a070">1</span>    KUBE-SEP-O6MCO5C4JB4A4VEJ  all  --  anywhere             anywhere             /* traffic-dispatcher/example-test:port-8080 */ statistic mode random probability 0.50000000000
+<span style="color:#40a070">2</span>    KUBE-SEP-KREF3VGT6NHFYTVH  all  --  anywhere             anywhere             /* traffic-dispatcher/example-test:port-8080 */
+
+<span style="color:#60a0b0;font-style:italic"># 删除规则</span>
+$ sudo iptables -t nat -D KUBE-SVC-KNYNFDNL67C7KAZZ <span style="color:#40a070">1</span> <span style="color:#40a070">2</span>
+</code></pre></div><p>现在以ClusterIP+Port的方式访问服务应该走不通了，测试访问:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ks
+NAME           TYPE       CLUSTER-IP   EXTERNAL-IP   PORT<span style="color:#666">(</span>S<span style="color:#666">)</span>                                     AGE
+example-test   NodePort   10.0.0.226   &lt;none&gt;        8080:30948/TCP                              18h
+traefik        NodePort   10.0.0.85    &lt;none&gt;        9000:30001/TCP,80:30002/TCP,443:31990/TCP   19h
+$ curl 10.0.0.226:8080
+访问失败
+$ curl 10.20.13.90:30948
+访问失败
+$ curl 10.20.13.90:30002 -H <span style="color:#4070a0">&#39;Host:testfile.shannonai.com&#39;</span>
+访问成功, 由此证明ingress是不走kube-proxy的!
+</code></pre></div><h2 id="二结论">二、结论</h2>
+<ol>
+<li>
+<p>kube-proxy的工作是附加一些转发规则，所以说单单的&quot;systemctl stop kube-proxy&quot;是不会影响已经存在的规则的，也就是原来可以走通的服务只要没有变化，就依旧可以走通；只是我们再添加新的服务，就不能走通了(因为没有kube-proxy为我们添加这些规则了); 另外多节点的集群，只要其他节点的kube-proxy是ok的，就已经可以从其他节点访问服务; 我们做了上述那么多破坏如果想要恢复的话，也只是需要重新&quot;systemctl restart kube-proxy&quot;就会自动把我们破坏掉的规则加回来</p>
+</li>
+<li>
+<p>如何理解我们集群的ClusterIP和他对应的端口？我们了解过kube-proxy的规则了之后就很明显的可以得出结论：<br>
+1）pod的ip是pod所处的networkns的真实ip，通过veth和网桥和我们宿主机的真实ip通信<br>
+2）clusterip仅仅为kube-proxy的iptables或者ipvs规则匹配所用，也就是并不会出现在本机进行路由</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># 本机的路由表只能看到真实的节点ip段和网络插件附加的pod ip段, 没有clusterip的地址段</span>
+$ route -n
+内核 IP 路由表
+目标            网关            子网掩码        标志  跃点   引用  使用 接口
+0.0.0.0         10.20.13.1      0.0.0.0         UG    <span style="color:#40a070">100</span>    <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> ens5
+10.20.13.0      0.0.0.0         255.255.255.0   U     <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> ens5
+10.20.13.1      0.0.0.0         255.255.255.255 UH    <span style="color:#40a070">100</span>    <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> ens5
+10.244.1.0      10.244.1.0      255.255.255.0   UG    <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> flannel.1
+10.244.2.0      10.244.2.0      255.255.255.0   UG    <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> flannel.1
+172.17.0.0      0.0.0.0         255.255.0.0     U     <span style="color:#40a070">0</span>      <span style="color:#40a070">0</span>        <span style="color:#40a070">0</span> docker0
+
+<span style="color:#60a0b0;font-style:italic"># iptables和ipvs的规则中可以看到clusterip的地址段</span>
+$ sudo iptables -S -t nat | grep 10.0.0.226
+-A KUBE-SERVICES ! -s 10.0.0.0/24 -d 10.0.0.226/32 -p tcp -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080 cluster IP&#34;</span> -m tcp --dport <span style="color:#40a070">8080</span> -j KUBE-MARK-MASQ
+-A KUBE-SERVICES -d 10.0.0.226/32 -p tcp -m comment --comment <span style="color:#4070a0">&#34;traffic-dispatcher/example-test:port-8080 cluster IP&#34;</span> -m tcp --dport <span style="color:#40a070">8080</span> -j KUBE-SVC-KNYNFDNL67C7KAZZ
+</code></pre></div></li>
+<li>
+<p>由此得出，pod的targetport在对于不同的pod的情况下是可以重复的；nodeport如果是处于同一个节点是不能重复的；clusterip在clusterip的地址不同(也就是iptables和ipvs的规则中不冲突/或者简单理解为不同服务)的情况下是可以重复的</p>
+</li>
+</ol>
+<p>参考链接:
+<a href="https://xuxinkun.github.io/2016/07/22/kubernetes-proxy/">https://xuxinkun.github.io/2016/07/22/kubernetes-proxy/</a></p>
 
         </div>
 
@@ -358,15 +289,15 @@ PASS
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/algorithm/1/">【算法系列】设计一个有getMin功能的栈</a></li>
-        
         <li><a href="/post/retrywatcher/">client-go watch接口隔一段时间自动退出怎么办？</a></li>
-        
-        <li><a href="/post/python-yield/">python yield详解</a></li>
         
         <li><a href="/post/monitor-control-plane/">prometheus 监测 kubernetes 控制平面</a></li>
         
-        <li><a href="/post/indexfund/">指数基金投资指南摘记</a></li>
+        <li><a href="/post/containerd/">浅谈 containerd</a></li>
+        
+        <li><a href="/post/algorithm/5/">【算法系列】用一个栈实现另一个栈的排序</a></li>
+        
+        <li><a href="/post/apigateway/">API网关对比</a></li>
         
     </ul>
 </div>
@@ -376,7 +307,7 @@ PASS
             
             <ul class="clearfix">
                 
-                <li><a href='/tags/algorithm'>algorithm</a></li>
+                <li><a href='/tags/kubernetes'>kubernetes</a></li>
                 
             </ul>
             
