@@ -6,7 +6,17 @@
     <description>Recent content on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>谈谈kubernetes 证书认证那些事儿</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes-certificate/</link>
+      <pubDate>Mon, 12 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes-certificate/</guid>
+      <description>kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
+ 一、数字证书原理 1.1 传统非对称加密 message --&amp;gt; (公钥加密) --&amp;gt; || 传输 || --&amp;gt; (私钥解密) --&amp;gt; message  注意:</description>
+    </item>
+    
     <item>
       <title>浅谈kubernetes ingress机制</title>
       <link>https://zhangsiming-blyq.github.io/post/ingress-mechanism/</link>
@@ -157,7 +167,7 @@ pod, err := mycluster.</description>
       
       <guid>https://zhangsiming-blyq.github.io/footprints/</guid>
       <description>更多请见：百里英骐的instagram
-2022-10-15 姥姥家阳台从窗户往下看，每天都有一只猫咪焦急地等待它的午饭 2022-10-10 西三环北路，首都师范大学北二区到北一区必经之路过街天桥 2022-10-10 夜晚 永定门城楼 2022-10-07 寿司拼盘 2022-10-05 东三环主路 2022-10-02 360大厦路口 2022-09-30 天桥演艺厅 </description>
+2022-10-15 从窗户往下看，一只猫咪焦急地等待它的午饭 2022-10-10 西三环北路，连接首都师范大学两个校区的过街天桥 2022-10-10 夜晚 永定门城楼 2022-10-07 寿司拼盘 2022-10-05 天气晴朗的东三环主路 2022-10-02 360大厦路口 2022-09-30 天桥演艺厅 </description>
     </item>
     
     <item>

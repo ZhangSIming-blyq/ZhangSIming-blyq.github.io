@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>谈谈kubernetes 证书认证那些事儿 | 百里英骐</title>
+    <meta property="og:title" content="谈谈kubernetes 证书认证那些事儿 - 百里英骐">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2022-09-12T00:00:00&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2022-09-12T00:00:00&#43;08:00'>
+        
+    <meta name="Keywords" content="百里英骐,BaileysRock,kubernetes,golang,python,shell,linux,sre,软件架构,blog">
+    <meta name="description" content="谈谈kubernetes 证书认证那些事儿">
+        <meta name="author" content="BaileysRock">
+        
+    <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+    
+    
+    
+</head>
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://zhangsiming-blyq.github.io/">
+                        百里英骐
+                    </a>
+                
+                <p class="description">专注于云原生、kubernetes、golang、python、linux、sre与自动化运维、软件架构等</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://zhangsiming-blyq.github.io/">首页</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/about/" title="关于">关于</a>
+                    
+                    <a  href="https://zhangsiming-blyq.github.io/footprints/" title="足迹">足迹</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一数字证书原理">一、数字证书原理</a>
+      <ul>
+        <li><a href="#11-传统非对称加密">1.1 传统非对称加密</a></li>
+        <li><a href="#12-哈希函数">1.2 哈希函数</a></li>
+        <li><a href="#13-数字证书">1.3 数字证书</a></li>
+      </ul>
+    </li>
+    <li><a href="#二双向-tls-认证原理">二、双向 TLS 认证原理</a></li>
+    <li><a href="#三kubernetes-中的证书工作机制">三、Kubernetes 中的证书工作机制</a>
+      <ul>
+        <li><a href="#31-kubernetes-中使用到的主要证书">3.1 Kubernetes 中使用到的主要证书</a></li>
+        <li><a href="#32-etcd-证书">3.2 etcd 证书</a></li>
+        <li><a href="#33-kube-apiserver-证书">3.3 kube-apiserver 证书</a></li>
+        <li><a href="#34-controller-manager-kubelet-scheduler-证书">3.4 controller-manager, kubelet, scheduler 证书</a></li>
+        <li><a href="#35-service-account-秘钥对">3.5 Service Account 秘钥对</a></li>
+      </ul>
+    </li>
+    <li><a href="#四监控kubernetes证书">四、监控kubernetes证书</a></li>
+    <li><a href="#faq">FAQ</a>
+      <ul>
+        <li><a href="#1-在安装-kubernetes-时我们需要为每一个工作节点上的-kubelet-分别生成一个证书由于工作节点可能很多手动生成-kubelet-证书的过程会比较繁琐怎么办">1. 在安装 Kubernetes 时，我们需要为每一个工作节点上的 Kubelet 分别生成一个证书。由于工作节点可能很多，手动生成 Kubelet 证书的过程会比较繁琐怎么办?</a></li>
+        <li><a href="#2-如何升级-kubernetes-证书但是不让-serviceaccout-轮换">2. 如何升级 kubernetes 证书但是不让 serviceaccout 轮换？</a></li>
+        <li><a href="#3-kubernetes-kubelet-证书自动-renew">3. kubernetes kubelet 证书自动 renew</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if (leftPos < 220) {
+                postToc.css({ "width": leftPos - 10, "margin-left": (0 - leftPos) })
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+
+        if ($("#TableOfContents").children().length < 1) {
+            $(".post-toc").remove();
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">谈谈kubernetes 证书认证那些事儿</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年9月12日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/kubernetes'>kubernetes</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <blockquote>
+<p>kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。</p>
+</blockquote>
+<h2 id="一数字证书原理">一、数字证书原理</h2>
+<h3 id="11-传统非对称加密">1.1 传统非对称加密</h3>
+<pre><code>message --&gt; (公钥加密) --&gt; || 传输 || --&gt; (私钥解密) --&gt; message
+</code></pre>
+<p><strong>注意</strong>:<br>
+1.这里与数字证书认证相反，是公钥加密私钥解密<br>
+2.公钥私钥需要是一个秘钥对</p>
+<h3 id="12-哈希函数">1.2 哈希函数</h3>
+<pre><code>message --&gt; H(message) --&gt; Hash message
+</code></pre>
+<p>处理加入一个随机数，然后得出结果(加盐); 可以有效缓解在输入值是一个有效的集合，哈希值也是固定长度被别人‘试’出来的几率</p>
+<pre><code>message --&gt; H(R|message) --&gt; Hash message
+</code></pre>
+<h3 id="13-数字证书">1.3 数字证书</h3>
+<h4 id="131-数字签名">1.3.1 数字签名</h4>
+<p>数字签名；把数据根据私钥/哈希进行加密，然后必须要对应的公钥来进行解密认证才能确保数据安全。前半句的加密过程就叫做 &lsquo;数字签名&rsquo;</p>
+<h4 id="132-数字证书认证过程">1.3.2 数字证书认证过程</h4>
+<p>Alice 想要通过证书加密让 Bob 安全读到自己的信息流程如下：</p>
+<ol>
+<li>Alice 在本地生成 Private Key 和 CSR（Certificate Signing Request）。CSR 中包含了 Alice 的<code>公钥</code>和姓名，机构、地址等身份信息。</li>
+<li>Alice 使用该 CSR 向证书机构发起数字证书申请。</li>
+<li>证书机构验证 Alice 的身份后，使用 CSR 中的信息生成数字证书，并使用自己的 CA 根证书对应的私钥对该证书签名。</li>
+<li>Alice 使用自己的 Private Key 对合同进行签名，然后将签名后的合同和自己的证书一起并发送给 Bob。</li>
+<li>Bob 使用操作系统中自带的证书机构根证书中的公钥来验证 Alice 证书中的签名，以确认 Alice 的身份和公钥。(<code>使用内置根证书确认身份并获取Alice证书</code>)</li>
+<li>Alice 的证书验证成功后，Bob 使用 Alice 证书中的公钥来验证合同中数字签名。(<code>使用刚刚获取的Alice证书(公钥)解析Alice发送的内容</code>)</li>
+<li>合同数字签名通过验证，可以证明该合同为 Alice 本人发送，并且中间未被第三方篡改过。</li>
+</ol>
+<p><strong>注意</strong>：<br>
+1.自签发证书：证书签发商和证书持有者是同一个人，缺点是没有人能告诉你&quot;这个人就是这个人(我就是我)&quot;; 所以需要上面的信任证书机构的介入，多一环进行认证证明<br>
+2.证书链：但是信任的证书机构的根证书是很机密的，一旦被盗取可能会导致很多人都无法证明&quot;我就是我&quot;, 所以一般会引入一些中间证书商，多一层上面的解析循环；这样也保证了万一中间商证书泄露，不至于全部使用证书机构的人都陷于危险之中<br>
+3.证书签发一般都是有一定时期的, 过期了就如同废纸</p>
+<p>参考链接：<br>
+<a href="https://zhaohuabing.com/post/2020-03-19-pki/">https://zhaohuabing.com/post/2020-03-19-pki/</a></p>
+<h2 id="二双向-tls-认证原理">二、双向 TLS 认证原理</h2>
+<p>
+        <img class="mx-auto" alt="both-tls" src="/doubletls.png" />   
+    </p>
+<p>双向 TLS 认证需要的场景是，服务端和客户端都需要确认，这样就是正反都走一遍上面的流程，来完成双向的数据加密，保证双向的数据安全</p>
+<p>参考链接：<br>
+<a href="https://medium.com/sitewards/the-magic-of-tls-x509-and-mutual-authentication-explained-b2162dec4401/">https://medium.com/sitewards/the-magic-of-tls-x509-and-mutual-authentication-explained-b2162dec4401/</a></p>
+<h2 id="三kubernetes-中的证书工作机制">三、Kubernetes 中的证书工作机制</h2>
+<p>
+        <img class="mx-auto" alt="cert-picture" src="/kubernetes-certificate-usage.png" />   
+    </p>
+<h3 id="31-kubernetes-中使用到的主要证书">3.1 Kubernetes 中使用到的主要证书</h3>
+<ul>
+<li>etcd 集群中各个节点之间相互通信使用的证书。由于一个 etctd 节点既为其他节点提供服务，又需要作为客户端访问其他节点，因此该证书同时用作服务器证书和客户端证书</li>
+<li>etcd 集群向外提供服务使用的证书。该证书是服务器证书</li>
+<li>kube-apiserver 作为客户端访问 etcd 使用的证书。该证书是客户端证书</li>
+<li>kube-apiserver 对外提供服务使用的证书。该证书是服务器证书</li>
+<li>kube-controller-manager 作为客户端访问 kube-apiserver 使用的证书,该证书是客户端证书</li>
+<li>kube-scheduler 作为客户端访问 kube-apiserver 使用的证书,该证书是客户端证书</li>
+<li>kube-proxy 作为客户端访问 kube-apiserver 使用的证书,该证书是客户端证书</li>
+<li>kubelet 作为客户端访问 kube-apiserver 使用的证书,该证书是客户端证书</li>
+<li>管理员用户通过 kubectl 访问 kube-apiserver 使用的证书,该证书是客户端证书</li>
+<li>kubelet 对外提供服务使用的证书。该证书是服务器证书</li>
+<li>kube-apiserver 作为客户端访问 kubelet 采用的证书。该证书是客户端证书</li>
+<li>kube-controller-manager 用于生成和验证 service-account token 的证书。该证书并不会像其他证书一样用于身份认证，而是将证书中的公钥/私钥对用于 service account token 的生成和验证。kube-controller-manager 会<code>用该证书的私钥来生成 service account token，然后以 secret 的方式加载到 pod 中</code>。pod 中的应用可以使用该 token 来访问 kube-apiserver， kube-apiserver 会<code>使用该证书中的公钥来验证请求中的 token</code></li>
+</ul>
+<p><strong>注意</strong>:</p>
+<ol>
+<li>只有当你运行 kube-proxy 并要支持 扩展 API 服务器 时，才需要 front-proxy 证书</li>
+</ol>
+<h3 id="32-etcd-证书">3.2 etcd 证书</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ssh 10.20.11.120
+$ sudo systemctl status etcd
+● etcd.service - etcd docker wrapper
+   Loaded: loaded <span style="color:#666">(</span>/etc/systemd/system/etcd.service; enabled; vendor preset: enabled<span style="color:#666">)</span>
+   Active: active <span style="color:#666">(</span>running<span style="color:#666">)</span> since Mon 2020-08-03 15:42:36 CST; <span style="color:#40a070">1</span> months <span style="color:#40a070">18</span> days ago
+$ cat /etc/etcd.env | tail -13
+
+<span style="color:#60a0b0;font-style:italic"># TLS settings</span>
+<span style="color:#bb60d5">ETCD_TRUSTED_CA_FILE</span><span style="color:#666">=</span>/etc/ssl/etcd/ssl/ca.pem <span style="color:#60a0b0;font-style:italic"># etcd验证访问 etcd 服务器的客户端证书的 CA 根证书, 服务端签名证书和服务端私钥</span>
+<span style="color:#bb60d5">ETCD_CERT_FILE</span><span style="color:#666">=</span>/etc/ssl/etcd/ssl/member-ip-10-20-11-120.pem
+<span style="color:#bb60d5">ETCD_KEY_FILE</span><span style="color:#666">=</span>/etc/ssl/etcd/ssl/member-ip-10-20-11-120-key.pem
+<span style="color:#bb60d5">ETCD_CLIENT_CERT_AUTH</span><span style="color:#666">=</span><span style="color:#007020">true</span>
+
+<span style="color:#bb60d5">ETCD_PEER_TRUSTED_CA_FILE</span><span style="color:#666">=</span>/etc/ssl/etcd/ssl/ca.pem <span style="color:#60a0b0;font-style:italic"># etcd peer之间验证访问 etcd 服务器的客户端证书的 CA 根证书, 服务端签名证书和服务端私钥</span>
+<span style="color:#bb60d5">ETCD_PEER_CERT_FILE</span><span style="color:#666">=</span>/etc/ssl/etcd/ssl/member-ip-10-20-11-120.pem
+<span style="color:#bb60d5">ETCD_PEER_KEY_FILE</span><span style="color:#666">=</span>/etc/ssl/etcd/ssl/member-ip-10-20-11-120-key.pem
+<span style="color:#bb60d5">ETCD_PEER_CLIENT_CERT_AUTH</span><span style="color:#666">=</span>True
+
+<span style="color:#60a0b0;font-style:italic"># 验证etcd证书过期时间</span>
+$ sudo openssl x509 -in /etc/ssl/etcd/ssl/ca.pem -noout -dates
+<span style="color:#bb60d5">notBefore</span><span style="color:#666">=</span>Aug  <span style="color:#40a070">6</span> 05:07:43 <span style="color:#40a070">2019</span> GMT
+<span style="color:#bb60d5">notAfter</span><span style="color:#666">=</span>Jul <span style="color:#40a070">13</span> 05:07:43 <span style="color:#40a070">2119</span> GMT
+</code></pre></div><h3 id="33-kube-apiserver-证书">3.3 kube-apiserver 证书</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ssh 10.20.11.120
+$ <span style="color:#007020">cd</span> /etc/kubernetes
+$ cat manifests/kube-apiserver.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    component: kube-apiserver
+    tier: control-plane
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --advertise-address<span style="color:#666">=</span>10.20.11.120
+    - --etcd-cafile<span style="color:#666">=</span>/etc/ssl/etcd/ssl/ca.pem <span style="color:#60a0b0;font-style:italic"># 用于验证 etcd 客户端证书的 CA 根证书, 用于访问 etcd 的客户端证书和私钥</span>
+    - --etcd-certfile<span style="color:#666">=</span>/etc/ssl/etcd/ssl/node-ip-10-20-11-120.pem
+    - --etcd-keyfile<span style="color:#666">=</span>/etc/ssl/etcd/ssl/node-ip-10-20-11-120-key.pem
+    - --kubelet-client-certificate<span style="color:#666">=</span>/etc/kubernetes/ssl/apiserver-kubelet-client.crt <span style="color:#60a0b0;font-style:italic"># 用于访问 kubelet 的客户端证书和私钥</span>
+    - --kubelet-client-key<span style="color:#666">=</span>/etc/kubernetes/ssl/apiserver-kubelet-client.key
+    - --proxy-client-cert-file<span style="color:#666">=</span>/etc/kubernetes/ssl/front-proxy-client.crt <span style="color:#60a0b0;font-style:italic"># 只有当你运行 kube-proxy 并要支持 扩展 API 服务器 时，才需要 front-proxy 证书</span>
+    - --proxy-client-key-file<span style="color:#666">=</span>/etc/kubernetes/ssl/front-proxy-client.key
+    - --client-ca-file<span style="color:#666">=</span>/etc/kubernetes/ssl/ca.crt <span style="color:#60a0b0;font-style:italic"># 用于验证访问 kube-apiserver 的客户端的证书的 CA 根证书</span>
+    - --service-account-key-file<span style="color:#666">=</span>/etc/kubernetes/ssl/sa.pub <span style="color:#60a0b0;font-style:italic"># 用于验证 service account token 的公钥</span>
+    - --tls-cert-file<span style="color:#666">=</span>/etc/kubernetes/ssl/apiserver.crt <span style="color:#60a0b0;font-style:italic"># 用于对外提供服务的服务器证书和私钥</span>
+    - --tls-private-key-file<span style="color:#666">=</span>/etc/kubernetes/ssl/apiserver.key
+    ...
+</code></pre></div><h3 id="34-controller-manager-kubelet-scheduler-证书">3.4 controller-manager, kubelet, scheduler 证书</h3>
+<p>上面三个 apiserver 的客户端组件的证书都写在了对应的 KUBECONFIG 中,名为 controller-manager.conf, kubelet.conf, scheduler.conf, 就不一一展示, 随便列举一个如下:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># 包含验证apiserver证书的ca证书, 还有请求时候的看客户端证书和私钥</span>
+$ cat scheduler.conf
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: ca证书
+    server: https://10.20.11.120:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: system:kube-scheduler
+  name: system:kube-scheduler@kubernetes
+current-context: system:kube-scheduler@kubernetes
+kind: Config
+preferences: <span style="color:#666">{}</span>
+users:
+- name: system:kube-scheduler
+  user:
+    client-certificate-data: server证书
+    client-key-data: 秘钥
+</code></pre></div><h3 id="35-service-account-秘钥对">3.5 Service Account 秘钥对</h3>
+<p>Service account 主要被 pod 用于访问 kube-apiserver。 在为一个 pod 指定了 service account 后，kubernetes 会为该 service account 生成一个 JWT token，并使用 secret 将该 service account token 挂载到 pod 上。pod 中的应用可以使用 service account token 来访问 api server。service account 证书被用于生成和验证 service account token。</p>
+<p><strong>注意</strong>:</p>
+<ol>
+<li>Service account加密过程是文章开头说的&quot;非对称加密&quot;, 也就是说只是controller-manager私钥加密数据, 然后kube-apiserver的公钥进行解密而已</li>
+<li>由于是非对称加密, 也就是说没有&quot;双向 tls 认证&quot;</li>
+<li>istio的做法就是为每个 service account 生成一个证书, 之后就可以&quot;双向 tls 认证&quot;</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat manifests/kube-controller-manager.yaml | grep service-account
+    - --service-account-private-key-file<span style="color:#666">=</span>/etc/kubernetes/ssl/sa.key
+    - --use-service-account-credentials<span style="color:#666">=</span><span style="color:#007020">true</span>
+$ cat manifests/kube-apiserver.yaml | grep service-account
+    - --service-account-key-file<span style="color:#666">=</span>/etc/kubernetes/ssl/sa.pub
+</code></pre></div><h2 id="四监控kubernetes证书">四、监控kubernetes证书</h2>
+<p>比较好用的是开源的x509 exporter</p>
+<p>开源链接：<br>
+<a href="https://github.com/enix/x509-certificate-exporter/">https://github.com/enix/x509-certificate-exporter/</a></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ gc https://github.com/enix/x509-certificate-exporter.git
+$ <span style="color:#007020">cd</span> deploy/charts/x509-certificate-exporter
+$ vim values.yaml
+...
+  daemonSets:
+    master:
+      nodeSelector:
+        <span style="color:#4070a0">&#34;node-role.kubernetes.io/controlplane&#34;</span>: <span style="color:#4070a0">&#34;true&#34;</span>
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+      watchDirectories:
+        - /etc/kubernetes/ssl/
+    nodes:
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
+      watchKubeconfFiles:
+        - /etc/kubernetes/ssl/kubecfg-kube-node.yaml
+        - /etc/kubernetes/ssl/kubecfg-kube-proxy.yaml
+
+$ helm install x509-certificate-exporter .
+$ k get daemonset                                               
+NAME                               DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                               AGE
+x509-certificate-exporter-master   <span style="color:#40a070">3</span>         <span style="color:#40a070">3</span>         <span style="color:#40a070">3</span>       <span style="color:#40a070">3</span>            <span style="color:#40a070">3</span>           node-role.kubernetes.io/controlplane<span style="color:#666">=</span><span style="color:#007020">true</span>   18d
+x509-certificate-exporter-nodes    <span style="color:#40a070">202</span>       <span style="color:#40a070">202</span>       <span style="color:#40a070">197</span>     <span style="color:#40a070">202</span>          <span style="color:#40a070">197</span>         &lt;none&gt;                                      18d
+...
+</code></pre></div><p>在daemonSet配置里面支持将核心的控制节点证书路径，或者kubeconfig文件写进去，然后部署即可；开源社区提供配套dashboard:</p>
+<p>
+        <img class="mx-auto" alt="k8scert" src="/k8scert.jpg" />   
+    </p>
+<h2 id="faq">FAQ</h2>
+<h3 id="1-在安装-kubernetes-时我们需要为每一个工作节点上的-kubelet-分别生成一个证书由于工作节点可能很多手动生成-kubelet-证书的过程会比较繁琐怎么办">1. 在安装 Kubernetes 时，我们需要为每一个工作节点上的 Kubelet 分别生成一个证书。由于工作节点可能很多，手动生成 Kubelet 证书的过程会比较繁琐怎么办?</h3>
+<ol>
+<li>Kubernetes 提供了一个 certificates.k8s.io API，可以使用配置的 CA 根证书来签发用户证书</li>
+<li>Kubernetes 提供了 TLS bootstrapping 的方式来简化 Kubelet 证书的生成过程</li>
+</ol>
+<p>过程如下:(需要 apiserver 启用&ndash;enable-bootstrap-token-auth)</p>
+<ol>
+<li>调用 kube-apiserver 生成一个 bootstrap token</li>
+<li>将该 bootstrap token 写入到一个 kubeconfig 文件中，作为 kubelet 调用 kube-apiserver 的客户端验证方式</li>
+<li>通过 &ndash;bootstrap-kubeconfig 启动参数将 bootstrap token 传递给 kubelet 进程</li>
+<li>Kubelet 采用 bootstrap token 调用 kube-apiserver API，生成自己所需的服务器和客户端证书</li>
+<li>证书生成后，Kubelet 采用生成的证书和 kube-apiserver 进行通信，并删除本地的 kubeconfig 文件，以避免 bootstrap token 泄漏风险</li>
+</ol>
+<p>参考链接:<br>
+<a href="https://zhaohuabing.com/post/2020-05-19-k8s-certificate/">https://zhaohuabing.com/post/2020-05-19-k8s-certificate/</a><br>
+<a href="https://kubernetes.io/zh/docs/tasks/tls/managing-tls-in-a-cluster/">https://kubernetes.io/zh/docs/tasks/tls/managing-tls-in-a-cluster/</a></p>
+<h3 id="2-如何升级-kubernetes-证书但是不让-serviceaccout-轮换">2. 如何升级 kubernetes 证书但是不让 serviceaccout 轮换？</h3>
+<p>我们都知道 serviceaccount 的 token 是依赖于 sa.key 和 sa.pub 的，也就是说如果这俩秘钥更换了，所有的 serviceaccout 就都失效了，会重新创建(kube-system 命名空间的会自动轮换，其他 ns 的需要手动); 但是如果只是更换证书的话，其实是不需要更换 sa 秘钥对的，因为 sa 秘钥对采用的是&quot;非对称加密&quot;, 也就是说永不过期，除非删除秘钥对；<br>
+事实上我们只要手动更换其他证书即可：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cp -R /etc/kubernetes/ssl /etc/kubernetes/ssl.backup
+$ cp /etc/kubernetes/admin.conf /etc/kubernetes/admin.conf.backup
+$ cp /etc/kubernetes/controller-manager.conf /etc/kubernetes/controller-manager.conf.backup
+$ cp /etc/kubernetes/kubelet.conf /etc/kubernetes/kubelet.conf.backup
+$ cp /etc/kubernetes/scheduler.conf /etc/kubernetes/scheduler.conf.backup
+
+$ kubeadm alpha certs renew apiserver-kubelet-client
+$ kubeadm alpha certs renew apiserver
+$ kubeadm alpha certs renew front-proxy-client
+$ kubeadm alpha kubeconfig user --client-name system:kube-controller-manager &gt; /etc/kubernetes/controller-manager.conf
+$ kubeadm alpha kubeconfig user --client-name system:kube-scheduler &gt; /etc/kubernetes/scheduler.conf
+$ kubeadm alpha kubeconfig user --client-name system:node:<span style="color:#666">{</span>nodename<span style="color:#666">}</span> --org system:nodes &gt; /etc/kubernetes/kubelet.conf
+
+$ kubeadm alpha kubeconfig user --client-name kubernetes-admin --org system:masters &gt; /etc/kubernetes/admin.conf
+$ cp /etc/kubernetes/admin.conf ~/.kube/config
+</code></pre></div><p>上述过程每个 master 都需要做(如果有多个 master), 最后重启基础组件即可(嫌麻烦可以直接 master 节点关机重启)</p>
+<p>参考链接：<br>
+<a href="https://github.com/kubernetes-sigs/kubespray/issues/5464/">https://github.com/kubernetes-sigs/kubespray/issues/5464/</a></p>
+<h3 id="3-kubernetes-kubelet-证书自动-renew">3. kubernetes kubelet 证书自动 renew</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#60a0b0;font-style:italic"># kubelet配置</span>
+--feature-gates<span style="color:#666">=</span><span style="color:#bb60d5">RotateKubeletServerCertificate</span><span style="color:#666">=</span><span style="color:#007020">true</span>
+--feature-gates<span style="color:#666">=</span><span style="color:#bb60d5">RotateKubeletClientCertificate</span><span style="color:#666">=</span><span style="color:#007020">true</span>
+<span style="color:#60a0b0;font-style:italic"># 1.8版本以上包含1.8都支持证书更换自动重载，以下版本只能手动重启服务</span>
+--rotate-certificates
+
+
+<span style="color:#60a0b0;font-style:italic"># kube-controller-manager配置</span>
+<span style="color:#60a0b0;font-style:italic"># 证书有效期为10年</span>
+--experimental-cluster-signing-duration<span style="color:#666">=</span>87600h0m0s
+--feature-gates<span style="color:#666">=</span><span style="color:#bb60d5">RotateKubeletServerCertificate</span><span style="color:#666">=</span><span style="color:#007020">true</span>
+</code></pre></div><p>创建自动批准相关 CSR 请求的 ClusterRole:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: system:certificates.k8s.io:certificatesigningrequests:selfnodeserver
+rules:
+- apiGroups: <span style="color:#666">[</span><span style="color:#4070a0">&#34;certificates.k8s.io&#34;</span><span style="color:#666">]</span>
+  resources: <span style="color:#666">[</span><span style="color:#4070a0">&#34;certificatesigningrequests/selfnodeserver&#34;</span><span style="color:#666">]</span>
+  verbs: <span style="color:#666">[</span><span style="color:#4070a0">&#34;create&#34;</span><span style="color:#666">]</span>
+</code></pre></div><p>自动批准 kubelet-bootstrap 用户 TLS bootstrapping 首次申请证书的 CSR 请求</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl create clusterrolebinding node-client-auto-approve-csr --clusterrole<span style="color:#666">=</span>system:certificates.k8s.io:certificatesigningrequests:nodeclient --user<span style="color:#666">=</span>kubelet-bootstrap
+</code></pre></div><p>自动批准 system:nodes 组用户更新 kubelet 自身与 apiserver 通讯证书的 CSR 请求</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl create clusterrolebinding node-client-auto-renew-crt --clusterrole<span style="color:#666">=</span>system:certificates.k8s.io:certificatesigningrequests:selfnodeclient --group<span style="color:#666">=</span>system:nodes
+</code></pre></div><p>自动批准 system:nodes 组用户更新 kubelet 10250 api 端口证书的 CSR 请求</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl create clusterrolebinding node-server-auto-renew-crt --clusterrole<span style="color:#666">=</span>system:certificates.k8s.io:certificatesigningrequests:selfnodeserver --group<span style="color:#666">=</span>system:nodes
+</code></pre></div><p>参考链接：<br>
+<a href="https://www.leiyawu.com/2020/10/11/Untitled/">https://www.leiyawu.com/2020/10/11/Untitled/</a></p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/ingress-mechanism/">浅谈kubernetes ingress机制</a></li>
+        
+        <li><a href="/post/retrywatcher/">client-go watch接口隔一段时间自动退出怎么办？</a></li>
+        
+        <li><a href="/post/monitor-control-plane/">prometheus 监测 kubernetes 控制平面</a></li>
+        
+        <li><a href="/post/containerd/">浅谈 containerd</a></li>
+        
+        <li><a href="/post/algorithm/5/">【算法系列】用一个栈实现另一个栈的排序</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/kubernetes'>kubernetes</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "ZhangSIming-blyq/blogcommit"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+    
+    
+
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2022 <a href="https://zhangsiming-blyq.github.io/">百里英骐 By BaileysRock</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://www.flysnow.org/" target="_black"><span class="badge-subject">Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+        </div>
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://zhangsiming-blyq.github.io/search' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://zhangsiming-blyq.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/" title="谈谈kubernetes 证书认证那些事儿">谈谈kubernetes 证书认证那些事儿</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" title="浅谈kubernetes ingress机制">浅谈kubernetes ingress机制</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序">【算法系列】用一个栈实现另一个栈的排序</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列">【算法系列】猫狗队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+    </li>
+    
+    <li>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (5)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/apigateway/">apigateway (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/containerd/">containerd (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/docker/">docker (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/finance/">finance (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (4)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
+    
+    <li><a href="https://zhangsiming-blyq.github.io/categories/python/">python (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/BaileysRock/">BaileysRock</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/about/">about</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/algorithm/">algorithm</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/ansible/">ansible</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apigateway/">apigateway</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/apiserver/">apiserver</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/containerd/">containerd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/controller-manager/">controller-manager</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/etcd/">etcd</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/finance/">finance</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/footprints/">footprints</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/fund/">fund</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/golang/">golang</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/kubernetes/">kubernetes</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/linux/">linux</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/python/">python</a>
+    
+    <a href="https://zhangsiming-blyq.github.io/tags/scheduler/">scheduler</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://zhangsiming-blyq.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.92.2" />
+	<meta name="generator" content="Hugo 0.87.0" />
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,7 +71,33 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" title="浅谈kubernetes ingress机制" target="_blank">浅谈kubernetes ingress机制</a>
+                <a href="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/" title="谈谈kubernetes 证书认证那些事儿">谈谈kubernetes 证书认证那些事儿</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2022年9月12日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/kubernetes'>kubernetes</a></span>
+            
+        </div>
+        
+        <div class="post-content">
+            kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
+ 一、数字证书原理 1.1 传统非对称加密 message --&gt; (公钥加密) --&gt; || 传输 || --&gt; (私钥解密) --&gt; message  注意:……
+        </div>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/">阅读全文</a></p>
+    </article>
+    
+    
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" title="浅谈kubernetes ingress机制">浅谈kubernetes ingress机制</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -81,9 +107,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/kubernetes' target="_blank">kubernetes</a>
-            </span>
+            <span class="meta-category"><a href='/categories/kubernetes'>kubernetes</a></span>
             
         </div>
         
@@ -92,7 +116,7 @@
  一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
 # 实验中选择的是&#34;iptables模式的kube-proxy&#34; # 首先关闭kube-proxy $ sudo systemctl stop kube-proxy # 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 $ ks NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE example-test NodePort 10.……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/">阅读全文</a></p>
     </article>
     
     
@@ -100,7 +124,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序" target="_blank">【算法系列】用一个栈实现另一个栈的排序</a>
+                <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序">【算法系列】用一个栈实现另一个栈的排序</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -110,9 +134,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/algorithm' target="_blank">algorithm</a>
-            </span>
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
             
         </div>
         
@@ -120,7 +142,7 @@
             题目要求 一个栈中元素的类型为整型，现在想将该栈从顶到底按从小到大的顺序排序，只允许申请一个栈。除此之外，可以申请新的变量，但不能申请额外的数据结构。如何完成排序？
 解题思路  申请一个新的help栈，不断从原有栈中获取数据, 去跟新的help栈的栈顶数据相比; 如果符合排序要求，就push到help栈中 如果不符合排序要求，就从help栈中pop出栈顶数据，push到原栈中，直至符合排序要求 最终原栈被清空，help栈是全部排好序的栈，重新一股脑写回来即完成栈排序  golang实现 package main // SortStark stark top --&gt; stark bottom(from small to big) func SortStark(stk *Stack) { helpStack := NewStack() // 1.……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/5/">阅读全文</a></p>
     </article>
     
     
@@ -128,7 +150,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比" target="_blank">API网关对比</a>
+                <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -138,13 +160,9 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/linux' target="_blank">linux</a>
-            </span>
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
             
-            <span class="meta-category">
-                <a href='/categories/apigateway' target="_blank">apigateway</a>
-            </span>
+            <span class="meta-category"><a href='/categories/apigateway'>apigateway</a></span>
             
         </div>
         
@@ -152,7 +170,7 @@
             kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
  一、kong 1.1 安装 # 安装kong $ helm repo add kong https://charts.……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/apigateway/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/apigateway/">阅读全文</a></p>
     </article>
     
     
@@ -160,7 +178,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解" target="_blank">ansible-playbook 详解</a>
+                <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -170,13 +188,9 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/ansible' target="_blank">ansible</a>
-            </span>
+            <span class="meta-category"><a href='/categories/ansible'>ansible</a></span>
             
-            <span class="meta-category">
-                <a href='/categories/linux' target="_blank">linux</a>
-            </span>
+            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
             
         </div>
         
@@ -184,7 +198,7 @@
             Ansible 是一个开源的基于 OpenSSH 的自动化配置管理工具。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。
  一、ansible 简介  Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。基于这样的目标，Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。Ansible 适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境。……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/">阅读全文</a></p>
     </article>
     
     
@@ -192,7 +206,7 @@
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列" target="_blank">【算法系列】猫狗队列</a>
+                <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列">【算法系列】猫狗队列</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -202,9 +216,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/algorithm' target="_blank">algorithm</a>
-            </span>
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
             
         </div>
         
@@ -212,7 +224,7 @@
             题目要求 狗和猫都实现了Pet接口，可以用getPetType()查看对应的动物类型; NewDog()、NewCat()可以分别新建狗猫对象。
 type Pet interface { getPetType() string } type fatherPet struct { Type string } func (fp *fatherPet) getPetType() string { return fp.……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/4/">阅读全文</a></p>
     </article>
     
     
@@ -220,7 +232,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈" target="_blank">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
+                <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -230,9 +242,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/algorithm' target="_blank">algorithm</a>
-            </span>
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
             
         </div>
         
@@ -240,7 +250,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
             题目要求 一个栈依次压入1、2、3、4、5，那么从栈顶到栈底分别为5、4、3、2、1。将这个栈转置后，从栈顶到栈底为1、2、3、4、5，也就是实现栈元素的逆序，但是只能用递归函数来实现，不能用其他数据结构。
 解题思路  一个函数实现返回栈内数据，用于返回栈底元素，当栈空的时候停止  另一个函数接受栈底元素并将每一个的数据重新压入栈中，即可实现逆序   golang实现 package main import &#34;fmt&#34; func getAndRemoveLastElement(stack *Stack) int { result := stack.……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/3/">阅读全文</a></p>
     </article>
     
     
@@ -248,7 +258,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列" target="_blank">【算法系列】由两个栈组成的队列</a>
+                <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -258,9 +268,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/algorithm' target="_blank">algorithm</a>
-            </span>
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
             
         </div>
         
@@ -268,7 +276,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
             题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
 解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/2/">阅读全文</a></p>
     </article>
     
     
@@ -276,7 +284,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈" target="_blank">【算法系列】设计一个有getMin功能的栈</a>
+                <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -286,16 +294,14 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/algorithm' target="_blank">algorithm</a>
-            </span>
+            <span class="meta-category"><a href='/categories/algorithm'>algorithm</a></span>
             
         </div>
         
         <div class="post-content">
             题目要求  pop、push、getMin操作的时间复杂度都是O(1) 设计的栈类型可以使用现成的栈结构  解题思路  使用两个栈，starkData和stackMin 每次压入starkData时候同时比较和stackMin顶部数据大小，小于stackMin顶部数据就将新的最小值压入栈  golang实现 golang内置数据结构不包括栈，定义一个栈:……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/algorithm/1/">阅读全文</a></p>
     </article>
     
     
@@ -303,7 +309,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
     <article class="post">
         <header>
             <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？" target="_blank">client-go watch接口隔一段时间自动退出怎么办？</a>
+                <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
@@ -313,13 +319,9 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category">
-                <a href='/categories/golang' target="_blank">golang</a>
-            </span>
+            <span class="meta-category"><a href='/categories/golang'>golang</a></span>
             
-            <span class="meta-category">
-                <a href='/categories/kubernetes' target="_blank">kubernetes</a>
-            </span>
+            <span class="meta-category"><a href='/categories/kubernetes'>kubernetes</a></span>
             
         </div>
         
@@ -329,36 +331,7 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
 使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
 pod, err := mycluster.……
         </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" target="_blank">阅读全文</a></p>
-    </article>
-    
-    
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解" target="_blank">python yield详解</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2022年4月18日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category">
-                <a href='/categories/python' target="_blank">python</a>
-            </span>
-            
-        </div>
-        
-        <div class="post-content">
-            讲解python中迭代器、生成器、以及yield字段的常见使用场景。
- Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
- __iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器  lst = [1, 2, 3] print(type(lst)) new_iter = lst.……
-        </div>
-        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/python-yield/" target="_blank">阅读全文</a></p>
+        <p class="readmore"><a href="https://zhangsiming-blyq.github.io/post/retrywatcher/">阅读全文</a></p>
     </article>
     
     
@@ -416,8 +389,6 @@ pod, err := mycluster.……
 
 
 
-
-
                 </div>
 
                 <div id="secondary">
@@ -435,43 +406,43 @@ pod, err := mycluster.……
 <ul class="widget-list">
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" title="浅谈kubernetes ingress机制" target="_blank">浅谈kubernetes ingress机制</a>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/" title="谈谈kubernetes 证书认证那些事儿">谈谈kubernetes 证书认证那些事儿</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序" target="_blank">【算法系列】用一个栈实现另一个栈的排序</a>
+        <a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" title="浅谈kubernetes ingress机制">浅谈kubernetes ingress机制</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比" target="_blank">API网关对比</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序">【算法系列】用一个栈实现另一个栈的排序</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解" target="_blank">ansible-playbook 详解</a>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列" target="_blank">【算法系列】猫狗队列</a>
+        <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈" target="_blank">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列">【算法系列】猫狗队列</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列" target="_blank">【算法系列】由两个栈组成的队列</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈" target="_blank">【算法系列】设计一个有getMin功能的栈</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？" target="_blank">client-go watch接口隔一段时间自动退出怎么办？</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="python yield详解" target="_blank">python yield详解</a>
+        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
     </li>
     
 </ul>
@@ -497,7 +468,7 @@ pod, err := mycluster.……
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/golang/">golang (1)</a></li>
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (3)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/kubernetes/">kubernetes (4)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/linux/">linux (2)</a></li>
     
