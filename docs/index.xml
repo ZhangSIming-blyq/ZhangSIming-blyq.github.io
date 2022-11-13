@@ -6,7 +6,18 @@
     <description>Recent content on 百里英骐</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【算法系列】生成窗口最大值数组</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/6/</link>
+      <pubDate>Sat, 01 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/6/</guid>
+      <description>题目要求 有一个整形数组arr和一个大小为w的窗口从数组最左边滑到最右边，窗口每次向右边滑一个位置。例如，数组为[4,3,5,4,3,3,6,7], 窗口大小为3时:
+ 如果数组长度为n，窗口大小为w，则一共产生 n-w+1 个窗口最大值。请实现一个函数：
+ 输入：整形数组arr，窗口大小为w 输出：一个长度为 n-w+1 的数组res，res[i]表示每一种窗口状态下的最大值，要求时间复杂度O(N*w)  解题思路  整体逻辑：</description>
+    </item>
+    
     <item>
       <title>谈谈kubernetes 证书认证那些事儿</title>
       <link>https://zhangsiming-blyq.github.io/post/kubernetes-certificate/</link>
@@ -167,7 +178,7 @@ pod, err := mycluster.</description>
       
       <guid>https://zhangsiming-blyq.github.io/footprints/</guid>
       <description>更多请见：百里英骐的instagram
-2022-11-11 下雨天的360大厦A座 2022-11-03 小武基体育中心的夜景 2022-10-30 10:00闭馆前的小武基体育健身中心室内篮球场 2022-10-21 电脑老是有点小噪音，都拆开查找发现是cpu风扇的贴纸掉到里面了&amp;hellip; 2022-10-19 月光下夜晚10点，永定门外大街空无一人 2022-10-15 从窗户往下看，一只猫咪焦急地等待它的午饭 2022-10-10 西三环北路，连接首都师范大学两个校区的过街天桥 2022-10-10 夜晚 永定门城楼 2022-10-07 寿司拼盘 2022-10-05 天气晴朗的东三环主路 2022-10-02 360大厦路口 2022-09-30 天桥演艺厅 </description>
+2022-11-13 Siri 今天天气如何？空气质量优 2022-11-12 秋雨配银杏 2022-11-11 下雨天的360大厦A座 2022-11-03 小武基体育中心的夜景 2022-10-30 10:00闭馆前的小武基体育健身中心室内篮球场 2022-10-21 电脑老是有点小噪音，都拆开查找发现是cpu风扇的贴纸掉到里面了&amp;hellip; 2022-10-19 月光下夜晚10点，永定门外大街空无一人 2022-10-15 从窗户往下看，一只猫咪焦急地等待它的午饭 2022-10-10 西三环北路，连接首都师范大学两个校区的过街天桥 2022-10-10 夜晚 永定门城楼 2022-10-07 寿司拼盘 2022-10-05 天气晴朗的东三环主路 2022-10-02 360大厦路口 2022-09-30 天桥演艺厅 </description>
     </item>
     
     <item>

@@ -196,9 +196,13 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/ansible'>ansible</a></span>
+            <span class="meta-category">
+                <a href='/categories/ansible' target="_blank">ansible</a>
+            </span>
             
-            <span class="meta-category"><a href='/categories/linux'>linux</a></span>
+            <span class="meta-category">
+                <a href='/categories/linux' target="_blank">linux</a>
+            </span>
             
         </div>
         
@@ -536,9 +540,9 @@ kube-system   nodelocaldns-xnvv7                1/1     Running   <span style="c
             
             <ul class="clearfix">
                 
-                <li><a href='/tags/ansible'>ansible</a></li>
+                <li><a href='/tags/ansible' target="_blank">ansible</a></li>
                 
-                <li><a href='/tags/linux'>linux</a></li>
+                <li><a href='/tags/linux' target="_blank">linux</a></li>
                 
             </ul>
             
@@ -598,6 +602,82 @@ kube-system   nodelocaldns-xnvv7                1/1     Running   <span style="c
 
 <a id="rocket" href="#top"></a>
 <script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+<style type="text/css">
+div.highlight {
+    position: relative;
+    margin: 1em 0px;
+}
+
+.copy-code {
+    display: none;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(78, 78, 78, 0.8);
+    border-radius: var(--radius);
+    padding: 0 5px;
+    font: inherit;
+    user-select: none;
+    cursor: pointer;
+    border: 0;
+    --radius: 8px;
+}
+
+div.highlight:hover .copy-code,pre:hover .copy-code {
+    display: block;
+}
+
+</style>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+
+
 
 
 
@@ -618,43 +698,43 @@ kube-system   nodelocaldns-xnvv7                1/1     Running   <span style="c
 <ul class="widget-list">
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/" title="谈谈kubernetes 证书认证那些事儿">谈谈kubernetes 证书认证那些事儿</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/6/" title="【算法系列】生成窗口最大值数组" target="_blank">【算法系列】生成窗口最大值数组</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" title="浅谈kubernetes ingress机制">浅谈kubernetes ingress机制</a>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/" title="谈谈kubernetes 证书认证那些事儿" target="_blank">谈谈kubernetes 证书认证那些事儿</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序">【算法系列】用一个栈实现另一个栈的排序</a>
+        <a href="https://zhangsiming-blyq.github.io/post/ingress-mechanism/" title="浅谈kubernetes ingress机制" target="_blank">浅谈kubernetes ingress机制</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比">API网关对比</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="【算法系列】用一个栈实现另一个栈的排序" target="_blank">【算法系列】用一个栈实现另一个栈的排序</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解">ansible-playbook 详解</a>
+        <a href="https://zhangsiming-blyq.github.io/post/apigateway/" title="API网关对比" target="_blank">API网关对比</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列">【算法系列】猫狗队列</a>
+        <a href="https://zhangsiming-blyq.github.io/post/ansible-playbook/" title="ansible-playbook 详解" target="_blank">ansible-playbook 详解</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/4/" title="【算法系列】猫狗队列" target="_blank">【算法系列】猫狗队列</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/3/" title="【算法系列】如何仅用递归函数和栈操作逆序一个栈" target="_blank">【算法系列】如何仅用递归函数和栈操作逆序一个栈</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈">【算法系列】设计一个有getMin功能的栈</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列" target="_blank">【算法系列】由两个栈组成的队列</a>
     </li>
     
     <li>
-        <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="【算法系列】设计一个有getMin功能的栈" target="_blank">【算法系列】设计一个有getMin功能的栈</a>
     </li>
     
 </ul>
@@ -666,7 +746,7 @@ kube-system   nodelocaldns-xnvv7                1/1     Running   <span style="c
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (5)</a></li>
+    <li><a href="https://zhangsiming-blyq.github.io/categories/algorithm/">algorithm (6)</a></li>
     
     <li><a href="https://zhangsiming-blyq.github.io/categories/ansible/">ansible (1)</a></li>
     
