@@ -4,12 +4,10 @@
   lang="en"
   data-figures=""
   
-    class="page"
-  
   
   >
   <head>
-<title>【算法系列】由两个栈组成的队列 | Clarity</title>
+<title>bailiyingqi | Clarity</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,20 +21,17 @@
 
 
 
-  
 <meta property="og:locale" content="en" />
 
 <meta property="og:type" content="article">
-<meta name="description" content="题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
-解题思路 栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了 golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是 …" />
+<meta name="description" content="" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="">
-<meta name="twitter:title" content="【算法系列】由两个栈组成的队列" />
+<meta name="twitter:title" content="bailiyingqi" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
-<meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/2/" />
-<meta property="og:title" content="【算法系列】由两个栈组成的队列" />
-<meta property="og:description" content="题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
-解题思路 栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了 golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是 …" />
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/tags/bailiyingqi/" />
+<meta property="og:title" content="bailiyingqi" />
+<meta property="og:description" content="" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
   <meta name="keywords" content="231,153,190,233,135,140,232,139,177,233,170,144,44,107,117,98,101,114,110,101,116,101,115,44,103,111,108,97,110,103,44,112,121,116,104,111,110,44,115,104,101,108,108,44,108,105,110,117,120,44,115,114,101,44,232,189,175,228,187,182,230,158,182,230,158,132,44,98,108,111,103" />
 
@@ -44,7 +39,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
 <link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
 
-<link rel="canonical" href="https://zhangsiming-blyq.github.io/post/algorithm/2/">
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/tags/bailiyingqi/">
+<link rel="alternate" type="application/rss+xml" href="https://zhangsiming-blyq.github.io/tags/bailiyingqi/index.xml" title="Clarity" />
 
 
 
@@ -126,10 +122,19 @@
 </header>
 
     <main>
-  
+
+
+
 <div class="grid-inverse wrap content">
-  <article class="post_content">
-    <h1 class="post_title">【算法系列】由两个栈组成的队列</h1>
+  <div>
+    <ul class="posts" id="posts">
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/about/" title="关于我">关于我</a>
+      </h3>
+      
   <div class="post_meta">
     <span><svg class="icon">
   <title>calendar</title>
@@ -137,21 +142,22 @@
 </svg>
 </span>
     <span class="post_date">
-      Jun 4, 2022</span>
-    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
+      Apr 10, 2022</span>
+    <span class="post_time"> · 1 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/about/' title="about" class="post_tag button button_translucent">about
+        </a><a href='https://zhangsiming-blyq.github.io/tags/bailiyingqi/' title="bailiyingqi" class="post_tag button button_translucent">bailiyingqi
         </a>
     </span>
     <span class="page_only">&nbsp;·
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e7%b3%bb%e5%88%97%e3%80%91%e7%94%b1%e4%b8%a4%e4%b8%aa%e6%a0%88%e7%bb%84%e6%88%90%e7%9a%84%e9%98%9f%e5%88%97&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=%e5%85%b3%e4%ba%8e%e6%88%91&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fabout%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>twitter</title>
   <use xlink:href="#twitter"></use>
 </svg>
 
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f2%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e7%b3%bb%e5%88%97%e3%80%91%e7%94%b1%e4%b8%a4%e4%b8%aa%e6%a0%88%e7%bb%84%e6%88%90%e7%9a%84%e9%98%9f%e5%88%97" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fabout%2f&t=%e5%85%b3%e4%ba%8e%e6%88%91" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>facebook</title>
   <use xlink:href="#facebook"></use>
@@ -165,7 +171,7 @@
 </svg>
 
     </a>
-    <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="Copy Link" class="link link_yank">
+    <a href="https://zhangsiming-blyq.github.io/about/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <title>copy</title>
   <use xlink:href="#copy"></use>
@@ -176,222 +182,31 @@
   </span>
   </div>
 
-      <div class="post_toc">
-        <h2>Overview</h2>
-        <nav id="TableOfContents">
-  <ul>
-    <li><a href="#题目要求">题目要求</a></li>
-    <li><a href="#解题思路">解题思路</a></li>
-    <li><a href="#golang实现">golang实现</a></li>
-    <li><a href="#测试用例">测试用例</a></li>
-  </ul>
-</nav>
-      </div>
-    
-    <div class="post_body"><h2 id="题目要求">题目要求</h2>
-<p>编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek</p>
-<h2 id="解题思路">解题思路</h2>
-<ol>
-<li>栈的特点是后进先出、队列的特点是先进先出</li>
-<li>一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了</li>
-</ol>
-<p><figure>
-  <picture>
-
-    
-      
-        
-        
-        
-        
-        
-        
-    <img
-      loading="lazy"
-      decoding="async"
-      alt="stack2"
-      
-        class="image_figure image_internal image_unprocessed"
-        src="/stack2.png"
-      
-      
-    />
-
-    </picture>
-</figure>
-</p>
-<h2 id="golang实现">golang实现</h2>
-<p>需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
-</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="kd">type</span> <span class="nx">TwoStackQueue</span> <span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="nx">stackPush</span> <span class="o">*</span><span class="nx">Stack</span>
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="nx">stackPop</span>  <span class="o">*</span><span class="nx">Stack</span>
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
-</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="kd">func</span> <span class="nf">NewTwoStackQueue</span><span class="p">()</span> <span class="o">*</span><span class="nx">TwoStackQueue</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">TwoStackQueue</span><span class="p">{</span>
-</span></span><span class="line"><span class="ln">12</span><span class="cl">		<span class="nx">stackPush</span><span class="p">:</span> <span class="nf">NewStack</span><span class="p">(),</span>
-</span></span><span class="line"><span class="ln">13</span><span class="cl">		<span class="nx">stackPop</span><span class="p">:</span>  <span class="nf">NewStack</span><span class="p">(),</span>
-</span></span><span class="line"><span class="ln">14</span><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln">16</span><span class="cl">
-</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span> <span class="nf">add</span><span class="p">(</span><span class="nx">data</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPush</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln">20</span><span class="cl">
-</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span> <span class="nf">poll</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">22</span><span class="cl">	<span class="k">if</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPush</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">23</span><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;TwoStackQueue is empty&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">24</span><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="k">for</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPush</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">26</span><span class="cl">			<span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPush</span><span class="p">.</span><span class="nf">Pop</span><span class="p">())</span>
-</span></span><span class="line"><span class="ln">27</span><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="ln">28</span><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="ln">29</span><span class="cl">	<span class="nx">value</span> <span class="o">:=</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Pop</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">30</span><span class="cl">	<span class="k">return</span> <span class="nx">value</span>
-</span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln">32</span><span class="cl">
-</span></span><span class="line"><span class="ln">33</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span> <span class="nf">peek</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">34</span><span class="cl">	<span class="k">if</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPush</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">35</span><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;TwoStackQueue is empty&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">36</span><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">37</span><span class="cl">		<span class="k">for</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPush</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">38</span><span class="cl">			<span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPush</span><span class="p">.</span><span class="nf">Pop</span><span class="p">())</span>
-</span></span><span class="line"><span class="ln">39</span><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="ln">40</span><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="ln">41</span><span class="cl">	<span class="nx">value</span> <span class="o">:=</span> <span class="nx">tsq</span><span class="p">.</span><span class="nx">stackPop</span><span class="p">.</span><span class="nf">Peek</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">42</span><span class="cl">	<span class="k">return</span> <span class="nx">value</span>
-</span></span><span class="line"><span class="ln">43</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="测试用例">测试用例</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-golang" data-lang="golang"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="s">&#34;testing&#34;</span>
-</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
-</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="s">&#34;github.com/stretchr/testify/assert&#34;</span>
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="kd">func</span> <span class="nf">TestTwoStackQueue</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="c1">// define a getmin stack
-</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>	<span class="nx">tests</span> <span class="o">:=</span> <span class="p">[]</span><span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">12</span><span class="cl">		<span class="c1">// 名字
-</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>		<span class="nx">name</span> <span class="kt">string</span>
-</span></span><span class="line"><span class="ln">14</span><span class="cl">
-</span></span><span class="line"><span class="ln">15</span><span class="cl">		<span class="c1">// 输入部分
-</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1"></span>		<span class="nx">val</span> <span class="kd">func</span><span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">17</span><span class="cl">
-</span></span><span class="line"><span class="ln">18</span><span class="cl">		<span class="c1">// 输出部分
-</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span>		<span class="nx">wantRes</span> <span class="kd">interface</span><span class="p">{}</span>
-</span></span><span class="line"><span class="ln">20</span><span class="cl">	<span class="p">}{</span>
-</span></span><span class="line"><span class="ln">21</span><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="ln">22</span><span class="cl">			<span class="nx">name</span><span class="p">:</span>    <span class="s">&#34;push&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">23</span><span class="cl">			<span class="nx">val</span><span class="p">:</span>     <span class="nx">push</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">24</span><span class="cl">			<span class="nx">wantRes</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="p">},</span>
-</span></span><span class="line"><span class="ln">26</span><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="ln">27</span><span class="cl">			<span class="nx">name</span><span class="p">:</span>    <span class="s">&#34;push and poll1&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">28</span><span class="cl">			<span class="nx">val</span><span class="p">:</span>     <span class="nx">pushpoll1</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">29</span><span class="cl">			<span class="nx">wantRes</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">30</span><span class="cl">		<span class="p">},</span>
-</span></span><span class="line"><span class="ln">31</span><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="ln">32</span><span class="cl">			<span class="nx">name</span><span class="p">:</span>    <span class="s">&#34;push and poll2&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">33</span><span class="cl">			<span class="nx">val</span><span class="p">:</span>     <span class="nx">pushpoll2</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">34</span><span class="cl">			<span class="nx">wantRes</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">35</span><span class="cl">		<span class="p">},</span>
-</span></span><span class="line"><span class="ln">36</span><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="ln">37</span><span class="cl">			<span class="nx">name</span><span class="p">:</span>    <span class="s">&#34;push and poll3&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">38</span><span class="cl">			<span class="nx">val</span><span class="p">:</span>     <span class="nx">pushpoll3</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">39</span><span class="cl">			<span class="nx">wantRes</span><span class="p">:</span> <span class="kc">nil</span><span class="p">,</span>
-</span></span><span class="line"><span class="ln">40</span><span class="cl">		<span class="p">},</span>
-</span></span><span class="line"><span class="ln">41</span><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="ln">42</span><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">tt</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">tests</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">43</span><span class="cl">		<span class="c1">// new TwoStackQueue
-</span></span></span><span class="line"><span class="ln">44</span><span class="cl"><span class="c1"></span>		<span class="nx">tsq</span> <span class="o">:=</span> <span class="nf">NewTwoStackQueue</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">45</span><span class="cl">		<span class="nx">t</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="nx">tt</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">46</span><span class="cl">			<span class="nx">tt</span><span class="p">.</span><span class="nf">val</span><span class="p">(</span><span class="nx">tsq</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">47</span><span class="cl">			<span class="nx">res</span> <span class="o">:=</span> <span class="nx">tsq</span><span class="p">.</span><span class="nf">peek</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">48</span><span class="cl">			<span class="nx">assert</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span> <span class="nx">tt</span><span class="p">.</span><span class="nx">wantRes</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">49</span><span class="cl">		<span class="p">})</span>
-</span></span><span class="line"><span class="ln">50</span><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="ln">51</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln">52</span><span class="cl">
-</span></span><span class="line"><span class="ln">53</span><span class="cl"><span class="kd">func</span> <span class="nf">push</span><span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">54</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">55</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">56</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">57</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln">58</span><span class="cl">
-</span></span><span class="line"><span class="ln">59</span><span class="cl"><span class="kd">func</span> <span class="nf">pushpoll1</span><span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">60</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">61</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">62</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">63</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">poll</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">64</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">poll</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">65</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln">66</span><span class="cl">
-</span></span><span class="line"><span class="ln">67</span><span class="cl"><span class="kd">func</span> <span class="nf">pushpoll2</span><span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">68</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">69</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">poll</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">70</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">71</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">72</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln">73</span><span class="cl">
-</span></span><span class="line"><span class="ln">74</span><span class="cl"><span class="kd">func</span> <span class="nf">pushpoll3</span><span class="p">(</span><span class="nx">tsq</span> <span class="o">*</span><span class="nx">TwoStackQueue</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">75</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">76</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">77</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">poll</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">78</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span></span><span class="line"><span class="ln">79</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">poll</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">80</span><span class="cl">	<span class="nx">tsq</span><span class="p">.</span><span class="nf">poll</span><span class="p">()</span>
-</span></span><span class="line"><span class="ln">81</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>测试结果：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl">$ go <span class="nb">test</span> -run ^TestTwoStackQueue$ . -v
-</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="o">===</span> RUN   <span class="nv">TestTwoStackQueue</span>
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="o">===</span> RUN   TestTwoStackQueue/push
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="o">===</span> RUN   TestTwoStackQueue/push_and_poll1
-</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="o">===</span> RUN   TestTwoStackQueue/push_and_poll2
-</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="o">===</span> RUN   TestTwoStackQueue/push_and_poll3
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl">--- PASS: TestTwoStackQueue <span class="o">(</span>0.00s<span class="o">)</span>
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    --- PASS: TestTwoStackQueue/push <span class="o">(</span>0.00s<span class="o">)</span>
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    --- PASS: TestTwoStackQueue/push_and_poll1 <span class="o">(</span>0.00s<span class="o">)</span>
-</span></span><span class="line"><span class="ln">10</span><span class="cl">    --- PASS: TestTwoStackQueue/push_and_poll2 <span class="o">(</span>0.00s<span class="o">)</span>
-</span></span><span class="line"><span class="ln">11</span><span class="cl">    --- PASS: TestTwoStackQueue/push_and_poll3 <span class="o">(</span>0.00s<span class="o">)</span>
-</span></span><span class="line"><span class="ln">12</span><span class="cl">PASS
-</span></span></code></pre></div><blockquote>
-<p>符合队列的特性，在add(1)、add(2)、add(3)的时候peek总是看到1，后面只有移除了1才能看到2，按照顺序直至队列取空。</p>
-</blockquote>
-
     </div>
-<div class="post_comments">
-  
-  
-    
- <script src="https://utteranc.es/client.js"
-         repo="ZhangSIming-blyq/blogcommit"
-         issue-term="pathname"
-         theme="github-light"
-         crossorigin="anonymous"
-         async>
- </script>
- 
-  
-  
-</div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p>专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等
+百里英骐 说点什么 Because I believe in you, just like I believe in each and every one of you here today.</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/about/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
 
-
-
-
-  </article>
+      <li>
+      </li>
+    </ul>
+  </div>
 <aside class="sidebar">
   <section class="sidebar_inner">
     <br>
     
   
   <div class="search">
-    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='post'>
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='tags'>
     <label for="find" class="search_label"><svg class="icon">
   <title>search</title>
   <use xlink:href="#search"></use>
@@ -659,8 +474,9 @@
   </section>
 </aside>
 
-  
 </div>
+
+
     </main><svg width="0" height="0" class="hidden">
   <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
     <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
