@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>百里英骐</title>
+    <title>Clarity</title>
     <link>https://zhangsiming-blyq.github.io/</link>
-    <description>Recent content on 百里英骐</description>
+    <description>Recent content on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
     <lastBuildDate>Sat, 01 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>【算法系列】生成窗口最大值数组</title>
@@ -13,9 +13,16 @@
       <pubDate>Sat, 01 Oct 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/6/</guid>
-      <description>题目要求 有一个整形数组arr和一个大小为w的窗口从数组最左边滑到最右边，窗口每次向右边滑一个位置。例如，数组为[4,3,5,4,3,3,6,7], 窗口大小为3时:
- 如果数组长度为n，窗口大小为w，则一共产生 n-w+1 个窗口最大值。请实现一个函数：
- 输入：整形数组arr，窗口大小为w 输出：一个长度为 n-w+1 的数组res，res[i]表示每一种窗口状态下的最大值，要求时间复杂度O(N*w)  解题思路  整体逻辑：</description>
+      <description>
+        
+          
+            题目要求 有一个整形数组arr和一个大小为w的窗口从数组最左边滑到最右边，窗口每次向右边滑一个位置。例如，数组为[4,3,5,4,3,3,6,7], 窗口大小为3时:
+如果数组长度为n，窗口大小为w，则一共产生 n-w+1 个窗口最大值。请实现一个函数：
+输入：整形数组arr，窗口大小为w 输出：一个长度为 n-w+1 的数组res，res[i]表示每一种窗口状态下的最大值，要求时间复杂度O(N*w) 解题思路 整体逻辑：
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -24,8 +31,15 @@
       <pubDate>Mon, 12 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/kubernetes-certificate/</guid>
-      <description>kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
- 一、数字证书原理 1.1 传统非对称加密 message --&amp;gt; (公钥加密) --&amp;gt; || 传输 || --&amp;gt; (私钥解密) --&amp;gt; message  注意:</description>
+      <description>
+        
+          
+            kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
+一、数字证书原理 1.1 传统非对称加密 1message --&amp;gt; (公钥加密) --&amp;gt; || 传输 || --&amp;gt; (私钥解密) --&amp;gt; message 注意:
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -34,9 +48,16 @@
       <pubDate>Thu, 25 Aug 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/ingress-mechanism/</guid>
-      <description>ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。
- 一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
-# 实验中选择的是&amp;#34;iptables模式的kube-proxy&amp;#34; # 首先关闭kube-proxy $ sudo systemctl stop kube-proxy # 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 $ ks NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE example-test NodePort 10.</description>
+      <description>
+        
+          
+            ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。
+一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
+1# 实验中选择的是&amp;#34;iptables模式的kube-proxy&amp;#34; 2# 首先关闭kube-proxy 3$ sudo systemctl stop kube-proxy 4 5# 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 6$ ks 7NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE 8example-test NodePort 10.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -45,8 +66,15 @@
       <pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/5/</guid>
-      <description>题目要求 一个栈中元素的类型为整型，现在想将该栈从顶到底按从小到大的顺序排序，只允许申请一个栈。除此之外，可以申请新的变量，但不能申请额外的数据结构。如何完成排序？
-解题思路  申请一个新的help栈，不断从原有栈中获取数据, 去跟新的help栈的栈顶数据相比; 如果符合排序要求，就push到help栈中 如果不符合排序要求，就从help栈中pop出栈顶数据，push到原栈中，直至符合排序要求 最终原栈被清空，help栈是全部排好序的栈，重新一股脑写回来即完成栈排序  golang实现 package main // SortStark stark top --&amp;gt; stark bottom(from small to big) func SortStark(stk *Stack) { helpStack := NewStack() // 1.</description>
+      <description>
+        
+          
+            题目要求 一个栈中元素的类型为整型，现在想将该栈从顶到底按从小到大的顺序排序，只允许申请一个栈。除此之外，可以申请新的变量，但不能申请额外的数据结构。如何完成排序？
+解题思路 申请一个新的help栈，不断从原有栈中获取数据, 去跟新的help栈的栈顶数据相比; 如果符合排序要求，就push到help栈中 如果不符合排序要求，就从help栈中pop出栈顶数据，push到原栈中，直至符合排序要求 最终原栈被清空，help栈是全部排好序的栈，重新一股脑写回来即完成栈排序 golang实现 1package main 2 3// SortStark stark top --&amp;gt; stark bottom(from small to big) 4func SortStark(stk *Stack) { 5	helpStack := NewStack() 6	// 1.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -55,8 +83,15 @@
       <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/apigateway/</guid>
-      <description>kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
- 一、kong 1.1 安装 # 安装kong $ helm repo add kong https://charts.</description>
+      <description>
+        
+          
+            kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
+一、kong 1.1 安装 1# 安装kong 2$ helm repo add kong https://charts.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -65,8 +100,15 @@
       <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/ansible-playbook/</guid>
-      <description>Ansible 是一个开源的基于 OpenSSH 的自动化配置管理工具。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。
- 一、ansible 简介  Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。基于这样的目标，Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。Ansible 适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境。</description>
+      <description>
+        
+          
+            Ansible 是一个开源的基于 OpenSSH 的自动化配置管理工具。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。
+一、ansible 简介 Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。基于这样的目标，Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。Ansible 适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境。
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -75,8 +117,15 @@
       <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/4/</guid>
-      <description>题目要求 狗和猫都实现了Pet接口，可以用getPetType()查看对应的动物类型; NewDog()、NewCat()可以分别新建狗猫对象。
-type Pet interface { getPetType() string } type fatherPet struct { Type string } func (fp *fatherPet) getPetType() string { return fp.</description>
+      <description>
+        
+          
+            题目要求 狗和猫都实现了Pet接口，可以用getPetType()查看对应的动物类型; NewDog()、NewCat()可以分别新建狗猫对象。
+1type Pet interface { 2	getPetType() string 3} 4 5type fatherPet struct { 6	Type string 7} 8 9func (fp *fatherPet) getPetType() string { 10	return fp.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -85,8 +134,15 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
       <pubDate>Sun, 05 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/3/</guid>
-      <description>题目要求 一个栈依次压入1、2、3、4、5，那么从栈顶到栈底分别为5、4、3、2、1。将这个栈转置后，从栈顶到栈底为1、2、3、4、5，也就是实现栈元素的逆序，但是只能用递归函数来实现，不能用其他数据结构。
-解题思路  一个函数实现返回栈内数据，用于返回栈底元素，当栈空的时候停止  另一个函数接受栈底元素并将每一个的数据重新压入栈中，即可实现逆序   golang实现 package main import &amp;#34;fmt&amp;#34; func getAndRemoveLastElement(stack *Stack) int { result := stack.</description>
+      <description>
+        
+          
+            题目要求 一个栈依次压入1、2、3、4、5，那么从栈顶到栈底分别为5、4、3、2、1。将这个栈转置后，从栈顶到栈底为1、2、3、4、5，也就是实现栈元素的逆序，但是只能用递归函数来实现，不能用其他数据结构。
+解题思路 一个函数实现返回栈内数据，用于返回栈底元素，当栈空的时候停止 另一个函数接受栈底元素并将每一个的数据重新压入栈中，即可实现逆序 golang实现 1package main 2 3import &amp;#34;fmt&amp;#34; 4 5func getAndRemoveLastElement(stack *Stack) int { 6	result := stack.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -95,8 +151,16 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
       <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/2/</guid>
-      <description>题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
-解题思路  栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了   golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。</description>
+      <description>
+        
+          
+            题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
+解题思路 栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了 golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。
+1package main 2 3import &amp;#34;fmt&amp;#34; 4 5type TwoStackQueue struct { 6	stackPush *Stack 7	stackPop *Stack 8} 9 10func NewTwoStackQueue() *TwoStackQueue { 11	return &amp;amp;TwoStackQueue{ 12	stackPush: NewStack(), 13	stackPop: NewStack(), 14	} 15} 16 17func (tsq *TwoStackQueue) add(data interface{}) { 18	tsq.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -105,7 +169,15 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
       <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/algorithm/1/</guid>
-      <description>题目要求  pop、push、getMin操作的时间复杂度都是O(1) 设计的栈类型可以使用现成的栈结构  解题思路  使用两个栈，starkData和stackMin 每次压入starkData时候同时比较和stackMin顶部数据大小，小于stackMin顶部数据就将新的最小值压入栈  golang实现 golang内置数据结构不包括栈，定义一个栈:</description>
+      <description>
+        
+          
+            题目要求 pop、push、getMin操作的时间复杂度都是O(1) 设计的栈类型可以使用现成的栈结构 解题思路 使用两个栈，starkData和stackMin 每次压入starkData时候同时比较和stackMin顶部数据大小，小于stackMin顶部数据就将新的最小值压入栈 golang实现 golang内置数据结构不包括栈，定义一个栈:
+支持NewStack()创建 支持Push(), Pop(), Peek(), Len(), Push支持任意类型(取值出来断言) 1package main 2 3import &amp;#34;sync&amp;#34; 4 5type ( 6	Stack struct { 7	top *node 8	length int 9	lock *sync.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -114,10 +186,16 @@ type Pet interface { getPetType() string } type fatherPet struct { Type string }
       <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/retrywatcher/</guid>
-      <description>在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
- 使用client-go watch接口 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+      <description>
+        
+          
+            在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+使用client-go watch接口 💡 全局的mycluster都等于*kubernetes.Clientset 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
 使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
-pod, err := mycluster.</description>
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -126,9 +204,16 @@ pod, err := mycluster.</description>
       <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/python-yield/</guid>
-      <description>讲解python中迭代器、生成器、以及yield字段的常见使用场景。
- Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
- __iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器  lst = [1, 2, 3] print(type(lst)) new_iter = lst.</description>
+      <description>
+        
+          
+            讲解python中迭代器、生成器、以及yield字段的常见使用场景。
+Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
+__iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -137,8 +222,15 @@ pod, err := mycluster.</description>
       <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</guid>
-      <description>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
- 一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</description>
+      <description>
+        
+          
+            对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
+一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -147,18 +239,16 @@ pod, err := mycluster.</description>
       <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/indexfund/</guid>
-      <description>股神巴菲特说：“通过定期投资指数基金，一个什么都不懂的业余投资者竟然往往能够战胜大部分专业投资者；指数基金追踪指数，对基金经理没有过多依赖；每个指数基金会同时投资几十只甚至上百只股票，可以最大化分散投资者的非市场风险；而且在所有同类基金里，指数基金的费率也是最低的。”
- 宽基指数基金  上证50指数：上交所选出沪市规模最大、流动性最好、最具有代表性的50只股票组成样本股，反应沪市最具影响力的一批优秀大盘企业的整体状况 沪深300指数：由中证指数公司开发，从上交所和深交所挑选规模最大、流动性最好的300只股票，国内股市最具代表性的指数 中证500指数：将全部沪深300指数的300家公司排除，然后将最近一年日均总市值排名前300名的企业也排除，剩下的公司中选择日均总市值排名前500名的企业，作为中证500指数 创业板指数：放在深交所下面的，给达不到主板上市条件的小企业开放的门槛更低的市场；创业板综指指的是所有创业板上市公司的股价平均表现；创业板指数是反应创业板最主要的100家企业的平均表现  以上四种指数按照市值加权，股票规模越大，指数中权重越高。</description>
-    </item>
-    
-    <item>
-      <title>关于我</title>
-      <link>https://zhangsiming-blyq.github.io/about/</link>
-      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/about/</guid>
-      <description>专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等
-百里英骐  说点什么 Because I believe in you, just like I believe in each and every one of you here today.</description>
+      <description>
+        
+          
+            股神巴菲特说：“通过定期投资指数基金，一个什么都不懂的业余投资者竟然往往能够战胜大部分专业投资者；指数基金追踪指数，对基金经理没有过多依赖；每个指数基金会同时投资几十只甚至上百只股票，可以最大化分散投资者的非市场风险；而且在所有同类基金里，指数基金的费率也是最低的。”
+宽基指数基金 上证50指数：上交所选出沪市规模最大、流动性最好、最具有代表性的50只股票组成样本股，反应沪市最具影响力的一批优秀大盘企业的整体状况 沪深300指数：由中证指数公司开发，从上交所和深交所挑选规模最大、流动性最好的300只股票，国内股市最具代表性的指数 中证500指数：将全部沪深300指数的300家公司排除，然后将最近一年日均总市值排名前300名的企业也排除，剩下的公司中选择日均总市值排名前500名的企业，作为中证500指数 创业板指数：放在深交所下面的，给达不到主板上市条件的小企业开放的门槛更低的市场；创业板综指指的是所有创业板上市公司的股价平均表现；创业板指数是反应创业板最主要的100家企业的平均表现 以上四种指数按照市值加权，股票规模越大，指数中权重越高。
+红利指数：是近十几年兴起的一类比较特殊的策略加权基金；我们都知道股票是会发放股息的，也就是现金分红；业绩比较好的公司会每年从净利润中拿出一部分，以现金分红的形式回馈股东；而红利指数就是按照分红进行加权，组成指数基金。常见的有上证红利指数、中证红利指数、深证红利指数和红利机会指数 基本面指数：基本面基本覆盖了一个公司运营的各个方面，比如营业收入、现金流、净资产、分红等，按照基本面进行加权的叫做基本面指数 央视财经50指数：专家们投票选出来的50只股票，和专家的选股能力息息相关 恒生指数：投资中国香港上市的公司中规模最大的50家企业 H股指数：公司在内地注册，但是在香港上市，这样的公司就是H股；H股指数的全程是恒生中国企业指数 上证50AH优选指数：很多公司同时在A股和H股上市，关系紧密；买入AH股中相对便宜的那个，卖出相对贵的那个，利用这一原理来获取超额收益的组成上证50AH优选指数 纳斯达克100指数：美股纳斯达克规模最大的100家大型企业 标普500指数：以大盘股为主，有500只成分股；标普500是一个附带主观判断的蓝筹股指数，包括公司各个行业分布、大小型公司的选择都比较均匀 上证综指：上交所全部的上市公司组成 中证100指数：沪深300中选择前100组成、还有类似的中证800、中证1000、中证全指 等权重指数：等权重指数则是分配给每个成分股完全相同的权重 行业指数基金 优秀行业： 必须消费：主要是维持我们正常生活所需要的各种消费品、例如饮料、酒、农副食品等 医药行业：每个人都离不开生老病死，医药是人类的基本需求 可选消费：饮料、烟草等常用日用消费品，一般单价比较低、消费频率大，也是刚需 养老产业：多行业混合的产业，覆盖了多个行业，包括医疗保健、信息技术、日常消费、可选消费、甚至包括保险公司这种金融行业 强周期性行业 银行业：银行的周期性受宏观经济的影响较大，经济处于下行周期，银行利差收益减少，利益就变差；经济好转时，银行效益就会变好 证券业 地产业 其他： 军工行业 环保行业 白酒行业 常见的估值指标 市盈率：公司市值/公司盈利，反映了我们愿意为了获取1元的净利润付出多少代价(市盈率10表示我们愿意为了1元盈利付出10元)；也可以反推估算市值(根据公司年净利润乘市盈率可以计算市值)；适用于流通性好，盈利稳定的公司 盈利收益率：公司盈利/公司市值，一般来说盈利收益率越高公司的估值就越低，公司越有可能被低估；适用于流通性好，盈利稳定的公司 市净率：公司市值/公司净资产，净资产就是资产减去负债；当企业的资产大多是比较容易衡量价值的有形资产，并且使长期保值的资产时，比较适合用市净率来估值 股息率：过去一年公司的现金分红/公司市值，股息率衡量的就是现金分红的收益率；盈利收益率*分红率=股息率；分红率一般是公司预先就设置好了，连续多年不会有什么改变；股息率会随之股价波动，股价越低，股息率越高 指数的估值查看”银行螺丝钉公众号”获取
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -167,36 +257,15 @@ pod, err := mycluster.</description>
       <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/containerd/</guid>
-      <description>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
- 一、安装使用 ctr 管理 containerd # Install Dependent Libraries $ sudo apt-get update $ sudo apt-get install libseccomp2 # 下载 # 目前是下载的1.</description>
-    </item>
-    
-    <item>
-      <title>足迹</title>
-      <link>https://zhangsiming-blyq.github.io/footprints/</link>
-      <pubDate>Tue, 22 Apr 1997 11:58:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/footprints/</guid>
-      <description>更多请见：百里英骐的instagram
-2022-11-13 Siri 今天天气如何？空气质量优 2022-11-12 秋雨配银杏 2022-11-11 下雨天的360大厦A座 2022-11-03 小武基体育中心的夜景 2022-10-30 10:00闭馆前的小武基体育健身中心室内篮球场 2022-10-21 电脑老是有点小噪音，都拆开查找发现是cpu风扇的贴纸掉到里面了&amp;hellip; 2022-10-19 月光下夜晚10点，永定门外大街空无一人 2022-10-15 从窗户往下看，一只猫咪焦急地等待它的午饭 2022-10-10 西三环北路，连接首都师范大学两个校区的过街天桥 2022-10-10 夜晚 永定门城楼 2022-10-07 寿司拼盘 2022-10-05 天气晴朗的东三环主路 2022-10-02 360大厦路口 2022-09-30 天桥演艺厅 </description>
-    </item>
-    
-    <item>
-      <title>归档</title>
-      <link>https://zhangsiming-blyq.github.io/archives/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/archives/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>搜索</title>
-      <link>https://zhangsiming-blyq.github.io/search/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/search/</guid>
-      <description></description>
+      <description>
+        
+          
+            伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
+一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.
+          
+          
+        
+      </description>
     </item>
     
   </channel>

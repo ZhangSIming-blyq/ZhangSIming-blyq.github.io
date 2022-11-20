@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>kubernetes on 百里英骐</title>
+    <title>kubernetes on Clarity</title>
     <link>https://zhangsiming-blyq.github.io/categories/kubernetes/</link>
-    <description>Recent content in kubernetes on 百里英骐</description>
+    <description>Recent content in kubernetes on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
     <lastBuildDate>Mon, 12 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>谈谈kubernetes 证书认证那些事儿</title>
@@ -13,8 +13,15 @@
       <pubDate>Mon, 12 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/kubernetes-certificate/</guid>
-      <description>kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
- 一、数字证书原理 1.1 传统非对称加密 message --&amp;gt; (公钥加密) --&amp;gt; || 传输 || --&amp;gt; (私钥解密) --&amp;gt; message  注意:</description>
+      <description>
+        
+          
+            kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
+一、数字证书原理 1.1 传统非对称加密 1message --&amp;gt; (公钥加密) --&amp;gt; || 传输 || --&amp;gt; (私钥解密) --&amp;gt; message 注意:
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -23,9 +30,16 @@
       <pubDate>Thu, 25 Aug 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/ingress-mechanism/</guid>
-      <description>ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。
- 一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
-# 实验中选择的是&amp;#34;iptables模式的kube-proxy&amp;#34; # 首先关闭kube-proxy $ sudo systemctl stop kube-proxy # 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 $ ks NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE example-test NodePort 10.</description>
+      <description>
+        
+          
+            ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。
+一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
+1# 实验中选择的是&amp;#34;iptables模式的kube-proxy&amp;#34; 2# 首先关闭kube-proxy 3$ sudo systemctl stop kube-proxy 4 5# 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 6$ ks 7NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE 8example-test NodePort 10.
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -34,10 +48,16 @@
       <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/retrywatcher/</guid>
-      <description>在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
- 使用client-go watch接口 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+      <description>
+        
+          
+            在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+使用client-go watch接口 💡 全局的mycluster都等于*kubernetes.Clientset 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
 使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
-pod, err := mycluster.</description>
+          
+          
+        
+      </description>
     </item>
     
     <item>
@@ -46,8 +66,15 @@ pod, err := mycluster.</description>
       <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://zhangsiming-blyq.github.io/post/monitor-control-plane/</guid>
-      <description>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
- 一、Prometheus 如何自动发现 Kubernetes Metrics 接口?</description>
+      <description>
+        
+          
+            对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
+一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.
+          
+          
+        
+      </description>
     </item>
     
   </channel>

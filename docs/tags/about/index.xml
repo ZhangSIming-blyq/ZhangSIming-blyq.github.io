@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>about on 百里英骐</title>
+    <title>about on Clarity</title>
     <link>https://zhangsiming-blyq.github.io/tags/about/</link>
-    <description>Recent content in about on 百里英骐</description>
+    <description>Recent content in about on Clarity</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
     <lastBuildDate>Sun, 10 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/about/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>关于我</title>
-      <link>https://zhangsiming-blyq.github.io/about/</link>
-      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/about/</guid>
-      <description>专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等
-百里英骐  说点什么 Because I believe in you, just like I believe in each and every one of you here today.</description>
-    </item>
-    
   </channel>
 </rss>

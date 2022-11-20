@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://zhangsiming-blyq.github.io/post/algorithm/6/</loc>
+    <lastmod>2022-10-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/algorithm/</loc>
     <lastmod>2022-10-01T00:00:00+00:00</lastmod>
   </url><url>
@@ -11,16 +14,13 @@
     <loc>https://zhangsiming-blyq.github.io/categories/</loc>
     <lastmod>2022-10-01T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://zhangsiming-blyq.github.io/</loc>
+    <lastmod>2022-10-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/</loc>
     <lastmod>2022-10-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/</loc>
-    <lastmod>2022-10-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/post/algorithm/6/</loc>
-    <lastmod>2022-10-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/</loc>
     <lastmod>2022-10-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
@@ -122,7 +122,7 @@
     <loc>https://zhangsiming-blyq.github.io/tags/about/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/BaileysRock/</loc>
+    <loc>https://zhangsiming-blyq.github.io/tags/baileysrock/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/containerd/</loc>
@@ -146,8 +146,8 @@
     <loc>https://zhangsiming-blyq.github.io/footprints/</loc>
     <lastmod>1997-04-22T11:58:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/archives/</loc>
-  </url><url>
     <loc>https://zhangsiming-blyq.github.io/search/</loc>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/series/</loc>
   </url>
 </urlset>
