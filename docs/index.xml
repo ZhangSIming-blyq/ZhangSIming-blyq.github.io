@@ -6,7 +6,25 @@
     <description>Recent content on bailiyingqi&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 01 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用zap打造你的golang日志库</title>
+      <link>https://zhangsiming-blyq.github.io/post/gozap/</link>
+      <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/gozap/</guid>
+      <description>
+        
+          
+            近期配置了uber家的zap日志库，觉得性能比较强，展示比较美观，在这里做一个分享，代码在第三部分可以自取。
+为什么不选择原生log? 说起golang如何优雅的打印日志，任何一个golang的初学者大概都是用的原生log库，或者直接fmt.Println()...但是这种方式并不优雅，并且有以下缺点：
+对于基础日志：不能细粒度区分info和debug级别的日志; 对于错误日志: 不支持除了fatal或者panic的普通error级别告知。 log示例 1package main 2 3import &amp;#34;log&amp;#34; 4 5func main() { 6 log.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>【算法系列】生成窗口最大值数组</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/6/</link>
