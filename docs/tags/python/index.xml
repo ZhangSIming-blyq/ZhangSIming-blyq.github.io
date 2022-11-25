@@ -18,7 +18,11 @@
           
             讲解python中迭代器、生成器、以及yield字段的常见使用场景。
 Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
-__iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.
+__iter__()方法：返回迭代器对象本身 __next__()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.__iter__() 4print(type(new_iter)) 5 6# Output 7&amp;lt;class &amp;#39;list&amp;#39;&amp;gt; 8&amp;lt;class &amp;#39;list_iterator&amp;#39;&amp;gt; for循环实际上就是通过__iter__()获取iterators，然后进行__next__()取值，直到StopIteration
+Generators&amp;amp;yield Generators是一种特殊的迭代器(iterators)。如果函数中任意位置存在yield字段，当你调用函数，函数不会直接执行，而是会返回一个生成器(generators)。另外生成器(generators)还支持生成器表达式（类似于列表，只是将[]换成了()）
+1def test(): 2 print(&amp;#34;for test&amp;#34;) 3 yield 0 4gen1 = test() 5print(type(gen1)) 6gen2 = (x*x for x in range(0, 3)) 7print(type(gen2)) 8 9# Output 10&amp;lt;class &amp;#39;generator&amp;#39;&amp;gt; 11&amp;lt;class &amp;#39;generator&amp;#39;&amp;gt; yield 区别于迭代器(iterators)会把所有的内容全部储存到内存中，生成器(generators)会随着__next__()的不断调用分配内存
+每次生成器(generators)会运行到yield字段，然后将生成器(generators)状态保存返回；下次调用__next__()会继续从当前位置继续，到达下一个yield字段。一直到StopIteration停止。看一下下面例子：
+1def test(): 2 print(&amp;#34;start&amp;#34;) 3 yield 0 4 print(&amp;#34;end&amp;#34;) 5 yield 1 6 7gen1 = test() 8print(gen1.
           
           
         

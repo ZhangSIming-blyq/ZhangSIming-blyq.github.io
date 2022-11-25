@@ -44,6 +44,9 @@
     <loc>https://zhangsiming-blyq.github.io/post/ingress-mechanism/</loc>
     <lastmod>2022-08-25T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://zhangsiming-blyq.github.io/archives/</loc>
+    <lastmod>2022-08-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/5/</loc>
     <lastmod>2022-08-01T00:00:00+00:00</lastmod>
   </url><url>
@@ -122,7 +125,13 @@
     <loc>https://zhangsiming-blyq.github.io/post/indexfund/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://zhangsiming-blyq.github.io/search/</loc>
+    <lastmod>2022-04-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/about/</loc>
+    <lastmod>2022-04-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/baileysrock/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/bailiyingqi/</loc>
@@ -137,22 +146,17 @@
     <loc>https://zhangsiming-blyq.github.io/categories/docker/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/footprints/</loc>
+    <lastmod>2022-04-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/about/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/containerd/</loc>
     <lastmod>2022-04-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/baileysrock/</loc>
-    <lastmod>1997-04-22T11:58:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/footprints/</loc>
-    <lastmod>1997-04-22T11:58:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhangsiming-blyq.github.io/footprints/</loc>
-    <lastmod>1997-04-22T11:58:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/search/</loc>
+    <lastmod>2022-04-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/series/</loc>
   </url>

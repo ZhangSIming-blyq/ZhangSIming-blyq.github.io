@@ -26,14 +26,13 @@
 <meta property="og:type" content="article">
 <meta name="description" content="" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:creator" content="">
+<meta name="twitter:creator" content="@janedoe">
 <meta name="twitter:title" content="Posts" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
 <meta property="og:url" content="https://zhangsiming-blyq.github.io/post/" />
 <meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
-  <meta name="keywords" content="231,153,190,233,135,140,232,139,177,233,170,144,44,107,117,98,101,114,110,101,116,101,115,44,103,111,108,97,110,103,44,112,121,116,104,111,110,44,115,104,101,108,108,44,108,105,110,117,120,44,115,114,101,44,232,189,175,228,187,182,230,158,182,230,158,132,44,98,108,111,103" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
@@ -89,6 +88,9 @@
     <a href="https://zhangsiming-blyq.github.io/" class="nav_item" title="Home">Home </a>
   </div>
   <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/archives/" class="nav_item" title="Archives">Archives </a>
+  </div>
+  <div class="nav_parent">
     <a href="https://zhangsiming-blyq.github.io/about/" class="nav_item" title="About">About </a>
   </div>
   <div class="nav_parent">
@@ -128,6 +130,74 @@
 <div class="grid-inverse wrap content">
   <div>
     <ul class="posts" id="posts">
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="【算法系列】由两个栈组成的队列">【算法系列】由两个栈组成的队列</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Jun 4, 2022</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e7%b3%bb%e5%88%97%e3%80%91%e7%94%b1%e4%b8%a4%e4%b8%aa%e6%a0%88%e7%bb%84%e6%88%90%e7%9a%84%e9%98%9f%e5%88%97&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f2%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e7%b3%bb%e5%88%97%e3%80%91%e7%94%b1%e4%b8%a4%e4%b8%aa%e6%a0%88%e7%bb%84%e6%88%90%e7%9a%84%e9%98%9f%e5%88%97" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p>题目要求 编写一个类，用两个栈实现队列，支持队列的基本操作：add、poll、peek
+解题思路 栈的特点是后进先出、队列的特点是先进先出 一个栈作为压入栈，另一个栈作为弹出栈，只要把压入栈的数据再压入弹出栈顺序就恢复回来了 golang实现 需要注意的是，因为只能保证每次从stackPush到stackPop的数据是连贯的, 所以stackPush在向stackPop压数据的时候必须一次性将全部数据压入, 并且只有stackPop为空时，才进行一次性压入操作。
+1package main 2 3import &quot;fmt&quot; 4 5type TwoStackQueue struct { 6	stackPush …</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
         <li class="post_item">
   <div class="excerpt">
     <div class="excerpt_header">
@@ -255,7 +325,7 @@
           
             <p>在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
 使用client-go watch接口 💡 全局的mycluster都等于*kubernetes.Clientset 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
-使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。</p>
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。 …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="Read More" class="excerpt_more button">Read More</a>
@@ -323,7 +393,7 @@
           
             <p>讲解python中迭代器、生成器、以及yield字段的常见使用场景。
 Iterators python中对象实现了__iter__()和__next__()两个方法，我们就成它是可迭代对象(iterables)，通过__iter__()可以返回一个迭代器对象(iterators)
-<strong>iter</strong>()方法：返回迭代器对象本身 <strong>next</strong>()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.</p>
+<strong>iter</strong>()方法：返回迭代器对象本身 <strong>next</strong>()方法：返回容器的下一个元素，在结尾时引发一个StopIteration异常终止迭代器 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.<strong>iter</strong>() 4print(type(new_iter)) 5 6# Output …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/python-yield/" title="Read More" class="excerpt_more button">Read More</a>
@@ -394,7 +464,7 @@ Iterators python中对象实现了__iter__()和__next__()两个方法，我们�
         <div class="pale">
           
             <p>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
-一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.</p>
+一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&quot;relabel_configs&quot;中的具体目标, 进行不断拉取(拉取间隔 …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/monitor-control-plane/" title="Read More" class="excerpt_more button">Read More</a>
@@ -530,7 +600,7 @@ Iterators python中对象实现了__iter__()和__next__()两个方法，我们�
         <div class="pale">
           
             <p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
-一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.</p>
+一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.5.2 7$ wget …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="Read More" class="excerpt_more button">Read More</a>
@@ -580,6 +650,11 @@ Iterators python中对象实现了__iter__()和__next__()两个方法，我们�
     <div class="search_results results"></div>
   </div>
 
+        <h2>百里英骐(bailiyingqi)</h2>
+      <div class="author_bio">
+        专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等
+      </div>
+      <a href='https://zhangsiming-blyq.github.io/about/' class="button mt-1" role="button" title='Read More'>Read More</a>
 
     
     

@@ -26,14 +26,13 @@
 <meta property="og:type" content="article">
 <meta name="description" content="" />
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:creator" content="">
+<meta name="twitter:creator" content="@janedoe">
 <meta name="twitter:title" content="kubernetes" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
 <meta property="og:url" content="https://zhangsiming-blyq.github.io/tags/kubernetes/" />
 <meta property="og:title" content="kubernetes" />
 <meta property="og:description" content="" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
-  <meta name="keywords" content="231,153,190,233,135,140,232,139,177,233,170,144,44,107,117,98,101,114,110,101,116,101,115,44,103,111,108,97,110,103,44,112,121,116,104,111,110,44,115,104,101,108,108,44,108,105,110,117,120,44,115,114,101,44,232,189,175,228,187,182,230,158,182,230,158,132,44,98,108,111,103" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
@@ -87,6 +86,9 @@
 
   <div class="nav_parent">
     <a href="https://zhangsiming-blyq.github.io/" class="nav_item" title="Home">Home </a>
+  </div>
+  <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/archives/" class="nav_item" title="Archives">Archives </a>
   </div>
   <div class="nav_parent">
     <a href="https://zhangsiming-blyq.github.io/about/" class="nav_item" title="About">About </a>
@@ -186,7 +188,10 @@
         <div class="pale">
           
             <p>kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
-一、数字证书原理 1.1 传统非对称加密 1message --&gt; (公钥加密) --&gt; || 传输 || --&gt; (私钥解密) --&gt; message 注意:</p>
+一、数字证书原理 1.1 传统非对称加密 1message --&gt; (公钥加密) --&gt; || 传输 || --&gt; (私钥解密) --&gt; message 注意:
+1.这里与数字证书认证相反，是公钥加密私钥解密
+2.公钥私钥需要是一个秘钥对
+1.2 哈希函数 1message --&gt; H(message) --&gt; Hash …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/kubernetes-certificate/" title="Read More" class="excerpt_more button">Read More</a>
@@ -323,7 +328,7 @@
           
             <p>在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
 使用client-go watch接口 💡 全局的mycluster都等于*kubernetes.Clientset 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
-使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。</p>
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。 …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/retrywatcher/" title="Read More" class="excerpt_more button">Read More</a>
@@ -394,7 +399,7 @@
         <div class="pale">
           
             <p>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
-一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.</p>
+一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&quot;relabel_configs&quot;中的具体目标, 进行不断拉取(拉取间隔 …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/monitor-control-plane/" title="Read More" class="excerpt_more button">Read More</a>
@@ -462,7 +467,7 @@
         <div class="pale">
           
             <p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
-一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.</p>
+一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.5.2 7$ wget …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/containerd/" title="Read More" class="excerpt_more button">Read More</a>
@@ -492,6 +497,11 @@
     <div class="search_results results"></div>
   </div>
 
+        <h2>百里英骐(bailiyingqi)</h2>
+      <div class="author_bio">
+        专注于IT互联网，包括但不限于kubernetes、Go语言(golang)、python、shell、linux等
+      </div>
+      <a href='https://zhangsiming-blyq.github.io/about/' class="button mt-1" role="button" title='Read More'>Read More</a>
 
     
     

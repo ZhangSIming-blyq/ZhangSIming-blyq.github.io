@@ -17,7 +17,7 @@
         
           
             kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
-一、kong 1.1 安装 1# 安装kong 2$ helm repo add kong https://charts.
+一、kong 1.1 安装 1# 安装kong 2$ helm repo add kong https://charts.konghq.com 3$ helm repo update 4$ helm fetch kong/kong 5$ tar xf kong-2.5.0.tgz 6$ cd kong 7$ ls 8CHANGELOG.md Chart.yaml FAQs.md README.md UPGRADE.md charts ci crds example-values requirements.lock requirements.yaml templates values.yaml 9...需要配置 101. postgresql作为存储 112. 允许plain text调用admin API 12 13# 安装konga 14$ gc https://github.com/pantsel/konga.git 15$ ls konga 16Chart.yaml templates values.yaml 17...需要配置 181. 获取postgresql的secret写入连接信息 19 20# 部署 21$ helm install kong .
           
           
         
@@ -35,6 +35,7 @@
           
             Ansible 是一个开源的基于 OpenSSH 的自动化配置管理工具。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。
 一、ansible 简介 Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。基于这样的目标，Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。Ansible 适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境。
+1.1 ansible 变量优先级如下 command line values (eg &amp;quot;-u user&amp;quot;) role defaults inventory file or script group vars inventory group_vars/all playbook group_vars/all inventory group_vars/* playbook group_vars/* inventory file or script host vars inventory host_vars/*: inventory 下面的 hosts_vars 目录下的变量优先级大于 group_vars 目录下的 playbook host_vars/* host facts / cached set_facts play vars play vars_prompt play vars_files: vars_files 优先级大于同级别的 vars 字段(play 内定义) role vars (defined in role/vars/main.
           
           
         
