@@ -6,7 +6,28 @@
     <description>Recent content in golang on bailiyingqi&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Fri, 28 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>聊一聊golang、python中的闭包</title>
+      <link>https://zhangsiming-blyq.github.io/post/closure/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/closure/</guid>
+      <description>
+        
+          
+            本文为golang、python新手通俗地解释什么是闭包，以及在这两种语言中使用闭包时候需要注意的地方。本文运行的时候保留了package、import等重复的代码部分，为了方便大家复制下来自己跑一下，劣势是导致有部分冗杂，还请理解。
+什么是闭包? a closure is a record storing a function together with an environment.
+闭包的两大要素：函数和环境
+函数：指的是在闭包实际实现的时候，往往通过调用一个外部函数返回其内部函数来实现的。内部函数可能是内部实名函数、匿名函数或者一段lambda表达式; 环境：在实际中引用环境是指外部函数的环境，闭包保存/记录了它产生时的外部函数的所有环境; 综上，闭包是一种延伸了作用域的函数，他会保留定义函数时存在的自由变量(未在本地作用域中绑定的变量)的绑定，这样调用函数时，所以定义作用域不可用了，但是仍能使用那些绑定。下面看一下闭包的常见用法：
+golang:
+1package main 2 3import &amp;#34;fmt&amp;#34; 4 5func outer() func(v int) { 6 x := 1 7 return func(v int) { 8 y := x + v 9 fmt.Println(x) 10 fmt.Println(y) 11 } 12} 13 14func main() { 15 a := outer() 16 a(1) 17 a(2) 18} 19 20// 输出结果 211 222 231 243 golang例子里面的逻辑中，a是一个闭包，闭包函数为内部的func(v int){}, 闭包环境为外部的x, 由于&#39;捕获&#39;了外部环境，所以每次执行闭包x都是1，最后输出结果1,2,1,3。
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>使用zap打造你的golang日志库</title>
       <link>https://zhangsiming-blyq.github.io/post/gozap/</link>
