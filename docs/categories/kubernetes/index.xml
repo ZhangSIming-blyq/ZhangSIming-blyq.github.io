@@ -6,7 +6,40 @@
     <description>Recent content in kubernetes on bailiyingqi&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 12 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>kubernetes常规问题</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
+      <description>
+        
+          
+             kubernetes的cordon打上的SchedulingDisabled仅仅影响调度，也就是直接打上nodeName不会受到该参数的影响 kubernetes的QosClass判断pod内的全部container，包括init-container，也就是如果init-container不进行限制，其他container无论怎么配置仍然不是Guaranteed kubernetes集群新版本如果cordon打上unschedule，会默认追加Taint；旧版本不会 kubernetes集群对于unschedule的节点不会走入调度环节，只有可以正常调度的节点才会走到后面判断Toleration，label等；特别地，对于daemonset的pod，schedulingDisable无效，但是tolerance等有效(v1.17版本中，Damoneset 的 pod 的调度从 daemonset controller 迁移到 kube-scheduler 来做调度，从而支持 PodAffnity、PodAntiAffinity 等能力) Error(不再重启)，Completed状态的podip会显示，但是实际不占用podip，真实podip已经分配给其他服务使用 kubernetes中，kubelet限制的max-pod数量是限制的具体的pod数量，超出会报错Outofpods 每次pod重启，kubelet会给他分配新的cgroup目录路径，而不会使用原来的；新的pod启动之后间隔一小段时间会删除旧的cgroup路径 kubernetes 推荐使用 systemd 来代替 cgroupfs; 因为systemd是kubernetes自带的cgroup管理器, 负责为每个进程分配cgroups; 但docker的cgroup driver默认是cgroupfs,这样就同时运行有两个cgroup控制管理器；可以使用docker info查看docker使用的cgroup driver，然后从&amp;quot;/etc/docker/daemon.json&amp;quot;中修改成systemd 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>在default命名空间下的svc, kubernetes</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes-default-svc/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes-default-svc/</guid>
+      <description>
+        
+          
+            
+该svc作为集群内部服务连接api-server的媒介(这三个信息会被注入到每个集群内部的pod中: KUBERNETES_SERVICE_HOST=10.96.0.1、KUBERNETES_SERVICE_PORT=443、KUBERNETES_SERVICE_PORT_HTTPS=443) 永远使用&amp;quot;--service-cluster-ip-range&amp;quot;定义的CIDR的第一个ip地址 svc以及对应的endpoints都是由master controller(api-server二进制文件在最开始启动的controller之一)管控 RunKubernetesService()是一个循环，里面的逻辑包含支持UpdateKubernetesService()更新这个svc信息，ReconcileEndpoints(...endpointPorts []corev1.EndpointPort...)来更新endpoint，也就是一般3个master的信息；不过有时候看到的endpoint可能只有一个ip，这可能是云厂商传入的master lb层 参考链接: https://networkop.co.uk/post/2020-06-kubernetes-default/ 
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>谈谈kubernetes 证书认证那些事儿</title>
       <link>https://zhangsiming-blyq.github.io/post/kubernetes-certificate/</link>

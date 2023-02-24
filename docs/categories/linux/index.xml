@@ -6,7 +6,23 @@
     <description>Recent content in linux on bailiyingqi&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>中断绑定cpu核心问题</title>
+      <link>https://zhangsiming-blyq.github.io/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</guid>
+      <description>
+        
+          
+             中断是什么？中断是一种电信号，由硬件产生并直接送到中断控制器上，再由中断控制器向CPU发送中断信号，CPU检测到信号后，中断当前工作转而处理中断信号；其实准确的说这种算硬中断 如果不像让这种中断，或者系统中断和网络中断和一些业务的中断在同一个cpu上面互相影响；可以把某个中断绑定到某几个特定的cpu核心，来达到目的 默认情况systemctl status irqbalance服务会平衡所有中断均衡地是用cpu 可以用echo cpu号 &amp;gt; /proc/irq/中断号/smp_affinity或者使用taskset来绑定中断到具体的cpu核心 ethtool -l eth0可以看到，一些通道信息(这个通道是可以触发网络中断的队列数量), 设置多了会影响内存等资源，设置小了可能会称为高流量瓶颈 参考链接：https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/7/html/tuning_guide/interrupt_and_process_binding 
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>API网关对比</title>
       <link>https://zhangsiming-blyq.github.io/post/apigateway/</link>
