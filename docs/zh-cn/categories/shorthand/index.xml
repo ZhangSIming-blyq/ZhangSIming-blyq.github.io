@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shorthand on 百里英骐的博客</title>
+    <link>https://zhangsiming-blyq.github.io/zh-cn/categories/shorthand/</link>
+    <description>Recent content in shorthand on 百里英骐的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/zh-cn/categories/shorthand/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git的cherry-pick操作</title>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</guid>
+      <description>
+        
+          
+             参考链接: https://www.atlassian.com/git/tutorials/cherry-pick/ git 的 cherry-pick 操作简单来讲就是可以把具体的commit从一个分支，直接嫁接(复制)到另一个分支, 下面看一个例子: 1$ git branch 2* feat/siming 3 master 4$ git log 5commit 1d7df64add47be9891efa6469f663e78acf3982f (HEAD -&amp;gt; feat/siming, origin/feat/siming) 6Author: zhangsiming &amp;lt;zhangsiming@360.cn&amp;gt; 7Date: Fri Feb 10 20:18:59 2023 +0800 8 9 test2 10 11commit a272f807df9f22c58aa2a970ff26a13a66abec4d 12Author: zhangsiming &amp;lt;zhangsiming@360.cn&amp;gt; 13Date: Fri Feb 10 19:59:06 2023 +0800 14 15 test 16... 17 18# 可以看到feat/siming分支最近两个commit一个是test，一个是test2，我们现在记录一下test的commitId，然后把他cherry-pick到master分支 19$ git checkout master 20$ git cherry-pick a272f807df9f22c58aa2a970ff26a13a66abec4d 21 22# 大功告成，test部分的变更已经追加到了master分支，我们看一下git log graph(注意看HEAD指针位置) 23$ git log --pretty=oneline --graph --decorate --all 24 25* 1d7df64add47be9891efa6469f663e78acf3982f (origin/feat/siming, feat/siming) test2 26* a272f807df9f22c58aa2a970ff26a13a66abec4d test 27* 627f296be9f64418d4f6dfe99d2fcf6881196f30 (HEAD -&amp;gt; master, origin/master, origin/HEAD) Merge branch &amp;#39;feat/siming&amp;#39; into &amp;#39;master&amp;#39; 28|\ 29| * 3a64ef1e9c78dba97b775ac6fcf3a1ecf0c7e925 fix: 优化gpu-alarmer 30| * 08358da0a98490e9e87a990342d13dbeffb7758f add: k8s-weekly-report 31| * 7231fc0a739fae55a5800e883d2e811b6c58e7f3 fix: 修改eventsinformer时间展示 32 33# 如果不想要这个commit了，可以reset回退(HEAD后面有几个^就回退几个commit，或者采用HEAD~n) 34$ git reset --hard HEAD^ 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>kubernetes常规问题</title>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
+      <description>
+        
+          
+             kubernetes的cordon打上的SchedulingDisabled仅仅影响调度，也就是直接打上nodeName不会受到该参数的影响 kubernetes的QosClass判断pod内的全部container，包括init-container，也就是如果init-container不进行限制，其他container无论怎么配置仍然不是Guaranteed kubernetes集群新版本如果cordon打上unschedule，会默认追加Taint；旧版本不会 kubernetes集群对于unschedule的节点不会走入调度环节，只有可以正常调度的节点才会走到后面判断Toleration，label等；特别地，对于daemonset的pod，schedulingDisable无效，但是tolerance等有效(v1.17版本中，Damoneset 的 pod 的调度从 daemonset controller 迁移到 kube-scheduler 来做调度，从而支持 PodAffnity、PodAntiAffinity 等能力) Error(不再重启)，Completed状态的podip会显示，但是实际不占用podip，真实podip已经分配给其他服务使用 kubernetes中，kubelet限制的max-pod数量是限制的具体的pod数量，超出会报错Outofpods 每次pod重启，kubelet会给他分配新的cgroup目录路径，而不会使用原来的；新的pod启动之后间隔一小段时间会删除旧的cgroup路径 kubernetes 推荐使用 systemd 来代替 cgroupfs; 因为systemd是kubernetes自带的cgroup管理器, 负责为每个进程分配cgroups; 但docker的cgroup driver默认是cgroupfs,这样就同时运行有两个cgroup控制管理器；可以使用docker info查看docker使用的cgroup driver，然后从&amp;quot;/etc/docker/daemon.json&amp;quot;中修改成systemd 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>在default命名空间下的svc, kubernetes</title>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-default-svc/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-default-svc/</guid>
+      <description>
+        
+          
+            
+该svc作为集群内部服务连接api-server的媒介(这三个信息会被注入到每个集群内部的pod中: KUBERNETES_SERVICE_HOST=10.96.0.1、KUBERNETES_SERVICE_PORT=443、KUBERNETES_SERVICE_PORT_HTTPS=443) 永远使用&amp;quot;--service-cluster-ip-range&amp;quot;定义的CIDR的第一个ip地址 svc以及对应的endpoints都是由master controller(api-server二进制文件在最开始启动的controller之一)管控 RunKubernetesService()是一个循环，里面的逻辑包含支持UpdateKubernetesService()更新这个svc信息，ReconcileEndpoints(...endpointPorts []corev1.EndpointPort...)来更新endpoint，也就是一般3个master的信息；不过有时候看到的endpoint可能只有一个ip，这可能是云厂商传入的master lb层 参考链接: https://networkop.co.uk/post/2020-06-kubernetes-default/ 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>中断绑定cpu核心问题</title>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</guid>
+      <description>
+        
+          
+             中断是什么？中断是一种电信号，由硬件产生并直接送到中断控制器上，再由中断控制器向CPU发送中断信号，CPU检测到信号后，中断当前工作转而处理中断信号；其实准确的说这种算硬中断 如果不像让这种中断，或者系统中断和网络中断和一些业务的中断在同一个cpu上面互相影响；可以把某个中断绑定到某几个特定的cpu核心，来达到目的 默认情况systemctl status irqbalance服务会平衡所有中断均衡地是用cpu 可以用echo cpu号 &amp;gt; /proc/irq/中断号/smp_affinity或者使用taskset来绑定中断到具体的cpu核心 ethtool -l eth0可以看到，一些通道信息(这个通道是可以触发网络中断的队列数量), 设置多了会影响内存等资源，设置小了可能会称为高流量瓶颈 参考链接：https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/7/html/tuning_guide/interrupt_and_process_binding 
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

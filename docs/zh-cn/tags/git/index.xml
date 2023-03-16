@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on 百里英骐的博客</title>
+    <link>https://zhangsiming-blyq.github.io/zh-cn/tags/git/</link>
+    <description>Recent content in git on 百里英骐的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/zh-cn/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git的cherry-pick操作</title>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</guid>
+      <description>
+        
+          
+             参考链接: https://www.atlassian.com/git/tutorials/cherry-pick/ git 的 cherry-pick 操作简单来讲就是可以把具体的commit从一个分支，直接嫁接(复制)到另一个分支, 下面看一个例子: 1$ git branch 2* feat/siming 3 master 4$ git log 5commit 1d7df64add47be9891efa6469f663e78acf3982f (HEAD -&amp;gt; feat/siming, origin/feat/siming) 6Author: zhangsiming &amp;lt;zhangsiming@360.cn&amp;gt; 7Date: Fri Feb 10 20:18:59 2023 +0800 8 9 test2 10 11commit a272f807df9f22c58aa2a970ff26a13a66abec4d 12Author: zhangsiming &amp;lt;zhangsiming@360.cn&amp;gt; 13Date: Fri Feb 10 19:59:06 2023 +0800 14 15 test 16... 17 18# 可以看到feat/siming分支最近两个commit一个是test，一个是test2，我们现在记录一下test的commitId，然后把他cherry-pick到master分支 19$ git checkout master 20$ git cherry-pick a272f807df9f22c58aa2a970ff26a13a66abec4d 21 22# 大功告成，test部分的变更已经追加到了master分支，我们看一下git log graph(注意看HEAD指针位置) 23$ git log --pretty=oneline --graph --decorate --all 24 25* 1d7df64add47be9891efa6469f663e78acf3982f (origin/feat/siming, feat/siming) test2 26* a272f807df9f22c58aa2a970ff26a13a66abec4d test 27* 627f296be9f64418d4f6dfe99d2fcf6881196f30 (HEAD -&amp;gt; master, origin/master, origin/HEAD) Merge branch &amp;#39;feat/siming&amp;#39; into &amp;#39;master&amp;#39; 28|\ 29| * 3a64ef1e9c78dba97b775ac6fcf3a1ecf0c7e925 fix: 优化gpu-alarmer 30| * 08358da0a98490e9e87a990342d13dbeffb7758f add: k8s-weekly-report 31| * 7231fc0a739fae55a5800e883d2e811b6c58e7f3 fix: 修改eventsinformer时间展示 32 33# 如果不想要这个commit了，可以reset回退(HEAD后面有几个^就回退几个commit，或者采用HEAD~n) 34$ git reset --hard HEAD^ 
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>apigateway on 百里英骐的博客</title>
+    <link>https://zhangsiming-blyq.github.io/zh-cn/categories/apigateway/</link>
+    <description>Recent content in apigateway on 百里英骐的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 18 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/zh-cn/categories/apigateway/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>API网关对比</title>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/apigateway/</link>
+      <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/apigateway/</guid>
+      <description>
+        
+          
+            kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
+一、kong 1.1 安装 1# 安装kong 2$ helm repo add kong https://charts.konghq.com 3$ helm repo update 4$ helm fetch kong/kong 5$ tar xf kong-2.5.0.tgz 6$ cd kong 7$ ls 8CHANGELOG.md Chart.yaml FAQs.md README.md UPGRADE.md charts ci crds example-values requirements.lock requirements.yaml templates values.yaml 9...需要配置 101. postgresql作为存储 112. 允许plain text调用admin API 12 13# 安装konga 14$ gc https://github.com/pantsel/konga.git 15$ ls konga 16Chart.yaml templates values.yaml 17...需要配置 181. 获取postgresql的secret写入连接信息 19 20# 部署 21$ helm install kong .
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>
