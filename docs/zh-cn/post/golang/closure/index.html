@@ -26,24 +26,26 @@
   
 <meta property="og:locale" content="zh-cn" />
 
+<meta property="og:locale:alternate" content="en-us" />
+
 <meta property="og:type" content="article">
 <meta name="description" content="本文为golang、python新手通俗地解释什么是闭包，以及在这两种语言中使用闭包时候需要注意的地方。本文运行的时候保留了package、import等重复的代码部分，为了方便大家复制下来自己跑一下，劣势是导致有部分冗杂，还请理解。
 什么是闭包? a closure is a record storing a …" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@janedoe">
 <meta name="twitter:title" content="聊一聊golang、python中的闭包" />
-<meta name="twitter:image" content="https://zhangsiming-blyq.github.io/bleach.jpg"/>
-<meta property="og:url" content="https://zhangsiming-blyq.github.io/zh-cn/post/closure/" />
+<meta name="twitter:image" content="https://zhangsiming-blyq.github.io/duck.jpeg"/>
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/zh-cn/post/golang/closure/" />
 <meta property="og:title" content="聊一聊golang、python中的闭包" />
 <meta property="og:description" content="本文为golang、python新手通俗地解释什么是闭包，以及在这两种语言中使用闭包时候需要注意的地方。本文运行的时候保留了package、import等重复的代码部分，为了方便大家复制下来自己跑一下，劣势是导致有部分冗杂，还请理解。
 什么是闭包? a closure is a record storing a …" />
-<meta property="og:image" content="https://zhangsiming-blyq.github.io/bleach.jpg" />
+<meta property="og:image" content="https://zhangsiming-blyq.github.io/duck.jpeg" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
 <link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
 
-<link rel="canonical" href="https://zhangsiming-blyq.github.io/zh-cn/post/closure/">
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/zh-cn/post/golang/closure/">
 
 
 
@@ -169,14 +171,14 @@
     <span class="page_only">&nbsp;·
   <div class="post_share">
     分享到:
-    <a href="https://twitter.com/intent/tweet?text=%e8%81%8a%e4%b8%80%e8%81%8agolang%e3%80%81python%e4%b8%ad%e7%9a%84%e9%97%ad%e5%8c%85&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fzh-cn%2fpost%2fclosure%2f&tw_p=tweetbutton" class="twitter" title="分享到 Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=%e8%81%8a%e4%b8%80%e8%81%8agolang%e3%80%81python%e4%b8%ad%e7%9a%84%e9%97%ad%e5%8c%85&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fzh-cn%2fpost%2fgolang%2fclosure%2f&tw_p=tweetbutton" class="twitter" title="分享到 Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>twitter</title>
   <use xlink:href="#twitter"></use>
 </svg>
 
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fzh-cn%2fpost%2fclosure%2f&t=%e8%81%8a%e4%b8%80%e8%81%8agolang%e3%80%81python%e4%b8%ad%e7%9a%84%e9%97%ad%e5%8c%85" class="facebook" title="分享到 Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fzh-cn%2fpost%2fgolang%2fclosure%2f&t=%e8%81%8a%e4%b8%80%e8%81%8agolang%e3%80%81python%e4%b8%ad%e7%9a%84%e9%97%ad%e5%8c%85" class="facebook" title="分享到 Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>facebook</title>
   <use xlink:href="#facebook"></use>
@@ -190,7 +192,7 @@
 </svg>
 
     </a>
-    <a href="https://zhangsiming-blyq.github.io/zh-cn/post/closure/" title="Copy Link" class="link link_yank">
+    <a href="https://zhangsiming-blyq.github.io/zh-cn/post/golang/closure/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <title>copy</title>
   <use xlink:href="#copy"></use>
@@ -217,7 +219,7 @@
       alt=""
       
         class="image_figure image_featured image_internal image_unprocessed"
-        src="/bleach.jpg"
+        src="/duck.jpeg"
       
       
     />
@@ -697,9 +699,9 @@
 <p>以上就是我对于闭包的理解，希望golang、python新手看了之后可以避开一个必踩之坑，如有疑问环境随时评论或者邮箱联系，谢谢~</p>
 </blockquote>
 <p><strong>参考链接：</strong></p>
-<p><a href="https://juejin.cn/post/6844904133208604679">https://juejin.cn/post/6844904133208604679</a></p>
-<p><a href="https://www.jianshu.com/p/fa21e6fada70">https://www.jianshu.com/p/fa21e6fada70</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/92634505">https://zhuanlan.zhihu.com/p/92634505</a></p>
+<p><a href="https://juejin.cn/post/6844904133208604679">https://juejin.cn/post/6844904133208604679</a><br>
+<a href="https://www.jianshu.com/p/fa21e6fada70">https://www.jianshu.com/p/fa21e6fada70</a><br>
+<a href="https://zhuanlan.zhihu.com/p/92634505">https://zhuanlan.zhihu.com/p/92634505</a></p>
 
     </div>
 <div class="post_comments">
@@ -718,6 +720,16 @@
   
 </div>
 
+
+<div class="post_i18n">
+  <h3 class="mb-0">翻译:</h3>
+  <nav class="tags_nav">
+    
+      <a href="https://zhangsiming-blyq.github.io/en-us/post/golang/closure/" class="post_tag button button_translucent">English</a> 
+      
+    
+    </nav>
+</div>
 
 
 
@@ -750,7 +762,7 @@
     <h2 class="mt-4">精选文章</h2>
     <ul>
       <li>
-        <a href="https://zhangsiming-blyq.github.io/zh-cn/post/closure/" class="nav-link" title="聊一聊golang、python中的闭包">聊一聊golang、python中的闭包</a>
+        <a href="https://zhangsiming-blyq.github.io/zh-cn/post/golang/closure/" class="nav-link" title="聊一聊golang、python中的闭包">聊一聊golang、python中的闭包</a>
       </li>
       <li>
         <a href="https://zhangsiming-blyq.github.io/zh-cn/post/gozap/" class="nav-link" title="使用zap打造你的golang日志库">使用zap打造你的golang日志库</a>
@@ -1098,7 +1110,7 @@
 
 <script type="text/javascript" src="https://zhangsiming-blyq.github.io/zh-cn/js/bundle.daf5d72d10b0f1e048706d4cb8d79d1ec41c3b5edcd83acfaa4df80252afff936252c1fa7804d8dcdb500eaf0f7d5adbb79cfe886cf7068f12f58cdebc05e1c3.js" integrity="sha512-2vXXLRCw8eBIcG1MuNedHsQcO17c2DrPqk34AlKv/5NiUsH6eATY3NtQDq8PfVrbt5z&#43;iGz3Bo8S9YzevAXhww==" crossorigin="anonymous"></script>
 
-  <script src="https://zhangsiming-blyq.github.io/js/search.min.9641a8a49c5a7dbd99f372bf456fc577a23b235fd157ee614ce2dab96b2e0f3687d5cc408d875f32e94405a2ccbca5c8bc43491cfce32471b72aa63e5315018d.js"></script>
+  <script src="https://zhangsiming-blyq.github.io/js/search.min.df4d84e4983f0c71dd495e07a09815d920553c3ddf3d0767801c73373573aa17e1b489e4453272dbf4ce2a38a3d01a10b170744e50dd6bec85a598221867ba9a.js"></script>
 
   </body>
 </html>

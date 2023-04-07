@@ -41,6 +41,16 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/post/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/post/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/tags/shorthand/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
@@ -82,18 +92,68 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/tags/golang/</loc>
     <lastmod>2022-11-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/tags/golang/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/tags/golang/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/categories/golang/</loc>
     <lastmod>2022-11-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/categories/golang/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/categories/golang/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/tags/python/</loc>
     <lastmod>2022-11-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/tags/python/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/tags/python/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/categories/python/</loc>
     <lastmod>2022-11-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/categories/python/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/categories/python/"
+                />
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/zh-cn/post/closure/</loc>
+    <loc>https://zhangsiming-blyq.github.io/zh-cn/post/golang/closure/</loc>
     <lastmod>2022-11-10T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/post/golang/closure/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/post/golang/closure/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/gozap/</loc>
     <lastmod>2022-10-28T00:00:00+00:00</lastmod>

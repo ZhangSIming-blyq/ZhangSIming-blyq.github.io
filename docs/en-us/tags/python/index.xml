@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Bailiyingqi&#39;s blog</title>
+    <link>https://zhangsiming-blyq.github.io/en-us/tags/python/</link>
+    <description>Recent content in python on Bailiyingqi&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/en-us/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Closures In Golang And Python</title>
+      <link>https://zhangsiming-blyq.github.io/en-us/post/golang/closure/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/en-us/post/golang/closure/</guid>
+      <description>
+        
+          
+            For people new to Golang and Python, this article explains what closures are as well as sometips that need to know about when using closures in these two programming languages. To make it easier for you to copy down and run on your own server, the code section would provide the package, import, and other repeated parts. The negative aspect is that this results in some redundancy, so please understand if this causes any inconvenience.
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>
