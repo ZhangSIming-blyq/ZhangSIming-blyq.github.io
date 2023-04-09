@@ -10,10 +10,10 @@
     <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/zh-cn/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>git的cherry-pick操作</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/linux/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/linux/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</guid>
       <description>
         
           
@@ -26,10 +26,10 @@
     
     <item>
       <title>kubernetes常规问题</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
       <description>
         
           
@@ -42,10 +42,10 @@
     
     <item>
       <title>在default命名空间下的svc, kubernetes</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-default-svc/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes-default-svc/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-default-svc/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes-default-svc/</guid>
       <description>
         
           
@@ -59,10 +59,10 @@
     
     <item>
       <title>中断绑定cpu核心问题</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/linux/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/linux/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</guid>
       <description>
         
           
@@ -96,10 +96,10 @@ golang:
     
     <item>
       <title>使用zap打造你的golang日志库</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/gozap/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/golang/gozap/</link>
       <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/gozap/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/golang/gozap/</guid>
       <description>
         
           
@@ -135,10 +135,10 @@ logrus示例 1package main 2 3import log &amp;#34;github.com/sirupsen/logrus&amp
     
     <item>
       <title>谈谈kubernetes 证书认证那些事儿</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-certificate/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes-certificate/</link>
       <pubDate>Mon, 12 Sep 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-certificate/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes-certificate/</guid>
       <description>
         
           
@@ -158,10 +158,10 @@ Alice 在本地生成 Private Key 和 CSR（Certificate Signing Request）。CSR
     
     <item>
       <title>浅谈kubernetes ingress机制</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/ingress-mechanism/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/ingress-mechanism/</link>
       <pubDate>Thu, 25 Aug 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/ingress-mechanism/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/ingress-mechanism/</guid>
       <description>
         
           
@@ -193,10 +193,10 @@ Alice 在本地生成 Private Key 和 CSR（Certificate Signing Request）。CSR
     
     <item>
       <title>API网关对比</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/apigateway/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/linux/apigateway/</link>
       <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/apigateway/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/linux/apigateway/</guid>
       <description>
         
           
@@ -210,10 +210,10 @@ Alice 在本地生成 Private Key 和 CSR（Certificate Signing Request）。CSR
     
     <item>
       <title>ansible-playbook 详解</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/ansible-playbook/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/linux/ansible-playbook/</link>
       <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/ansible-playbook/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/linux/ansible-playbook/</guid>
       <description>
         
           
@@ -297,10 +297,10 @@ Alice 在本地生成 Private Key 和 CSR（Certificate Signing Request）。CSR
     
     <item>
       <title>client-go watch接口隔一段时间自动退出怎么办？</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/retrywatcher/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/golang/retrywatcher/</link>
       <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/retrywatcher/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/golang/retrywatcher/</guid>
       <description>
         
           
@@ -318,10 +318,10 @@ Alice 在本地生成 Private Key 和 CSR（Certificate Signing Request）。CSR
     
     <item>
       <title>python yield详解</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/python-yield/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/python/python-yield/</link>
       <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/python-yield/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/python/python-yield/</guid>
       <description>
         
           
@@ -340,10 +340,10 @@ Generators&amp;amp;yield Generators是一种特殊的迭代器(iterators)。如�
     
     <item>
       <title>prometheus 监测 kubernetes 控制平面</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/monitor-control-plane/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/monitor-control-plane/</link>
       <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/monitor-control-plane/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/monitor-control-plane/</guid>
       <description>
         
           
@@ -390,10 +390,10 @@ non_resource_urls - (Optional) NonResourceURLs is a set of partial urls that a u
     
     <item>
       <title>浅谈 containerd</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/containerd/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/containerd/</link>
       <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/containerd/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/containerd/</guid>
       <description>
         
           

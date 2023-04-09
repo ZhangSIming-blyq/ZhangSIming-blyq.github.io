@@ -10,10 +10,10 @@
     <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/zh-cn/categories/shorthand/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>git的cherry-pick操作</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/linux/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/linux/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</guid>
       <description>
         
           
@@ -26,10 +26,10 @@
     
     <item>
       <title>kubernetes常规问题</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
       <description>
         
           
@@ -42,10 +42,10 @@
     
     <item>
       <title>在default命名空间下的svc, kubernetes</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-default-svc/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes-default-svc/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes-default-svc/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes-default-svc/</guid>
       <description>
         
           
@@ -59,10 +59,10 @@
     
     <item>
       <title>中断绑定cpu核心问题</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/linux/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</link>
       <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/linux/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</guid>
       <description>
         
           

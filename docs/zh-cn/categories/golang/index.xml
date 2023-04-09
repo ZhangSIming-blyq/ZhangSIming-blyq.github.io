@@ -31,10 +31,10 @@ golang:
     
     <item>
       <title>使用zap打造你的golang日志库</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/gozap/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/golang/gozap/</link>
       <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/gozap/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/golang/gozap/</guid>
       <description>
         
           
@@ -51,10 +51,10 @@ logrus示例 1package main 2 3import log &amp;#34;github.com/sirupsen/logrus&amp
     
     <item>
       <title>client-go watch接口隔一段时间自动退出怎么办？</title>
-      <link>https://zhangsiming-blyq.github.io/zh-cn/post/retrywatcher/</link>
+      <link>https://zhangsiming-blyq.github.io/zh-cn/post/golang/retrywatcher/</link>
       <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/retrywatcher/</guid>
+      <guid>https://zhangsiming-blyq.github.io/zh-cn/post/golang/retrywatcher/</guid>
       <description>
         
           
