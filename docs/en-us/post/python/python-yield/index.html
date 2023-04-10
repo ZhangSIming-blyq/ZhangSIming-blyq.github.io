@@ -4,10 +4,12 @@
   lang="en-us"
   data-figures=""
   
+    class="page"
+  
   
   >
   <head>
-<title>python | Bailiyingqi&#39;s blog</title>
+<title>Python Yield | Bailiyingqi&#39;s blog</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,27 +23,29 @@
 
 
 
+  
 <meta property="og:locale" content="en-us" />
 
 <meta property="og:locale:alternate" content="zh-cn" />
 
 <meta property="og:type" content="article">
-<meta name="description" content="" />
+<meta name="description" content="Explain the common usage scenarios of iterators, generators, and yield fields in Python.
+Iterators Python object implements iter() and next() methods, we become …" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@janedoe">
-<meta name="twitter:title" content="python" />
+<meta name="twitter:title" content="Python Yield" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
-<meta property="og:url" content="https://zhangsiming-blyq.github.io/en-us/tags/python/" />
-<meta property="og:title" content="python" />
-<meta property="og:description" content="" />
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/" />
+<meta property="og:title" content="Python Yield" />
+<meta property="og:description" content="Explain the common usage scenarios of iterators, generators, and yield fields in Python.
+Iterators Python object implements iter() and next() methods, we become …" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
 <link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
 
-<link rel="canonical" href="https://zhangsiming-blyq.github.io/en-us/tags/python/">
-<link rel="alternate" type="application/rss+xml" href="https://zhangsiming-blyq.github.io/en-us/tags/python/index.xml" title="Bailiyingqi's blog" />
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/">
 
 
 
@@ -148,86 +152,10 @@
 </header>
 
     <main>
-
-
-
+  
 <div class="grid-inverse wrap content">
-  <div>
-    <ul class="posts" id="posts">
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/en-us/post/golang/closure/" title="Closures In Golang And Python">Closures In Golang And Python</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Nov 10, 2022</span>
-    <span class="post_time"> · 12 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/en-us/tags/golang/' title="golang" class="post_tag button button_translucent">golang
-        </a><a href='https://zhangsiming-blyq.github.io/en-us/tags/python/' title="python" class="post_tag button button_translucent">python
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=Closures%20In%20Golang%20And%20Python&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fen-us%2fpost%2fgolang%2fclosure%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fen-us%2fpost%2fgolang%2fclosure%2f&t=Closures%20In%20Golang%20And%20Python" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/en-us/post/golang/closure/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>For people new to Golang and Python, this article explains what closures are as well as sometips that need to know about when using closures in these two programming languages. To make it easier for you to copy down and run on your own server, the code section would provide the package, import, and other repeated …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/en-us/post/golang/closure/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/" title="Python Yield">Python Yield</a>
-      </h3>
-      
+  <article class="post_content">
+    <h1 class="post_title">Python Yield</h1>
   <div class="post_meta">
     <span><svg class="icon">
   <title>calendar</title>
@@ -274,32 +202,149 @@
   </span>
   </div>
 
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>Explain the common usage scenarios of iterators, generators, and yield fields in Python.
-Iterators Python object implements iter() and next() methods, we become iterable objects (iterables), through iter() can return an iterator object (iterators).
-<strong>iter</strong>() method: return the iterator object itself <strong>next</strong>() method: …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
+      <div class="post_toc">
+        <h2>Overview</h2>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#iterators">Iterators</a></li>
+    <li><a href="#generatorsyield">Generators&amp;yield</a></li>
+    <li><a href="#yield-in-action">Yield In Action</a></li>
+  </ul>
+</nav>
       </div>
-    </div>
-  </li>
+    
+    <div class="post_body"><blockquote>
+<p>Explain the common usage scenarios of iterators, generators, and yield fields in Python.</p>
+</blockquote>
+<h2 id="iterators">Iterators</h2>
+<p>Python object implements <strong>iter</strong>() and <strong>next</strong>() methods, we become iterable objects (iterables), through <strong>iter</strong>() can return an iterator object (iterators).</p>
+<ol>
+<li>__iter__() method: return the iterator object itself</li>
+<li>__next__() method: returns the next element of the container, and raises a StopIteration Exception at the end to terminate the iterator</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="n">new_iter</span> <span class="o">=</span> <span class="n">lst</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">new_iter</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"># Output</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">list</span><span class="s1">&#39;&gt;</span>
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">list_iterator</span><span class="s1">&#39;&gt;</span>
+</span></span></code></pre></div><p>The for loop actually gets iterators by <strong>iter</strong>() and then does <strong>next</strong>() to fetch until StopIteration.</p>
+<h2 id="generatorsyield">Generators&amp;yield</h2>
+<p>Generators are a special kind of iterators. <strong>If a field exists anywhere in the function, when you call the function, the function will not execute directly, but will return a generator</strong>. In addition generators also support generator expressions (similar to lists, except that [] is replaced with ()).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;for test&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="k">yield</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="n">gen1</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">gen1</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="n">gen2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">gen2</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"># Output</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">generator</span><span class="s1">&#39;&gt;</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="o">&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">generator</span><span class="s1">&#39;&gt;</span>
+</span></span></code></pre></div><ul>
+<li>yield</li>
+</ul>
+<p>Unlike iterators, which store all of their content <strong>in memory</strong>, generators allocate memory as <strong>next</strong>() is called over and over again.</p>
+<p>Each time generators will run to the yield field, then save the generator state and return; the next call to <strong>next</strong>() will continue from the current position to the next yield field. This continues until StopIteration stops. Take a look at the following example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;start&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="k">yield</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;end&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="k">yield</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="n">gen1</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">gen1</span><span class="o">.</span><span class="fm">__next__</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">gen1</span><span class="o">.</span><span class="fm">__next__</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="n">gen2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">gen2</span><span class="o">.</span><span class="fm">__next__</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">gen2</span><span class="o">.</span><span class="fm">__next__</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">gen2</span><span class="o">.</span><span class="fm">__next__</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">gen2</span><span class="o">.</span><span class="fm">__next__</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1"># Output</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="n">start</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="mi">0</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="n">end</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">
+</span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="mi">0</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="mi">1</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="mi">4</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">  <span class="n">File</span> <span class="s2">&#34;/home/vagrant/aa.py&#34;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">16</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">gen2</span><span class="o">.</span><span class="fm">__next__</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl"><span class="ne">StopIteration</span>
+</span></span></code></pre></div><h2 id="yield-in-action">Yield In Action</h2>
+<p>We have a batch of 100 pieces of data in a list and want to divide it into 10 groups of 10 and process them separately:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">def</span> <span class="nf">chunks</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="s2">&#34;&#34;&#34;Yield successive n-sized chunks from lst.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">),</span> <span class="n">n</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">        <span class="k">yield</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="n">origin_lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">(</span><span class="n">origin_lst</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"># Output</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">39</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">49</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">59</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">69</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">[</span><span class="mi">70</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">79</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">89</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="p">[</span><span class="mi">90</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">99</span><span class="p">]</span>
+</span></span></code></pre></div><p><strong>Reference Links</strong>:</p>
+<ol>
+<li><a href="https://blog.csdn.net/Yuyh131/article/details/83310486">https://blog.csdn.net/Yuyh131/article/details/83310486</a></li>
+<li><a href="https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do">https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do</a></li>
+</ol>
 
-      <li>
-      </li>
-    </ul>
-  </div>
+    </div>
+<div class="post_comments">
+  
+  
+    
+ <script src="https://utteranc.es/client.js"
+         repo="ZhangSIming-blyq/blogcommit"
+         issue-term="pathname"
+         theme="github-light"
+         crossorigin="anonymous"
+         async>
+ </script>
+ 
+  
+  
+</div>
+
+
+<div class="post_i18n">
+  <h3 class="mb-0">Translations:</h3>
+  <nav class="tags_nav">
+    
+      <a href="https://zhangsiming-blyq.github.io/zh-cn/post/python/python-yield/" class="post_tag button button_translucent">中文</a> 
+      
+    
+    </nav>
+</div>
+
+
+
+  </article>
 <aside class="sidebar">
   <section class="sidebar_inner">
     <br>
     
   
   <div class="search">
-    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='tags'>
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='post'>
     <label for="find" class="search_label"><svg class="icon">
   <title>search</title>
   <use xlink:href="#search"></use>
@@ -393,9 +438,8 @@ Iterators Python object implements iter() and next() methods, we become iterable
   </section>
 </aside>
 
+  
 </div>
-
-
     </main><svg width="0" height="0" class="hidden">
   <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
     <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>

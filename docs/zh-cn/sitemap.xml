@@ -224,6 +224,16 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/python/python-yield/</loc>
     <lastmod>2022-04-18T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/post/python/python-yield/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/tags/apiserver/</loc>
     <lastmod>2022-04-11T00:00:00+00:00</lastmod>

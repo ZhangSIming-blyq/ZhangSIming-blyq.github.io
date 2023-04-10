@@ -25,6 +25,24 @@
     </item>
     
     <item>
+      <title>Python Yield</title>
+      <link>https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/</link>
+      <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/</guid>
+      <description>
+        
+          
+            Explain the common usage scenarios of iterators, generators, and yield fields in Python.
+Iterators Python object implements iter() and next() methods, we become iterable objects (iterables), through iter() can return an iterator object (iterators).
+__iter__() method: return the iterator object itself __next__() method: returns the next element of the container, and raises a StopIteration Exception at the end to terminate the iterator 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
       <title>Index Fund Investment Guide Digest</title>
       <link>https://zhangsiming-blyq.github.io/en-us/post/indexfund/</link>
       <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
