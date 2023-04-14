@@ -1,29 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bailiyingqi&#39;s blog</title>
-    <link>https://zhangsiming-blyq.github.io/en-us/</link>
-    <description>Recent content on Bailiyingqi&#39;s blog</description>
+    <title>algorithm on Bailiyingqi&#39;s blog</title>
+    <link>https://zhangsiming-blyq.github.io/en-us/tags/algorithm/</link>
+    <description>Recent content in algorithm on Bailiyingqi&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/en-us/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Closures In Golang And Python</title>
-      <link>https://zhangsiming-blyq.github.io/en-us/post/golang/closure/</link>
-      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/en-us/post/golang/closure/</guid>
-      <description>
-        
-          
-            For people new to Golang and Python, this article explains what closures are as well as sometips that need to know about when using closures in these two programming languages. To make it easier for you to copy down and run on your own server, the code section would provide the package, import, and other repeated parts. The negative aspect is that this results in some redundancy, so please understand if this causes any inconvenience.
-          
-          
-        
-      </description>
-    </item>
-    
+    <lastBuildDate>Sun, 05 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/en-us/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ALGORITHM SERIES | How To Inverse Order A Stack Using Only Recursive Functions And Stack</title>
       <link>https://zhangsiming-blyq.github.io/en-us/post/algorithm/3/</link>
@@ -67,40 +51,6 @@ Solving Ideas stacks are characterized by last-in-first-out, queues are characte
         
           
             Requirements the time complexity of pop, push, getMin operations are O(1) the design of the stack type can use the ready-made stack structure Solving Ideas use two stacks, starkData and stackMin compare the size of the top data of stackMin with that of starkData each time it is pressed in, and press the new minimum value onto the stack if it is smaller than the top data of stackMin Golang Implementation Golang built-in data structure does not include a stack, define a stack.
-          
-          
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Python Yield</title>
-      <link>https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/</link>
-      <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/en-us/post/python/python-yield/</guid>
-      <description>
-        
-          
-            Explain the common usage scenarios of iterators, generators, and yield fields in Python.
-Iterators Python object implements iter() and next() methods, we become iterable objects (iterables), through iter() can return an iterator object (iterators).
-__iter__() method: return the iterator object itself __next__() method: returns the next element of the container, and raises a StopIteration Exception at the end to terminate the iterator 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.
-          
-          
-        
-      </description>
-    </item>
-    
-    <item>
-      <title>Index Fund Investment Guide Digest</title>
-      <link>https://zhangsiming-blyq.github.io/en-us/post/indexfund/</link>
-      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://zhangsiming-blyq.github.io/en-us/post/indexfund/</guid>
-      <description>
-        
-          
-            Warren Buffett, the stock god, said, &amp;quot;By investing regularly in index funds, an amateur investor who knows nothing can surprisingly often beat most professional investors; index funds track indices and do not rely too much on fund managers; each index fund will invest in dozens or even hundreds of stocks at the same time, which can maximize the diversification of investors&#39; non-market risks; and among all similar index funds also have the lowest fees of all funds of their kind.
           
           
         

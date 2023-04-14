@@ -163,9 +163,29 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/tags/algorithm/</loc>
     <lastmod>2022-10-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/tags/algorithm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/tags/algorithm/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/categories/algorithm/</loc>
     <lastmod>2022-10-01T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/categories/algorithm/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/categories/algorithm/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/kubernetes/kubernetes-certificate/</loc>
     <lastmod>2022-09-12T00:00:00+00:00</lastmod>
@@ -212,12 +232,42 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/algorithm/3/</loc>
     <lastmod>2022-06-05T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/post/algorithm/3/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/post/algorithm/3/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/algorithm/2/</loc>
     <lastmod>2022-06-04T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/post/algorithm/2/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/post/algorithm/2/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/algorithm/1/</loc>
     <lastmod>2022-06-02T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://zhangsiming-blyq.github.io/en-us/post/algorithm/1/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/post/algorithm/1/"
+                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/zh-cn/post/golang/retrywatcher/</loc>
     <lastmod>2022-05-28T00:00:00+00:00</lastmod>
