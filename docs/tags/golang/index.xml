@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on </title>
+    <link>https://zhangsiming-blyq.github.io/tags/golang/</link>
+    <description>Recent content in golang on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Closures In Golang And Python</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/closure/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/closure/</guid>
+      <description>
+        
+          
+            For people new to Golang and Python, this article explains what closures are as well as sometips that need to know about when using closures in these two programming languages. To make it easier for you to copy down and run on your own server, the code section would provide the package, import, and other repeated parts. The negative aspect is that this results in some redundancy, so please understand if this causes any inconvenience.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>使用zap打造你的golang日志库</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/gozap/</link>
+      <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/gozap/</guid>
+      <description>
+        
+          
+            近期配置了uber家的zap日志库，觉得性能比较强，展示比较美观，在这里做一个分享，代码在第三部分可以自取。
+为什么不选择原生log? 说起golang如何优雅的打印日志，任何一个golang的初学者大概都是用的原生log库，或者直接fmt.Println()...但是这种方式并不优雅，并且有以下缺点：
+对于基础日志：不能细粒度区分info和debug级别的日志; 对于错误日志: 不支持除了fatal或者panic的普通error级别告知。 log示例 1package main 2 3import &amp;#34;log&amp;#34; 4 5func main() { 6 log.Print(&amp;#34;info or debug&amp;#34;) 7 log.Fatal(&amp;#34;fatal&amp;#34;) 8 log.Panic(&amp;#34;panic&amp;#34;) 9} 10 11// 输出如下 122022/11/23 22:23:32 info or debug 132022/11/23 22:23:32 fatal 14exit status 1 为什么不选择logrus? logrus也是比较常用的自定义日志库，不过因为Go语言是一门强类型的静态语言，而logrus需要知道数据的类型来打印日志，怎么办呢？实现方案是使用反射，这导致大量分配计数。虽然通常不是一个大问题（取决于代码），但是在大规模、高并发的项目中频繁的反射开销影响很大，所以这里不进行采用。
+仓库链接: logrus
+logrus示例 1package main 2 3import log &amp;#34;github.com/sirupsen/logrus&amp;#34; 4 5var logger = log.New() 6 7func main() { 8 // 这里可以通过WithFields来附加字段 9 logger.WithFields(log.Fields{&amp;#34;testfield&amp;#34;: &amp;#34;test&amp;#34;}).Info(&amp;#34;test info&amp;#34;) 10 logger.Info(&amp;#34;info&amp;#34;) 11 logger.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>client-go watch接口隔一段时间自动退出怎么办？</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/retrywatcher/</link>
+      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/retrywatcher/</guid>
+      <description>
+        
+          
+            在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+使用client-go watch接口 💡 全局的mycluster都等于*kubernetes.Clientset 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
+1pod, err := mycluster.Clusterclientset.CoreV1().Pods(appNamespace).Watch(context.TODO(), metav1.ListOptions{LabelSelector: label}) 2if err != nil { 3 log.Error(err) 4} 5... 6event, ok := &amp;lt;-pod.ResultChan() 7if !ok { 8 log.Error(err) 9} 异常：watch接口自动断开 1. 现象 在使用过程中，watch操作持续一段时间就会自动断开
+2. 排查 我们进入watch包里面找到streamwatcher.go，其中节选了一些重要片段：
+1type StreamWatcher struct { 2	sync.Mutex 3	source Decoder 4	reporter Reporter 5	result chan Event 6	stopped bool 7} 8... 9func NewStreamWatcher(d Decoder, r Reporter) *StreamWatcher { 10	sw := &amp;amp;StreamWatcher{ 11	source: d, 12	reporter: r, 13	// It&amp;#39;s easy for a consumer to add buffering via an extra 14	// goroutine/channel, but impossible for them to remove it, 15	// so nonbuffered is better.
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

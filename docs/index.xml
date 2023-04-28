@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <link>https://zhangsiming-blyq.github.io/</link>
+    <description>Recent content on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git的cherry-pick操作</title>
+      <link>https://zhangsiming-blyq.github.io/post/linux/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/linux/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</guid>
+      <description>
+        
+          
+             参考链接: https://www.atlassian.com/git/tutorials/cherry-pick/ git 的 cherry-pick 操作简单来讲就是可以把具体的commit从一个分支，直接嫁接(复制)到另一个分支, 下面看一个例子: 1$ git branch 2* feat/siming 3 master 4$ git log 5commit 1d7df64add47be9891efa6469f663e78acf3982f (HEAD -&amp;gt; feat/siming, origin/feat/siming) 6Author: zhangsiming &amp;lt;zhangsiming@360.cn&amp;gt; 7Date: Fri Feb 10 20:18:59 2023 +0800 8 9 test2 10 11commit a272f807df9f22c58aa2a970ff26a13a66abec4d 12Author: zhangsiming &amp;lt;zhangsiming@360.cn&amp;gt; 13Date: Fri Feb 10 19:59:06 2023 +0800 14 15 test 16... 17 18# 可以看到feat/siming分支最近两个commit一个是test，一个是test2，我们现在记录一下test的commitId，然后把他cherry-pick到master分支 19$ git checkout master 20$ git cherry-pick a272f807df9f22c58aa2a970ff26a13a66abec4d 21 22# 大功告成，test部分的变更已经追加到了master分支，我们看一下git log graph(注意看HEAD指针位置) 23$ git log --pretty=oneline --graph --decorate --all 24 25* 1d7df64add47be9891efa6469f663e78acf3982f (origin/feat/siming, feat/siming) test2 26* a272f807df9f22c58aa2a970ff26a13a66abec4d test 27* 627f296be9f64418d4f6dfe99d2fcf6881196f30 (HEAD -&amp;gt; master, origin/master, origin/HEAD) Merge branch &amp;#39;feat/siming&amp;#39; into &amp;#39;master&amp;#39; 28|\ 29| * 3a64ef1e9c78dba97b775ac6fcf3a1ecf0c7e925 fix: 优化gpu-alarmer 30| * 08358da0a98490e9e87a990342d13dbeffb7758f add: k8s-weekly-report 31| * 7231fc0a739fae55a5800e883d2e811b6c58e7f3 fix: 修改eventsinformer时间展示 32 33# 如果不想要这个commit了，可以reset回退(HEAD后面有几个^就回退几个commit，或者采用HEAD~n) 34$ git reset --hard HEAD^ 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>kubernetes常规问题</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</guid>
+      <description>
+        
+          
+             kubernetes的cordon打上的SchedulingDisabled仅仅影响调度，也就是直接打上nodeName不会受到该参数的影响 kubernetes的QosClass判断pod内的全部container，包括init-container，也就是如果init-container不进行限制，其他container无论怎么配置仍然不是Guaranteed kubernetes集群新版本如果cordon打上unschedule，会默认追加Taint；旧版本不会 kubernetes集群对于unschedule的节点不会走入调度环节，只有可以正常调度的节点才会走到后面判断Toleration，label等；特别地，对于daemonset的pod，schedulingDisable无效，但是tolerance等有效(v1.17版本中，Damoneset 的 pod 的调度从 daemonset controller 迁移到 kube-scheduler 来做调度，从而支持 PodAffnity、PodAntiAffinity 等能力) Error(不再重启)，Completed状态的podip会显示，但是实际不占用podip，真实podip已经分配给其他服务使用 kubernetes中，kubelet限制的max-pod数量是限制的具体的pod数量，超出会报错Outofpods 每次pod重启，kubelet会给他分配新的cgroup目录路径，而不会使用原来的；新的pod启动之后间隔一小段时间会删除旧的cgroup路径 kubernetes 推荐使用 systemd 来代替 cgroupfs; 因为systemd是kubernetes自带的cgroup管理器, 负责为每个进程分配cgroups; 但docker的cgroup driver默认是cgroupfs,这样就同时运行有两个cgroup控制管理器；可以使用docker info查看docker使用的cgroup driver，然后从&amp;quot;/etc/docker/daemon.json&amp;quot;中修改成systemd 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>中断绑定cpu核心问题</title>
+      <link>https://zhangsiming-blyq.github.io/post/linux/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/linux/%E4%B8%AD%E6%96%AD%E7%BB%91%E5%AE%9Acpu%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98/</guid>
+      <description>
+        
+          
+             中断是什么？中断是一种电信号，由硬件产生并直接送到中断控制器上，再由中断控制器向CPU发送中断信号，CPU检测到信号后，中断当前工作转而处理中断信号；其实准确的说这种算硬中断 如果不像让这种中断，或者系统中断和网络中断和一些业务的中断在同一个cpu上面互相影响；可以把某个中断绑定到某几个特定的cpu核心，来达到目的 默认情况systemctl status irqbalance服务会平衡所有中断均衡地是用cpu 可以用echo cpu号 &amp;gt; /proc/irq/中断号/smp_affinity或者使用taskset来绑定中断到具体的cpu核心 ethtool -l eth0可以看到，一些通道信息(这个通道是可以触发网络中断的队列数量), 设置多了会影响内存等资源，设置小了可能会称为高流量瓶颈 参考链接：https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/7/html/tuning_guide/interrupt_and_process_binding 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>在default命名空间下的svc, kubernetes</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes-default-svc/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes-default-svc/</guid>
+      <description>
+        
+          
+            
+该svc作为集群内部服务连接api-server的媒介(这三个信息会被注入到每个集群内部的pod中: KUBERNETES_SERVICE_HOST=10.96.0.1、KUBERNETES_SERVICE_PORT=443、KUBERNETES_SERVICE_PORT_HTTPS=443) 永远使用&amp;quot;--service-cluster-ip-range&amp;quot;定义的CIDR的第一个ip地址 svc以及对应的endpoints都是由master controller(api-server二进制文件在最开始启动的controller之一)管控 RunKubernetesService()是一个循环，里面的逻辑包含支持UpdateKubernetesService()更新这个svc信息，ReconcileEndpoints(...endpointPorts []corev1.EndpointPort...)来更新endpoint，也就是一般3个master的信息；不过有时候看到的endpoint可能只有一个ip，这可能是云厂商传入的master lb层 参考链接: https://networkop.co.uk/post/2020-06-kubernetes-default/ 
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Closures In Golang And Python</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/closure/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/closure/</guid>
+      <description>
+        
+          
+            For people new to Golang and Python, this article explains what closures are as well as sometips that need to know about when using closures in these two programming languages. To make it easier for you to copy down and run on your own server, the code section would provide the package, import, and other repeated parts. The negative aspect is that this results in some redundancy, so please understand if this causes any inconvenience.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>使用zap打造你的golang日志库</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/gozap/</link>
+      <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/gozap/</guid>
+      <description>
+        
+          
+            近期配置了uber家的zap日志库，觉得性能比较强，展示比较美观，在这里做一个分享，代码在第三部分可以自取。
+为什么不选择原生log? 说起golang如何优雅的打印日志，任何一个golang的初学者大概都是用的原生log库，或者直接fmt.Println()...但是这种方式并不优雅，并且有以下缺点：
+对于基础日志：不能细粒度区分info和debug级别的日志; 对于错误日志: 不支持除了fatal或者panic的普通error级别告知。 log示例 1package main 2 3import &amp;#34;log&amp;#34; 4 5func main() { 6 log.Print(&amp;#34;info or debug&amp;#34;) 7 log.Fatal(&amp;#34;fatal&amp;#34;) 8 log.Panic(&amp;#34;panic&amp;#34;) 9} 10 11// 输出如下 122022/11/23 22:23:32 info or debug 132022/11/23 22:23:32 fatal 14exit status 1 为什么不选择logrus? logrus也是比较常用的自定义日志库，不过因为Go语言是一门强类型的静态语言，而logrus需要知道数据的类型来打印日志，怎么办呢？实现方案是使用反射，这导致大量分配计数。虽然通常不是一个大问题（取决于代码），但是在大规模、高并发的项目中频繁的反射开销影响很大，所以这里不进行采用。
+仓库链接: logrus
+logrus示例 1package main 2 3import log &amp;#34;github.com/sirupsen/logrus&amp;#34; 4 5var logger = log.New() 6 7func main() { 8 // 这里可以通过WithFields来附加字段 9 logger.WithFields(log.Fields{&amp;#34;testfield&amp;#34;: &amp;#34;test&amp;#34;}).Info(&amp;#34;test info&amp;#34;) 10 logger.Info(&amp;#34;info&amp;#34;) 11 logger.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Generate an array of window maximums</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/6/</link>
+      <pubDate>Sat, 01 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/6/</guid>
+      <description>
+        
+          
+            Requirements There is a integer array arr and a window of size w that slides from the leftmost to the rightmost part of the array, with the window sliding one position at a time to the right. For example, the array is [4,3,5,4,3,3,6,7], and the window size is 3.
+If the length of the array is n and the window size is w, then a total of n-w+1 window maxima are generated.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>谈谈kubernetes 证书认证那些事儿</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes-certificate/</link>
+      <pubDate>Mon, 12 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes-certificate/</guid>
+      <description>
+        
+          
+            kubernetes各个组件都是加密通信的, 那么都有哪些证书、各个证书怎么交互、这些证书什么时候过期，这个就变得至关重要; 本文引用了一些其他网络内容(均已附上原文链接)，并适当补充完善，用于让新手完善熟悉kubernetes证书体系(如有侵权联系邮箱可以删除)。
+一、数字证书原理 1.1 传统非对称加密 1message --&amp;gt; (公钥加密) --&amp;gt; || 传输 || --&amp;gt; (私钥解密) --&amp;gt; message 注意:
+1.这里与数字证书认证相反，是公钥加密私钥解密
+2.公钥私钥需要是一个秘钥对
+1.2 哈希函数 1message --&amp;gt; H(message) --&amp;gt; Hash message 处理加入一个随机数，然后得出结果(加盐); 可以有效缓解在输入值是一个有效的集合，哈希值也是固定长度被别人‘试’出来的几率
+1message --&amp;gt; H(R|message) --&amp;gt; Hash message 1.3 数字证书 1.3.1 数字签名 数字签名；把数据根据私钥/哈希进行加密，然后必须要对应的公钥来进行解密认证才能确保数据安全。前半句的加密过程就叫做 &#39;数字签名&#39;
+1.3.2 数字证书认证过程 Alice 想要通过证书加密让 Bob 安全读到自己的信息流程如下：
+Alice 在本地生成 Private Key 和 CSR（Certificate Signing Request）。CSR 中包含了 Alice 的公钥和姓名，机构、地址等身份信息。 Alice 使用该 CSR 向证书机构发起数字证书申请。 证书机构验证 Alice 的身份后，使用 CSR 中的信息生成数字证书，并使用自己的 CA 根证书对应的私钥对该证书签名。 Alice 使用自己的 Private Key 对合同进行签名，然后将签名后的合同和自己的证书一起并发送给 Bob。 Bob 使用操作系统中自带的证书机构根证书中的公钥来验证 Alice 证书中的签名，以确认 Alice 的身份和公钥。(使用内置根证书确认身份并获取Alice证书) Alice 的证书验证成功后，Bob 使用 Alice 证书中的公钥来验证合同中数字签名。(使用刚刚获取的Alice证书(公钥)解析Alice发送的内容) 合同数字签名通过验证，可以证明该合同为 Alice 本人发送，并且中间未被第三方篡改过。 注意：
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>浅谈kubernetes ingress机制</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/ingress-mechanism/</link>
+      <pubDate>Thu, 25 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/ingress-mechanism/</guid>
+      <description>
+        
+          
+            ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。
+一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
+1# 实验中选择的是&amp;#34;iptables模式的kube-proxy&amp;#34; 2# 首先关闭kube-proxy 3$ sudo systemctl stop kube-proxy 4 5# 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 6$ ks 7NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE 8example-test NodePort 10.0.0.226 &amp;lt;none&amp;gt; 8080:30948/TCP 18h 9traefik NodePort 10.0.0.85 &amp;lt;none&amp;gt; 9000:30001/TCP,80:30002/TCP,443:31990/TCP 19h 10 11# 查看与&amp;#34;10.0.0.226&amp;#34;有关的iptables条目，得知访问&amp;#34;10.0.0.226&amp;#34;且目的端口是&amp;#34;8080&amp;#34;的流量会发送给KUBE-SVC-KNYNFDNL67C7KAZZ链 12$ sudo iptables -S -t nat | grep 10.0.0.226 13-A KUBE-SERVICES ! -s 10.0.0.0/24 -d 10.0.0.226/32 -p tcp -m comment --comment &amp;#34;traffic-dispatcher/example-test:port-8080 cluster IP&amp;#34; -m tcp --dport 8080 -j KUBE-MARK-MASQ 14-A KUBE-SERVICES -d 10.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Use One Stack To Sort Another Stack</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/5/</link>
+      <pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/5/</guid>
+      <description>
+        
+          
+            Requirements A stack whose elements are of type integer now wants to sort the stack from top to bottom in order from smallest to largest, and only one stack is allowed to be requested. Other than that, new variables can be requested, but no additional data structures can be requested. How to complete the sorting?
+Solution apply for a new help stack, keep getting data from the original stack, and compare it with the top data of the new help stack; if it meets the sorting requirements, then push it to the help stack if it does not meet the sorting requirements, pop the top data from the help stack and push it to the original stack until it meets the sorting requirements Finally, the original stack is emptied, and the help stack is the stack that is all sorted, so write it back again to complete the stack sorting.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>API网关对比</title>
+      <link>https://zhangsiming-blyq.github.io/post/linux/apigateway/</link>
+      <pubDate>Mon, 18 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/linux/apigateway/</guid>
+      <description>
+        
+          
+            kong、apisix是当前比较火的两款开源api网关，本文对比了二者的部署、使用方式；提供一个简单的参考; 对于kong，大家都比较熟悉，但是对于apisix可能熟悉的并不多，那么kong、apisix在使用方式，功能命名上是否有相似，还是理念不同，请看下文。
+一、kong 1.1 安装 1# 安装kong 2$ helm repo add kong https://charts.konghq.com 3$ helm repo update 4$ helm fetch kong/kong 5$ tar xf kong-2.5.0.tgz 6$ cd kong 7$ ls 8CHANGELOG.md Chart.yaml FAQs.md README.md UPGRADE.md charts ci crds example-values requirements.lock requirements.yaml templates values.yaml 9...需要配置 101. postgresql作为存储 112. 允许plain text调用admin API 12 13# 安装konga 14$ gc https://github.com/pantsel/konga.git 15$ ls konga 16Chart.yaml templates values.yaml 17...需要配置 181. 获取postgresql的secret写入连接信息 19 20# 部署 21$ helm install kong .
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ansible-playbook 详解</title>
+      <link>https://zhangsiming-blyq.github.io/post/linux/ansible-playbook/</link>
+      <pubDate>Sun, 10 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/linux/ansible-playbook/</guid>
+      <description>
+        
+          
+            Ansible 是一个开源的基于 OpenSSH 的自动化配置管理工具。可以用它来配置系统、部署软件和编排更高级的 IT 任务，比如持续部署或零停机更新。
+一、ansible 简介 Ansible 的主要目标是简单和易用，并且它还高度关注安全性和可靠性。基于这样的目标，Ansible 适用于开发人员、系统管理员、发布工程师、IT 经理，以及介于两者之间的所有人。Ansible 适合管理几乎所有的环境，从拥有少数实例的小型环境到有数千个实例的企业环境。
+1.1 ansible 变量优先级如下 command line values (eg &amp;quot;-u user&amp;quot;) role defaults inventory file or script group vars inventory group_vars/all playbook group_vars/all inventory group_vars/* playbook group_vars/* inventory file or script host vars inventory host_vars/*: inventory 下面的 hosts_vars 目录下的变量优先级大于 group_vars 目录下的 playbook host_vars/* host facts / cached set_facts play vars play vars_prompt play vars_files: vars_files 优先级大于同级别的 vars 字段(play 内定义) role vars (defined in role/vars/main.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Dog-Cat Queue</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/4/</link>
+      <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/4/</guid>
+      <description>
+        
+          
+            Requirements Dog and cat have implemented the Pet interface, you can use getPetType() to view the corresponding animal type; NewDog(), NewCat() can create new dog and cat objects respectively.
+1type Pet interface { 2	getPetType() string 3} 4 5type fatherPet struct { 6	Type string 7} 8 9func (fp *fatherPet) getPetType() string { 10	return fp.Type 11} 12 13type Dog struct { 14	fatherPet 15} 16 17func NewDog() *Dog { 18	fmt.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | How To Inverse Order A Stack Using Only Recursive Functions And Stack</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/3/</link>
+      <pubDate>Sun, 05 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/3/</guid>
+      <description>
+        
+          
+            Requirements A stack is pressed into 1, 2, 3, 4, 5, then from the top of the stack to the bottom of the stack is 5, 4, 3, 2, 1. After transposing this stack, from the top of the stack to the bottom of the stack is 1, 2, 3, 4, 5, that is, to achieve the reverse order of the stack elements, but only with recursive functions to achieve, can not use other data structures.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Queue Composed Of Two Stacks</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/2/</link>
+      <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/2/</guid>
+      <description>
+        
+          
+            Requirements Write a class that implements a queue with two stacks and supports the basic operations of a queue: add, poll, peek
+Solving Ideas stacks are characterized by last-in-first-out, queues are characterized by first-in-first-out one stack as a press-in stack, the other stack as a pop-up stack, as long as the data pressed into the press-in stack and then pressed into the pop-up stack order will be restored Golang Implementation Note that since the data from stackPush to stackPop is only guaranteed to be coherent each time, stackPush has to press all the data into stackPop at once, and only when stackPop is empty.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Designing A Stack With &#39;getMin&#39; Function</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/1/</link>
+      <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/1/</guid>
+      <description>
+        
+          
+            Requirements the time complexity of pop, push, getMin operations are O(1) the design of the stack type can use the ready-made stack structure Solving Ideas use two stacks, starkData and stackMin compare the size of the top data of stackMin with that of starkData each time it is pressed in, and press the new minimum value onto the stack if it is smaller than the top data of stackMin Golang Implementation Golang built-in data structure does not include a stack, define a stack.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>client-go watch接口隔一段时间自动退出怎么办？</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/retrywatcher/</link>
+      <pubDate>Sat, 28 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/retrywatcher/</guid>
+      <description>
+        
+          
+            在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+使用client-go watch接口 💡 全局的mycluster都等于*kubernetes.Clientset 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。
+1pod, err := mycluster.Clusterclientset.CoreV1().Pods(appNamespace).Watch(context.TODO(), metav1.ListOptions{LabelSelector: label}) 2if err != nil { 3 log.Error(err) 4} 5... 6event, ok := &amp;lt;-pod.ResultChan() 7if !ok { 8 log.Error(err) 9} 异常：watch接口自动断开 1. 现象 在使用过程中，watch操作持续一段时间就会自动断开
+2. 排查 我们进入watch包里面找到streamwatcher.go，其中节选了一些重要片段：
+1type StreamWatcher struct { 2	sync.Mutex 3	source Decoder 4	reporter Reporter 5	result chan Event 6	stopped bool 7} 8... 9func NewStreamWatcher(d Decoder, r Reporter) *StreamWatcher { 10	sw := &amp;amp;StreamWatcher{ 11	source: d, 12	reporter: r, 13	// It&amp;#39;s easy for a consumer to add buffering via an extra 14	// goroutine/channel, but impossible for them to remove it, 15	// so nonbuffered is better.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Python Yield</title>
+      <link>https://zhangsiming-blyq.github.io/post/python/python-yield/</link>
+      <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/python/python-yield/</guid>
+      <description>
+        
+          
+            Explain the common usage scenarios of iterators, generators, and yield fields in Python.
+Iterators Python object implements iter() and next() methods, we become iterable objects (iterables), through iter() can return an iterator object (iterators).
+__iter__() method: return the iterator object itself __next__() method: returns the next element of the container, and raises a StopIteration Exception at the end to terminate the iterator 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>prometheus 监测 kubernetes 控制平面</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/monitor-control-plane/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/monitor-control-plane/</guid>
+      <description>
+        
+          
+            对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
+一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&amp;quot;relabel_configs&amp;quot;中的具体目标, 进行不断拉取(拉取间隔为&amp;quot;scrape_interval&amp;quot;)
+配置权限： k8s 中 RBAC 支持授权资源对象的权限，比如可以 get、list、watch 集群中的 pod，还支持直接赋予对象访问 api 路径的权限，比如获取/healthz, /api 等, 官方对于 non_resource_urls 的解释如下：
+non_resource_urls - (Optional) NonResourceURLs is a set of partial urls that a user should have access to. *s are allowed, but only as the full, final step in the path Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>指数基金投资指南摘记</title>
+      <link>https://zhangsiming-blyq.github.io/post/indexfund/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/indexfund/</guid>
+      <description>
+        
+          
+            股神巴菲特说：“通过定期投资指数基金，一个什么都不懂的业余投资者竟然往往能够战胜大部分专业投资者；指数基金追踪指数，对基金经理没有过多依赖；每个指数基金会同时投资几十只甚至上百只股票，可以最大化分散投资者的非市场风险；而且在所有同类基金里，指数基金的费率也是最低的。”
+宽基指数基金 上证50指数：上交所选出沪市规模最大、流动性最好、最具有代表性的50只股票组成样本股，反应沪市最具影响力的一批优秀大盘企业的整体状况 沪深300指数：由中证指数公司开发，从上交所和深交所挑选规模最大、流动性最好的300只股票，国内股市最具代表性的指数 中证500指数：将全部沪深300指数的300家公司排除，然后将最近一年日均总市值排名前300名的企业也排除，剩下的公司中选择日均总市值排名前500名的企业，作为中证500指数 创业板指数：放在深交所下面的，给达不到主板上市条件的小企业开放的门槛更低的市场；创业板综指指的是所有创业板上市公司的股价平均表现；创业板指数是反应创业板最主要的100家企业的平均表现 以上四种指数按照市值加权，股票规模越大，指数中权重越高。
+红利指数：是近十几年兴起的一类比较特殊的策略加权基金；我们都知道股票是会发放股息的，也就是现金分红；业绩比较好的公司会每年从净利润中拿出一部分，以现金分红的形式回馈股东；而红利指数就是按照分红进行加权，组成指数基金。常见的有上证红利指数、中证红利指数、深证红利指数和红利机会指数 基本面指数：基本面基本覆盖了一个公司运营的各个方面，比如营业收入、现金流、净资产、分红等，按照基本面进行加权的叫做基本面指数 央视财经50指数：专家们投票选出来的50只股票，和专家的选股能力息息相关 恒生指数：投资中国香港上市的公司中规模最大的50家企业 H股指数：公司在内地注册，但是在香港上市，这样的公司就是H股；H股指数的全程是恒生中国企业指数 上证50AH优选指数：很多公司同时在A股和H股上市，关系紧密；买入AH股中相对便宜的那个，卖出相对贵的那个，利用这一原理来获取超额收益的组成上证50AH优选指数 纳斯达克100指数：美股纳斯达克规模最大的100家大型企业 标普500指数：以大盘股为主，有500只成分股；标普500是一个附带主观判断的蓝筹股指数，包括公司各个行业分布、大小型公司的选择都比较均匀 上证综指：上交所全部的上市公司组成 中证100指数：沪深300中选择前100组成、还有类似的中证800、中证1000、中证全指 等权重指数：等权重指数则是分配给每个成分股完全相同的权重 行业指数基金 优秀行业： 必须消费：主要是维持我们正常生活所需要的各种消费品、例如饮料、酒、农副食品等 医药行业：每个人都离不开生老病死，医药是人类的基本需求 可选消费：饮料、烟草等常用日用消费品，一般单价比较低、消费频率大，也是刚需 养老产业：多行业混合的产业，覆盖了多个行业，包括医疗保健、信息技术、日常消费、可选消费、甚至包括保险公司这种金融行业 强周期性行业 银行业：银行的周期性受宏观经济的影响较大，经济处于下行周期，银行利差收益减少，利益就变差；经济好转时，银行效益就会变好 证券业 地产业 其他： 军工行业 环保行业 白酒行业 常见的估值指标 市盈率：公司市值/公司盈利，反映了我们愿意为了获取1元的净利润付出多少代价(市盈率10表示我们愿意为了1元盈利付出10元)；也可以反推估算市值(根据公司年净利润乘市盈率可以计算市值)；适用于流通性好，盈利稳定的公司 盈利收益率：公司盈利/公司市值，一般来说盈利收益率越高公司的估值就越低，公司越有可能被低估；适用于流通性好，盈利稳定的公司 市净率：公司市值/公司净资产，净资产就是资产减去负债；当企业的资产大多是比较容易衡量价值的有形资产，并且使长期保值的资产时，比较适合用市净率来估值 股息率：过去一年公司的现金分红/公司市值，股息率衡量的就是现金分红的收益率；盈利收益率*分红率=股息率；分红率一般是公司预先就设置好了，连续多年不会有什么改变；股息率会随之股价波动，股价越低，股息率越高 指数的估值查看”银行螺丝钉公众号”获取
+挑选指数基金 盈利收益率法： 投资方法：
+盈利收益率大于10%时，开始(坚持)定投 盈利收益率小于10%，大于6.4%的时候暂停定投、继续持有；可以定投其他盈利收益率大于10%的品种 盈利收益率小于6.4%时，分批卖出 适用范围：流通性好、盈利比较稳定的品种：
+指数：上证50、上证红利、中证红利、基本面50、央视50、上证50AH优选、恒生指数、H股指数
+博格公式法： 指数基金未来的年复合收益率，等于指数基金的投资初期股息率，加上指数基金每年的市盈率变化率，再加上指数基金每年的盈利变化率：
+股息率：从公证号估值获取 市盈率：市盈率呈周期性变化，如果看历史市盈率处于较低则未来大概率是会上涨的，这时候应该买入 盈利：一般情况国内经济上涨都会带来正收益 投资方法：
+市盈率处于历史底部区域的时候坚持定投 市盈率进入正常估值，暂停定投，继续持有；可以定投其他处于底部的产品 市盈率进入历史较高区域的时候卖出 适用范围：盈利呈高速增长姿态的指数，可以使用博格公式对其进行判断。如果指数当前的市盈率处于它历史市盈率波动范围的较低区域，就可以投资它
+指数：沪深300、中证500、创业板、红利机会指数、必需消费行业指数、医药行业指数、可选消费行业指数、养老产业指数
+博格公式法-变种： 指数基金未来的年复合收益率，等于指数基金每年市净率的变化率，加上指数基金每年净资产的变化率
+投资方法：
+市净率处于历史底部区域的时候坚持定投 市净率进入正常估值，暂停定投，继续持有；可以定投其他处于底部的产品 市净率进入历史较高区域的时候卖出 适用范围：盈利处于不稳定状态或者盈利呈周期性变化，但行业没有长期亏损记录的指数
+指数：证券行业指数、金融行业指数、非银金融行业指数、地产行业指数
+在指数基金低估、值的投资的时候再进行定投
+提高定投收益的五个小技巧 省下就是赚到：降低交易基金的费用 正确处理基金分红，能让长期收益上一个台阶(收益继续投入) 定投的频率选择：长期收益来看，一个月一投和一周一投收益几乎一致；如果月中看到大跌忍不住追加建议两周或者一周一投都可 定期不定额(盈利收益率法)：以盈利收益率首次达到10%以上开始投资基金额为基准，以后每个月定投的金额可以用下面公式计算：首次低谷时的定投资金*(当月的盈利收益率/首次的盈利收益率) 定期不定额(博格公式法)：首次低估时的定投资金*(首次的市盈率/当月的市盈率)；适用于博格公式变种的则是：首次低估时的定投资金*(首次的市净率/当月的市净率) 我应该投入多少资金到指数基金？ 对于手里有部分流动资产，可以用100减去自己当前的年龄，用得到的数值加上百分号就是适合投入到指数基金中的资金比例； 对于上班族：(每个月收入-各项开支)*0.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>浅谈 containerd</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/containerd/</link>
+      <pubDate>Sun, 10 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/containerd/</guid>
+      <description>
+        
+          
+            伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
+一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.5.2 7$ wget https://github.com/containerd/containerd/releases/download/v${VERSION}/cri-containerd-cni-${VERSION}-linux-amd64.tar.gz 8 9# 安装 10$ sudo tar --no-overwrite-dir -C / -xzf cri-containerd-cni-${VERSION}-linux-amd64.tar.gz 11# 初始化containerd配置 12$ containerd config default &amp;gt; /etc/containerd/config.toml 13# 修改默认的sandbox_image 14$ vim /etc/containerd/config.toml 15... 16sandbox_image = &amp;#34;registry.cn-beijing.aliyuncs.com/shannonai-k8s/pause:3.1&amp;#34; 17... 18 19# 启动服务 20sudo systemctl daemon-reload 21sudo systemctl start containerd 22 23# 查看版本 24$ ctr version 25Client: 26 Version: 1.
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

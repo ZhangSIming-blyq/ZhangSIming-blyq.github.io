@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>etcd on </title>
+    <link>https://zhangsiming-blyq.github.io/tags/etcd/</link>
+    <description>Recent content in etcd on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 11 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>prometheus 监测 kubernetes 控制平面</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/monitor-control-plane/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/monitor-control-plane/</guid>
+      <description>
+        
+          
+            对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
+一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&amp;quot;relabel_configs&amp;quot;中的具体目标, 进行不断拉取(拉取间隔为&amp;quot;scrape_interval&amp;quot;)
+配置权限： k8s 中 RBAC 支持授权资源对象的权限，比如可以 get、list、watch 集群中的 pod，还支持直接赋予对象访问 api 路径的权限，比如获取/healthz, /api 等, 官方对于 non_resource_urls 的解释如下：
+non_resource_urls - (Optional) NonResourceURLs is a set of partial urls that a user should have access to. *s are allowed, but only as the full, final step in the path Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding.
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>
