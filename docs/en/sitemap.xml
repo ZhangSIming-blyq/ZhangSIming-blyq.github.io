@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://zhangsiming-blyq.github.io/</loc>
-    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -16,7 +16,7 @@
                 />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/</loc>
-    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -26,6 +26,40 @@
                 rel="alternate"
                 hreflang="en"
                 href="https://zhangsiming-blyq.github.io/categories/"
+                />
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/english/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/notes/fast-and-furious9/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/movie/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/movie/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/notes/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/notes/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/</loc>
+    <lastmod>2023-05-27T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://zhangsiming-blyq.github.io/zh-cn/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://zhangsiming-blyq.github.io/tags/"
                 />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/git/</loc>
@@ -52,27 +86,11 @@
     <loc>https://zhangsiming-blyq.github.io/categories/linux/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/post/</loc>
-    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/shorthand/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/shorthand/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/</loc>
-    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://zhangsiming-blyq.github.io/zh-cn/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://zhangsiming-blyq.github.io/tags/"
-                />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
@@ -84,9 +102,6 @@
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/golang/closure/</loc>
-    <lastmod>2022-11-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/english/</loc>
     <lastmod>2022-11-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/golang/</loc>
