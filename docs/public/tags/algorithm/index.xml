@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithm on </title>
+    <link>https://zhangsiming-blyq.github.io/tags/algorithm/</link>
+    <description>Recent content in algorithm on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Sat, 01 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ALGORITHM SERIES | Generate an array of window maximums</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/6/</link>
+      <pubDate>Sat, 01 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/6/</guid>
+      <description>
+        
+          
+            Requirements There is a integer array arr and a window of size w that slides from the leftmost to the rightmost part of the array, with the window sliding one position at a time to the right. For example, the array is [4,3,5,4,3,3,6,7], and the window size is 3.
+If the length of the array is n and the window size is w, then a total of n-w+1 window maxima are generated.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Use One Stack To Sort Another Stack</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/5/</link>
+      <pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/5/</guid>
+      <description>
+        
+          
+            Requirements A stack whose elements are of type integer now wants to sort the stack from top to bottom in order from smallest to largest, and only one stack is allowed to be requested. Other than that, new variables can be requested, but no additional data structures can be requested. How to complete the sorting?
+Solution apply for a new help stack, keep getting data from the original stack, and compare it with the top data of the new help stack; if it meets the sorting requirements, then push it to the help stack if it does not meet the sorting requirements, pop the top data from the help stack and push it to the original stack until it meets the sorting requirements Finally, the original stack is emptied, and the help stack is the stack that is all sorted, so write it back again to complete the stack sorting.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Dog-Cat Queue</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/4/</link>
+      <pubDate>Tue, 07 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/4/</guid>
+      <description>
+        
+          
+            Requirements Dog and cat have implemented the Pet interface, you can use getPetType() to view the corresponding animal type; NewDog(), NewCat() can create new dog and cat objects respectively.
+1type Pet interface { 2	getPetType() string 3} 4 5type fatherPet struct { 6	Type string 7} 8 9func (fp *fatherPet) getPetType() string { 10	return fp.Type 11} 12 13type Dog struct { 14	fatherPet 15} 16 17func NewDog() *Dog { 18	fmt.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | How To Inverse Order A Stack Using Only Recursive Functions And Stack</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/3/</link>
+      <pubDate>Sun, 05 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/3/</guid>
+      <description>
+        
+          
+            Requirements A stack is pressed into 1, 2, 3, 4, 5, then from the top of the stack to the bottom of the stack is 5, 4, 3, 2, 1. After transposing this stack, from the top of the stack to the bottom of the stack is 1, 2, 3, 4, 5, that is, to achieve the reverse order of the stack elements, but only with recursive functions to achieve, can not use other data structures.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Queue Composed Of Two Stacks</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/2/</link>
+      <pubDate>Sat, 04 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/2/</guid>
+      <description>
+        
+          
+            Requirements Write a class that implements a queue with two stacks and supports the basic operations of a queue: add, poll, peek
+Solving Ideas stacks are characterized by last-in-first-out, queues are characterized by first-in-first-out one stack as a press-in stack, the other stack as a pop-up stack, as long as the data pressed into the press-in stack and then pressed into the pop-up stack order will be restored Golang Implementation Note that since the data from stackPush to stackPop is only guaranteed to be coherent each time, stackPush has to press all the data into stackPop at once, and only when stackPop is empty.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>ALGORITHM SERIES | Designing A Stack With &#39;getMin&#39; Function</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/1/</link>
+      <pubDate>Thu, 02 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/1/</guid>
+      <description>
+        
+          
+            Requirements the time complexity of pop, push, getMin operations are O(1) the design of the stack type can use the ready-made stack structure Solving Ideas use two stacks, starkData and stackMin compare the size of the top data of stackMin with that of starkData each time it is pressed in, and press the new minimum value onto the stack if it is smaller than the top data of stackMin Golang Implementation Golang built-in data structure does not include a stack, define a stack.
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>
