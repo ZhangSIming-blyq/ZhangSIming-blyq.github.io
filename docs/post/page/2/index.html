@@ -156,6 +156,75 @@
   <div class="excerpt">
     <div class="excerpt_header">
       <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/ingress-mechanism/" title="浅谈kubernetes ingress机制">浅谈kubernetes ingress机制</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Aug 25, 2022</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=%e6%b5%85%e8%b0%88kubernetes%20ingress%e6%9c%ba%e5%88%b6&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fingress-mechanism%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fingress-mechanism%2f&t=%e6%b5%85%e8%b0%88kubernetes%20ingress%e6%9c%ba%e5%88%b6" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/kubernetes/ingress-mechanism/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p>ingress在将流量发往后端的时候是不经过kube-proxy的，ingress controller会直接和kube-apiserver进行交互，然后获取pod endpoints和service的对应关系，进行轮询，负载均衡到后端节点。
+一、验证试验 从集群中删除kube-proxy，查看通过ingress的方式是否可以访问成功?
+1# 实验中选择的是&quot;iptables模式的kube-proxy&quot; 2# 首先关闭kube-proxy 3$ sudo systemctl stop kube-proxy 4 5# 查看服务，ClusterIP的端口是8080，NodePort的端口是30948 6$ ks …</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/kubernetes/ingress-mechanism/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
         <a href="https://zhangsiming-blyq.github.io/post/algorithm/5/" title="ALGORITHM SERIES | Use One Stack To Sort Another Stack">ALGORITHM SERIES | Use One Stack To Sort Another Stack</a>
       </h3>
       
@@ -767,78 +836,6 @@ Iterators Python object implements iter() and next() methods, we become iterable
     </div>
   </li>
 
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/monitor-control-plane/" title="prometheus 监测 kubernetes 控制平面">prometheus 监测 kubernetes 控制平面</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Apr 11, 2022</span>
-    <span class="post_time"> · 4 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
-        </a><a href='https://zhangsiming-blyq.github.io/tags/apiserver/' title="apiserver" class="post_tag button button_translucent">apiserver
-        </a><a href='https://zhangsiming-blyq.github.io/tags/etcd/' title="etcd" class="post_tag button button_translucent">etcd
-        </a><a href='https://zhangsiming-blyq.github.io/tags/controller-manager/' title="controller-manager" class="post_tag button button_translucent">controller-manager
-        </a><a href='https://zhangsiming-blyq.github.io/tags/scheduler/' title="scheduler" class="post_tag button button_translucent">scheduler
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=prometheus%20%e7%9b%91%e6%b5%8b%20kubernetes%20%e6%8e%a7%e5%88%b6%e5%b9%b3%e9%9d%a2&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fmonitor-control-plane%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fmonitor-control-plane%2f&t=prometheus%20%e7%9b%91%e6%b5%8b%20kubernetes%20%e6%8e%a7%e5%88%b6%e5%b9%b3%e9%9d%a2" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/post/kubernetes/monitor-control-plane/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>对于 kubernetes 集群的控制平面组件，监控是必要的, 他可以帮助我们获取到集群的整体负载压力，并在核心组件出问题的时候配合告警让管理员及时发现问题，及时处理，更稳定的保证集群的生命周期。
-一、Prometheus 如何自动发现 Kubernetes Metrics 接口? prometheus 收集 kubernetes 集群中的指标有两种方式，一种是使用 crd(servicemonitors.monitoring.coreos.com)的方式，主要通过标签匹配；另一种是通过 scrape_config，支持根据配置好的&quot;relabel_configs&quot;中的具体目标, 进行不断拉取(拉取间隔 …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/kubernetes/monitor-control-plane/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
       <li>
     <ul class="pagination pagination-default">
       <li class="page-item">
@@ -901,6 +898,9 @@ Iterators Python object implements iter() and next() methods, we become iterable
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
       <li>
+        <a href="https://zhangsiming-blyq.github.io/post/linux/neovim/" class="nav-link" title="Comprehensive Guide to Neovim">Comprehensive Guide to Neovim</a>
+      </li>
+      <li>
         <a href="https://zhangsiming-blyq.github.io/post/notes/fast-and-furious9/" class="nav-link" title="Fast &amp; Furious 9">Fast &amp; Furious 9</a>
       </li>
       <li>
@@ -914,9 +914,6 @@ Iterators Python object implements iter() and next() methods, we become iterable
       </li>
       <li>
         <a href="https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes-default-svc/" class="nav-link" title="在default命名空间下的svc, kubernetes">在default命名空间下的svc, kubernetes</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/6/" class="nav-link" title="ALGORITHM SERIES | Generate an array of window maximums">ALGORITHM SERIES | Generate an array of window maximums</a>
       </li>
       <li>
         <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" class="nav-link" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
@@ -996,6 +993,77 @@ Iterators Python object implements iter() and next() methods, we become iterable
         </a>
         
         
+        <br>
+        <div class="post_tags_toggle button">All Categories</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/algorithm/' class=" post_tag button button_translucent" data-position=6 title="algorithm">ALGORITHM<span class="button_tally">6</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/ansible/' class=" post_tag button button_translucent" data-position=1 title="ansible">ANSIBLE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/apigateway/' class=" post_tag button button_translucent" data-position=1 title="apigateway">APIGATEWAY<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/containerd/' class=" post_tag button button_translucent" data-position=1 title="containerd">CONTAINERD<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/docker/' class=" post_tag button button_translucent" data-position=1 title="docker">DOCKER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/finance/' class=" post_tag button button_translucent" data-position=1 title="finance">FINANCE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/git/' class=" post_tag button button_translucent" data-position=1 title="git">GIT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/golang/' class=" post_tag button button_translucent" data-position=3 title="golang">GOLANG<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class=" post_tag button button_translucent" data-position=6 title="kubernetes">KUBERNETES<span class="button_tally">6</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/linux/' class=" post_tag button button_translucent" data-position=3 title="linux">LINUX<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/movie/' class=" post_tag button button_translucent" data-position=1 title="movie">MOVIE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/notes/' class=" post_tag button button_translucent" data-position=1 title="notes">NOTES<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/python/' class=" post_tag button button_translucent" data-position=2 title="python">PYTHON<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/shorthand/' class=" post_tag button button_translucent" data-position=4 title="shorthand">SHORTHAND<span class="button_tally">4</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/vim/' class=" post_tag button button_translucent" data-position=1 title="vim">VIM<span class="button_tally">1</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
       </nav>
     </div>
     <div>
@@ -1008,7 +1076,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
         
         <a href='https://zhangsiming-blyq.github.io/tags/english/' class="post_tag button button_translucent" title="english">
           ENGLISH
-          <span class="button_tally">10</span>
+          <span class="button_tally">11</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
@@ -1109,7 +1177,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/english/' class=" post_tag button button_translucent" data-position=10 title="english">ENGLISH<span class="button_tally">10</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/english/' class=" post_tag button button_translucent" data-position=11 title="english">ENGLISH<span class="button_tally">11</span>
             </a>
             
             
@@ -1158,6 +1226,10 @@ Iterators Python object implements iter() and next() methods, we become iterable
             
             
             <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' class=" post_tag button button_translucent" data-position=4 title="shorthand">SHORTHAND<span class="button_tally">4</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/vim/' class=" post_tag button button_translucent" data-position=1 title="vim">VIM<span class="button_tally">1</span>
             </a>
             
             
@@ -1264,7 +1336,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
 
 <script type="text/javascript" src="https://zhangsiming-blyq.github.io/en/js/bundle.daf5d72d10b0f1e048706d4cb8d79d1ec41c3b5edcd83acfaa4df80252afff936252c1fa7804d8dcdb500eaf0f7d5adbb79cfe886cf7068f12f58cdebc05e1c3.js" integrity="sha512-2vXXLRCw8eBIcG1MuNedHsQcO17c2DrPqk34AlKv/5NiUsH6eATY3NtQDq8PfVrbt5z&#43;iGz3Bo8S9YzevAXhww==" crossorigin="anonymous"></script>
 
-  <script src="https://zhangsiming-blyq.github.io/js/search.min.df4d84e4983f0c71dd495e07a09815d920553c3ddf3d0767801c73373573aa17e1b489e4453272dbf4ce2a38a3d01a10b170744e50dd6bec85a598221867ba9a.js"></script>
+  <script src="https://zhangsiming-blyq.github.io/js/search.min.9641a8a49c5a7dbd99f372bf456fc577a23b235fd157ee614ce2dab96b2e0f3687d5cc408d875f32e94405a2ccbca5c8bc43491cfce32471b72aa63e5315018d.js"></script>
 
   </body>
 </html>
