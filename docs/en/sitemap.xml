@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://zhangsiming-blyq.github.io/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -15,11 +15,11 @@
                 href="https://zhangsiming-blyq.github.io/"
                 />
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/post/notes/%E6%97%A0%E9%99%90%E7%B2%BE%E5%8A%9B/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <loc>https://zhangsiming-blyq.github.io/post/java/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF1/</loc>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -31,26 +31,20 @@
                 href="https://zhangsiming-blyq.github.io/categories/"
                 />
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/efficiency/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/efficiency/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/english/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/health/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <loc>https://zhangsiming-blyq.github.io/tags/java/</loc>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/health/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <loc>https://zhangsiming-blyq.github.io/categories/java/</loc>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/</loc>
-    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+    <lastmod>2023-08-31T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -61,6 +55,21 @@
                 hreflang="en"
                 href="https://zhangsiming-blyq.github.io/tags/"
                 />
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/notes/%E6%97%A0%E9%99%90%E7%B2%BE%E5%8A%9B/</loc>
+    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/efficiency/</loc>
+    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/efficiency/</loc>
+    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/health/</loc>
+    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/health/</loc>
+    <lastmod>2023-08-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/linux/neovim/</loc>
     <lastmod>2023-08-08T00:00:00+00:00</lastmod>

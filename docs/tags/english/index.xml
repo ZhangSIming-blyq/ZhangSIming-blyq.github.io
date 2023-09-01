@@ -6,7 +6,32 @@
     <description>Recent content in English on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 16 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/english/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/english/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【Java入门系列】Java基础入门 --- 安装，数据类型，类</title>
+      <link>https://zhangsiming-blyq.github.io/post/java/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF1/</link>
+      <pubDate>Thu, 31 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/java/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF1/</guid>
+      <description>
+        
+          
+            一、Java环境安装 Java是一门强大的编程语言，首先需要在您的计算机上安装Java开发环境。以下是安装Java环境的步骤：
+1. 选择Java版本 对于初学者，建议选择Java 8或Java 11版本。您可以从Oracle官方网站下载这些版本。
+Java 8下载链接：https://www.oracle.com/java/technologies/javase/jdk8-archive-downloads.html Java 11下载链接：https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html 2. 下载示例代码 您可以下载示例代码，以便学习和实践Java编程。示例代码通常包含了一些基础的Java程序，可以帮助您快速入门。
+示例代码下载链接（以wget为例）：
+1$ wget https://horstmann.com/corejava/corejava11.zip 3. 配置环境变量 将Java主目录添加到系统的PATH环境变量中，这样您就可以在任何位置运行Java命令。您可以使用以下命令来编辑配置文件：
+1$ vim ~/.zshrc 在配置文件中添加以下行：
+1export PATH=/your/java/installation/path/bin:$PATH 确保将/your/java/installation/path替换为您的Java安装路径, 比如&amp;quot;/Users/simingzhang/siming/jdk-11.0.17/bin&amp;quot;。
+4. 验证安装 corejava实例代码和javasrc内置库代码都放到java主目录下：
+1$ tree -L 1 2. 3├── README.html 4├── bin 5├── conf 6├── corejava 7├── include 8├── javasrc 9├── jmods 10├── legal 11├── lib 12├── man 13└── release 使用以下命令验证您的Java安装是否成功：
+1$ javac --version 2javac 11.0.17 3 4$ java --version 5java 11.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>8 Habits For (Almost) Limitless Energy</title>
       <link>https://zhangsiming-blyq.github.io/post/notes/%E6%97%A0%E9%99%90%E7%B2%BE%E5%8A%9B/</link>
