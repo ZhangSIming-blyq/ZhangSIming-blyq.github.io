@@ -451,10 +451,10 @@
 </span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="o">[</span> v3_req <span class="o">]</span>
 </span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="nv">subjectAltName</span> <span class="o">=</span> @alt_names
 </span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="o">[</span>alt_names<span class="o">]</span>
-</span></span><span class="line"><span class="ln">14</span><span class="cl">DNS.1 <span class="o">=</span> etcd-sre.so.qihoo.net
-</span></span><span class="line"><span class="ln">15</span><span class="cl">IP.1 <span class="o">=</span> 10.146.80.50
-</span></span><span class="line"><span class="ln">16</span><span class="cl">IP.2 <span class="o">=</span> 10.146.80.52
-</span></span><span class="line"><span class="ln">17</span><span class="cl">IP.3 <span class="o">=</span> 10.146.80.49
+</span></span><span class="line"><span class="ln">14</span><span class="cl">DNS.1 <span class="o">=</span> xxx.xxx.xxx.xxx
+</span></span><span class="line"><span class="ln">15</span><span class="cl">IP.1 <span class="o">=</span> xxx.xxx.xxx.xxx
+</span></span><span class="line"><span class="ln">16</span><span class="cl">IP.2 <span class="o">=</span> xxx.xxx.xxx.xxx
+</span></span><span class="line"><span class="ln">17</span><span class="cl">IP.3 <span class="o">=</span> xxx.xxx.xxx.xxx
 </span></span><span class="line"><span class="ln">18</span><span class="cl">$ openssl genrsa -out server.key <span class="m">2048</span>
 </span></span><span class="line"><span class="ln">19</span><span class="cl">$ openssl req -new -key server.key -out server.csr -subj <span class="s2">&#34;/CN=etcd-server&#34;</span> -config server.cnf
 </span></span><span class="line"><span class="ln">20</span><span class="cl">$ openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days <span class="m">365</span> -extensions v3_req -extfile server.cnf
