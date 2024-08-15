@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on </title>
+    <link>https://zhangsiming-blyq.github.io/tags/python/</link>
+    <description>Recent content in python on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Closures In Golang And Python</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/closure/</link>
+      <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/closure/</guid>
+      <description>
+        
+          
+            For people new to Golang and Python, this article explains what closures are as well as sometips that need to know about when using closures in these two programming languages. To make it easier for you to copy down and run on your own server, the code section would provide the package, import, and other repeated parts. The negative aspect is that this results in some redundancy, so please understand if this causes any inconvenience.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Python Yield</title>
+      <link>https://zhangsiming-blyq.github.io/post/python/python-yield/</link>
+      <pubDate>Mon, 18 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/python/python-yield/</guid>
+      <description>
+        
+          
+            Explain the common usage scenarios of iterators, generators, and yield fields in Python.
+Iterators Python object implements iter() and next() methods, we become iterable objects (iterables), through iter() can return an iterator object (iterators).
+__iter__() method: return the iterator object itself __next__() method: returns the next element of the container, and raises a StopIteration Exception at the end to terminate the iterator 1lst = [1, 2, 3] 2print(type(lst)) 3new_iter = lst.
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

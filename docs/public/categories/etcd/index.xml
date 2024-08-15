@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Etcd on </title>
+    <link>https://zhangsiming-blyq.github.io/categories/etcd/</link>
+    <description>Recent content in Etcd on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Tue, 05 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/etcd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Etcd Tutorial</title>
+      <link>https://zhangsiming-blyq.github.io/post/linux/etcd-tutorial/</link>
+      <pubDate>Tue, 05 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/linux/etcd-tutorial/</guid>
+      <description>
+        
+          
+            Preface: This tutorial focuses exclusively on the Etcd v3 protocol. Throughout Etcd&#39;s history, two protocols have been employed: v2 and v3. However, v2 is considered outdated and not recommended for production environments. Furthermore, Etcd v2 and v3 have distinct data storage structures. As a result, you cannot use Etcd v2 to read data from Etcd v3 or use an Etcd v2 snapshot to restore data in Etcd v3. This document is tailored for Etcd instances containing v3 data.
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>
