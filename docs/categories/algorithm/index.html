@@ -210,10 +210,10 @@
       <div class="excerpt_footer">
         <div class="pale">
           
-            <p>算法刷题系列】第1天 704. 二分查找，27. 移除元素, 977.有序数组的平方 学习内容 学习文档：数组理论基础
+            <p>学习内容 学习文档：数组理论基础
 收获总结 快速排序：
 快速排序是一种基于分治法的排序算法。首先，选择一个基准元素，然后通过分区操作将数组划分为两部分，一部分元素小于基准值，另一部分元素大于基准值。递归地对这两部分进行排序，最终将数组排序完成。
-1package main 2 3import &quot;fmt&quot; 4 5func quickSort(arr []int, low, high int) { 6 if low &lt; high { 7 pi := partition(arr, low, high) 8 …</p>
+1package main 2 3import &quot;fmt&quot; 4 5func quickSort(arr []int, low, high int) { 6 if low &lt; high { 7 pi := partition(arr, low, high) 8 quickSort(arr, low, pi-1) 9 quickSort(arr, pi+1, high) …</p>
           
           <br>
           <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day1/" title="Read More" class="excerpt_more button">Read More</a>
