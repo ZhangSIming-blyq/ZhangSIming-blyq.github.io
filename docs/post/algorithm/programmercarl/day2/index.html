@@ -9,7 +9,7 @@
   
   >
   <head>
-<title>kubernetes常规问题 | </title>
+<title>【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II | </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,21 +27,27 @@
 <meta property="og:locale" content="en" />
 
 <meta property="og:type" content="article">
-<meta name="description" content=" kubernetes的cordon打上的SchedulingDisabled仅仅影响调度，也就是直接打上nodeName不会受到该参数的影响 kubernetes的QosClass判断pod内的全部container，包括init-container，也就是如果init-container不进行限制，其 …" />
+<meta name="description" content="学习内容 学习文档：
+长度最小子数组讲解
+螺旋矩阵II讲解
+收获总结 滑动窗口： 在某些情况下，滑动窗口可以看作是一种特殊的双指针技术，其中两个指针 i 和 j（即左指针和右指针）从同一端开始，但移动的条件有所不同。滑动窗口的核心思想是通过右指针 j 不断向右扩展窗口，同时左指针 i 尽量向右收缩窗口，以找到满足特定条 …" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@janedoe">
-<meta name="twitter:title" content="kubernetes常规问题" />
+<meta name="twitter:title" content="【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
-<meta property="og:url" content="https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/" />
-<meta property="og:title" content="kubernetes常规问题" />
-<meta property="og:description" content=" kubernetes的cordon打上的SchedulingDisabled仅仅影响调度，也就是直接打上nodeName不会受到该参数的影响 kubernetes的QosClass判断pod内的全部container，包括init-container，也就是如果init-container不进行限制，其 …" />
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/" />
+<meta property="og:title" content="【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II" />
+<meta property="og:description" content="学习内容 学习文档：
+长度最小子数组讲解
+螺旋矩阵II讲解
+收获总结 滑动窗口： 在某些情况下，滑动窗口可以看作是一种特殊的双指针技术，其中两个指针 i 和 j（即左指针和右指针）从同一端开始，但移动的条件有所不同。滑动窗口的核心思想是通过右指针 j 不断向右扩展窗口，同时左指针 i 尽量向右收缩窗口，以找到满足特定条 …" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
 <link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
 
-<link rel="canonical" href="https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/">
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/">
 
 
 
@@ -151,7 +157,7 @@
   
 <div class="grid-inverse wrap content">
   <article class="post_content">
-    <h1 class="post_title">kubernetes常规问题</h1>
+    <h1 class="post_title">【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II</h1>
   <div class="post_meta">
     <span><svg class="icon">
   <title>calendar</title>
@@ -159,23 +165,22 @@
 </svg>
 </span>
     <span class="post_date">
-      Feb 24, 2023</span>
-    <span class="post_time"> · 1 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' title="shorthand" class="post_tag button button_translucent">shorthand
-        </a><a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
+      Aug 15, 2024</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
         </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
         </a>
     </span>
     <span class="page_only">&nbsp;·
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=kubernetes%e5%b8%b8%e8%a7%84%e9%97%ae%e9%a2%98&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fkubernetes%25E5%25B8%25B8%25E8%25A7%2584%25E9%2597%25AE%25E9%25A2%2598%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac2%e5%a4%a9%20209.%20%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84%2c%2059.%20%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5%20II&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>twitter</title>
   <use xlink:href="#twitter"></use>
 </svg>
 
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fkubernetes%25E5%25B8%25B8%25E8%25A7%2584%25E9%2597%25AE%25E9%25A2%2598%2f&t=kubernetes%e5%b8%b8%e8%a7%84%e9%97%ae%e9%a2%98" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday2%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac2%e5%a4%a9%20209.%20%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84%2c%2059.%20%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5%20II" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>facebook</title>
   <use xlink:href="#facebook"></use>
@@ -189,7 +194,7 @@
 </svg>
 
     </a>
-    <a href="https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/" title="Copy Link" class="link link_yank">
+    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <title>copy</title>
   <use xlink:href="#copy"></use>
@@ -200,16 +205,161 @@
   </span>
   </div>
 
-    <div class="post_body"><ol>
-<li>kubernetes的cordon打上的SchedulingDisabled仅仅影响调度，也就是直接打上nodeName不会受到该参数的影响</li>
-<li>kubernetes的QosClass判断pod内的全部container，包括init-container，也就是如果init-container不进行限制，其他container无论怎么配置仍然不是Guaranteed</li>
-<li>kubernetes集群新版本如果cordon打上unschedule，会默认追加Taint；旧版本不会</li>
-<li>kubernetes集群对于unschedule的节点不会走入调度环节，只有可以正常调度的节点才会走到后面判断Toleration，label等；特别地，对于daemonset的pod，schedulingDisable无效，但是tolerance等有效(v1.17版本中，Damoneset 的 pod 的调度从 daemonset controller 迁移到 kube-scheduler 来做调度，从而支持 PodAffnity、PodAntiAffinity 等能力)</li>
-<li>Error(不再重启)，Completed状态的podip会显示，但是实际不占用podip，真实podip已经分配给其他服务使用</li>
-<li>kubernetes中，kubelet限制的max-pod数量是限制的具体的pod数量，超出会报错Outofpods</li>
-<li>每次pod重启，kubelet会给他分配新的cgroup目录路径，而不会使用原来的；新的pod启动之后间隔一小段时间会删除旧的cgroup路径</li>
-<li>kubernetes 推荐使用 systemd 来代替 cgroupfs; 因为systemd是kubernetes自带的cgroup管理器, 负责为每个进程分配cgroups; 但docker的cgroup driver默认是cgroupfs,这样就同时运行有两个cgroup控制管理器；可以使用<code>docker info</code>查看docker使用的cgroup driver，然后从&quot;/etc/docker/daemon.json&quot;中修改成systemd</li>
-</ol>
+      <div class="post_toc">
+        <h2>Overview</h2>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#学习内容">学习内容</a></li>
+    <li><a href="#收获总结">收获总结</a></li>
+    <li><a href="#题目解析">题目解析</a>
+      <ul>
+        <li><a href="#题目1209-长度最小的子数组httpsleetcodecnproblemsminimum-size-subarray-sum">题目1：<a href="https://leetcode.cn/problems/minimum-size-subarray-sum/">209. 长度最小的子数组</a></a></li>
+        <li><a href="#题目259-螺旋矩阵-iihttpsleetcodecnproblemsspiral-matrix-iidescription">题目2：<a href="https://leetcode.cn/problems/spiral-matrix-ii/description/">59. 螺旋矩阵 II</a></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
+    <div class="post_body"><h2 id="学习内容">学习内容</h2>
+<p>学习文档：</p>
+<p><a href="https://programmercarl.com/0209.%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.html">长度最小子数组讲解</a></p>
+<p><a href="https://programmercarl.com/0059.%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5II.html">螺旋矩阵II讲解</a></p>
+<h2 id="收获总结">收获总结</h2>
+<ul>
+<li><strong>滑动窗口</strong>：</li>
+</ul>
+<p>在某些情况下，滑动窗口可以看作是一种特殊的双指针技术，其中两个指针 <code>i</code> 和 <code>j</code>（即左指针和右指针）从同一端开始，但移动的条件有所不同。滑动窗口的核心思想是通过右指针 <code>j</code> 不断向右扩展窗口，同时左指针 <code>i</code> 尽量向右收缩窗口，以找到满足特定条件的最小或最大窗口。</p>
+<p>举例来说，假设你想找到数组 <code>arr</code> 中两个元素之间的差值等于 <code>diff</code> 的一对元素索引，这可以视为滑动窗口问题，<strong><font color=purple>右指针 <code>j</code> 用来扩展窗口，左指针 <code>i</code> 用来收缩窗口</font></strong>，直到找到满足条件的子数组。初始化时可以根据具体问题选择 <code>i, j</code> 都从 <code>0, 0</code> 开始，也可以 <code>0, 1</code> 这种情况。</p>
+<h2 id="题目解析">题目解析</h2>
+<h3 id="题目1209-长度最小的子数组httpsleetcodecnproblemsminimum-size-subarray-sum">题目1：<a href="https://leetcode.cn/problems/minimum-size-subarray-sum/">209. 长度最小的子数组</a></h3>
+<ul>
+<li>
+<p><strong>题目描述</strong>: 给定一个含有 <code>n</code> 个正整数的数组 <code>nums</code> 和一个正整数 <code>target</code> ，找出该数组中满足其和 <code>≥ target</code> 的长度最小的连续子数组，并返回其长度。如果不存在符合条件的子数组，返回 <code>0</code>。</p>
+</li>
+<li>
+<p><strong>示例</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">输入</span><span class="p">:</span> <span class="nx">target</span> <span class="p">=</span> <span class="mi">7</span><span class="p">,</span> <span class="nx">nums</span> <span class="p">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">输出</span><span class="p">:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="nx">解释</span><span class="p">:</span> <span class="nx">子数组</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="nx">是该条件下的长度最小的子数组</span><span class="err">。</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>解法总结</strong>:
+该题可以通过滑动窗口技术来解决。我们使用两个指针 <code>i</code> 和 <code>j</code>，分别代表窗口的左右边界。首先，右指针 <code>j</code> 向右移动，扩展窗口，累加窗口内的元素和 <code>sum</code>。当 <code>sum</code> 大于或等于 <code>target</code> 时，开始收缩窗口（移动左指针 <code>i</code>），同时记录当前窗口的最小长度。通过这种方式，可以高效地找到满足条件的最短子数组长度。
+这里需要注意的是，因为有可能第一个数就等于target，所以j也要从0开始，同时内侧判断条件也是for!</p>
+</li>
+<li>
+<p><strong>代码实现</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">minSubArrayLen</span><span class="p">(</span><span class="nx">target</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="nx">min</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="k">for</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">		<span class="nx">sum</span> <span class="o">+=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">		<span class="k">for</span> <span class="nx">sum</span> <span class="o">&gt;=</span> <span class="nx">target</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">			<span class="c1">// 只在 sum 等于 target 时更新 min
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>			<span class="nx">min</span> <span class="p">=</span> <span class="nf">minValue</span><span class="p">(</span><span class="nx">j</span><span class="o">-</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">min</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">			<span class="nx">sum</span> <span class="o">-=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">			<span class="nx">i</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">		<span class="nx">j</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">
+</span></span><span class="line"><span class="ln">19</span><span class="cl">	<span class="c1">// 最后检查是否找到了符合条件的子数组
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">min</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">		<span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">		<span class="k">return</span> <span class="nx">min</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="kd">func</span> <span class="nf">minValue</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">	<span class="k">if</span> <span class="nx">x</span> <span class="p">&lt;</span> <span class="nx">y</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">		<span class="k">return</span> <span class="nx">x</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">	<span class="k">return</span> <span class="nx">y</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>时间复杂度</strong>: <code>O(n)</code>，因为每个元素在最坏情况下只会被访问两次，分别是被加入到窗口和从窗口中移除。</p>
+</li>
+<li>
+<p><strong>空间复杂度</strong>: <code>O(1)</code>，仅使用了常数空间来存储索引、和以及最小长度。</p>
+</li>
+</ul>
+<h3 id="题目259-螺旋矩阵-iihttpsleetcodecnproblemsspiral-matrix-iidescription">题目2：<a href="https://leetcode.cn/problems/spiral-matrix-ii/description/">59. 螺旋矩阵 II</a></h3>
+<ul>
+<li>
+<p><strong>题目描述</strong>: 给定一个正整数 <code>n</code>，生成一个包含 <code>1</code> 到 <code>n^2</code> 所有元素，且元素按顺时针顺序螺旋排列的 <code>n x n</code> 正方形矩阵。</p>
+</li>
+<li>
+<p><strong>示例</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">输入</span><span class="p">:</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">输出</span><span class="p">:</span> 
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="p">]</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>解法总结</strong>:
+这段代码的目的是生成一个 <code>n x n</code> 的螺旋矩阵，矩阵中的元素从 1 开始，按顺时针方向从外向内依次填充。具体来说，代码通过控制矩阵的四个边界（上、下、左、右）来逐步缩小范围。每次循环依次填充当前边界，从左到右、从上到下、从右到左、从下到上，直到所有元素填满为止。在填充过程中，每个方向的边界都会向内收缩一行或一列，确保后续填充在正确的范围内进行。最终，当 <code>num</code> 超过目标值（<code>n * n</code>）时，填充过程结束，返回生成的螺旋矩阵。
+在实现过程中，有几个关键要点和注意事项。首先是边界的初始化和更新，确保在每次填充完一个方向后正确地调整 <code>top</code>、<code>bottom</code>、<code>left</code> 和 <code>right</code> 的值，以防止重复填充或越界。其次，在循环过程中需要时刻检查 <code>num</code> 的值，以确保填充过程不会超出范围。此外，需要特别处理小矩阵的特殊情况，如 <code>n = 1</code> 或 <code>n = 0</code>，以保证代码的通用性和正确性。最后，由于算法的时间和空间复杂度均为 <code>O(n^2)</code>，这意味着该算法可以有效地处理中小规模的矩阵生成任务，但在非常大的 <code>n</code> 时需要考虑性能问题。</p>
+</li>
+<li>
+<p><strong>代码实现</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">generateMatrix</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="c1">// Init
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1"></span>	<span class="nx">top</span><span class="p">,</span> <span class="nx">bottom</span><span class="p">,</span> <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="nx">num</span> <span class="o">:=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="nx">target</span> <span class="o">:=</span> <span class="nx">n</span> <span class="o">*</span> <span class="nx">n</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="nx">matrix</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">		<span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="k">for</span> <span class="nx">num</span> <span class="o">&lt;=</span> <span class="nx">target</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">left</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">right</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">			<span class="nx">matrix</span><span class="p">[</span><span class="nx">top</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">num</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">			<span class="nx">num</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">		<span class="nx">top</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl">		<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">top</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">bottom</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">			<span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">right</span><span class="p">]</span> <span class="p">=</span> <span class="nx">num</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">			<span class="nx">num</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">		<span class="nx">right</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">
+</span></span><span class="line"><span class="ln">26</span><span class="cl">		<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">right</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="nx">left</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">			<span class="nx">matrix</span><span class="p">[</span><span class="nx">bottom</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">num</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">			<span class="nx">num</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">		<span class="nx">bottom</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">
+</span></span><span class="line"><span class="ln">32</span><span class="cl">		<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">bottom</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="nx">top</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">			<span class="nx">matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">left</span><span class="p">]</span> <span class="p">=</span> <span class="nx">num</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">			<span class="nx">num</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">		<span class="nx">left</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">
+</span></span><span class="line"><span class="ln">39</span><span class="cl">	<span class="k">return</span> <span class="nx">matrix</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>时间复杂度</strong>: <code>O(n^2)</code>，因为需要填充整个 <code>n x n</code> 的矩阵。</p>
+</li>
+<li>
+<p><strong>空间复杂度</strong>: <code>O(n^2)</code>，用于存储生成的螺旋矩阵。</p>
+</li>
+</ul>
 
     </div>
 <div class="post_comments">

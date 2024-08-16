@@ -6,7 +6,30 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 14 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/</link>
+      <pubDate>Thu, 15 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/</guid>
+      <description>
+        
+          
+            学习内容 学习文档：
+长度最小子数组讲解
+螺旋矩阵II讲解
+收获总结 滑动窗口： 在某些情况下，滑动窗口可以看作是一种特殊的双指针技术，其中两个指针 i 和 j（即左指针和右指针）从同一端开始，但移动的条件有所不同。滑动窗口的核心思想是通过右指针 j 不断向右扩展窗口，同时左指针 i 尽量向右收缩窗口，以找到满足特定条件的最小或最大窗口。
+举例来说，假设你想找到数组 arr 中两个元素之间的差值等于 diff 的一对元素索引，这可以视为滑动窗口问题，右指针 j 用来扩展窗口，左指针 i 用来收缩窗口，直到找到满足条件的子数组。初始化时可以根据具体问题选择 i, j 都从 0, 0 开始，也可以 0, 1 这种情况。
+题目解析 题目1：209. 长度最小的子数组 题目描述: 给定一个含有 n 个正整数的数组 nums 和一个正整数 target ，找出该数组中满足其和 ≥ target 的长度最小的连续子数组，并返回其长度。如果不存在符合条件的子数组，返回 0。
+示例:
+1输入: target = 7, nums = [2,3,1,2,4,3] 2输出: 2 3解释: 子数组 [4,3] 是该条件下的长度最小的子数组。 解法总结: 该题可以通过滑动窗口技术来解决。我们使用两个指针 i 和 j，分别代表窗口的左右边界。首先，右指针 j 向右移动，扩展窗口，累加窗口内的元素和 sum。当 sum 大于或等于 target 时，开始收缩窗口（移动左指针 i），同时记录当前窗口的最小长度。通过这种方式，可以高效地找到满足条件的最短子数组长度。 这里需要注意的是，因为有可能第一个数就等于target，所以j也要从0开始，同时内侧判断条件也是for!
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>【算法刷题系列】第1天 704. 二分查找，27. 移除元素, 977.有序数组的平方</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day1/</link>
