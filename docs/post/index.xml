@@ -6,7 +6,34 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 15 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【算法刷题系列】第3天 203.移除链表元素, 707.设计链表, 206.反转链表</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day3/</link>
+      <pubDate>Fri, 16 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day3/</guid>
+      <description>
+        
+          
+            学习内容 学习文档：
+链表讲解
+收获总结 链表概述 链表是一种基础的数据结构，由一系列节点组成，每个节点包含数据部分和指向下一个节点的指针（或引用）。链表的最后一个节点指向 null，表示链表的末尾。链表动态扩展性强，适合频繁插入和删除操作。
+链表的定义 链表有多种类型，最常见的是单链表和双链表。
+单链表：每个节点包含数据和指向下一个节点的指针 next。链表的头节点指向第一个节点，最后一个节点的 next 指向 null。
+Golang 单链表定义：
+1type ListNode struct { 2 Val int 3 Next *ListNode 4} 双链表：每个节点包含数据、指向下一个节点的指针 next 和指向前一个节点的指针 prev，允许双向遍历。
+Golang 双链表定义：
+1type ListNode struct { 2 Val int 3 Next *ListNode 4 Prev *ListNode 5} 注意事项 循环的时候参考数组，初始条件是i,j; 链表就是cur, cur.Next 链表的第一个节点比较特殊，处理的时候需要特殊处理；引入一个空的头节点dummyHead，可以简化很多操作(一视同仁) 链表的指针就是ListNode本身，因为任何一个ListNode都可以根据Next进行移动; 双指针解法的时候每一个指针都应该是一个ListNode 链表元素的内存分布 链表节点的内存分布不连续，节点在内存中的位置是随机分配的。这使得链表可以灵活地增长或缩小，但查找元素的时间复杂度较高，因为需要从头节点开始逐一遍历。
+节点的插入与删除 插入节点：
+头部插入：新节点的 next 指向当前头节点，并将链表头节点更新为新节点，时间复杂度为 O(1)。 尾部插入：单链表需要遍历链表找到最后一个节点，时间复杂度为 O(n)，双链表则直接访问尾节点，时间复杂度为 O(1)。 删除节点：
+删除头节点：将头节点更新为下一个节点，时间复杂度为 O(1)。 删除指定节点：需要遍历链表找到待删除节点，时间复杂度为 O(n)。 题目解析 题目1：203.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/</link>
