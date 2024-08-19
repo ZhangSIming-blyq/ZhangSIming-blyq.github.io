@@ -6,7 +6,32 @@
     <description>Recent content in 中文 on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Fri, 16 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【算法刷题系列】第4天 24. 两两交换链表中的节点, 19. 删除链表的倒数第 N 个结点, 面试题 02.07. 链表相交, 142. 环形链表 II</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day4/</link>
+      <pubDate>Sun, 18 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day4/</guid>
+      <description>
+        
+          
+            收获总结 虚拟头节点的使用：虚拟头节点（Dummy Head）是处理链表问题的一大利器，尤其在增删节点操作中。通过引入虚拟头节点，可以避免处理链表头部时遇到的特殊情况，如删除第一个节点或在第一个节点前插入新节点。这不仅简化了代码，还减少了需要额外考虑的边界条件。例如，在处理 19. 删除链表的倒数第 N 个结点 时，虚拟头节点能够让双指针操作统一化，避免对头节点的单独处理。
+双指针技术：双指针技术是链表问题中的核心工具，特别是在处理链表长度不一致、链表中查找特定节点、或检测链表是否存在环时。双指针通常有两种应用方式：
+快慢指针：通过让一个指针每次走两步（快指针），另一个指针每次走一步（慢指针），这种方法能有效检测链表中的环（如 142. 环形链表 II）。当快慢指针相遇时，表明链表中存在环。随后，通过调整指针，可以精确找到环的起点。 同步指针：在链表相交问题中（如 面试题 02.07. 链表相交），同步指针的应用非常巧妙。让两个指针分别从两个链表的头开始遍历，当其中一个指针走到链表末尾时切换到另一个链表的头部，最终两个指针会在相交点相遇。这种方法的妙处在于，它平衡了链表长度的差异，使得指针在正确的位置相遇。 内置数据结构的应用：在处理链表问题时，合理使用内置的数据结构（如 map）可以大大提高解决问题的效率。例如，在检测链表是否有环时，使用哈希表可以记录已经访问过的节点，一旦再次访问到相同的节点，就可以立即判定链表中存在环，并找到环的入口。这种方法尽管增加了空间复杂度，但通常能够显著降低时间复杂度，是时间换空间的一种常见手段。
+画图和理清思路：链表操作往往涉及多步节点指针的调整，容易出现操作顺序错误导致链表断裂或死循环的问题。因此，在进行复杂链表操作之前，通过画图来理清每一步的指针变动，明确节点间的连接关系，是非常必要的。比如在解决 24. 两两交换链表中的节点 问题时，通过画图可以清晰地看到每次交换后的链表结构，有助于正确实现节点交换。
+操作的标准化和优化：在链表操作中，保持节点连接的正确性是最重要的。在实现代码时，应尽量避免无效或重复的操作。例如，在删除节点时，应确保先处理前驱节点的 next 指针，再释放目标节点的内存。同时，在实际开发中，掌握一些标准化的代码模板（如增删节点的通用代码框架）能够帮助减少错误，提高代码的复用性和开发效率。
+题目解析 题目1：24. 两两交换链表中的节点 题目描述: 给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。你不能只是单纯地改变节点内部的值，而是需要实际进行节点交换。
+示例:
+1输入: head = [1,2,3,4] 2输出: [2,1,4,3] 解法总结: 这个问题要求我们在链表中两两交换相邻的节点。为了简化操作，可以引入一个虚拟头节点（dummy head），它指向原链表的头节点，这样可以统一对头节点和后续节点的处理。然后使用双指针遍历链表，分别指向当前待交换的两个节点及其前驱节点。关键在于每次交换时，需要提前保存第二个节点的下一个节点，以防止链表断裂。假设1-&amp;gt;2-&amp;gt;3-&amp;gt;4是待交换的两个节点，交换过程如下：
+将pre指向2 将2指向1 将1指向3 将pre指向1 将cur指向3 重复上述步骤，直到cur或cur.Next为空 代码实现:
+1/** 2 * Definition for singly-linked list. 3 * type ListNode struct { 4 * Val int 5 * Next *ListNode 6 * } 7 */ 8func swapPairs(head *ListNode) *ListNode { 9	// 1.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>【算法刷题系列】第3天 203.移除链表元素, 707.设计链表, 206.反转链表</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day3/</link>
