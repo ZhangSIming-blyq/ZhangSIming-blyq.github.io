@@ -7,7 +7,7 @@
   
   >
   <head>
-<title>containerd | </title>
+<title>algorithm | </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,10 +27,10 @@
 <meta name="description" content="" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@janedoe">
-<meta name="twitter:title" content="containerd" />
+<meta name="twitter:title" content="algorithm" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
-<meta property="og:url" content="https://zhangsiming-blyq.github.io/tags/containerd/" />
-<meta property="og:title" content="containerd" />
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/categories/algorithm/" />
+<meta property="og:title" content="algorithm" />
 <meta property="og:description" content="" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
 
@@ -38,8 +38,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
 <link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
 
-<link rel="canonical" href="https://zhangsiming-blyq.github.io/tags/containerd/">
-<link rel="alternate" type="application/rss+xml" href="https://zhangsiming-blyq.github.io/tags/containerd/index.xml" title="" />
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/categories/algorithm/">
+<link rel="alternate" type="application/rss+xml" href="https://zhangsiming-blyq.github.io/categories/algorithm/index.xml" title="" />
 
 
 
@@ -156,7 +156,7 @@
   <div class="excerpt">
     <div class="excerpt_header">
       <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/containerd/" title="浅谈 containerd">浅谈 containerd</a>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="ALGORITHM SERIES | Queue Composed Of Two Stacks">ALGORITHM SERIES | Queue Composed Of Two Stacks</a>
       </h3>
       
   <div class="post_meta">
@@ -166,23 +166,22 @@
 </svg>
 </span>
     <span class="post_date">
-      Apr 10, 2022</span>
-    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
-        </a><a href='https://zhangsiming-blyq.github.io/tags/containerd/' title="containerd" class="post_tag button button_translucent">containerd
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+      Jun 4, 2022</span>
+    <span class="post_time"> · 3 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
+        </a><a href='https://zhangsiming-blyq.github.io/tags/english/' title="English" class="post_tag button button_translucent">English
         </a>
     </span>
     <span class="page_only">&nbsp;·
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e6%b5%85%e8%b0%88%20containerd&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fcontainerd%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=ALGORITHM%20SERIES%20%7c%20Queue%20Composed%20Of%20Two%20Stacks&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>twitter</title>
   <use xlink:href="#twitter"></use>
 </svg>
 
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fcontainerd%2f&t=%e6%b5%85%e8%b0%88%20containerd" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f2%2f&t=ALGORITHM%20SERIES%20%7c%20Queue%20Composed%20Of%20Two%20Stacks" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>facebook</title>
   <use xlink:href="#facebook"></use>
@@ -196,7 +195,7 @@
 </svg>
 
     </a>
-    <a href="https://zhangsiming-blyq.github.io/post/kubernetes/containerd/" title="Copy Link" class="link link_yank">
+    <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <title>copy</title>
   <use xlink:href="#copy"></use>
@@ -211,17 +210,104 @@
       <div class="excerpt_footer">
         <div class="pale">
           
-            <p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
-一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.5.2 7$ wget …</p>
+            <p>Requirements Write a class that implements a queue with two stacks and supports the basic operations of a queue: add, poll, peek
+Solving Ideas stacks are characterized by last-in-first-out, queues are characterized by first-in-first-out one stack as a press-in stack, the other stack as a pop-up stack, as long as the …</p>
           
           <br>
-          <a href="https://zhangsiming-blyq.github.io/post/kubernetes/containerd/" title="Read More" class="excerpt_more button">Read More</a>
+          <a href="https://zhangsiming-blyq.github.io/post/algorithm/2/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="ALGORITHM SERIES | Designing A Stack With &#39;getMin&#39; Function">ALGORITHM SERIES | Designing A Stack With 'getMin' Function</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Jun 2, 2022</span>
+    <span class="post_time"> · 4 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
+        </a><a href='https://zhangsiming-blyq.github.io/tags/english/' title="English" class="post_tag button button_translucent">English
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=ALGORITHM%20SERIES%20%7c%20Designing%20A%20Stack%20With%20%27getMin%27%20Function&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f1%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2f1%2f&t=ALGORITHM%20SERIES%20%7c%20Designing%20A%20Stack%20With%20%27getMin%27%20Function" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p>Requirements the time complexity of pop, push, getMin operations are O(1) the design of the stack type can use the ready-made stack structure Solving Ideas use two stacks, starkData and stackMin compare the size of the top data of stackMin with that of starkData each time it is pressed in, and press the new minimum …</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/algorithm/1/" title="Read More" class="excerpt_more button">Read More</a>
         </div>
       </div>
     </div>
   </li>
 
       <li>
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/categories/algorithm/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/categories/algorithm/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/categories/algorithm/" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
       </li>
     </ul>
   </div>
@@ -231,7 +317,7 @@
     
   
   <div class="search">
-    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='tags'>
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='categories'>
     <label for="find" class="search_label"><svg class="icon">
   <title>search</title>
   <use xlink:href="#search"></use>

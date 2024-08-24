@@ -4,10 +4,12 @@
   lang="en"
   data-figures=""
   
+    class="page"
+  
   
   >
   <head>
-<title>containerd | </title>
+<title>【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和 | </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,25 +23,29 @@
 
 
 
+  
 <meta property="og:locale" content="en" />
 
 <meta property="og:type" content="article">
-<meta name="description" content="" />
+<meta name="description" content="学习内容 学习文档：
+哈希表理论基础
+收获总结 Go中的rune类型: 在Go语言中，rune是一种别名类型，它表示一个Unicode码点，即一个整数，通常用于表示字符。Go的字符串是以字节数组的形式存储的，因此在处理多字节字符（如汉字、表情符号等）时，直接使用索引访问可能会得到不完整的字符。rune类型解决了这个问 …" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@janedoe">
-<meta name="twitter:title" content="containerd" />
+<meta name="twitter:title" content="【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
-<meta property="og:url" content="https://zhangsiming-blyq.github.io/tags/containerd/" />
-<meta property="og:title" content="containerd" />
-<meta property="og:description" content="" />
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/" />
+<meta property="og:title" content="【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和" />
+<meta property="og:description" content="学习内容 学习文档：
+哈希表理论基础
+收获总结 Go中的rune类型: 在Go语言中，rune是一种别名类型，它表示一个Unicode码点，即一个整数，通常用于表示字符。Go的字符串是以字节数组的形式存储的，因此在处理多字节字符（如汉字、表情符号等）时，直接使用索引访问可能会得到不完整的字符。rune类型解决了这个问 …" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
 <link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
 
-<link rel="canonical" href="https://zhangsiming-blyq.github.io/tags/containerd/">
-<link rel="alternate" type="application/rss+xml" href="https://zhangsiming-blyq.github.io/tags/containerd/index.xml" title="" />
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/">
 
 
 
@@ -146,19 +152,10 @@
 </header>
 
     <main>
-
-
-
+  
 <div class="grid-inverse wrap content">
-  <div>
-    <ul class="posts" id="posts">
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/containerd/" title="浅谈 containerd">浅谈 containerd</a>
-      </h3>
-      
+  <article class="post_content">
+    <h1 class="post_title">【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和</h1>
   <div class="post_meta">
     <span><svg class="icon">
   <title>calendar</title>
@@ -166,23 +163,22 @@
 </svg>
 </span>
     <span class="post_date">
-      Apr 10, 2022</span>
-    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
-        </a><a href='https://zhangsiming-blyq.github.io/tags/containerd/' title="containerd" class="post_tag button button_translucent">containerd
+      Aug 22, 2024</span>
+    <span class="post_time"> · 3 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
         </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
         </a>
     </span>
     <span class="page_only">&nbsp;·
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e6%b5%85%e8%b0%88%20containerd&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fcontainerd%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac6%e5%a4%a9%20242.%20%e6%9c%89%e6%95%88%e7%9a%84%e5%ad%97%e6%af%8d%e5%bc%82%e4%bd%8d%e8%af%8d%2c%20349.%20%e4%b8%a4%e4%b8%aa%e6%95%b0%e7%bb%84%e7%9a%84%e4%ba%a4%e9%9b%86%2c%20202.%20%e5%bf%ab%e4%b9%90%e6%95%b0%2c%201.%20%e4%b8%a4%e6%95%b0%e4%b9%8b%e5%92%8c&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday6%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>twitter</title>
   <use xlink:href="#twitter"></use>
 </svg>
 
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fcontainerd%2f&t=%e6%b5%85%e8%b0%88%20containerd" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday6%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac6%e5%a4%a9%20242.%20%e6%9c%89%e6%95%88%e7%9a%84%e5%ad%97%e6%af%8d%e5%bc%82%e4%bd%8d%e8%af%8d%2c%20349.%20%e4%b8%a4%e4%b8%aa%e6%95%b0%e7%bb%84%e7%9a%84%e4%ba%a4%e9%9b%86%2c%20202.%20%e5%bf%ab%e4%b9%90%e6%95%b0%2c%201.%20%e4%b8%a4%e6%95%b0%e4%b9%8b%e5%92%8c" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>facebook</title>
   <use xlink:href="#facebook"></use>
@@ -196,7 +192,7 @@
 </svg>
 
     </a>
-    <a href="https://zhangsiming-blyq.github.io/post/kubernetes/containerd/" title="Copy Link" class="link link_yank">
+    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <title>copy</title>
   <use xlink:href="#copy"></use>
@@ -207,31 +203,283 @@
   </span>
   </div>
 
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>伴随着kubernetes对docker的弃用，containerd开始进入大众视野；相比于kubelet中集成docker-shim连接docker，docker再次条用containerd去管理容器，直接使用containerd可以通过原生CRI接口的调用实现容器runtime，简化了调用链路，更加的灵活可靠。
-一、安装使用 ctr 管理 containerd 1# Install Dependent Libraries 2$ sudo apt-get update 3$ sudo apt-get install libseccomp2 4 5# 下载 6# 目前是下载的1.5.2 7$ wget …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/kubernetes/containerd/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
+      <div class="post_toc">
+        <h2>Overview</h2>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#学习内容">学习内容</a></li>
+    <li><a href="#收获总结">收获总结</a></li>
+    <li><a href="#题目解析">题目解析</a>
+      <ul>
+        <li><a href="#题目1242-有效的字母异位词httpsleetcodecnproblemsvalid-anagramdescription">题目1：<a href="https://leetcode.cn/problems/valid-anagram/description/">242. 有效的字母异位词</a></a></li>
+        <li><a href="#题目2349-两个数组的交集httpsleetcodecnproblemsintersection-of-two-arraysdescription">题目2：<a href="https://leetcode.cn/problems/intersection-of-two-arrays/description/">349. 两个数组的交集</a></a></li>
+        <li><a href="#题目3202-快乐数httpsleetcodecnproblemshappy-numberdescription">题目3：<a href="https://leetcode.cn/problems/happy-number/description/">202. 快乐数</a></a></li>
+        <li><a href="#题目41-两数之和httpsleetcodecnproblemstwo-sum">题目4：<a href="https://leetcode.cn/problems/two-sum/">1. 两数之和</a></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
       </div>
-    </div>
-  </li>
+    
+    <div class="post_body"><h2 id="学习内容">学习内容</h2>
+<p>学习文档：</p>
+<p><a href="https://programmercarl.com/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html">哈希表理论基础</a></p>
+<h2 id="收获总结">收获总结</h2>
+<ol>
+<li>
+<p><strong>Go中的rune类型</strong>: 在Go语言中，<code>rune</code>是一种别名类型，它表示一个Unicode码点，即一个整数，通常用于表示字符。Go的字符串是以字节数组的形式存储的，因此在处理多字节字符（如汉字、表情符号等）时，直接使用索引访问可能会得到不完整的字符。<code>rune</code>类型解决了这个问题，它能够正确处理和表示多字节的Unicode字符。这对于处理包含非ASCII字符的字符串时非常重要，尤其在国际化或多语言支持的应用中。通过这次学习，我们掌握了如何使用<code>rune</code>遍历字符串，确保对每个字符进行准确的操作。</p>
+</li>
+<li>
+<p><strong>数组作为简单高效的哈希表</strong>: 在解决某些特定范围的哈希问题时，数组可以作为一种极为简单和高效的哈希表实现方式。特别是在字符计数和映射问题中，如果字符集固定（例如，字母a到z），我们可以使用一个固定长度的整数数组（如<code>[26]int</code>）来记录每个字符的出现次数。数组的索引直接对应字符的ASCII值减去偏移量，这使得字符查找和更新操作都可以在常数时间内完成。学习这部分内容让我们理解了如何在时间复杂度和空间复杂度上进行权衡，选择最合适的数据结构。</p>
+</li>
+<li>
+<p><strong>Go中使用map实现set</strong>: 在Go语言中，集合(set)这一数据结构并没有直接实现，但我们可以通过map来间接实现。使用<code>map[T]struct{}</code>这种方式来模拟集合，其中<code>T</code>是元素类型，<code>struct{}</code>是一种不占用内存的零大小结构体。通过map键的唯一性，保证集合中的元素不重复，同时由于值类型为空结构体，节省了内存空间。我们还学习了如何利用<code>delete</code>函数从map中删除元素，进而动态地管理集合内容。这种技巧在需要高效去重和查找操作的场景中非常有用。</p>
+</li>
+<li>
+<p><strong>Go中struct{}{}占用空间最小</strong>: 在Go语言中，<code>struct{}{}</code>是一个空的结构体类型，占用空间为零。在使用map实现集合时，我们可以将map的值类型定义为<code>struct{}{}</code>，这样可以在实现集合功能的同时，极大地节省内存空间。与其他语言的集合实现相比，这种方式更为轻量级，适合内存受限的场景。通过这种学习，我们进一步理解了Go语言在性能优化方面的设计思想，以及如何在日常编程中应用这些知识提高程序的效率。</p>
+</li>
+<li>
+<p><strong>两数之和的双指针与哈希表解法</strong>: 对于两数之和问题，如果数组是有序的，我们可以利用双指针（也称为对撞指针）策略，从数组两端同时向中间移动，根据当前和与目标值的比较结果决定指针的移动方向，从而在O(n)时间复杂度内找到解。如果数组是无序的，则可以使用哈希表来记录已遍历过的数值及其索引。在遍历数组时，通过查找哈希表，快速判断是否存在与当前元素互补的数值，并在常数时间内找到目标组合。这些方法各有优劣，双指针法简单直观但只能用于有序数组，而哈希表法适用于无序数组且查找效率更高。通过学习这两种解法，我们理解了不同场景下算法选择的依据。</p>
+</li>
+<li>
+<p><strong>扩展知识</strong>: 在这次学习中，还扩展了关于哈希表、双指针法在不同算法问题中的广泛应用。深入理解了哈希表在解决查找问题中的效率优势，以及双指针在排序数组中优化搜索过程的应用场景。这些知识不仅在理论层面增强了我们的算法理解，也为我们实际解决编程问题提供了多种思路和工具。</p>
+</li>
+</ol>
+<h2 id="题目解析">题目解析</h2>
+<h3 id="题目1242-有效的字母异位词httpsleetcodecnproblemsvalid-anagramdescription">题目1：<a href="https://leetcode.cn/problems/valid-anagram/description/">242. 有效的字母异位词</a></h3>
+<ul>
+<li>
+<p><strong>题目描述</strong>: 给定两个字符串 <code>s</code> 和 <code>t</code>，编写一个函数来判断 <code>t</code> 是否是 <code>s</code> 的字母异位词。字母异位词是指由相同的字母组成，但排列顺序不同的字符串。注意，字符串中的字母全部为小写字母。</p>
+</li>
+<li>
+<p><strong>示例</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">输入: s = &#34;anagram&#34;, t = &#34;nagaram&#34;
+</span></span><span class="line"><span class="ln">2</span><span class="cl">输出: true
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl">输入: s = &#34;rat&#34;, t = &#34;car&#34;
+</span></span><span class="line"><span class="ln">5</span><span class="cl">输出: false
+</span></span></code></pre></div></li>
+<li>
+<p><strong>解法总结</strong>: 该题目要求判断两个字符串是否为字母异位词，核心在于统计两个字符串中各字符的出现次数。如果两个字符串中各字符出现的次数完全相同，那么这两个字符串就是字母异位词。解法采用了固定长度的整数数组来记录字符的频次，其中每个字符的频次通过其ASCII码的偏移计算得出。在遍历第一个字符串时，对应字符的计数器加一；在遍历第二个字符串时，对应字符的计数器减一。最后，如果数组中的所有值都为零，则说明两个字符串是字母异位词。这个方法利用了数组的高效查找特性，使得整个过程的时间复杂度保持在O(n)。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">isAnagram</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">t</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="kd">var</span> <span class="nx">tmp</span> <span class="p">[</span><span class="mi">26</span><span class="p">]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="c1">// 1. 映射s到数组+1(数组是简单高效的哈希表)
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">c</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">		<span class="nx">tmp</span><span class="p">[</span><span class="nx">c</span><span class="o">-</span><span class="nb">rune</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="c1">// 2. 映射t到数组-1
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">c</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">t</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">		<span class="nx">tmp</span><span class="p">[</span><span class="nx">c</span><span class="o">-</span><span class="nb">rune</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="c1">// 3. 检查是否有元素不为0
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">c</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">tmp</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="k">if</span> <span class="nx">c</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">			<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>时间复杂度</strong>: O(n)，其中n是字符串的长度。算法主要耗时在两次遍历字符串上，每次遍历的时间复杂度均为O(n)。</p>
+</li>
+<li>
+<p><strong>空间复杂度</strong>: O(1)。由于使用了固定大小的数组来存储字符频次，无论字符串的长度如何变化，空间复杂度始终保持常数。</p>
+</li>
+</ul>
+<h3 id="题目2349-两个数组的交集httpsleetcodecnproblemsintersection-of-two-arraysdescription">题目2：<a href="https://leetcode.cn/problems/intersection-of-two-arrays/description/">349. 两个数组的交集</a></h3>
+<ul>
+<li>
+<p><strong>题目描述</strong>: 给定两个数组，编写一个函数来计算它们的交集。返回结果中的每个元素应是唯一的，结果可以是任意顺序。</p>
+</li>
+<li>
+<p><strong>示例</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">输入: nums1 = [1,2,2,1], nums2 = [2,2]
+</span></span><span class="line"><span class="ln">2</span><span class="cl">输出: [2]
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl">输入: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+</span></span><span class="line"><span class="ln">5</span><span class="cl">输出: [9,4]
+</span></span></code></pre></div></li>
+<li>
+<p><strong>解法总结</strong>: 该题目的目标是找出两个数组中的公共元素，并确保结果中的元素不重复。通过使用两个map结构，一个用于存储第一个数组中的元素，另一个用于存储交集结果。首先，将第一个数组中的所有元素存入一个map中，以去重。然后，遍历第二个数组，检查每个元素是否存在于第一个数组的map中，如果存在，则将该元素添加到结果集并从map中删除，以确保结果集中元素的唯一性。这种方法利用了哈希表的快速查找特性，能够高效地找出两个数组的交集。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">intersection</span><span class="p">(</span><span class="nx">nums1</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">nums2</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="nx">nums1Map</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="nx">result</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="c1">// 1. 将nums1编入map,并且去重
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">nums1Map</span><span class="p">[</span><span class="nx">v</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">			<span class="nx">nums1Map</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="c1">// 2. 循环nums2，如果nums1有就放入结果集
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">nums1Map</span><span class="p">[</span><span class="nx">v</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">			<span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">            <span class="nb">delete</span><span class="p">(</span><span class="nx">nums1Map</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl">	<span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>时间复杂度</strong>: O(n + m)，其中n和m分别是两个数组的长度。时间复杂度主要耗费在两个数组的遍历和哈希表的查找操作上。</p>
+</li>
+<li>
+<p><strong>空间复杂度</strong>: O(min(n, m))。空间复杂度主要由存储第一个数组的map以及结果集map决定，取决于两个数组中较小的那个。</p>
+</li>
+</ul>
+<h3 id="题目3202-快乐数httpsleetcodecnproblemshappy-numberdescription">题目3：<a href="https://leetcode.cn/problems/happy-number/description/">202. 快乐数</a></h3>
+<ul>
+<li>
+<p><strong>题目描述</strong>: 编写一个算法来判断一个数n是否是快乐数。快乐数定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，然后重复这个过程，直到这个数变为1，或是无限循环但始终变不到1。如果可以变为1，则这个数是快乐数。</p>
+</li>
+<li>
+<p><strong>示例</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">输入: 19
+</span></span><span class="line"><span class="ln">2</span><span class="cl">输出: true
+</span></span><span class="line"><span class="ln">3</span><span class="cl">解释: 
+</span></span><span class="line"><span class="ln">4</span><span class="cl">1² + 9² = 82
+</span></span><span class="line"><span class="ln">5</span><span class="cl">8² + 2² = 68
+</span></span><span class="line"><span class="ln">6</span><span class="cl">6² + 8² = 100
+</span></span><span class="line"><span class="ln">7</span><span class="cl">1² + 0² + 0² = 1
+</span></span></code></pre></div></li>
+<li>
+<p><strong>解法总结</strong>: 该题目通过不断迭代计算数字的平方和，判断其是否最终收敛到1。为了防止进入无限循环，使用一个map来记录每次迭代后的数字，如果某个数字已经出现过，则表示出现了循环，当前</p>
+</li>
+</ul>
+<p>数字不可能是快乐数。具体实现上，首先定义一个辅助函数<code>happyNum</code>来计算平方和，然后在主函数中进行迭代判断，直到数字变为1（返回true）或者出现循环（返回false）。</p>
+<pre><code>```go
+func isHappy(n int) bool {
+	resultMap := map[int]struct{}{}
+	// 1. 无限循环计算快乐数
+	for {
+		// 2. 计算快乐数
+		n = happyNum(n)
+		// 3. 如果快乐数等于1，直接返回true
+		if n == 1 {
+			return true
+		}
 
-      <li>
-      </li>
-    </ul>
-  </div>
+		// 4. 如果相同的快乐数出现了两次，返回false
+		if _, ok := resultMap[n]; ok {
+			return false
+		}
+		resultMap[n] = struct{}{}
+	}
+}
+
+func happyNum(n int) int {
+	sum := 0
+	// 只适合两位数的
+	for n &gt; 0 {
+		sum += (n % 10) * (n % 10)
+		n = n / 10
+	}
+
+	return sum
+}
+```
+</code></pre>
+<ul>
+<li>
+<p><strong>时间复杂度</strong>: O(logn)。每次迭代中数字的位数减少，最终将收敛到1或出现循环。由于数字的位数与它的对数成正比，因此时间复杂度是O(logn)。</p>
+</li>
+<li>
+<p><strong>空间复杂度</strong>: O(logn)。用于记录中间结果的哈希表最多存储数字的平方和的位数，空间复杂度为O(logn)。</p>
+</li>
+</ul>
+<h3 id="题目41-两数之和httpsleetcodecnproblemstwo-sum">题目4：<a href="https://leetcode.cn/problems/two-sum/">1. 两数之和</a></h3>
+<ul>
+<li>
+<p><strong>题目描述</strong>: 给定一个整数数组<code>nums</code>和一个目标值<code>target</code>，请你在该数组中找出和为目标值的那<code>两个</code>整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
+</li>
+<li>
+<p><strong>示例</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="ln">1</span><span class="cl">输入: nums = [2,7,11,15], target = 9
+</span></span><span class="line"><span class="ln">2</span><span class="cl">输出: [0,1]
+</span></span><span class="line"><span class="ln">3</span><span class="cl">解释: 因为 nums[0] + nums[1] = 2 + 7 = 9
+</span></span></code></pre></div></li>
+<li>
+<p><strong>解法总结</strong>: 对于这道题目，可以采用两种解法：双指针法和哈希表法。如果数组是有序的，可以使用双指针法，通过从两端向中间移动指针，根据当前和与目标值的关系来调整指针，直到找到两个数之和等于目标值的位置。这种方法的时间复杂度为O(n)。如果数组是无序的，可以使用哈希表法。遍历数组的同时，将每个元素及其对应的索引存入哈希表。在遍历过程中，检查哈希表中是否存在目标值与当前元素的差值，如果存在，说明找到了两个数之和等于目标值的位置。这种方法的时间复杂度为O(n)，但空间复杂度也为O(n)。</p>
+</li>
+</ul>
+<p><code>双指针版本</code></p>
+<pre><code>```go
+func twoSum(nums []int, target int) []int {
+	// 1. 定义对撞双指针
+	// 2. 暴力
+	for i := 0; i &lt; len(nums); i++ {
+		for j := i + 1; j &lt; len(nums); j++ {
+			sum := nums[i] + nums[j]
+			if sum == target {
+				return []int{i, j}
+			}
+		}
+	}
+
+	return []int{}
+}
+```
+</code></pre>
+<p><code>哈希表版本</code></p>
+<pre><code>```go
+func twoSum(nums []int, target int) []int {
+	resultMap := map[int]int{}
+
+	for index, v := range nums {
+		// 将另一半索引到map里面!
+		if tarIndex, ok := resultMap[target-v]; ok {
+			return []int{index, tarIndex}
+		} else {
+			resultMap[v] = index
+		}
+	}
+	return []int{}
+}
+```
+</code></pre>
+<ul>
+<li>
+<p><strong>时间复杂度</strong>: 双指针法的时间复杂度为O(n)，哈希表法的时间复杂度也为O(n)。</p>
+</li>
+<li>
+<p><strong>空间复杂度</strong>: 双指针法的空间复杂度为O(1)，哈希表法的空间复杂度为O(n)。</p>
+</li>
+</ul>
+
+    </div>
+<div class="post_comments">
+  
+  
+    
+ <script src="https://utteranc.es/client.js"
+         repo="ZhangSIming-blyq/blogcommit"
+         issue-term="pathname"
+         theme="github-light"
+         crossorigin="anonymous"
+         async>
+ </script>
+ 
+  
+  
+</div>
+
+
+
+
+  </article>
 <aside class="sidebar">
   <section class="sidebar_inner">
     <br>
     
   
   <div class="search">
-    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='tags'>
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='post'>
     <label for="find" class="search_label"><svg class="icon">
   <title>search</title>
   <use xlink:href="#search"></use>
@@ -539,9 +787,8 @@
   </section>
 </aside>
 
+  
 </div>
-
-
     </main><svg width="0" height="0" class="hidden">
   <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
     <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
