@@ -162,7 +162,7 @@
 </span>
     <span class="post_date">
       Aug 23, 2024</span>
-    <span class="post_time"> · 4 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
+    <span class="post_time"> · 5 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
         </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
         </a>
     </span>
@@ -352,92 +352,84 @@
 </span></span></code></pre></div></li>
 <li>
 <p><strong>解法总结</strong>: 该题目要求找出所有和为0的三元组，且不能有重复的三元组。暴力解法会尝试每个三元组合，时间复杂度为O(n^3)，效率低下。为提高效率，可以首先对数组进行排序，然后利用双指针法进行查找：固定一个数作为基准，剩下的两个数通过左右双指针向中间搜索，确保找到的三元组和为零。排序能够帮助我们轻松跳过重复的元素，避免产生重复的结果。最终的时间复杂度为O(n^2)，远优于暴力解法。</p>
-</li>
-</ul>
 <p><code>暴力解法</code>: 注意，暴力解法虽然正确，但是会超时；第二种双指针写法更优</p>
-<pre><code>```go
-func threeSum(nums []int) [][]int {
-	checkMap := map[int]int{}
-	result := [][]int{}
-	seenMap := map[string]struct{}{}
-
-	// 1. 第一轮循环，从头扫描到尾，把对应的值放checkMap进去，key是0-v，value是index
-	for index, v := range nums {
-		checkMap[0-v] = index
-
-	}
-
-	// 2. 第二轮循环，双指针循环(不重复)，同时需要相加判断checkMap是否有，index是否重合
-	for i := 0; i &lt; len(nums); i++ {
-		for j := i + 1; j &lt; len(nums); j++ {
-			if v, ok := checkMap[nums[i]+nums[j]]; ok {
-				if v != i &amp;&amp; v != j {
-					tmp := []int{nums[v], nums[i], nums[j]}
-					sort.Ints(tmp)
-					if _, ok := seenMap[fmt.Sprintf(&quot;%d%d%d&quot;, tmp[0], tmp[1], tmp[2])]; !ok {
-						result = append(result, tmp)
-						seenMap[fmt.Sprintf(&quot;%d%d%d&quot;, tmp[0], tmp[1], tmp[2])] = struct{}{}
-					}
-				}
-			}
-		}
-	}
-	return result
-}
-```
-</code></pre>
-<p><code>对撞双指针解法</code></p>
-<pre><code>```go
-import &quot;sort&quot;
-
-func threeSum(nums []int) [][]int {
-	result := [][]int{}
-
-	// 0. 排序数组(默认由小到大)，这个是后面对撞双指针的前提
-	sort.Ints(nums)
-
-	// 1. 由于要找三个数，在不重复的情况下，i应该&lt;len-2
-	for i := 0; i &lt; len(nums)-2; i++ {
-		// 2. 并且排序后如果已经&gt;0了都直接跳过
-		if nums[i] &gt; 0 {
-			break
-		}
-
-		// 3. 去重a
-		if i &gt;= 1 &amp;&amp; nums[i] == nums[i-1] {
-			continue
-		}
-
-		// 4. 对撞双指针找b和c
-		left := i + 1
-		right := len(nums) - 1
-
-		for left &lt; right {
-			b, c := nums[left], nums[right]
-			if nums[i]+b+c == 0 {
-				tmp := []int{nums[i], b, c}
-				result = append(result, tmp)
-
-				// 去重b
-				for left &lt; right &amp;&amp; nums[left] == b {
-					left++
-				}
-				// 去重c
-				for left &lt; right &amp;&amp; nums[right] == c {
-					right--
-				}
-			} else if nums[i]+b+c &lt; 0 {
-				left++
-			} else {
-				right--
-			}
-		}
-	}
-	return result
-}
-```
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">threeSum</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="nx">checkMap</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="nx">result</span> <span class="o">:=</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="nx">seenMap</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="c1">// 1. 第一轮循环，从头扫描到尾，把对应的值放checkMap进去，key是0-v，value是index
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">		<span class="nx">checkMap</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="nx">v</span><span class="p">]</span> <span class="p">=</span> <span class="nx">index</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="c1">// 2. 第二轮循环，双指针循环(不重复)，同时需要相加判断checkMap是否有，index是否重合
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">			<span class="k">if</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">checkMap</span><span class="p">[</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">+</span><span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">				<span class="k">if</span> <span class="nx">v</span> <span class="o">!=</span> <span class="nx">i</span> <span class="o">&amp;&amp;</span> <span class="nx">v</span> <span class="o">!=</span> <span class="nx">j</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">					<span class="nx">tmp</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="nx">nums</span><span class="p">[</span><span class="nx">v</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">					<span class="nx">sort</span><span class="p">.</span><span class="nf">Ints</span><span class="p">(</span><span class="nx">tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">					<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">seenMap</span><span class="p">[</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%d%d%d&#34;</span><span class="p">,</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">						<span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">						<span class="nx">seenMap</span><span class="p">[</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%d%d%d&#34;</span><span class="p">,</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">					<span class="p">}</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">	<span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><code>对撞双指针解法</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">import</span> <span class="s">&#34;sort&#34;</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kd">func</span> <span class="nf">threeSum</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="nx">result</span> <span class="o">:=</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="c1">// 0. 排序数组(默认由小到大)，这个是后面对撞双指针的前提
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span>	<span class="nx">sort</span><span class="p">.</span><span class="nf">Ints</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="c1">// 1. 由于要找三个数，在不重复的情况下，i应该&lt;len-2
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">		<span class="c1">// 2. 并且排序后如果已经&gt;0了都直接跳过
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">			<span class="k">break</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl">		<span class="c1">// 3. 去重a
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">			<span class="k">continue</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">
+</span></span><span class="line"><span class="ln">21</span><span class="cl">		<span class="c1">// 4. 对撞双指针找b和c
+</span></span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="c1"></span>		<span class="nx">left</span> <span class="o">:=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">		<span class="nx">right</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">
+</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">			<span class="nx">b</span><span class="p">,</span> <span class="nx">c</span> <span class="o">:=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">			<span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">+</span><span class="nx">b</span><span class="o">+</span><span class="nx">c</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">				<span class="nx">tmp</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">				<span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">tmp</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">
+</span></span><span class="line"><span class="ln">31</span><span class="cl">				<span class="c1">// 去重b
+</span></span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="c1"></span>				<span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="o">&amp;&amp;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">]</span> <span class="o">==</span> <span class="nx">b</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">					<span class="nx">left</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">				<span class="c1">// 去重c
+</span></span></span><span class="line"><span class="ln">36</span><span class="cl"><span class="c1"></span>				<span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="o">&amp;&amp;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span> <span class="o">==</span> <span class="nx">c</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">					<span class="nx">right</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">			<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">+</span><span class="nx">b</span><span class="o">+</span><span class="nx">c</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">				<span class="nx">left</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">42</span><span class="cl">				<span class="nx">right</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="ln">44</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">46</span><span class="cl">	<span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
 <li>
 <p><strong>时间复杂度</strong>: O(n^2)。排序需要O(n log n)，双指针查找需要O(n^2)。</p>
 </li>
@@ -457,66 +449,61 @@ func threeSum(nums []int) [][]int {
 </span></span></code></pre></div></li>
 <li>
 <p><strong>解法总结</strong>: 该题目是“三数之和”的扩展版，要求找到四个数的和等于目标值的所有不重复四元组。解法与“三数之和”类似，可以通过排序和双指针法来解决。首先对数组进行排序，然后固定两个数，剩下的两个数通过左右双指针进行搜索，确保找到的四元组和为目标值。为了避免重复解，固定的数以及双指针搜索过程中都需要进行去重处理。最终时间复杂度为O(n^3)，其中n是数组的长度。</p>
-</li>
-</ul>
 <p><code>对撞双指针解法</code></p>
-<pre><code>```go
-import &quot;sort&quot;
-
-func fourSum(nums []int, target int) [][]int {
-	result := [][]int{}
-	// 双指针解法
-	// 0. 排序
-	sort.Ints(nums)
-
-	// 1. a+b+c+d 第一个循环a
-	for i := 0; i &lt; len(nums)-3; i++ {
-		// a去重
-		a := nums[i]
-		if i &gt; 0 &amp;&amp; a == nums[i-1] {
-			continue
-		}
-
-		// 2. 往后循环b
-		for j := i + 1; j &lt; len(nums)-2; j++ {
-			b := nums[j]
-			if j &gt; i+1 &amp;&amp; b == nums[j-1] {
-				continue
-			}
-
-			// 3. 双指针c，d(left, right)
-			left := j + 1
-			right := len(nums) - 1
-
-			for left &lt; right {
-				c := nums[left]
-				d := nums[right]
-				sum := a + b + c + d
-				if sum == target {
-					result = append(result, []int{a, b, c, d})
-					// 如果下一个数字和已经加入result的相同，就直接按照方向跳过
-					for left &lt; right &amp;&amp; nums[left] == nums[left+1] {
-						left++
-					}
-					for left &lt; right &amp;&amp; nums[right] == nums[right-1] {
-						right--
-					}
-					// 双指针同时移动
-					left++
-					right--
-				} else if sum &lt; target {
-					left++
-				} else {
-					right--
-				}
-			}
-		}
-	}
-	return result
-}
-```
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">import</span> <span class="s">&#34;sort&#34;</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kd">func</span> <span class="nf">fourSum</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="nx">result</span> <span class="o">:=</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="c1">// 双指针解法
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>	<span class="c1">// 0. 排序
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span>	<span class="nx">sort</span><span class="p">.</span><span class="nf">Ints</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="c1">// 1. a+b+c+d 第一个循环a
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">		<span class="c1">// a去重
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span>		<span class="nx">a</span> <span class="o">:=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">		<span class="k">if</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">a</span> <span class="o">==</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">			<span class="k">continue</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl">		<span class="c1">// 2. 往后循环b
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1"></span>		<span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">			<span class="nx">b</span> <span class="o">:=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">			<span class="k">if</span> <span class="nx">j</span> <span class="p">&gt;</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nx">b</span> <span class="o">==</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">				<span class="k">continue</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">
+</span></span><span class="line"><span class="ln">24</span><span class="cl">			<span class="c1">// 3. 双指针c，d(left, right)
+</span></span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="c1"></span>			<span class="nx">left</span> <span class="o">:=</span> <span class="nx">j</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">			<span class="nx">right</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">
+</span></span><span class="line"><span class="ln">28</span><span class="cl">			<span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">				<span class="nx">c</span> <span class="o">:=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">				<span class="nx">d</span> <span class="o">:=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">				<span class="nx">sum</span> <span class="o">:=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="nx">c</span> <span class="o">+</span> <span class="nx">d</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">				<span class="k">if</span> <span class="nx">sum</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">					<span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">})</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">					<span class="c1">// 如果下一个数字和已经加入result的相同，就直接按照方向跳过
+</span></span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="c1"></span>					<span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="o">&amp;&amp;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">]</span> <span class="o">==</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">						<span class="nx">left</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">					<span class="p">}</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">					<span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="o">&amp;&amp;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="p">]</span> <span class="o">==</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">right</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">						<span class="nx">right</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">					<span class="p">}</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">					<span class="c1">// 双指针同时移动
+</span></span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="c1"></span>					<span class="nx">left</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl">					<span class="nx">right</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">44</span><span class="cl">				<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">sum</span> <span class="p">&lt;</span> <span class="nx">target</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">					<span class="nx">left</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">46</span><span class="cl">				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl">					<span class="nx">right</span><span class="o">--</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="ln">49</span><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">52</span><span class="cl">	<span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="ln">53</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
 <li>
 <p><strong>时间复杂度</strong>: O(n^3)。排序需要O(n log n)，三层嵌套循环分别是O(n^3)。</p>
 </li>

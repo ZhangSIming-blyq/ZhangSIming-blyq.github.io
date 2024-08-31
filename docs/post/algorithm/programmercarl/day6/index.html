@@ -349,43 +349,37 @@
 </span></span><span class="line"><span class="ln">7</span><span class="cl">1² + 0² + 0² = 1
 </span></span></code></pre></div></li>
 <li>
-<p><strong>解法总结</strong>: 该题目通过不断迭代计算数字的平方和，判断其是否最终收敛到1。为了防止进入无限循环，使用一个map来记录每次迭代后的数字，如果某个数字已经出现过，则表示出现了循环，当前</p>
-</li>
-</ul>
-<p>数字不可能是快乐数。具体实现上，首先定义一个辅助函数<code>happyNum</code>来计算平方和，然后在主函数中进行迭代判断，直到数字变为1（返回true）或者出现循环（返回false）。</p>
-<pre><code>```go
-func isHappy(n int) bool {
-	resultMap := map[int]struct{}{}
-	// 1. 无限循环计算快乐数
-	for {
-		// 2. 计算快乐数
-		n = happyNum(n)
-		// 3. 如果快乐数等于1，直接返回true
-		if n == 1 {
-			return true
-		}
-
-		// 4. 如果相同的快乐数出现了两次，返回false
-		if _, ok := resultMap[n]; ok {
-			return false
-		}
-		resultMap[n] = struct{}{}
-	}
-}
-
-func happyNum(n int) int {
-	sum := 0
-	// 只适合两位数的
-	for n &gt; 0 {
-		sum += (n % 10) * (n % 10)
-		n = n / 10
-	}
-
-	return sum
-}
-```
-</code></pre>
-<ul>
+<p><strong>解法总结</strong>: 该题目通过不断迭代计算数字的平方和，判断其是否最终收敛到1。为了防止进入无限循环，使用一个map来记录每次迭代后的数字，如果某个数字已经出现过，则表示出现了循环，当前数字不可能是快乐数。具体实现上，首先定义一个辅助函数<code>happyNum</code>来计算平方和，然后在主函数中进行迭代判断，直到数字变为1（返回true）或者出现循环（返回false）。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">isHappy</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="nx">resultMap</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="c1">// 1. 无限循环计算快乐数
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">		<span class="c1">// 2. 计算快乐数
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>		<span class="nx">n</span> <span class="p">=</span> <span class="nf">happyNum</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">		<span class="c1">// 3. 如果快乐数等于1，直接返回true
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">		<span class="c1">// 4. 如果相同的快乐数出现了两次，返回false
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">resultMap</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">			<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">		<span class="nx">resultMap</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="kd">func</span> <span class="nf">happyNum</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">	<span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">	<span class="c1">// 只适合两位数的
+</span></span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">n</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">		<span class="nx">sum</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">		<span class="nx">n</span> <span class="p">=</span> <span class="nx">n</span> <span class="o">/</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">
+</span></span><span class="line"><span class="ln">28</span><span class="cl">	<span class="k">return</span> <span class="nx">sum</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></div></li>
 <li>
 <p><strong>时间复杂度</strong>: O(logn)。每次迭代中数字的位数减少，最终将收敛到1或出现循环。由于数字的位数与它的对数成正比，因此时间复杂度是O(logn)。</p>
 </li>
@@ -405,45 +399,37 @@ func happyNum(n int) int {
 </span></span><span class="line"><span class="ln">3</span><span class="cl">解释: 因为 nums[0] + nums[1] = 2 + 7 = 9
 </span></span></code></pre></div></li>
 <li>
-<p><strong>解法总结</strong>: 对于这道题目，可以采用两种解法：双指针法和哈希表法。如果数组是有序的，可以使用双指针法，通过从两端向中间移动指针，根据当前和与目标值的关系来调整指针，直到找到两个数之和等于目标值的位置。这种方法的时间复杂度为O(n)。如果数组是无序的，可以使用哈希表法。遍历数组的同时，将每个元素及其对应的索引存入哈希表。在遍历过程中，检查哈希表中是否存在目标值与当前元素的差值，如果存在，说明找到了两个数之和等于目标值的位置。这种方法的时间复杂度为O(n)，但空间复杂度也为O(n)。</p>
-</li>
-</ul>
-<p><code>双指针版本</code></p>
-<pre><code>```go
-func twoSum(nums []int, target int) []int {
-	// 1. 定义对撞双指针
-	// 2. 暴力
-	for i := 0; i &lt; len(nums); i++ {
-		for j := i + 1; j &lt; len(nums); j++ {
-			sum := nums[i] + nums[j]
-			if sum == target {
-				return []int{i, j}
-			}
-		}
-	}
-
-	return []int{}
-}
-```
-</code></pre>
-<p><code>哈希表版本</code></p>
-<pre><code>```go
-func twoSum(nums []int, target int) []int {
-	resultMap := map[int]int{}
-
-	for index, v := range nums {
-		// 将另一半索引到map里面!
-		if tarIndex, ok := resultMap[target-v]; ok {
-			return []int{index, tarIndex}
-		} else {
-			resultMap[v] = index
-		}
-	}
-	return []int{}
-}
-```
-</code></pre>
-<ul>
+<p><strong>解法总结</strong>: 对于这道题目，可以采用两种解法：双指针法和哈希表法。如果数组是有序的，可以使用双指针法，通过从两端向中间移动指针，根据当前和与目标值的关系来调整指针，直到找到两个数之和等于目标值的位置。这种方法的时间复杂度为O(n)。如果数组是无序的，可以使用哈希表法。遍历数组的同时，将每个元素及其对应的索引存入哈希表。在遍历过程中，检查哈希表中是否存在目标值与当前元素的差值，如果存在，说明找到了两个数之和等于目标值的位置。这种方法的时间复杂度为O(n)，但空间复杂度也为O(n)。
+<code>双指针版本</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">twoSum</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="c1">// 1. 定义对撞双指针
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1"></span>	<span class="c1">// 2. 暴力
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">		<span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">			<span class="nx">sum</span> <span class="o">:=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">			<span class="k">if</span> <span class="nx">sum</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">				<span class="k">return</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">	<span class="k">return</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><code>哈希表版本</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">twoSum</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="nx">resultMap</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">		<span class="c1">// 将另一半索引到map里面!
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">tarIndex</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">resultMap</span><span class="p">[</span><span class="nx">target</span><span class="o">-</span><span class="nx">v</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">			<span class="k">return</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="nx">index</span><span class="p">,</span> <span class="nx">tarIndex</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">		<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">			<span class="nx">resultMap</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span> <span class="p">=</span> <span class="nx">index</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="k">return</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"></code></pre></div></li>
 <li>
 <p><strong>时间复杂度</strong>: 双指针法的时间复杂度为O(n)，哈希表法的时间复杂度也为O(n)。</p>
 </li>
