@@ -6,7 +6,25 @@
     <description>Recent content in English on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 05 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/english/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/english/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deploy Kubernetes cluster via kubeadm</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/</link>
+      <pubDate>Tue, 10 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/</guid>
+      <description>
+        
+          
+            1. Install kubeadm(kubelet kubectl) and docker https://docs.docker.com/engine/install/ubuntu/
+Set up docker apt repository:
+1# Add Docker&amp;#39;s official GPG key: 2sudo apt-get update 3sudo apt-get install ca-certificates curl 4sudo install -m 0755 -d /etc/apt/keyrings 5sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc 6sudo chmod a+r /etc/apt/keyrings/docker.asc 7 8# Add the repository to Apt sources: 9echo \ 10 &amp;#34;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \ 11 $(. /etc/os-release &amp;amp;&amp;amp; echo &amp;#34;$VERSION_CODENAME&amp;#34;) stable&amp;#34; | \ 12 sudo tee /etc/apt/sources.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>Etcd Tutorial</title>
       <link>https://zhangsiming-blyq.github.io/post/linux/etcd-tutorial/</link>

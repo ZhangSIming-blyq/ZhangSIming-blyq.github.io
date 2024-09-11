@@ -37,6 +37,18 @@
                 href="https://zhangsiming-blyq.github.io/categories/"
                 />
   </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/</loc>
+    <lastmod>2024-09-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/english/</loc>
+    <lastmod>2024-09-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
+    <lastmod>2024-09-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
+    <lastmod>2024-09-10T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/</loc>
     <lastmod>2024-09-10T00:00:00+00:00</lastmod>
   </url><url>
@@ -54,6 +66,9 @@
                 />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/</loc>
+    <lastmod>2024-09-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/kubernetes/addnode/</loc>
     <lastmod>2024-09-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day8/</loc>
@@ -76,9 +91,6 @@
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day1/</loc>
     <lastmod>2024-08-14T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/english/</loc>
-    <lastmod>2023-09-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/etcd/</loc>
     <lastmod>2023-09-05T00:00:00+00:00</lastmod>
@@ -114,12 +126,6 @@
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/linux/git%E7%9A%84cherry-pick%E6%93%8D%E4%BD%9C/</loc>
-    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
-    <lastmod>2023-02-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</loc>

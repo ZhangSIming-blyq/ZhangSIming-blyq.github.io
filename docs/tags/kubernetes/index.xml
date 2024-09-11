@@ -6,7 +6,44 @@
     <description>Recent content in kubernetes on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deploy Kubernetes cluster via kubeadm</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/</link>
+      <pubDate>Tue, 10 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/</guid>
+      <description>
+        
+          
+            1. Install kubeadm(kubelet kubectl) and docker https://docs.docker.com/engine/install/ubuntu/
+Set up docker apt repository:
+1# Add Docker&amp;#39;s official GPG key: 2sudo apt-get update 3sudo apt-get install ca-certificates curl 4sudo install -m 0755 -d /etc/apt/keyrings 5sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc 6sudo chmod a+r /etc/apt/keyrings/docker.asc 7 8# Add the repository to Apt sources: 9echo \ 10 &amp;#34;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \ 11 $(. /etc/os-release &amp;amp;&amp;amp; echo &amp;#34;$VERSION_CODENAME&amp;#34;) stable&amp;#34; | \ 12 sudo tee /etc/apt/sources.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>如何加节点到Kubernetes集群</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/addnode/</link>
+      <pubDate>Tue, 10 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/addnode/</guid>
+      <description>
+        
+          
+            方法一：基于 Bootstrap Token 的加入方式 原理 Bootstrap Token 是一种临时的令牌，用于新节点在加入集群时进行身份验证。 新节点使用 kubeadm join 命令，提供 --token 和 --discovery-token-ca-cert-hash 参数，与控制平面 API 服务器建立安全连接。 控制平面验证 token 的有效性，并向新节点提供所需的证书和配置文件，使其能够加入集群。 具体步骤 1. 在控制平面节点上生成 Bootstrap Token 使用以下命令生成新的引导令牌：
+1kubeadm token create --print-join-command 输出示例：
+1kubeadm join 10.0.24.14:6443 --token abcdef.0123456789abcdef \ 2 --discovery-token-ca-cert-hash sha256:430cb53669a7fde6e44338968458d47f3fcdbeda4d73bda7435df34ed20ad5be --print-join-command 参数会直接输出用于加入集群的完整命令，包括 token 和 discovery-token-ca-cert-hash。 2. 在新节点上执行加入命令 在新节点上，以 root 或具有相应权限的用户身份执行上述输出的命令：
+1kubeadm join 10.0.24.14:6443 --token abcdef.0123456789abcdef \ 2 --discovery-token-ca-cert-hash sha256:430cb53669a7fde6e44338968458d47f3fcdbeda4d73bda7435df34ed20ad5be 3. 加入过程解析 身份验证：新节点使用 token 与控制平面 API 服务器进行身份验证。 证书验证：使用 --discovery-token-ca-cert-hash 提供的哈希值，确保连接的 API 服务器是可信的。 获取配置：验证通过后，新节点从控制平面获取 kubelet 所需的配置文件和证书。 节点注册：kubelet 启动并与控制平面通信，节点被注册到集群中。 注意事项 Token 有效期：默认情况下，token 有效期为 24 小时。可以使用 --ttl 参数调整有效期。 Token 管理：使用 kubeadm token list 查看现有 token，kubeadm token delete &amp;lt;token-id&amp;gt; 删除 token。 方法二：使用 静态 Kubeconfig 文件 的方式(这种是最常规的, 最正确的) 原理 预先在控制平面节点上为新节点生成 kubeconfig 文件，包含必要的证书和配置信息。 将 kubeconfig 文件安全地传输到新节点。 新节点的 kubelet 使用该 kubeconfig 文件与控制平面通信，完成加入过程。 具体步骤 1.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>kubernetes常规问题</title>
       <link>https://zhangsiming-blyq.github.io/post/kubernetes/kubernetes%E5%B8%B8%E8%A7%84%E9%97%AE%E9%A2%98/</link>
