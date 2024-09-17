@@ -1,0 +1,1686 @@
+
+<!DOCTYPE html>
+<html
+  lang="en"
+  data-figures=""
+  
+    class="page"
+  
+  
+  >
+  <head>
+<title>Kubernetes Operator 新手开发一文入门 | </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script async src="https://www.googletagmanager.com/gtag/js?id=XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'XXXXXXXXXX');
+</script>
+
+
+
+  
+<meta property="og:locale" content="en" />
+
+<meta property="og:type" content="article">
+<meta name="description" content="概述 Kubernetes Operator 简介 Kubernetes Operator 是一类 Kubernetes 控制器，它能够自动化管理复杂的应用程序和其生命周期，通常被用来管理有状态应用（如数据库、缓存等）。通过扩展 Kubernetes API，Operator 可以将日常操作流程（如安装、升级、扩展、备 …" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@janedoe">
+<meta name="twitter:title" content="Kubernetes Operator 新手开发一文入门" />
+<meta name="twitter:image" content="https://zhangsiming-blyq.github.io/post/kubernetes/Switzerland.jpg"/>
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/post/kubernetes/operator/" />
+<meta property="og:title" content="Kubernetes Operator 新手开发一文入门" />
+<meta property="og:description" content="概述 Kubernetes Operator 简介 Kubernetes Operator 是一类 Kubernetes 控制器，它能够自动化管理复杂的应用程序和其生命周期，通常被用来管理有状态应用（如数据库、缓存等）。通过扩展 Kubernetes API，Operator 可以将日常操作流程（如安装、升级、扩展、备 …" />
+<meta property="og:image" content="https://zhangsiming-blyq.github.io/post/kubernetes/Switzerland.jpg" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
+<link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
+
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/post/kubernetes/operator/">
+
+
+
+<link rel="preload" href="https://zhangsiming-blyq.github.io/css/styles.42e2c5f6d8cf9c52872666f8d8b2678ad0c426978b9d78aff3c33b7a1e7f6f97f54bcdaf0518a25fb0fe26367d04f8b07c683b3b38b331cb098daadee06b1f3e.css" integrity = "sha512-QuLF9tjPnFKHJmb42LJnitDEJpeLnXiv88M7eh5/b5f1S82vBRiiX7D&#43;JjZ9BPiwfGg7OzizMcsJjare4GsfPg==" as="style" crossorigin="anonymous">
+
+
+
+<link rel="preload" href="https://zhangsiming-blyq.github.io/en/js/bundle.daf5d72d10b0f1e048706d4cb8d79d1ec41c3b5edcd83acfaa4df80252afff936252c1fa7804d8dcdb500eaf0f7d5adbb79cfe886cf7068f12f58cdebc05e1c3.js" as="script" integrity=
+"sha512-2vXXLRCw8eBIcG1MuNedHsQcO17c2DrPqk34AlKv/5NiUsH6eATY3NtQDq8PfVrbt5z&#43;iGz3Bo8S9YzevAXhww==" crossorigin="anonymous">
+
+
+<link rel="stylesheet" type="text/css" href="https://zhangsiming-blyq.github.io/css/styles.42e2c5f6d8cf9c52872666f8d8b2678ad0c426978b9d78aff3c33b7a1e7f6f97f54bcdaf0518a25fb0fe26367d04f8b07c683b3b38b331cb098daadee06b1f3e.css" integrity="sha512-QuLF9tjPnFKHJmb42LJnitDEJpeLnXiv88M7eh5/b5f1S82vBRiiX7D&#43;JjZ9BPiwfGg7OzizMcsJjare4GsfPg==" crossorigin="anonymous">
+
+
+  </head>
+  <body
+    data-code="100000"
+    data-lines="false"
+    id="documentTop"
+    data-lang="en"
+  >
+
+<header class="nav_header" >
+  <nav class="nav"><a href='https://zhangsiming-blyq.github.io/' class="nav_brand nav_item" title="">
+  <img src="https://zhangsiming-blyq.github.io/logos/bailiyingqi.png" class="logo" alt="">
+  <div class="nav_close">
+    <div><svg class="icon">
+  <title>open-menu</title>
+  <use xlink:href="#open-menu"></use>
+</svg>
+<svg class="icon">
+  <title>closeme</title>
+  <use xlink:href="#closeme"></use>
+</svg>
+</div>
+  </div>
+</a>
+
+    <div class='nav_body nav_body_left'>
+      
+      
+      
+        
+
+  <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/" class="nav_item" title="Home">Home </a>
+  </div>
+  <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/archives/" class="nav_item" title="Archives">Archives </a>
+  </div>
+  <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/about/" class="nav_item" title="About">About </a>
+  </div>
+      
+      <div class="nav_parent">
+        <a href="#" class="nav_item"></a>
+        <div class="nav_sub">
+          <span class="nav_child"></span>
+          
+          <a href="https://zhangsiming-blyq.github.io/" class="nav_child nav_item"></a>
+          
+          <a href="https://zhangsiming-blyq.github.io/zh-cn/" class="nav_child nav_item"></a>
+          
+        </div>
+      </div>
+<div class='follow'>
+  <a href="https://www.instagram.com/zhangsiming_bailiyingqi/">
+    <svg class="icon">
+  <title>instagram</title>
+  <use xlink:href="#instagram"></use>
+</svg>
+
+  </a>
+  <a href="https://twitter.com/Siming78740702">
+    <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+  </a>
+  <a href="https://github.com/ZhangSIming-blyq">
+    <svg class="icon">
+  <title>github</title>
+  <use xlink:href="#github"></use>
+</svg>
+
+  </a>
+    
+  <a href="https://zhangsiming-blyq.github.io/index.xml">
+    <svg class="icon">
+  <title>rss</title>
+  <use xlink:href="#rss"></use>
+</svg>
+
+  </a>
+<div class="color_mode">
+  <input type="checkbox" class="color_choice" id="mode">
+</div>
+
+</div>
+
+    </div>
+  </nav>
+</header>
+
+    <main>
+  
+<div class="grid-inverse wrap content">
+  <article class="post_content">
+    <h1 class="post_title">Kubernetes Operator 新手开发一文入门</h1>
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 15, 2024</span>
+    <span class="post_time"> · 17 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Kubernetes%20Operator%20%e6%96%b0%e6%89%8b%e5%bc%80%e5%8f%91%e4%b8%80%e6%96%87%e5%85%a5%e9%97%a8&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2foperator%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2foperator%2f&t=Kubernetes%20Operator%20%e6%96%b0%e6%89%8b%e5%bc%80%e5%8f%91%e4%b8%80%e6%96%87%e5%85%a5%e9%97%a8" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/kubernetes/operator/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+<div class="post_featured"><figure>
+  <picture>
+
+    
+      
+        
+        
+        
+        
+        
+        
+    <img
+      loading="lazy"
+      decoding="async"
+      alt=""
+      
+        class="image_figure image_featured image_internal image_unprocessed"
+        src="/post/kubernetes/Switzerland.jpg"
+      
+      
+    />
+
+    </picture>
+</figure>
+
+      </div>
+      <div class="post_toc">
+        <h2>Overview</h2>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a>
+      <ul>
+        <li><a href="#kubernetes-operator-简介">Kubernetes Operator 简介</a></li>
+        <li><a href="#为什么使用-operator">为什么使用 Operator</a></li>
+        <li><a href="#operator-与-controller-的关系">Operator 与 Controller 的关系</a></li>
+      </ul>
+    </li>
+    <li><a href="#核心概念">核心概念</a>
+      <ul>
+        <li><a href="#自定义资源-cr-和自定义资源定义-crd">自定义资源 (CR) 和自定义资源定义 (CRD)</a></li>
+        <li><a href="#控制器-controller">控制器 (Controller)</a></li>
+        <li><a href="#informer">Informer</a></li>
+        <li><a href="#rbac-role-based-access-control">RBAC (Role-Based Access Control)</a></li>
+      </ul>
+    </li>
+    <li><a href="#kubebuilder-快速入门">Kubebuilder 快速入门</a>
+      <ul>
+        <li><a href="#什么是-kubebuilder">什么是 Kubebuilder</a></li>
+        <li><a href="#安装-kubebuilder">安装 Kubebuilder</a></li>
+        <li><a href="#kubebuilder-的项目结构">Kubebuilder 的项目结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql-operator">MySQL Operator</a>
+      <ul>
+        <li><a href="#1-使用-kubebuilder-初始化项目">1. 使用 Kubebuilder 初始化项目</a></li>
+        <li><a href="#2crd-的定义与生成">2.CRD 的定义与生成</a></li>
+        <li><a href="#3-详细的-controller-部分开发文档">3. 详细的 Controller 部分开发文档</a></li>
+        <li><a href="#4-手动部署-operator-到-kubernetes-集群并查看效果">4. 手动部署 Operator 到 Kubernetes 集群并查看效果</a></li>
+      </ul>
+    </li>
+    <li><a href="#kubebuilder-原理详解">Kubebuilder 原理详解</a>
+      <ul>
+        <li><a href="#kubebuilder-的核心组件">Kubebuilder 的核心组件</a></li>
+        <li><a href="#kubebuilder-的工作流程">Kubebuilder 的工作流程</a></li>
+        <li><a href="#与-kubernetes-api-的集成">与 Kubernetes API 的集成</a></li>
+        <li><a href="#总结开发者如何使用-kubebuilder-开发-operator">总结：开发者如何使用 Kubebuilder 开发 Operator</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
+    <div class="post_body"><h2 id="概述">概述</h2>
+<h3 id="kubernetes-operator-简介">Kubernetes Operator 简介</h3>
+<p>Kubernetes Operator 是一类 Kubernetes 控制器，它能够自动化管理复杂的应用程序和其生命周期，通常被用来管理有状态应用（如数据库、缓存等）。通过扩展 Kubernetes API，Operator 可以将日常操作流程（如安装、升级、扩展、备份等）转换为 Kubernetes 原生对象，从而实现自动化和声明式管理。</p>
+<h3 id="为什么使用-operator">为什么使用 Operator</h3>
+<p>Operator 通过将 DevOps 团队日常管理应用的运维知识和流程编码化，使复杂的应用程序管理变得简单和自动化。在 Kubernetes 中，Operator 可以持续监控自定义资源，并自动进行相应操作，确保应用程序的状态与用户期望一致。</p>
+<h3 id="operator-与-controller-的关系">Operator 与 Controller 的关系</h3>
+<p>Operator 实际上是一个高级 Controller，它不仅负责监控和管理 Kubernetes 中的自定义资源 (CR)，还可以执行特定的业务逻辑。Controller 是 Kubernetes 架构中管理资源状态的核心组件，Operator 是对 Controller 的封装和扩展，专门用于复杂应用的生命周期管理。</p>
+<h2 id="核心概念">核心概念</h2>
+<h3 id="自定义资源-cr-和自定义资源定义-crd">自定义资源 (CR) 和自定义资源定义 (CRD)</h3>
+<h4 id="什么是-cr">什么是 CR</h4>
+<p>自定义资源 (Custom Resource, CR) 是 Kubernetes 用户可以定义的扩展对象，用于描述某个具体的应用或资源的期望状态。每个 CR 对象的结构基于其相应的 CRD (Custom Resource Definition)，通过 CR，用户可以声明他们希望 Kubernetes 管理的特定应用或服务。</p>
+<h4 id="什么是-crd">什么是 CRD</h4>
+<p>CRD（自定义资源定义）是 Kubernetes 的一种扩展机制，允许用户向 Kubernetes API 添加新的对象类型。通过 CRD，用户可以定义新的资源种类（类似于内置的 <code>Pod</code>、<code>Service</code> 等），并指定这些资源的结构和行为。</p>
+<h4 id="crd-的结构与定义详解">CRD 的结构与定义详解</h4>
+<ul>
+<li><strong><code>apiVersion</code></strong>: 指定 API 组和版本，例如 <code>apps/v1</code>。</li>
+<li><strong><code>kind</code></strong>: 定义资源的类型，比如 <code>MySQL</code>、<code>Redis</code> 等。</li>
+<li><strong><code>metadata</code></strong>: 描述 CR 对象的元数据信息，如名称、命名空间等。</li>
+<li><strong><code>spec</code></strong>: 用于描述资源的期望状态，包含资源的配置项，如副本数、存储大小、版本等。</li>
+<li><strong><code>status</code></strong>: 系统生成，用于记录资源的当前状态，如运行中的副本数、最后备份时间等。</li>
+</ul>
+<h3 id="控制器-controller">控制器 (Controller)</h3>
+<h4 id="controller-的工作原理">Controller 的工作原理</h4>
+<p>Controller 是 Kubernetes 中的核心组件之一，用于确保集群中的资源状态与用户的期望状态一致。Controller 通过监听资源对象的变化事件（如创建、更新、删除等），并根据这些事件采取行动来调整实际状态。例如，当用户期望创建一个 MySQL 实例时，Controller 监听到 MySQL CR 的创建事件，并根据该 CR 的 <code>spec</code> 定义自动创建相应的 Kubernetes 资源（如 <code>Deployment</code>、<code>Service</code>）。</p>
+<h4 id="controller-的生命周期管理">Controller 的生命周期管理</h4>
+<p>Controller 通过一个无限循环的 &quot;控制循环&quot;（Control Loop）来工作，它会不断地获取资源的当前状态，并与期望状态进行对比。如果发现不一致，Controller 会采取相应的操作来修正状态。Controller 的生命周期管理包括以下几个阶段：</p>
+<ul>
+<li><strong>监听事件</strong>：Controller 通过 Informer 监听自定义资源的增删改等事件。</li>
+<li><strong>执行 Reconcile</strong>：每当资源的状态发生变化时，Controller 会调用 <code>Reconcile</code> 函数来同步状态。</li>
+<li><strong>更新状态</strong>：Controller 操作 Kubernetes 资源（如创建 Pod、删除 Service 等），确保资源状态符合期望，并更新状态信息。</li>
+</ul>
+<h4 id="核心控制循环解释-control-loop">核心控制循环解释 (Control Loop)</h4>
+<p>控制循环（Control Loop）是 Controller 实现资源管理的核心机制。它的工作原理是：</p>
+<ol>
+<li><strong>获取资源的实际状态</strong>：通过 Kubernetes API 监听或查询资源的当前状态。</li>
+<li><strong>对比期望状态和实际状态</strong>：根据 CR 中定义的 <code>spec</code> 与资源的当前状态 (<code>status</code>) 进行对比。</li>
+<li><strong>采取行动</strong>：如果发现状态不一致，Controller 会采取相应的操作（如创建、删除、更新资源），确保资源的实际状态与用户期望一致。</li>
+<li><strong>重复此过程</strong>：控制循环是持续运行的，确保资源状态始终与期望一致。</li>
+</ol>
+<h3 id="informer">Informer</h3>
+<h4 id="informer-的原理">Informer 的原理</h4>
+<p>在 Kubernetes 中，<strong>Informer</strong> 是一个核心组件，它负责监听 Kubernetes API 资源的变化事件（如增、删、改等），并将这些事件通知给相应的 Controller。Informer 是基于 <strong>缓存（Cache）</strong> 的机制，通过减少直接与 API Server 的交互来提升系统的性能和效率。</p>
+<p>Informer 的主要工作流程包括：</p>
+<ol>
+<li><strong>List</strong>：启动时，Informer 会从 API Server 中获取资源的当前状态列表，并将其缓存。</li>
+<li><strong>Watch</strong>：Informer 监听资源的变化（创建、更新、删除等），并将变化事件发送给对应的 Controller。</li>
+<li><strong>同步数据</strong>：Informer 将变化的资源同步到本地缓存，避免每次都向 API Server 请求资源，减少了对 API Server 的压力。</li>
+</ol>
+<p>这种机制保证了 Kubernetes 系统的高可用性和高性能。</p>
+<h4 id="sharedinformer-与-controller-的配合">SharedInformer 与 Controller 的配合</h4>
+<p><strong>SharedInformer</strong> 是 Informer 的高级版本，允许多个 Controller 共享同一个资源的缓存数据。由于 Kubernetes 集群中的资源可能会被多个 Controller 监控，如果每个 Controller 都独立与 API Server 交互，这会增加系统的负载。通过 SharedInformer，不同的 Controller 可以共享同一个数据源，避免重复查询，提升效率。</p>
+<p><strong>SharedInformer 的主要特点</strong>：</p>
+<ul>
+<li><strong>共享缓存</strong>：多个 Controller 可以通过一个 SharedInformer 来访问相同的缓存数据，避免每个 Controller 独立维护缓存。</li>
+<li><strong>事件广播</strong>：SharedInformer 会将监听到的事件广播给所有监听该资源的 Controller，每个 Controller 可以根据业务逻辑处理相应事件。</li>
+</ul>
+<p>SharedInformer 的典型工作流程如下：</p>
+<ol>
+<li>启动时，SharedInformer 获取资源的列表并缓存。</li>
+<li>监听资源的变化，并更新缓存。</li>
+<li>将变化事件通知给所有订阅该资源的 Controller。</li>
+</ol>
+<h4 id="informer-的缓存机制及事件处理流程">Informer 的缓存机制及事件处理流程</h4>
+<p>Informer 依赖本地缓存来加速数据访问。每当 API Server 中的资源发生变化时，Informer 会将变化事件存储在本地缓存中，并通过事件处理机制通知 Controller。缓存的机制允许 Controller 可以快速访问已经监听的资源，而无需频繁与 API Server 通信。</p>
+<p><strong>Informer 的事件处理流程</strong>：</p>
+<ol>
+<li><strong>List 阶段</strong>：Informer 启动时，通过 <code>List</code> 操作获取当前所有资源的完整状态，并将这些资源存储到本地缓存中。</li>
+<li><strong>Watch 阶段</strong>：Informer 通过 <code>Watch</code> 机制持续监听资源的变化事件，如资源的 <code>Add</code>（增加）、<code>Update</code>（更新）和 <code>Delete</code>（删除）。</li>
+<li><strong>本地缓存更新</strong>：每当有资源变化时，Informer 会更新本地缓存，并根据不同的事件类型（添加、更新、删除）触发不同的事件处理函数。</li>
+<li><strong>事件通知</strong>：Informer 会将资源变化事件传递给 Controller，Controller 再根据业务逻辑对事件进行处理。</li>
+</ol>
+<p>通过这种机制，Informer 可以有效地减少 API Server 的压力，并加速 Controller 的事件处理过程。</p>
+<p>下图展示了 <strong>Informer 的事件处理机制</strong>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">+-------------------+           +-----------------------+
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">|   API Server       |           |     Controller        |
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">|                   |           |                       |
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">|  (Add/Update/Delete)-----------&gt; (Reconcile function)  |
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">|   (List/Watch)     |           |   Handles resource    |
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">+-------------------+           +-----------------------+
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">          ^                              ^
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">          |                              |
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">          |    +------------------+      |
+</span></span><span class="line"><span class="ln">10</span><span class="cl">          +----+ SharedInformer    +------+
+</span></span><span class="line"><span class="ln">11</span><span class="cl">               | (Cache + Event)   |
+</span></span><span class="line"><span class="ln">12</span><span class="cl">               +------------------+
+</span></span></code></pre></div><h4 id="核心组件介绍clientsetindexerlister">核心组件介绍：ClientSet、Indexer、Lister</h4>
+<p>Informer 的工作依赖于以下几个关键组件：</p>
+<ol>
+<li>
+<p><strong>ClientSet</strong>：</p>
+<ul>
+<li><strong>ClientSet</strong> 是与 Kubernetes API Server 交互的客户端工具，负责发出请求来获取资源的列表（<code>List</code>）并监听资源的变化（<code>Watch</code>）。Informer 依赖 ClientSet 来与 API Server 通信。</li>
+<li>每种资源类型都有一个对应的 ClientSet，例如 <code>PodsClient</code>、<code>ServicesClient</code> 等。</li>
+</ul>
+</li>
+<li>
+<p><strong>Indexer</strong>：</p>
+<ul>
+<li><strong>Indexer</strong> 是 Kubernetes 缓存中的一种数据结构，用来根据特定的键（如对象的名称或标签）索引和检索资源对象。它可以高效地从缓存中获取指定资源的信息。</li>
+<li>Indexer 提供了一种高效的资源查找方式，特别是在需要从大规模资源列表中查找特定对象时。</li>
+</ul>
+</li>
+<li>
+<p><strong>Lister</strong>：</p>
+<ul>
+<li><strong>Lister</strong> 是一个用于从本地缓存中快速获取资源的工具，通常结合 Indexer 使用。与直接查询 API Server 不同，Lister 可以从缓存中快速读取资源，提升查询效率。</li>
+<li>Lister 允许控制器以类似于直接调用 Kubernetes API 的方式访问缓存数据。</li>
+</ul>
+</li>
+</ol>
+<h3 id="rbac-role-based-access-control">RBAC (Role-Based Access Control)</h3>
+<h4 id="什么是-rbac">什么是 RBAC</h4>
+<p>RBAC（基于角色的访问控制）是 Kubernetes 中用于管理用户和服务对集群中资源的访问权限的机制。通过 RBAC，集群管理员可以定义哪些用户或服务账户有权访问哪些资源，以及能够执行哪些操作。</p>
+<p>RBAC 的四个核心概念：</p>
+<ol>
+<li><strong>Role</strong>：定义一组对资源的访问权限，如对 <code>Pods</code> 的读取权限或对 <code>Deployments</code> 的修改权限。</li>
+<li><strong>RoleBinding</strong>：将 <code>Role</code> 分配给一个或多个用户或服务账户，授权他们执行 <code>Role</code> 中定义的操作。</li>
+<li><strong>ClusterRole</strong>：类似于 <code>Role</code>，但 <code>ClusterRole</code> 可以跨命名空间作用，通常用于管理全局资源或集群级别的访问权限。</li>
+<li><strong>ClusterRoleBinding</strong>：将 <code>ClusterRole</code> 绑定到用户或服务账户，使其在整个集群范围内具备相应的权限。</li>
+</ol>
+<h4 id="创建-rbac-规则与权限控制">创建 RBAC 规则与权限控制</h4>
+<p>当部署 Kubernetes Operator 时，通常需要为 Operator 定义一系列 RBAC 规则，确保 Operator 能够访问和管理特定资源。为了确保 Operator 拥有必要的权限，必须创建相关的 <code>Role</code> 和 <code>RoleBinding</code>，或者 <code>ClusterRole</code> 和 <code>ClusterRoleBinding</code>。</p>
+<p>创建一个简单的 <code>ClusterRole</code>，例如允许 Operator 访问和管理 <code>Deployment</code> 资源：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">rbac.authorization.k8s.io/v1</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterRole</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">operator-role</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="w"></span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="w">  </span>- <span class="nt">apiGroups</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;pods&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;services&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="w">    </span><span class="nt">verbs</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;get&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;list&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;watch&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;create&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;update&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;patch&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;delete&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="w">  </span>- <span class="nt">apiGroups</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;apps&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;deployments&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="w">    </span><span class="nt">verbs</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;get&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;list&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;watch&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;create&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;update&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;patch&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;delete&#34;</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></div><p>然后，创建 <code>ClusterRoleBinding</code>，将该 <code>ClusterRole</code> 绑定到 Operator 的 <code>ServiceAccount</code>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">rbac.authorization.k8s.io/v1</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterRoleBinding</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">operator-role-binding</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="w"></span><span class="nt">subjects</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="w">  </span>- <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ServiceAccount</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">operator-sa</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="w"></span><span class="nt">roleRef</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterRole</span><span class="w">
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">operator-role</span><span class="w">
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="w">  </span><span class="nt">apiGroup</span><span class="p">:</span><span class="w"> </span><span class="l">rbac.authorization.k8s.io</span><span class="w">
+</span></span></span></code></pre></div><h4 id="operator-中的-rbac-规则应用">Operator 中的 RBAC 规则应用</h4>
+<p>Operator 作为 Kubernetes 控制器的一部分，需要管理集群中的各种资源。因此，正确配置 RBAC 对 Operator 的安全性和功能至关重要。如果 Operator 需要管理多种资源（如 CRD、Deployment、Service 等），则需要为 Operator 创建适当的 <code>ClusterRole</code> 和 <code>ClusterRoleBinding</code>，确保它具备足够的权限去执行任务。</p>
+<p>在 Operator 项目中，RBAC 通常通过注解的方式生成。例如，Kubebuilder 会自动根据控制器中的注解生成 RBAC 清单：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// +kubebuilder:rbac:groups=apps,resources=deployments,verbs=get;list;watch;create;update;patch;delete
+</span></span></span></code></pre></div><p>这些注解会在 <code>make manifests</code> 或 <code>make install</code> 时生成对应的 RBAC 文件，确保 Operator 有足够的权限管理 Kubernetes 资源。</p>
+<h2 id="kubebuilder-快速入门">Kubebuilder 快速入门</h2>
+<h3 id="什么是-kubebuilder">什么是 Kubebuilder</h3>
+<p><strong>Kubebuilder</strong> 是一个用于快速构建 Kubernetes Operator 的开发框架，它简化了 Operator 的开发流程，并自动生成所需的代码和配置文件。Kubebuilder 基于 <strong>controller-runtime</strong>，为开发者提供了一套完整的工具链，帮助他们轻松构建、测试和部署 Kubernetes 控制器和自定义资源。</p>
+<h4 id="kubebuilder-的功能概述">Kubebuilder 的功能概述</h4>
+<ol>
+<li>
+<p><strong>项目结构初始化</strong>：Kubebuilder 提供了项目初始化工具，能够自动生成符合最佳实践的项目结构。开发者可以专注于业务逻辑，而不需要手动设置复杂的项目配置。</p>
+</li>
+<li>
+<p><strong>自动生成 CRD</strong>：开发者可以通过简单的命令定义自定义资源 (CRD) 的 API 结构，Kubebuilder 会自动生成对应的 CRD 定义文件以及与 Kubernetes API 交互的 Go 代码。</p>
+</li>
+<li>
+<p><strong>自动生成控制器</strong>：通过 Kubebuilder，开发者可以快速生成控制器 (Controller) 的基础代码，控制器负责管理自定义资源的生命周期和状态变化。</p>
+</li>
+<li>
+<p><strong>RBAC 配置管理</strong>：Kubebuilder 支持通过代码注解自动生成 Kubernetes RBAC (基于角色的访问控制) 配置文件，确保 Operator 拥有正确的权限。</p>
+</li>
+<li>
+<p><strong>测试支持</strong>：Kubebuilder 提供了内置的测试框架，支持单元测试、集成测试和端到端测试，帮助开发者在本地和 CI 管道中验证 Operator 的行为。</p>
+</li>
+<li>
+<p><strong>Kustomize 集成</strong>：Kubebuilder 使用 Kustomize 进行配置管理，简化了 Kubernetes 清单的定制和部署。开发者可以轻松管理 CRD、RBAC 和 Operator 的部署配置。</p>
+</li>
+</ol>
+<h4 id="与-operator-sdk-的区别">与 Operator SDK 的区别</h4>
+<p>虽然 <strong>Kubebuilder</strong> 和 <strong>Operator SDK</strong> 都是用于开发 Kubernetes Operator 的框架，但它们有一些区别：</p>
+<ol>
+<li>
+<p><strong>框架基础</strong>：</p>
+<ul>
+<li><strong>Kubebuilder</strong> 是基于 <code>controller-runtime</code> 构建的，从底层开始就提供了对 Kubernetes 控制器的更细粒度控制。</li>
+<li><strong>Operator SDK</strong> 最初是基于 Kubebuilder 的，也采用了 <code>controller-runtime</code>，但它集成了更多高级工具，如 Ansible、Helm，用于简化非 Go 语言开发者的 Operator 开发。</li>
+</ul>
+</li>
+<li>
+<p><strong>开发语言支持</strong>：</p>
+<ul>
+<li><strong>Kubebuilder</strong> 主要支持 Go 语言开发，专注于 Go 原生的 Operator 开发体验。</li>
+<li><strong>Operator SDK</strong> 不仅支持 Go，还支持通过 Ansible 和 Helm 开发 Operator，适合不熟悉 Go 语言的开发者。</li>
+</ul>
+</li>
+<li>
+<p><strong>项目结构和生成工具</strong>：</p>
+<ul>
+<li><strong>Kubebuilder</strong> 注重生成符合最佳实践的 Go 代码，项目结构清晰且与 Kubernetes 社区的标准紧密一致。</li>
+<li><strong>Operator SDK</strong> 提供更广泛的工具和命令，允许开发者通过不同的方式生成 Operator，但在生成 Go 项目时与 Kubebuilder 的结构较为相似。</li>
+</ul>
+</li>
+<li>
+<p><strong>社区和支持</strong>：</p>
+<ul>
+<li><strong>Kubebuilder</strong> 是 Kubernetes 官方提供的 Operator 开发框架，紧密与 Kubernetes 社区保持一致，跟随 Kubernetes 的更新而更新。</li>
+<li><strong>Operator SDK</strong> 起源于 Red Hat，并在 Ansible 和 Helm Operator 生态系统中有着强大的支持，尤其适合 Red Hat 的 OpenShift 平台。</li>
+</ul>
+</li>
+</ol>
+<h3 id="安装-kubebuilder">安装 Kubebuilder</h3>
+<p>github地址：https://github.com/kubernetes-sigs/kubebuilder</p>
+<ul>
+<li>安装步骤</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">wget</span> <span class="o">-</span><span class="nx">c</span> <span class="nx">https</span><span class="p">:</span><span class="c1">//github.com/kubernetes-sigs/kubebuilder/releases/download/v4.2.0/kubebuilder_darwin_amd64
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="nx">mv</span> <span class="nx">kubebuilder_darwin_amd64</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">kubebuilder</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="nx">chmod</span> <span class="o">+</span><span class="nx">x</span> <span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">local</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">kubebuilder</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="nx">kubebuilder</span> <span class="nx">version</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="nx">Version</span><span class="p">:</span> <span class="nx">main</span><span class="p">.</span><span class="nx">version</span><span class="p">{</span><span class="nx">KubeBuilderVersion</span><span class="p">:</span><span class="s">&#34;4.2.0&#34;</span><span class="p">,</span> <span class="nx">KubernetesVendor</span><span class="p">:</span><span class="s">&#34;1.31.0&#34;</span><span class="p">,</span> <span class="nx">GitCommit</span><span class="p">:</span><span class="s">&#34;c7cde5172dc8271267dbf2899e65ef6f9d30f91e&#34;</span><span class="p">,</span> <span class="nx">BuildDate</span><span class="p">:</span><span class="s">&#34;2024-08-17T09:41:45Z&#34;</span><span class="p">,</span> <span class="nx">GoOs</span><span class="p">:</span><span class="s">&#34;darwin&#34;</span><span class="p">,</span> <span class="nx">GoArch</span><span class="p">:</span><span class="s">&#34;amd64&#34;</span><span class="p">}</span>
+</span></span></code></pre></div><h3 id="kubebuilder-的项目结构">Kubebuilder 的项目结构</h3>
+<h4 id="初始化-kubebuilder-项目">初始化 Kubebuilder 项目</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="nx">kubebuilder</span> <span class="nx">init</span> <span class="o">--</span><span class="nx">domain</span> <span class="nx">siming</span><span class="p">.</span><span class="nx">com</span> <span class="o">--</span><span class="nx">repo</span> <span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">ZhangSIming</span><span class="o">-</span><span class="nx">blyq</span><span class="o">/</span><span class="nx">mysql</span><span class="o">-</span><span class="nx">operator</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="nx">INFO</span> <span class="nx">Writing</span> <span class="nx">kustomize</span> <span class="nx">manifests</span> <span class="k">for</span> <span class="nx">you</span> <span class="nx">to</span> <span class="nx">edit</span><span class="o">...</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="nx">INFO</span> <span class="nx">Writing</span> <span class="nx">scaffold</span> <span class="k">for</span> <span class="nx">you</span> <span class="nx">to</span> <span class="nx">edit</span><span class="o">...</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="nx">INFO</span> <span class="nx">Get</span> <span class="nx">controller</span> <span class="nx">runtime</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="err">$</span> <span class="k">go</span> <span class="nx">get</span> <span class="nx">sigs</span><span class="p">.</span><span class="nx">k8s</span><span class="p">.</span><span class="nx">io</span><span class="o">/</span><span class="nx">controller</span><span class="o">-</span><span class="nx">runtime</span><span class="err">@</span><span class="nx">v0</span><span class="mf">.19.0</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="nx">INFO</span> <span class="nx">Update</span> <span class="nx">dependencies</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="err">$</span> <span class="k">go</span> <span class="nx">mod</span> <span class="nx">tidy</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="o">...</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="nx">Next</span><span class="p">:</span> <span class="nx">define</span> <span class="nx">a</span> <span class="nx">resource</span> <span class="nx">with</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="err">$</span> <span class="nx">kubebuilder</span> <span class="nx">create</span> <span class="nx">api</span>
+</span></span></code></pre></div><p>生成自定义资源 (CRD) 的 API 和控制器代码, 这里因为我下面要创建的是MySQL资源，所以这里的group是apps，version是v1，kind是MySQL。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">kubebuilder</span> <span class="nx">create</span> <span class="nx">api</span> <span class="o">--</span><span class="nx">group</span> <span class="nx">apps</span> <span class="o">--</span><span class="nx">version</span> <span class="nx">v1</span> <span class="o">--</span><span class="nx">kind</span> <span class="nx">MySQL</span>
+</span></span></code></pre></div><h4 id="项目文件结构详解">项目文件结构详解</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="ln"> 1</span><span class="cl">├── Dockerfile                     # 用于构建 Operator 的容器镜像
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">├── Makefile                       # 定义了常用的构建、测试、部署命令，简化操作流程
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">├── PROJECT                        # Kubebuilder 项目元数据文件，记录项目配置和版本信息
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">├── README.md                      # 项目介绍文件，记录项目的目标、安装步骤、功能等信息
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">├── api
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">│   └── v1
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">│       ├── groupversion_info.go   # 定义了 API 版本信息和资源组信息
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">│       ├── mysql_types.go         # 自定义资源 (CRD) 的结构定义，包含 CRD 的字段和序列化逻辑
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">│       └── zz_generated.deepcopy.go  # 自动生成的代码，用于深度拷贝自定义资源对象
+</span></span><span class="line"><span class="ln">10</span><span class="cl">├── bin
+</span></span><span class="line"><span class="ln">11</span><span class="cl">│   ├── controller-gen             # Kubebuilder 用于生成控制器的工具，提供 CRD、RBAC 等生成功能的二进制文件
+</span></span><span class="line"><span class="ln">12</span><span class="cl">│   └── controller-gen-v0.16.1     # 特定版本的 controller-gen 工具
+</span></span><span class="line"><span class="ln">13</span><span class="cl">├── cmd
+</span></span><span class="line"><span class="ln">14</span><span class="cl">│   └── main.go                    # Operator 入口点，初始化 Manager 并启动控制器
+</span></span><span class="line"><span class="ln">15</span><span class="cl">├── config
+</span></span><span class="line"><span class="ln">16</span><span class="cl">│   ├── crd
+</span></span><span class="line"><span class="ln">17</span><span class="cl">│   │   ├── kustomization.yaml     # CRD 的 kustomize 配置，用于定制 CRD 的生成
+</span></span><span class="line"><span class="ln">18</span><span class="cl">│   │   └── kustomizeconfig.yaml   # 自定义资源定义 (CRD) 的额外配置文件
+</span></span><span class="line"><span class="ln">19</span><span class="cl">│   ├── default
+</span></span><span class="line"><span class="ln">20</span><span class="cl">│   │   ├── kustomization.yaml     # 默认的 kustomize 配置文件，用于管理 Operator 的部署
+</span></span><span class="line"><span class="ln">21</span><span class="cl">│   │   ├── manager_metrics_patch.yaml  # 配置 Manager 的指标导出补丁
+</span></span><span class="line"><span class="ln">22</span><span class="cl">│   │   └── metrics_service.yaml   # 用于暴露 Operator 监控指标的服务配置
+</span></span><span class="line"><span class="ln">23</span><span class="cl">│   ├── manager
+</span></span><span class="line"><span class="ln">24</span><span class="cl">│   │   ├── kustomization.yaml     # 用于部署 Manager 的 kustomize 配置
+</span></span><span class="line"><span class="ln">25</span><span class="cl">│   │   └── manager.yaml           # Manager 的 Kubernetes 部署清单
+</span></span><span class="line"><span class="ln">26</span><span class="cl">│   ├── network-policy
+</span></span><span class="line"><span class="ln">27</span><span class="cl">│   │   ├── allow-metrics-traffic.yaml  # 网络策略，允许访问指标服务
+</span></span><span class="line"><span class="ln">28</span><span class="cl">│   │   └── kustomization.yaml     # 网络策略的 kustomize 配置
+</span></span><span class="line"><span class="ln">29</span><span class="cl">│   ├── prometheus
+</span></span><span class="line"><span class="ln">30</span><span class="cl">│   │   ├── kustomization.yaml     # Prometheus 监控的 kustomize 配置
+</span></span><span class="line"><span class="ln">31</span><span class="cl">│   │   └── monitor.yaml           # Prometheus 对 Operator 进行监控的规则
+</span></span><span class="line"><span class="ln">32</span><span class="cl">│   ├── rbac
+</span></span><span class="line"><span class="ln">33</span><span class="cl">│   │   ├── kustomization.yaml     # 用于生成 RBAC 配置的 kustomize 配置
+</span></span><span class="line"><span class="ln">34</span><span class="cl">│   │   ├── leader_election_role.yaml   # Leader 选举的角色权限配置
+</span></span><span class="line"><span class="ln">35</span><span class="cl">│   │   ├── leader_election_role_binding.yaml  # Leader 选举的角色绑定
+</span></span><span class="line"><span class="ln">36</span><span class="cl">│   │   ├── metrics_auth_role.yaml # 监控指标授权的 RBAC 配置
+</span></span><span class="line"><span class="ln">37</span><span class="cl">│   │   ├── metrics_auth_role_binding.yaml # 监控指标授权的角色绑定
+</span></span><span class="line"><span class="ln">38</span><span class="cl">│   │   ├── metrics_reader_role.yaml  # 用于读取指标的角色
+</span></span><span class="line"><span class="ln">39</span><span class="cl">│   │   ├── mysql_editor_role.yaml    # MySQL 资源编辑者角色
+</span></span><span class="line"><span class="ln">40</span><span class="cl">│   │   ├── mysql_viewer_role.yaml    # MySQL 资源查看者角色
+</span></span><span class="line"><span class="ln">41</span><span class="cl">│   │   ├── role.yaml                 # 默认的 Operator 角色
+</span></span><span class="line"><span class="ln">42</span><span class="cl">│   │   ├── role_binding.yaml         # 角色绑定，将角色分配给 ServiceAccount
+</span></span><span class="line"><span class="ln">43</span><span class="cl">│   │   └── service_account.yaml      # 定义 Operator 的 ServiceAccount
+</span></span><span class="line"><span class="ln">44</span><span class="cl">│   └── samples
+</span></span><span class="line"><span class="ln">45</span><span class="cl">│       ├── apps_v1_mysql.yaml       # 示例自定义资源，定义 MySQL 资源的 YAML 文件
+</span></span><span class="line"><span class="ln">46</span><span class="cl">│       └── kustomization.yaml       # 样例资源的 kustomize 配置
+</span></span><span class="line"><span class="ln">47</span><span class="cl">├── go.mod                           # Go 模块文件，记录依赖关系
+</span></span><span class="line"><span class="ln">48</span><span class="cl">├── go.sum                           # Go 依赖的版本锁定文件
+</span></span><span class="line"><span class="ln">49</span><span class="cl">├── hack
+</span></span><span class="line"><span class="ln">50</span><span class="cl">│   └── boilerplate.go.txt           # 代码文件的版权声明模板
+</span></span><span class="line"><span class="ln">51</span><span class="cl">├── internal
+</span></span><span class="line"><span class="ln">52</span><span class="cl">│   └── controller
+</span></span><span class="line"><span class="ln">53</span><span class="cl">│       ├── mysql_controller.go      # MySQL 控制器的核心逻辑，处理 CR 的状态同步和管理
+</span></span><span class="line"><span class="ln">54</span><span class="cl">│       ├── mysql_controller_test.go # 控制器的单元测试
+</span></span><span class="line"><span class="ln">55</span><span class="cl">│       └── suite_test.go            # 控制器的测试套件配置
+</span></span><span class="line"><span class="ln">56</span><span class="cl">└── test
+</span></span><span class="line"><span class="ln">57</span><span class="cl">    ├── e2e
+</span></span><span class="line"><span class="ln">58</span><span class="cl">    │   ├── e2e_suite_test.go        # 端到端测试的套件配置
+</span></span><span class="line"><span class="ln">59</span><span class="cl">    │   └── e2e_test.go              # 端到端测试的逻辑
+</span></span><span class="line"><span class="ln">60</span><span class="cl">    └── utils
+</span></span><span class="line"><span class="ln">61</span><span class="cl">        └── utils.go                 # 测试过程中使用的工具函数
+</span></span></code></pre></div><p><strong>文件和目录详细说明</strong>：</p>
+<ul>
+<li>
+<p><strong><code>Dockerfile</code></strong>：用于构建 Operator 的容器镜像。部署到 Kubernetes 集群之前，Operator 会被打包为 Docker 镜像。</p>
+</li>
+<li>
+<p><strong><code>Makefile</code></strong>：包含常见的构建命令，如生成 CRD、安装 CRD、编译控制器代码、运行测试、打包 Operator 等。</p>
+</li>
+<li>
+<p><strong><code>api/v1/</code></strong>：该目录包含自定义资源的定义文件。</p>
+<ul>
+<li><strong><code>mysql_types.go</code></strong>：定义了 MySQL CRD 的 API 结构体，包括 spec 和 status 字段。</li>
+<li><strong><code>zz_generated.deepcopy.go</code></strong>：通过代码生成工具自动生成的代码，用于深度拷贝自定义资源对象。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>controllers/</code></strong>：这个目录存放控制器逻辑。</p>
+<ul>
+<li><strong><code>mysql_controller.go</code></strong>：实现了核心的控制器逻辑，监听 MySQL CR 的变化并执行相应的操作，如创建、删除、更新 MySQL 实例。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>config/</code></strong>：存放所有与 Kubernetes 相关的配置文件，如 CRD、RBAC、部署和监控配置。</p>
+<ul>
+<li><strong><code>crd/</code></strong>：定义 CRD 的生成与管理。</li>
+<li><strong><code>rbac/</code></strong>：定义 Operator 所需的 RBAC 权限，包括 ServiceAccount 和角色绑定。</li>
+<li><strong><code>samples/</code></strong>：提供了示例自定义资源文件，用于创建 MySQL 实例。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>cmd/</code></strong>：存放 <code>main.go</code> 文件，作为 Operator 的入口点，负责启动控制器并与 Kubernetes API 交互。</p>
+</li>
+<li>
+<p><strong><code>test/</code></strong>：存放测试代码，分为端到端测试（e2e）和辅助工具文件。</p>
+</li>
+</ul>
+<h4 id="apicontroller-和配置文件的作用">API、Controller 和配置文件的作用</h4>
+<ol>
+<li>api/ 目录：该目录用于定义自定义资源 (CRD) 的 API，包括资源的结构和字段。开发者可以在这里定义 Go 结构体，Kubebuilder 会根据这些结构体自动生成 CRD。</li>
+<li>controllers/ 目录：该目录用于编写控制器逻辑。控制器负责监听自定义资源的状态变化，并根据需要采取相应的行动。Kubebuilder 会生成控制器的基础代码，开发者只需填充业务逻辑即可。</li>
+<li>config/ 目录：包含了与 Operator 相关的配置文件，包括：CRD 定义：在 config/crd 目录下生成的 CRD 清单文件。RBAC 配置：在 config/rbac 目录下定义了 Operator 所需的 RBAC 权限。 Manager 配置：在 config/manager 目录下定义了控制器管理器的部署配置。</li>
+</ol>
+<h2 id="mysql-operator">MySQL Operator</h2>
+<h3 id="1-使用-kubebuilder-初始化项目">1. 使用 Kubebuilder 初始化项目</h3>
+<p>在已经初始化的项目中（你已经运行过 <code>kubebuilder init</code>），你可以定义新的 API 和控制器逻辑，而不直接应用到集群。首先，我们生成 API 和控制器的代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">kubebuilder create api --group apps --version v1 --kind MySQL --resource --controller
+</span></span></code></pre></div><ul>
+<li><strong><code>--group apps</code></strong>：定义 API 组为 <code>apps</code>，通常与 Kubernetes 中已有的 <code>apps</code> 组保持一致。</li>
+<li><strong><code>--version v1</code></strong>：定义 API 版本为 <code>v1</code>，表示资源版本为 <code>v1</code>。</li>
+<li><strong><code>--kind MySQL</code></strong>：定义新自定义资源的种类（Kind）为 <code>MySQL</code>。</li>
+<li><strong><code>--resource</code></strong>：生成与自定义资源 (CRD) 相关的代码。</li>
+<li><strong><code>--controller</code></strong>：生成控制器相关的代码，控制器将用于管理 MySQL 实例的生命周期。</li>
+</ul>
+<p><strong>生成文件内容：</strong></p>
+<ul>
+<li><code>api/v1/mysql_types.go</code>：此文件将包含自定义资源的定义，包括 <code>Spec</code> 和 <code>Status</code> 的结构。</li>
+<li><code>controllers/mysql_controller.go</code>：此文件将包含初始的控制器代码，用于后续管理 MySQL 资源的生命周期。</li>
+<li><code>config/crd/</code>：此目录将包含生成的 Kubernetes CRD 定义清单文件。</li>
+</ul>
+<h3 id="2crd-的定义与生成">2.CRD 的定义与生成</h3>
+<p><strong>流程综述：</strong></p>
+<ol>
+<li><strong>生成 API 和控制器文件</strong>：使用 <code>kubebuilder create api</code> 命令生成自定义资源相关的文件，但不应用。</li>
+<li><strong>编辑 <code>mysql_types.go</code></strong>：定义 MySQL 资源的 <code>Spec</code> 和 <code>Status</code> 字段。</li>
+<li><strong>生成代码</strong>：使用 <code>make generate</code> 生成深度拷贝函数等辅助代码。</li>
+<li><strong>生成 CRD 清单文件</strong>：使用 <code>make manifests</code> 生成 Kubernetes CRD YAML 文件，但不将其应用到集群。</li>
+<li><strong>手动查看或修改生成的文件</strong>：在 <code>config/crd/bases/</code> 中找到生成的 CRD 文件，进一步检查或修改。</li>
+</ol>
+<p>我们将编写自定义资源 <code>MySQL</code> 的 <code>Spec</code> 和 <code>Status</code> 字段，并使用 Kubebuilder 的标注 (annotations) 自动生成深度拷贝函数、CRD 定义等。</p>
+<p>修改 <code>mysql_types.go</code>: <code>mysql_types.go</code> 文件是定义自定义资源类型的主要文件。在这里，我们需要定义 MySQL 的 <code>Spec</code>（期望状态）和 <code>Status</code>（当前状态）。</p>
+<p><strong>文件路径：<code>api/v1/mysql_types.go</code></strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">v1</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nx">metav1</span> <span class="s">&#34;k8s.io/apimachinery/pkg/apis/meta/v1&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1">// MySQLSpec 定义了 MySQL 资源的期望状态
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">MySQLSpec</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="c1">// MySQL 用户名
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>    <span class="nx">Username</span> <span class="kt">string</span> <span class="s">`json:&#34;username&#34;`</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="c1">// MySQL 用户密码
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>    <span class="nx">Password</span> <span class="kt">string</span> <span class="s">`json:&#34;password&#34;`</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="c1">// 数据库名称
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1"></span>    <span class="nx">Database</span> <span class="kt">string</span> <span class="s">`json:&#34;database&#34;`</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="c1">// MySQL 实例的副本数（用于扩展）
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span>    <span class="nx">Size</span> <span class="kt">int32</span> <span class="s">`json:&#34;size&#34;`</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="c1">// 定期备份的时间表（Cron 表达式）
+</span></span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="c1"></span>    <span class="nx">BackupSchedule</span> <span class="kt">string</span> <span class="s">`json:&#34;backupSchedule&#34;`</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="c1">// 备份存储路径
+</span></span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="c1"></span>    <span class="nx">BackupPath</span> <span class="kt">string</span> <span class="s">`json:&#34;backupPath&#34;`</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">
+</span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="c1">// MySQLStatus 定义了 MySQL 资源的当前状态
+</span></span></span><span class="line"><span class="ln">29</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">MySQLStatus</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">    <span class="c1">// 当前可用的 MySQL 副本数
+</span></span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="c1"></span>    <span class="nx">ReadyReplicas</span> <span class="kt">int32</span> <span class="s">`json:&#34;readyReplicas&#34;`</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">
+</span></span><span class="line"><span class="ln">33</span><span class="cl">    <span class="c1">// 最近备份的时间
+</span></span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="c1"></span>    <span class="nx">LastBackupTime</span> <span class="o">*</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">Time</span> <span class="s">`json:&#34;lastBackupTime,omitempty&#34;`</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">
+</span></span><span class="line"><span class="ln">36</span><span class="cl">    <span class="c1">// 资源状态条件（如是否可用、是否需要备份等）
+</span></span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="c1"></span>    <span class="nx">Conditions</span> <span class="p">[]</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">Condition</span> <span class="s">`json:&#34;conditions,omitempty&#34;`</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">
+</span></span><span class="line"><span class="ln">40</span><span class="cl"><span class="c1">// +kubebuilder:object:root=true
+</span></span></span><span class="line"><span class="ln">41</span><span class="cl"><span class="c1">// +kubebuilder:subresource:status
+</span></span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl"><span class="c1">// MySQL 是 MySQL 资源的 Schema
+</span></span></span><span class="line"><span class="ln">44</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">MySQL</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">    <span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span>   <span class="s">`json:&#34;,inline&#34;`</span>
+</span></span><span class="line"><span class="ln">46</span><span class="cl">    <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span> <span class="s">`json:&#34;metadata,omitempty&#34;`</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl">
+</span></span><span class="line"><span class="ln">48</span><span class="cl">    <span class="nx">Spec</span>   <span class="nx">MySQLSpec</span>   <span class="s">`json:&#34;spec,omitempty&#34;`</span>
+</span></span><span class="line"><span class="ln">49</span><span class="cl">    <span class="nx">Status</span> <span class="nx">MySQLStatus</span> <span class="s">`json:&#34;status,omitempty&#34;`</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl">
+</span></span><span class="line"><span class="ln">52</span><span class="cl"><span class="c1">// +kubebuilder:object:root=true
+</span></span></span><span class="line"><span class="ln">53</span><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="ln">54</span><span class="cl"><span class="c1">// MySQLList 包含 MySQL 资源的列表
+</span></span></span><span class="line"><span class="ln">55</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">MySQLList</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">56</span><span class="cl">    <span class="nx">metav1</span><span class="p">.</span><span class="nx">TypeMeta</span> <span class="s">`json:&#34;,inline&#34;`</span>
+</span></span><span class="line"><span class="ln">57</span><span class="cl">    <span class="nx">metav1</span><span class="p">.</span><span class="nx">ListMeta</span> <span class="s">`json:&#34;metadata,omitempty&#34;`</span>
+</span></span><span class="line"><span class="ln">58</span><span class="cl">    <span class="nx">Items</span>           <span class="p">[]</span><span class="nx">MySQL</span> <span class="s">`json:&#34;items&#34;`</span>
+</span></span><span class="line"><span class="ln">59</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">60</span><span class="cl">
+</span></span><span class="line"><span class="ln">61</span><span class="cl"><span class="kd">func</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">62</span><span class="cl">    <span class="nx">SchemeBuilder</span><span class="p">.</span><span class="nf">Register</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">MySQL</span><span class="p">{},</span> <span class="o">&amp;</span><span class="nx">MySQLList</span><span class="p">{})</span>
+</span></span><span class="line"><span class="ln">63</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>代码解释</strong></p>
+<ul>
+<li><strong><code>MySQLSpec</code></strong>：定义期望的 MySQL 实例的配置信息（如用户名、密码、副本数、备份计划等）。</li>
+<li><strong><code>MySQLStatus</code></strong>：定义 MySQL 实例的运行状态，包括副本数、最后备份时间和状态条件。</li>
+<li><strong><code>+kubebuilder:object:root=true</code></strong>：告诉 Kubebuilder 这是自定义资源的根对象。</li>
+<li><strong><code>+kubebuilder:subresource:status</code></strong>：让 Kubernetes 自动创建一个子资源来管理 <code>status</code> 字段。</li>
+</ul>
+<p>在完成 <code>mysql_types.go</code> 的定义后，运行以下命令来生成相应的辅助代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># `make generate` 的作用：</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"># 生成深度拷贝函数 `zz_generated.deepcopy.go`，确保在 Kubernetes 控制器中可以安全地拷贝自定义资源对象。</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># 确保自定义资源的代码与 Kubernetes API 兼容。</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">make generate
+</span></span></code></pre></div><p>你将在 <code>api/v1/</code> 目录下看到生成的 <code>zz_generated.deepcopy.go</code> 文件。</p>
+<p><strong>生成 Kubernetes CRD 清单文件</strong></p>
+<p>为了将定义的 CRD 注册到 Kubernetes，我们需要生成相应的 CRD 定义 YAML 文件。此时，<strong>生成代码但不应用</strong>。你可以使用 <code>make manifests</code> 命令生成清单文件。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1"># **`make manifests` 的作用**：</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"># - 该命令会基于 `mysql_types.go` 中的定义生成相应的 Kubernetes CRD 定义文件。</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># - 文件会被生成到 `config/crd/bases/` 目录下。</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">make manifests
+</span></span></code></pre></div><p><strong>生成的文件</strong></p>
+<p><code>config/crd/bases/apps.example.com_mysqls.yaml</code>：这个 YAML 文件包含了 MySQL 自定义资源的定义，你可以查看文件，里面会包含以下内容：</p>
+<ul>
+<li><code>spec</code> 和 <code>status</code> 字段的定义。</li>
+<li>API 组名、版本信息和其他元数据。</li>
+</ul>
+<h3 id="3-详细的-controller-部分开发文档">3. 详细的 Controller 部分开发文档</h3>
+<p><strong>流程综述</strong></p>
+<ol>
+<li><strong>生成控制器文件</strong>：使用 <code>kubebuilder create api --controller</code> 生成控制器文件。</li>
+<li><strong>编写控制器逻辑</strong>：在 <code>mysql_controller.go</code> 中编写 <code>Reconcile</code> 函数，处理自定义资源的状态变化。</li>
+<li><strong>生成代码</strong>：运行 <code>make generate</code> 生成辅助代码。</li>
+<li><strong>手动查看和修改文件</strong>：生成的文件位于 <code>config/</code> 目录下，可手动查看或修改生成的 Kubernetes 清单。</li>
+</ol>
+<p>当你运行 <code>kubebuilder create api --controller</code> 时，已经生成了一个初始的控制器文件。接下来，我们将编写控制器的业务逻辑。</p>
+<p><strong>生成的文件路径</strong>：<code>controllers/mysql_controller.go</code></p>
+<p><strong>1. 编辑 <code>mysql_controller.go</code></strong></p>
+<p><code>mysql_controller.go</code> 文件中包含了控制器的主要逻辑。我们将在这里编写 <code>Reconcile</code> 函数，它将根据 MySQL CR 的状态采取相应操作。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">  1</span><span class="cl"><span class="kn">package</span> <span class="nx">controller</span>
+</span></span><span class="line"><span class="ln">  2</span><span class="cl">
+</span></span><span class="line"><span class="ln">  3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln">  4</span><span class="cl">	<span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="ln">  5</span><span class="cl">	<span class="nx">appsv1</span> <span class="s">&#34;k8s.io/api/apps/v1&#34;</span>
+</span></span><span class="line"><span class="ln">  6</span><span class="cl">	<span class="nx">corev1</span> <span class="s">&#34;k8s.io/api/core/v1&#34;</span>
+</span></span><span class="line"><span class="ln">  7</span><span class="cl">	<span class="s">&#34;k8s.io/apimachinery/pkg/api/errors&#34;</span>
+</span></span><span class="line"><span class="ln">  8</span><span class="cl">	<span class="nx">metav1</span> <span class="s">&#34;k8s.io/apimachinery/pkg/apis/meta/v1&#34;</span>
+</span></span><span class="line"><span class="ln">  9</span><span class="cl">	<span class="s">&#34;k8s.io/apimachinery/pkg/runtime&#34;</span>
+</span></span><span class="line"><span class="ln"> 10</span><span class="cl">	<span class="s">&#34;k8s.io/apimachinery/pkg/types&#34;</span>
+</span></span><span class="line"><span class="ln"> 11</span><span class="cl">	<span class="nx">ctrl</span> <span class="s">&#34;sigs.k8s.io/controller-runtime&#34;</span>
+</span></span><span class="line"><span class="ln"> 12</span><span class="cl">	<span class="s">&#34;sigs.k8s.io/controller-runtime/pkg/client&#34;</span>
+</span></span><span class="line"><span class="ln"> 13</span><span class="cl">	<span class="s">&#34;sigs.k8s.io/controller-runtime/pkg/log&#34;</span>
+</span></span><span class="line"><span class="ln"> 14</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 15</span><span class="cl">	<span class="nx">appsv1alpha1</span> <span class="s">&#34;github.com/ZhangSIming-blyq/mysql-operator/api/v1&#34;</span>
+</span></span><span class="line"><span class="ln"> 16</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 17</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 18</span><span class="cl"><span class="c1">// MySQLReconciler 是 MySQL 控制器的结构体
+</span></span></span><span class="line"><span class="ln"> 19</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">MySQLReconciler</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 20</span><span class="cl">	<span class="nx">client</span><span class="p">.</span><span class="nx">Client</span>
+</span></span><span class="line"><span class="ln"> 21</span><span class="cl">	<span class="nx">Scheme</span> <span class="o">*</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">Scheme</span>
+</span></span><span class="line"><span class="ln"> 22</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 23</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 24</span><span class="cl"><span class="c1">// Reconcile 是控制器的核心逻辑，用于处理 MySQL CR 的状态变化
+</span></span></span><span class="line"><span class="ln"> 25</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">MySQLReconciler</span><span class="p">)</span> <span class="nf">Reconcile</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">req</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 26</span><span class="cl">	<span class="cm">/*
+</span></span></span><span class="line"><span class="ln"> 27</span><span class="cl"><span class="cm">		是的，目前的 Reconcile 逻辑主要涵盖以下两点：
+</span></span></span><span class="line"><span class="ln"> 28</span><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="ln"> 29</span><span class="cl"><span class="cm">		创建 MySQL 的 Deployment：如果 MySQL CR 对应的 Deployment 不存在，会根据 CR 中定义的 spec 创建一个新的 Deployment。
+</span></span></span><span class="line"><span class="ln"> 30</span><span class="cl"><span class="cm">		控制副本数：如果 MySQL CR 的 spec.size 与现有 Deployment 的副本数不匹配，控制器会更新 Deployment，以确保实际副本数与期望的副本数一致。
+</span></span></span><span class="line"><span class="ln"> 31</span><span class="cl"><span class="cm">		除此之外，Reconcile 函数还会更新 MySQL CR 的 status，将 Deployment 中实际的副本数同步到 MySQL CR 的 ReadyReplicas 字段。
+</span></span></span><span class="line"><span class="ln"> 32</span><span class="cl"><span class="cm">	*/</span>
+</span></span><span class="line"><span class="ln"> 33</span><span class="cl">	<span class="nx">log</span> <span class="o">:=</span> <span class="nx">log</span><span class="p">.</span><span class="nf">FromContext</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 34</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 35</span><span class="cl">	<span class="c1">// 获取 MySQL 实例: 在 Kubernetes 的控制器中，r.Get 函数只会返回一个具体的对象，而不会返回多个对象。这是因为 req.NamespacedName 包含了特定的 namespace 和 name，代表了一个唯一的资源实例。因此，不会出现 Get 返回多个对象的情况。
+</span></span></span><span class="line"><span class="ln"> 36</span><span class="cl"><span class="c1"></span>	<span class="kd">var</span> <span class="nx">mysql</span> <span class="nx">appsv1alpha1</span><span class="p">.</span><span class="nx">MySQL</span>
+</span></span><span class="line"><span class="ln"> 37</span><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">NamespacedName</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">mysql</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 38</span><span class="cl">		<span class="k">if</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 39</span><span class="cl">			<span class="c1">// 如果没有找到 MySQL 实例，可能已经被删除，不采取行动
+</span></span></span><span class="line"><span class="ln"> 40</span><span class="cl"><span class="c1"></span>			<span class="nx">log</span><span class="p">.</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;MySQL resource not found. Ignoring since object must be deleted&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 41</span><span class="cl">			<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="ln"> 42</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 43</span><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to get MySQL&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 44</span><span class="cl">		<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="ln"> 45</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 46</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 47</span><span class="cl">	<span class="c1">// 检查 MySQL Secret 是否存在，如果不存在则创建
+</span></span></span><span class="line"><span class="ln"> 48</span><span class="cl"><span class="c1"></span>	<span class="kd">var</span> <span class="nx">secret</span> <span class="nx">corev1</span><span class="p">.</span><span class="nx">Secret</span>
+</span></span><span class="line"><span class="ln"> 49</span><span class="cl">	<span class="nx">secretName</span> <span class="o">:=</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span> <span class="c1">// 使用 MySQL CR 的名称作为 Secret 名称
+</span></span></span><span class="line"><span class="ln"> 50</span><span class="cl"><span class="c1"></span>	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">types</span><span class="p">.</span><span class="nx">NamespacedName</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span> <span class="nx">secretName</span><span class="p">,</span> <span class="nx">Namespace</span><span class="p">:</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span> <span class="o">&amp;</span><span class="nx">secret</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 51</span><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 52</span><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;Creating a new Secret for MySQL&#34;</span><span class="p">,</span> <span class="s">&#34;Secret.Namespace&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="s">&#34;Secret.Name&#34;</span><span class="p">,</span> <span class="nx">secretName</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 53</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 54</span><span class="cl">		<span class="c1">// 从 MySQL CR 中获取 username 和 password
+</span></span></span><span class="line"><span class="ln"> 55</span><span class="cl"><span class="c1"></span>		<span class="nx">username</span> <span class="o">:=</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Username</span>
+</span></span><span class="line"><span class="ln"> 56</span><span class="cl">		<span class="nx">password</span> <span class="o">:=</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Password</span>
+</span></span><span class="line"><span class="ln"> 57</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 58</span><span class="cl">		<span class="c1">// 创建 Secret
+</span></span></span><span class="line"><span class="ln"> 59</span><span class="cl"><span class="c1"></span>		<span class="nx">secret</span> <span class="p">=</span> <span class="nx">corev1</span><span class="p">.</span><span class="nx">Secret</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 60</span><span class="cl">			<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 61</span><span class="cl">				<span class="nx">Name</span><span class="p">:</span>      <span class="nx">secretName</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 62</span><span class="cl">				<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 63</span><span class="cl">			<span class="p">},</span>
+</span></span><span class="line"><span class="ln"> 64</span><span class="cl">			<span class="nx">StringData</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 65</span><span class="cl">				<span class="s">&#34;MYSQL_ROOT_PASSWORD&#34;</span><span class="p">:</span> <span class="nx">password</span><span class="p">,</span> <span class="c1">// 使用 CR 中的 password
+</span></span></span><span class="line"><span class="ln"> 66</span><span class="cl"><span class="c1"></span>				<span class="s">&#34;MYSQL_USER&#34;</span><span class="p">:</span>          <span class="nx">username</span><span class="p">,</span> <span class="c1">// 使用 CR 中的 username
+</span></span></span><span class="line"><span class="ln"> 67</span><span class="cl"><span class="c1"></span>			<span class="p">},</span>
+</span></span><span class="line"><span class="ln"> 68</span><span class="cl">			<span class="nx">Type</span><span class="p">:</span> <span class="nx">corev1</span><span class="p">.</span><span class="nx">SecretTypeOpaque</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 69</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 70</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 71</span><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">secret</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 72</span><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to create new Secret&#34;</span><span class="p">,</span> <span class="s">&#34;Secret.Namespace&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="s">&#34;Secret.Name&#34;</span><span class="p">,</span> <span class="nx">secretName</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 73</span><span class="cl">			<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="ln"> 74</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 75</span><span class="cl">		<span class="c1">// 重新排队 Reconcile
+</span></span></span><span class="line"><span class="ln"> 76</span><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{</span><span class="nx">Requeue</span><span class="p">:</span> <span class="kc">true</span><span class="p">},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="ln"> 77</span><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 78</span><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to get Secret&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 79</span><span class="cl">		<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="ln"> 80</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 81</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 82</span><span class="cl">	<span class="c1">// 检查是否存在 MySQL Deployment，如果不存在则创建
+</span></span></span><span class="line"><span class="ln"> 83</span><span class="cl"><span class="c1"></span>	<span class="kd">var</span> <span class="nx">deployment</span> <span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span>
+</span></span><span class="line"><span class="ln"> 84</span><span class="cl">	<span class="nx">err</span> <span class="p">=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">types</span><span class="p">.</span><span class="nx">NamespacedName</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">Namespace</span><span class="p">:</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">},</span> <span class="o">&amp;</span><span class="nx">deployment</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 85</span><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">IsNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 86</span><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Info</span><span class="p">(</span><span class="s">&#34;Creating a new Deployment for MySQL&#34;</span><span class="p">,</span> <span class="s">&#34;Deployment.Namespace&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="s">&#34;Deployment.Name&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 87</span><span class="cl">		<span class="c1">// 根据CRD的定义创建 Deployment
+</span></span></span><span class="line"><span class="ln"> 88</span><span class="cl"><span class="c1"></span>		<span class="nx">dep</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">mysqlDeployment</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">mysql</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 89</span><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">dep</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 90</span><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to create new Deployment&#34;</span><span class="p">,</span> <span class="s">&#34;Deployment.Namespace&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="s">&#34;Deployment.Name&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 91</span><span class="cl">			<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="ln"> 92</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 93</span><span class="cl">		<span class="c1">// 重新排队 Reconcile
+</span></span></span><span class="line"><span class="ln"> 94</span><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{</span><span class="nx">Requeue</span><span class="p">:</span> <span class="kc">true</span><span class="p">},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="ln"> 95</span><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 96</span><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to get Deployment&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 97</span><span class="cl">		<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="ln"> 98</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 99</span><span class="cl">
+</span></span><span class="line"><span class="ln">100</span><span class="cl">	<span class="c1">// 确保副本数与期望一致
+</span></span></span><span class="line"><span class="ln">101</span><span class="cl"><span class="c1"></span>	<span class="nx">size</span> <span class="o">:=</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Size</span>
+</span></span><span class="line"><span class="ln">102</span><span class="cl">	<span class="k">if</span> <span class="o">*</span><span class="nx">deployment</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="o">!=</span> <span class="nx">size</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">103</span><span class="cl">		<span class="nx">deployment</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Replicas</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">size</span>
+</span></span><span class="line"><span class="ln">104</span><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">deployment</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">105</span><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to update Deployment&#34;</span><span class="p">,</span> <span class="s">&#34;Deployment.Namespace&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span> <span class="s">&#34;Deployment.Name&#34;</span><span class="p">,</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">106</span><span class="cl">			<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="ln">107</span><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="ln">108</span><span class="cl">		<span class="c1">// 创建完secret没有必要立刻重建
+</span></span></span><span class="line"><span class="ln">109</span><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="ln">110</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">111</span><span class="cl">
+</span></span><span class="line"><span class="ln">112</span><span class="cl">	<span class="c1">// 更新 MySQL 状态
+</span></span></span><span class="line"><span class="ln">113</span><span class="cl"><span class="c1"></span>	<span class="nx">mysql</span><span class="p">.</span><span class="nx">Status</span><span class="p">.</span><span class="nx">ReadyReplicas</span> <span class="p">=</span> <span class="nx">deployment</span><span class="p">.</span><span class="nx">Status</span><span class="p">.</span><span class="nx">ReadyReplicas</span>
+</span></span><span class="line"><span class="ln">114</span><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Status</span><span class="p">().</span><span class="nf">Update</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">mysql</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">115</span><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="s">&#34;Failed to update MySQL status&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">116</span><span class="cl">		<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="ln">117</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">118</span><span class="cl">
+</span></span><span class="line"><span class="ln">119</span><span class="cl">	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="ln">120</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">121</span><span class="cl">
+</span></span><span class="line"><span class="ln">122</span><span class="cl"><span class="c1">// mysqlDeployment 返回定义的 MySQL Deployment
+</span></span></span><span class="line"><span class="ln">123</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">MySQLReconciler</span><span class="p">)</span> <span class="nf">mysqlDeployment</span><span class="p">(</span><span class="nx">mysql</span> <span class="o">*</span><span class="nx">appsv1alpha1</span><span class="p">.</span><span class="nx">MySQL</span><span class="p">)</span> <span class="o">*</span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">124</span><span class="cl">	<span class="nx">labels</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;app&#34;</span><span class="p">:</span> <span class="s">&#34;mysql&#34;</span><span class="p">,</span> <span class="s">&#34;mysql_cr&#34;</span><span class="p">:</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">125</span><span class="cl">	<span class="nx">replicas</span> <span class="o">:=</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Spec</span><span class="p">.</span><span class="nx">Size</span>
+</span></span><span class="line"><span class="ln">126</span><span class="cl">
+</span></span><span class="line"><span class="ln">127</span><span class="cl">	<span class="nx">dep</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">128</span><span class="cl">		<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">129</span><span class="cl">			<span class="nx">Name</span><span class="p">:</span>      <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">130</span><span class="cl">			<span class="nx">Namespace</span><span class="p">:</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Namespace</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">131</span><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="ln">132</span><span class="cl">		<span class="nx">Spec</span><span class="p">:</span> <span class="nx">appsv1</span><span class="p">.</span><span class="nx">DeploymentSpec</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">133</span><span class="cl">			<span class="nx">Replicas</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">replicas</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">134</span><span class="cl">			<span class="nx">Selector</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">LabelSelector</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">135</span><span class="cl">				<span class="nx">MatchLabels</span><span class="p">:</span> <span class="nx">labels</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">136</span><span class="cl">			<span class="p">},</span>
+</span></span><span class="line"><span class="ln">137</span><span class="cl">			<span class="nx">Template</span><span class="p">:</span> <span class="nx">corev1</span><span class="p">.</span><span class="nx">PodTemplateSpec</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">138</span><span class="cl">				<span class="nx">ObjectMeta</span><span class="p">:</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">139</span><span class="cl">					<span class="nx">Labels</span><span class="p">:</span> <span class="nx">labels</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">140</span><span class="cl">				<span class="p">},</span>
+</span></span><span class="line"><span class="ln">141</span><span class="cl">				<span class="nx">Spec</span><span class="p">:</span> <span class="nx">corev1</span><span class="p">.</span><span class="nx">PodSpec</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">142</span><span class="cl">					<span class="nx">Containers</span><span class="p">:</span> <span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">Container</span><span class="p">{{</span>
+</span></span><span class="line"><span class="ln">143</span><span class="cl">						<span class="nx">Name</span><span class="p">:</span>  <span class="s">&#34;mysql&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">144</span><span class="cl">						<span class="nx">Image</span><span class="p">:</span> <span class="s">&#34;mysql:5.7&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">145</span><span class="cl">						<span class="nx">Ports</span><span class="p">:</span> <span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">ContainerPort</span><span class="p">{{</span>
+</span></span><span class="line"><span class="ln">146</span><span class="cl">							<span class="nx">ContainerPort</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">147</span><span class="cl">							<span class="nx">Name</span><span class="p">:</span>          <span class="s">&#34;mysql&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">148</span><span class="cl">						<span class="p">}},</span>
+</span></span><span class="line"><span class="ln">149</span><span class="cl">						<span class="nx">Env</span><span class="p">:</span> <span class="p">[]</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">EnvVar</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">150</span><span class="cl">							<span class="p">{</span>
+</span></span><span class="line"><span class="ln">151</span><span class="cl">								<span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;MYSQL_ROOT_PASSWORD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">152</span><span class="cl">								<span class="nx">ValueFrom</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">EnvVarSource</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">153</span><span class="cl">									<span class="nx">SecretKeyRef</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">corev1</span><span class="p">.</span><span class="nx">SecretKeySelector</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">154</span><span class="cl">										<span class="nx">Key</span><span class="p">:</span> <span class="s">&#34;MYSQL_ROOT_PASSWORD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">155</span><span class="cl">										<span class="nx">LocalObjectReference</span><span class="p">:</span> <span class="nx">corev1</span><span class="p">.</span><span class="nx">LocalObjectReference</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">156</span><span class="cl">											<span class="nx">Name</span><span class="p">:</span> <span class="nx">mysql</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">157</span><span class="cl">										<span class="p">},</span>
+</span></span><span class="line"><span class="ln">158</span><span class="cl">									<span class="p">},</span>
+</span></span><span class="line"><span class="ln">159</span><span class="cl">								<span class="p">},</span>
+</span></span><span class="line"><span class="ln">160</span><span class="cl">							<span class="p">},</span>
+</span></span><span class="line"><span class="ln">161</span><span class="cl">						<span class="p">},</span>
+</span></span><span class="line"><span class="ln">162</span><span class="cl">					<span class="p">}},</span>
+</span></span><span class="line"><span class="ln">163</span><span class="cl">				<span class="p">},</span>
+</span></span><span class="line"><span class="ln">164</span><span class="cl">			<span class="p">},</span>
+</span></span><span class="line"><span class="ln">165</span><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="ln">166</span><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="ln">167</span><span class="cl">	<span class="c1">// Set the owner reference for garbage collection
+</span></span></span><span class="line"><span class="ln">168</span><span class="cl"><span class="c1"></span>	<span class="nx">ctrl</span><span class="p">.</span><span class="nf">SetControllerReference</span><span class="p">(</span><span class="nx">mysql</span><span class="p">,</span> <span class="nx">dep</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">169</span><span class="cl">	<span class="k">return</span> <span class="nx">dep</span>
+</span></span><span class="line"><span class="ln">170</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">171</span><span class="cl">
+</span></span><span class="line"><span class="ln">172</span><span class="cl"><span class="c1">// SetupWithManager 将控制器注册到 Manager 中
+</span></span></span><span class="line"><span class="ln">173</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">MySQLReconciler</span><span class="p">)</span> <span class="nf">SetupWithManager</span><span class="p">(</span><span class="nx">mgr</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Manager</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">174</span><span class="cl">	<span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nf">NewControllerManagedBy</span><span class="p">(</span><span class="nx">mgr</span><span class="p">).</span>
+</span></span><span class="line"><span class="ln">175</span><span class="cl">		<span class="nf">For</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">appsv1alpha1</span><span class="p">.</span><span class="nx">MySQL</span><span class="p">{}).</span>
+</span></span><span class="line"><span class="ln">176</span><span class="cl">		<span class="nf">Owns</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">appsv1</span><span class="p">.</span><span class="nx">Deployment</span><span class="p">{}).</span>
+</span></span><span class="line"><span class="ln">177</span><span class="cl">		<span class="nf">Complete</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">178</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>代码逻辑解释</strong></p>
+<ol>
+<li>
+<p><strong>获取 MySQL CR 对象</strong>：</p>
+<ul>
+<li>首先，通过 <code>r.Get</code> 函数获取当前的 MySQL 实例。如果实例不存在，控制器会跳过当前操作。</li>
+</ul>
+</li>
+<li>
+<p><strong>检查 MySQL Deployment(还有前置的secret) 是否存在</strong>：</p>
+<ul>
+<li>如果 MySQL 实例的 <code>Deployment</code> 不存在，控制器将根据 MySQL CR 的 <code>Spec</code> 字段创建新的 <code>Deployment</code>，用于启动 MySQL 容器。</li>
+</ul>
+</li>
+<li>
+<p><strong>同步副本数</strong>：</p>
+<ul>
+<li>如果 MySQL 的实际副本数与 <code>spec</code> 中定义的不一致，控制器会更新 <code>Deployment</code>，确保副本数与期望保持一致。</li>
+</ul>
+</li>
+<li>
+<p><strong>更新 MySQL 的状态</strong>：</p>
+<ul>
+<li>将 <code>Deployment</code> 中的副本数写入 MySQL CR 的 <code>Status</code> 字段，以反映当前 MySQL 实例的运行状态。</li>
+</ul>
+</li>
+<li>
+<p><strong>SetupWithManager</strong>：</p>
+<ul>
+<li>控制器通过 <code>SetupWithManager</code> 注册到管理器 (Manager) 中，监听 <code>MySQL</code> 资源以及 <code>Deployment</code> 的变化。</li>
+</ul>
+</li>
+</ol>
+<p><strong>六、生成 Controller 代码</strong></p>
+<p>在编写完控制器逻辑之后，执行以下命令生成并更新相应的代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">make generate
+</span></span></code></pre></div><h3 id="4-手动部署-operator-到-kubernetes-集群并查看效果">4. 手动部署 Operator 到 Kubernetes 集群并查看效果</h3>
+<p>完成代码生成后，接下来需要将生成的 Operator 部署到 Kubernetes 集群并验证其功能。以下步骤将指导你如何构建 Operator 镜像、部署 Operator、并测试其运行情况。</p>
+<p><strong>构建并推送 Operator 镜像</strong></p>
+<p>首先，我们需要将 Operator 打包为容器镜像。执行以下命令构建 Docker 镜像：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">make docker-build <span class="nv">IMG</span><span class="o">=</span>&lt;your-operator-image&gt;:&lt;tag&gt;
+</span></span></code></pre></div><p>将 <code>&lt;your-operator-image&gt;</code> 替换为你镜像的名称（例如 <code>myregistry/mysql-operator</code>），<code>&lt;tag&gt;</code> 替换为版本号（如 <code>v1.0.0</code>）。例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">make docker-build <span class="nv">IMG</span><span class="o">=</span>myregistry/mysql-operator:v1.0.0
+</span></span></code></pre></div><p>接着，将构建好的 Docker 镜像推送到镜像仓库：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">make docker-push <span class="nv">IMG</span><span class="o">=</span>myregistry/mysql-operator:v1.0.0
+</span></span></code></pre></div><p><strong>更新 Kubernetes 部署文件</strong></p>
+<p>在 <code>config/manager/manager.yaml</code> 文件中，找到 <code>image:</code> 字段，将其更新为刚刚推送的 Docker 镜像：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="ln">1</span><span class="cl"><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">manager</span><span class="w">
+</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">myregistry/mysql-operator:v1.0.0</span><span class="w">
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="w">      </span>- <span class="l">/manager</span><span class="w">
+</span></span></span></code></pre></div><p><strong>生成 Kubernetes 清单文件</strong></p>
+<p>使用以下命令生成 Kubernetes 所需的 CRD、RBAC 规则和部署清单文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">make manifests
+</span></span></code></pre></div><p>生成的文件将位于 <code>config/crd/</code>、<code>config/rbac/</code> 和 <code>config/manager/</code> 目录中。</p>
+<p><strong>部署 Operator到kubernetes集群</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1"># 上传镜像到kubernetes所在机器</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">docker image save docker.io/myregistry/mysql-operator:v1.0.0 &gt; dockerimage                                                                                      
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">du -sh dockerimage 
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"> 81M	dockerimage
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">scp dockerimage siming-dev:~
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">dockerimage
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"># 部署各种yaml</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">k apply -f crd/bases/apps.siming.com_mysqls.yaml
+</span></span><span class="line"><span class="ln">12</span><span class="cl">k apply -f manager/manager.yaml
+</span></span><span class="line"><span class="ln">13</span><span class="cl">k apply -f rbac/service_account.yaml
+</span></span><span class="line"><span class="ln">14</span><span class="cl">k apply -f rbac/role_binding.yaml
+</span></span><span class="line"><span class="ln">15</span><span class="cl">k apply -f rbac/role.yaml
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1"># 查看状态: 如果rbac权限不够，比如代码逻辑需要，记得手动更新</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">k logs -f controller-manager-6c784ddb46-2b7lb                                                                                                         
+</span></span><span class="line"><span class="ln">19</span><span class="cl">2024-09-17T12:46:43Z	INFO	setup	starting manager
+</span></span><span class="line"><span class="ln">20</span><span class="cl">2024-09-17T12:46:43Z	INFO	starting server	<span class="o">{</span><span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;health probe&#34;</span>, <span class="s2">&#34;addr&#34;</span>: <span class="s2">&#34;[::]:8081&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">I0917 12:46:43.256807       <span class="m">1</span> leaderelection.go:254<span class="o">]</span> attempting to acquire leader lease system/b3982890.siming.com...
+</span></span><span class="line"><span class="ln">22</span><span class="cl">I0917 12:47:00.943439       <span class="m">1</span> leaderelection.go:268<span class="o">]</span> successfully acquired lease system/b3982890.siming.com
+</span></span><span class="line"><span class="ln">23</span><span class="cl">2024-09-17T12:47:00Z	DEBUG	events	controller-manager-6c784ddb46-2b7lb_8dccc7f2-caa7-4e2e-8268-8726aab5a9cf became leader	<span class="o">{</span><span class="s2">&#34;type&#34;</span>: <span class="s2">&#34;Normal&#34;</span>, <span class="s2">&#34;object&#34;</span>: <span class="o">{</span><span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Lease&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;b3982890.siming.com&#34;</span>,<span class="s2">&#34;uid&#34;</span>:<span class="s2">&#34;bd617fbe-a002-4545-8a23-ed4dd77d7f82&#34;</span>,<span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;coordination.k8s.io/v1&#34;</span>,<span class="s2">&#34;resourceVersion&#34;</span>:<span class="s2">&#34;1470723&#34;</span><span class="o">}</span>, <span class="s2">&#34;reason&#34;</span>: <span class="s2">&#34;LeaderElection&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">2024-09-17T12:47:00Z	INFO	Starting EventSource	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;source&#34;</span>: <span class="s2">&#34;kind source: *v1.MySQL&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">2024-09-17T12:47:00Z	INFO	Starting EventSource	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;source&#34;</span>: <span class="s2">&#34;kind source: *v1.Deployment&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">2024-09-17T12:47:00Z	INFO	Starting Controller	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">2024-09-17T12:47:01Z	INFO	Starting workers	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;worker count&#34;</span>: 1<span class="o">}</span>
+</span></span></code></pre></div><h4 id="测试-operator"><strong>测试 Operator</strong></h4>
+<p>接下来，通过应用 MySQL 自定义资源来测试 Operator 的功能。你可以修改 <code>config/samples/apps_v1_mysql.yaml</code> 文件来创建一个 MySQL 实例。例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps.example.com/v1</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">MySQL</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">example-mysql</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="w">  </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">root</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l">password123</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="w">  </span><span class="nt">database</span><span class="p">:</span><span class="w"> </span><span class="l">mydatabase</span><span class="w">
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="w">  </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="w">  </span><span class="nt">backupSchedule</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;*/5 * * * *&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="w">  </span><span class="nt">backupPath</span><span class="p">:</span><span class="w"> </span><span class="l">/backups</span><span class="w">
+</span></span></span></code></pre></div><p>创建mysql，查看operator日志</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl">k logs -f controller-manager-578b69d9d4-t228b                                                                                                              ok <span class="p">|</span> base py <span class="p">|</span> with ubuntu@VM-24-14-ubuntu <span class="p">|</span> at 22:45:08
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">2024-09-17T14:41:49Z	INFO	setup	starting manager
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">2024-09-17T14:41:49Z	INFO	starting server	<span class="o">{</span><span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;health probe&#34;</span>, <span class="s2">&#34;addr&#34;</span>: <span class="s2">&#34;[::]:8081&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">I0917 14:41:49.676064       <span class="m">1</span> leaderelection.go:254<span class="o">]</span> attempting to acquire leader lease system/b3982890.siming.com...
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">I0917 14:42:17.231093       <span class="m">1</span> leaderelection.go:268<span class="o">]</span> successfully acquired lease system/b3982890.siming.com
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">2024-09-17T14:42:17Z	DEBUG	events	controller-manager-578b69d9d4-t228b_521b43d8-0f30-44b1-a596-83d2946336b4 became leader	<span class="o">{</span><span class="s2">&#34;type&#34;</span>: <span class="s2">&#34;Normal&#34;</span>, <span class="s2">&#34;object&#34;</span>: <span class="o">{</span><span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;Lease&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;b3982890.siming.com&#34;</span>,<span class="s2">&#34;uid&#34;</span>:<span class="s2">&#34;bd617fbe-a002-4545-8a23-ed4dd77d7f82&#34;</span>,<span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;coordination.k8s.io/v1&#34;</span>,<span class="s2">&#34;resourceVersion&#34;</span>:<span class="s2">&#34;1484357&#34;</span><span class="o">}</span>, <span class="s2">&#34;reason&#34;</span>: <span class="s2">&#34;LeaderElection&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">2024-09-17T14:42:17Z	INFO	Starting EventSource	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;source&#34;</span>: <span class="s2">&#34;kind source: *v1.MySQL&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">2024-09-17T14:42:17Z	INFO	Starting EventSource	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;source&#34;</span>: <span class="s2">&#34;kind source: *v1.Deployment&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">2024-09-17T14:42:17Z	INFO	Starting Controller	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">2024-09-17T14:42:17Z	INFO	Starting workers	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;worker count&#34;</span>: 1<span class="o">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">2024-09-17T14:43:01Z	INFO	Creating a new Deployment <span class="k">for</span> MySQL	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;MySQL&#34;</span>: <span class="o">{</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;mysql-sample&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span><span class="o">}</span>, <span class="s2">&#34;namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span>, <span class="s2">&#34;reconcileID&#34;</span>: <span class="s2">&#34;90483a7a-4ba9-4381-a402-04a18635a0b9&#34;</span>, <span class="s2">&#34;Deployment.Namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;Deployment.Name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">2024-09-17T14:45:00Z	INFO	MySQL resource not found. Ignoring since object must be deleted	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;MySQL&#34;</span>: <span class="o">{</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;mysql-sample&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span><span class="o">}</span>, <span class="s2">&#34;namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span>, <span class="s2">&#34;reconcileID&#34;</span>: <span class="s2">&#34;a93dd691-e78f-46fa-9672-fde7cf421d6d&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">2024-09-17T14:45:00Z	INFO	MySQL resource not found. Ignoring since object must be deleted	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;MySQL&#34;</span>: <span class="o">{</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;mysql-sample&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span><span class="o">}</span>, <span class="s2">&#34;namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span>, <span class="s2">&#34;reconcileID&#34;</span>: <span class="s2">&#34;10467c4f-e29d-4aca-b60d-878a3ceac98a&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">2024-09-17T14:45:07Z	INFO	Creating a new Secret <span class="k">for</span> MySQL	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;MySQL&#34;</span>: <span class="o">{</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;mysql-sample&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span><span class="o">}</span>, <span class="s2">&#34;namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span>, <span class="s2">&#34;reconcileID&#34;</span>: <span class="s2">&#34;f4e005b4-b4db-49fd-a838-e9031958e9e8&#34;</span>, <span class="s2">&#34;Secret.Namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;Secret.Name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">2024-09-17T14:45:07Z	INFO	Creating a new Deployment <span class="k">for</span> MySQL	<span class="o">{</span><span class="s2">&#34;controller&#34;</span>: <span class="s2">&#34;mysql&#34;</span>, <span class="s2">&#34;controllerGroup&#34;</span>: <span class="s2">&#34;apps.siming.com&#34;</span>, <span class="s2">&#34;controllerKind&#34;</span>: <span class="s2">&#34;MySQL&#34;</span>, <span class="s2">&#34;MySQL&#34;</span>: <span class="o">{</span><span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;mysql-sample&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span><span class="o">}</span>, <span class="s2">&#34;namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span>, <span class="s2">&#34;reconcileID&#34;</span>: <span class="s2">&#34;748ccf1b-e0ca-4544-8f11-8cd40b526458&#34;</span>, <span class="s2">&#34;Deployment.Namespace&#34;</span>: <span class="s2">&#34;system&#34;</span>, <span class="s2">&#34;Deployment.Name&#34;</span>: <span class="s2">&#34;mysql-sample&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">...
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl">kp   
+</span></span><span class="line"><span class="ln">19</span><span class="cl">controller-manager-578b69d9d4-t228b   1/1     Running   <span class="m">0</span>          3m39s
+</span></span><span class="line"><span class="ln">20</span><span class="cl">mysql-sample-64b88f58f7-9lkr9         1/1     Running   <span class="m">0</span>          20s
+</span></span><span class="line"><span class="ln">21</span><span class="cl">
+</span></span><span class="line"><span class="ln">22</span><span class="cl">k get mysql mysql-sample -o yaml                                                                                                      
+</span></span><span class="line"><span class="ln">23</span><span class="cl">apiVersion: apps.siming.com/v1
+</span></span><span class="line"><span class="ln">24</span><span class="cl">kind: MySQL
+</span></span><span class="line"><span class="ln">25</span><span class="cl">metadata:
+</span></span><span class="line"><span class="ln">26</span><span class="cl">  annotations:
+</span></span><span class="line"><span class="ln">27</span><span class="cl">    kubectl.kubernetes.io/last-applied-configuration: <span class="p">|</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">      <span class="o">{</span><span class="s2">&#34;apiVersion&#34;</span>:<span class="s2">&#34;apps.siming.com/v1&#34;</span>,<span class="s2">&#34;kind&#34;</span>:<span class="s2">&#34;MySQL&#34;</span>,<span class="s2">&#34;metadata&#34;</span>:<span class="o">{</span><span class="s2">&#34;annotations&#34;</span>:<span class="o">{}</span>,<span class="s2">&#34;labels&#34;</span>:<span class="o">{</span><span class="s2">&#34;app.kubernetes.io/managed-by&#34;</span>:<span class="s2">&#34;kustomize&#34;</span>,<span class="s2">&#34;app.kubernetes.io/name&#34;</span>:<span class="s2">&#34;mysql-operator&#34;</span><span class="o">}</span>,<span class="s2">&#34;name&#34;</span>:<span class="s2">&#34;mysql-sample&#34;</span>,<span class="s2">&#34;namespace&#34;</span>:<span class="s2">&#34;system&#34;</span><span class="o">}</span>,<span class="s2">&#34;spec&#34;</span>:<span class="o">{</span><span class="s2">&#34;backupPath&#34;</span>:<span class="s2">&#34;/backups&#34;</span>,<span class="s2">&#34;backupSchedule&#34;</span>:<span class="s2">&#34;*/5 * * * *&#34;</span>,<span class="s2">&#34;database&#34;</span>:<span class="s2">&#34;mydatabase&#34;</span>,<span class="s2">&#34;password&#34;</span>:<span class="s2">&#34;password123&#34;</span>,<span class="s2">&#34;size&#34;</span>:1,<span class="s2">&#34;username&#34;</span>:<span class="s2">&#34;root&#34;</span><span class="o">}}</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">  creationTimestamp: <span class="s2">&#34;2024-09-17T14:45:07Z&#34;</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">  generation: <span class="m">1</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">  labels:
+</span></span><span class="line"><span class="ln">32</span><span class="cl">    app.kubernetes.io/managed-by: kustomize
+</span></span><span class="line"><span class="ln">33</span><span class="cl">    app.kubernetes.io/name: mysql-operator
+</span></span><span class="line"><span class="ln">34</span><span class="cl">  name: mysql-sample
+</span></span><span class="line"><span class="ln">35</span><span class="cl">  namespace: system
+</span></span><span class="line"><span class="ln">36</span><span class="cl">  resourceVersion: <span class="s2">&#34;1484746&#34;</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">  uid: 3e799684-8646-4c20-a1dd-6724ab78e56b
+</span></span><span class="line"><span class="ln">38</span><span class="cl">spec:
+</span></span><span class="line"><span class="ln">39</span><span class="cl">  backupPath: /backups
+</span></span><span class="line"><span class="ln">40</span><span class="cl">  backupSchedule: <span class="s1">&#39;*/5 * * * *&#39;</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">  database: mydatabase
+</span></span><span class="line"><span class="ln">42</span><span class="cl">  password: password123
+</span></span><span class="line"><span class="ln">43</span><span class="cl">  size: <span class="m">1</span>
+</span></span><span class="line"><span class="ln">44</span><span class="cl">  username: root
+</span></span><span class="line"><span class="ln">45</span><span class="cl">status:
+</span></span><span class="line"><span class="ln">46</span><span class="cl">  readyReplicas: <span class="m">1</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl">
+</span></span><span class="line"><span class="ln">48</span><span class="cl"><span class="c1"># 把副本改成2之后会通过operator自动创建</span>
+</span></span><span class="line"><span class="ln">49</span><span class="cl">k apply -f samples/apps_v1_mysql.yaml
+</span></span><span class="line"><span class="ln">50</span><span class="cl">mysql.apps.siming.com/mysql-sample configured
+</span></span><span class="line"><span class="ln">51</span><span class="cl">
+</span></span><span class="line"><span class="ln">52</span><span class="cl">kp -w 
+</span></span><span class="line"><span class="ln">53</span><span class="cl">NAME                                  READY   STATUS              RESTARTS   AGE
+</span></span><span class="line"><span class="ln">54</span><span class="cl">controller-manager-578b69d9d4-t228b   1/1     Running             <span class="m">0</span>          5m27s
+</span></span><span class="line"><span class="ln">55</span><span class="cl">mysql-sample-64b88f58f7-9lkr9         1/1     Running             <span class="m">0</span>          2m8s
+</span></span><span class="line"><span class="ln">56</span><span class="cl">mysql-sample-64b88f58f7-trwrc         0/1     ContainerCreating   <span class="m">0</span>          1s
+</span></span><span class="line"><span class="ln">57</span><span class="cl">mysql-sample-64b88f58f7-trwrc         1/1     Running             <span class="m">0</span>          2s
+</span></span></code></pre></div><h2 id="kubebuilder-原理详解">Kubebuilder 原理详解</h2>
+<h3 id="kubebuilder-的核心组件">Kubebuilder 的核心组件</h3>
+<p><strong>Controller-runtime 的作用</strong></p>
+<p><strong>Controller-runtime</strong> 是 Kubebuilder 构建 Kubernetes Operator 的核心库，它为开发者提供了一套标准化的控制器开发工具，简化了 Kubernetes 资源的管理工作。<code>controller-runtime</code> 的主要作用包括：</p>
+<ol>
+<li>
+<p><strong>控制器管理</strong>：</p>
+<ul>
+<li><code>controller-runtime</code> 提供了一个 <strong>Manager</strong>，负责启动和管理所有的控制器。Manager 会管理控制器的生命周期，并确保它们持续运行。</li>
+<li>通过 <code>Manager</code>，多个控制器可以并行运行，监控和处理不同资源的状态变化。</li>
+</ul>
+</li>
+<li>
+<p><strong>事件监听与处理</strong>：</p>
+<ul>
+<li><strong>Informer</strong> 监听 Kubernetes 资源的变化事件（如创建、更新、删除等），<code>controller-runtime</code> 会通过这些事件驱动控制器的 <strong>Reconcile</strong> 函数。</li>
+<li>当资源的状态与期望不一致时，<code>Reconcile</code> 函数被触发，执行对应的逻辑进行同步。</li>
+</ul>
+</li>
+<li>
+<p><strong>资源的缓存机制</strong>：</p>
+<ul>
+<li><code>controller-runtime</code> 使用缓存本地存储资源的状态，减少与 Kubernetes API Server 的交互。控制器可以优先从缓存中获取资源信息，这提高了系统性能并减少了对 API Server 的负载。</li>
+</ul>
+</li>
+<li>
+<p><strong>封装 Client 交互</strong>：</p>
+<ul>
+<li><code>controller-runtime</code> 提供了一个简化的 <strong>Client</strong>，开发者可以通过它来对 Kubernetes 资源进行增删改查操作，而无需直接与 Kubernetes API Server 进行复杂的 HTTP 请求交互。</li>
+<li>例如，通过 Client 可以轻松创建或更新 Kubernetes 资源，如 Pods、Deployments、Services 等。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>为什么 <code>controller-runtime</code> 能做这些？</strong>
+<code>controller-runtime</code> 封装了复杂的 API 调用、缓存机制和事件监听系统，开发者只需编写核心业务逻辑，它会自动处理资源的状态同步、错误处理、重试等过程。它能够通过 Manager 和 Client 管理控制器的生命周期和资源交互，使得 Operator 能够以高效、优雅的方式与 Kubernetes 生态系统交互。</p>
+</blockquote>
+<p><strong>Code Generation（代码生成）的原理</strong></p>
+<p><strong>代码生成</strong> 是 Kubebuilder 的一个重要特性，它通过自动生成大量样板代码，减少了开发者的重复工作量。Kubebuilder 的代码生成功能基于 Go 语言的代码注解，通过注解和命令行工具生成相应的 CRD 文件、深度拷贝函数、RBAC 权限等。</p>
+<ol>
+<li>
+<p><strong>API 生成</strong>：</p>
+<ul>
+<li>当开发者定义自定义资源 (CRD) 的结构体时，Kubebuilder 会根据这些定义自动生成 Kubernetes 所需的 CRD 清单文件以及相应的 Go 代码。例如，你定义的资源 <code>MySQLSpec</code> 和 <code>MySQLStatus</code> 会生成相应的 <code>yaml</code> 文件，用于在集群中注册 CRD。</li>
+</ul>
+</li>
+<li>
+<p><strong>深度拷贝函数生成</strong>：</p>
+<ul>
+<li>Kubernetes 需要在内部对对象进行深度拷贝操作，Kubebuilder 提供了自动生成深度拷贝函数的能力。开发者只需定义资源的结构，生成工具会自动为这些结构体生成 <code>DeepCopy</code> 函数，确保对象可以安全地在不同线程和上下文中传递。</li>
+</ul>
+</li>
+<li>
+<p><strong>RBAC 权限生成</strong>：</p>
+<ul>
+<li>在控制器代码中，开发者可以通过注解（如 <code>+kubebuilder:rbac</code>）为控制器生成相应的 RBAC 配置。注解会告诉 Kubebuilder 控制器需要对哪些资源有权限，这样 Kubebuilder 会自动生成 Kubernetes 中的 RBAC 规则清单，确保控制器可以正确操作相关资源。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>为什么 Kubebuilder 能做到？</strong>
+Kubebuilder 通过静态分析代码注解，结合 Kubernetes API 的需求，自动生成符合 Kubernetes 标准的资源清单和代码逻辑。它的底层依赖于 Kubernetes 的工具链（如 <code>controller-tools</code>）和 Go 语言的反射机制，开发者只需编写核心业务逻辑，Kubebuilder 就能自动生成复杂的样板代码。</p>
+</blockquote>
+<h3 id="kubebuilder-的工作流程">Kubebuilder 的工作流程</h3>
+<p>Kubebuilder 的工作流程包括初始化项目、生成 API 和控制器代码、编写业务逻辑，以及最终生成 Kubernetes 清单文件。以下是详细的工作流程。</p>
+<p><strong>1. 初始化项目</strong></p>
+<p>开发者通过 <code>kubebuilder init</code> 命令初始化一个标准化的 Operator 项目。这个命令会生成项目的目录结构，包括 <code>api/</code>、<code>controllers/</code>、<code>config/</code> 等文件夹。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">kubebuilder init --domain mydomain.com --repo github.com/myorg/my-operator
+</span></span></code></pre></div><ul>
+<li><strong>生成的文件结构</strong>：
+<ul>
+<li><code>api/</code>：存放自定义资源的定义文件。</li>
+<li><code>controllers/</code>：存放控制器的逻辑。</li>
+<li><code>config/</code>：存放 Kubernetes 的清单文件（如 CRD、RBAC 配置）。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>开发者要做什么？</strong><br>
+执行 <code>kubebuilder init</code>，然后根据生成的结构填充业务逻辑。此时，项目已经具备标准的目录结构。</p>
+</blockquote>
+<p><strong>2. 创建 API 和控制器</strong></p>
+<p>开发者通过 <code>kubebuilder create api</code> 命令为自定义资源生成 API 结构和控制器骨架代码。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">kubebuilder create api --group apps --version v1 --kind MySQL
+</span></span></code></pre></div><ul>
+<li><strong>生成的文件</strong>：
+<ul>
+<li><code>api/v1/mysql_types.go</code>：自定义资源 API 结构的定义。</li>
+<li><code>controllers/mysql_controller.go</code>：控制器的骨架代码。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>开发者要做什么？</strong><br>
+在 <code>api/v1/mysql_types.go</code> 中定义自定义资源的 <code>Spec</code> 和 <code>Status</code>，在 <code>controllers/mysql_controller.go</code> 中编写业务逻辑（如如何创建、更新资源）。</p>
+</blockquote>
+<p><strong>3. 生成代码和配置文件</strong></p>
+<p>开发者完成业务逻辑编写后，运行以下命令生成辅助代码和 Kubernetes 清单文件。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">make generate
+</span></span><span class="line"><span class="ln">2</span><span class="cl">make manifests
+</span></span></code></pre></div><ul>
+<li><strong><code>make generate</code></strong>：生成深度拷贝函数、API 注册等必要的辅助代码。</li>
+<li><strong><code>make manifests</code></strong>：生成 CRD、RBAC、Deployment 等 Kubernetes 资源的清单文件。</li>
+</ul>
+<blockquote>
+<p><strong>开发者要做什么？</strong><br>
+通过 <code>make generate</code> 生成自动化的辅助代码，无需手动编写深度拷贝和序列化逻辑。通过 <code>make manifests</code> 生成可部署的 CRD 和 Operator 清单文件。</p>
+</blockquote>
+<p><strong>4. 编写控制器逻辑</strong></p>
+<p>控制器是 Operator 的核心，负责监听和处理资源的状态变化。开发者需要在控制器的 <code>Reconcile</code> 函数中编写核心逻辑，例如当检测到 MySQL CR 创建时，如何为它创建一个相应的 Kubernetes <code>Deployment</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">MySQLReconciler</span><span class="p">)</span> <span class="nf">Reconcile</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">req</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">(</span><span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="c1">// 获取 MySQL 实例
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">mysql</span> <span class="nx">appsv1alpha1</span><span class="p">.</span><span class="nx">MySQL</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">NamespacedName</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">mysql</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">        <span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">client</span><span class="p">.</span><span class="nf">IgnoreNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="c1">// 检查是否需要创建或更新 Deployment
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span>    <span class="c1">// 处理业务逻辑
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><blockquote>
+<p><strong>开发者要做什么？</strong><br>
+在 <code>controllers/mysql_controller.go</code> 文件中编写核心逻辑，如资源的创建、更新和状态同步。Kubebuilder 提供的骨架代码会自动调用 <code>Reconcile</code> 函数，开发者只需专注于业务逻辑。</p>
+</blockquote>
+<h3 id="与-kubernetes-api-的集成">与 Kubernetes API 的集成</h3>
+<p>Kubebuilder 通过 <code>controller-runtime</code> 进行与 Kubernetes API 的交互，使用 <strong>ClientSet</strong>、<strong>Informer</strong> 和 <strong>Controller</strong> 协同工作，确保资源状态与期望一致。</p>
+<p><strong>如何通过 ClientSet 进行资源管理</strong></p>
+<p>在 <code>controller-runtime</code> 中，<strong>Client</strong> 是与 Kubernetes API Server 交互的主要方式。开发者可以通过 <code>Client</code> 进行资源的 CRUD 操作。</p>
+<ul>
+<li><strong>获取资源</strong>：通过 <code>r.Get</code> 获取当前的资源实例。</li>
+<li><strong>创建资源</strong>：通过 <code>r.Create</code> 向 Kubernetes 集群中创建资源。</li>
+<li><strong>更新资源</strong>：通过 <code>r.Update</code> 更新资源状态。</li>
+<li><strong>删除资源</strong>：通过 <code>r.Delete</code> 删除不再需要的资源。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">var</span> <span class="nx">mysql</span> <span class="nx">appsv1alpha1</span><span class="p">.</span><span class="nx">MySQL</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">NamespacedName</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">mysql</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="k">return</span> <span class="nx">ctrl</span><span class="p">.</span><span class="nx">Result</span><span class="p">{},</span> <span class="nx">client</span><span class="p">.</span><span class="nf">IgnoreNotFound</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><blockquote>
+<p><strong>开发者要做什么？</strong><br>
+在控制器中使用 <code>Client</code> 来管理 Kubernetes 资源，编写 <code>Get</code>、<code>Create</code>、<code>Update</code> 和 <code>Delete</code> 的业务逻辑。<code>controller-runtime</code> 封装了与 API Server 的交互，简化了操作。</p>
+</blockquote>
+<p><strong>Informer、Controller 如何配合工作</strong></p>
+<p><strong>Informer</strong> 监听 Kubernetes 中资源的变化（如创建、更新、删除），并将这些事件通知给相应的控制器。控制器通过 <strong>Reconcile Loop</strong> 响应这些事件，执行资源状态的同步和调整。</p>
+<ol>
+<li>
+<p><strong>Informer 的工作流程</strong>:</p>
+<ul>
+<li>启动时，Informer 从 API Server 获取资源列表并缓存。</li>
+<li>通过 Watch 机制，Informer 监听资源的变化并更新缓存。</li>
+<li>当资源发生变化时，Informer 将事件通知给 Controller。</li>
+</ul>
+</li>
+<li>
+<p><strong>Controller 的工作流程</strong>：</p>
+<ul>
+<li>Controller 通过 <code>Reconcile</code> 函数响应来自 Informer 的事件。每当有新的事件发生，<code>Reconcile</code> 函数被调用，执行资源的状态更新或调整。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>开发者要做什么？</strong><br>
+Kubebuilder 自动生成了 Informer 和 Controller 的配合逻辑。开发者只需在 <code>Reconcile</code> 函数中编写具体的业务逻辑，无需手动处理事件监听或缓存管理。</p>
+</blockquote>
+<h3 id="总结开发者如何使用-kubebuilder-开发-operator">总结：开发者如何使用 Kubebuilder 开发 Operator</h3>
+<ol>
+<li><strong>初始化项目</strong>：使用 <code>kubebuilder init</code> 创建标准项目结构。</li>
+<li><strong>创建 API 和控制器</strong>：通过 <code>kubebuilder create api</code> 生成 CRD 和控制器骨架代码。</li>
+<li><strong>编写 API 和控制器</strong>：定义 CRD 的 <code>Spec</code> 和 <code>Status</code>，编写控制器的 <code>Reconcile</code> 逻辑。</li>
+<li><strong>生成代码和清单文件</strong>：运行 <code>make generate</code> 和 <code>make manifests</code>，生成 Kubernetes 所需的清单文件和代码。</li>
+<li><strong>部署和测试 Operator</strong>：通过 <code>make install</code> 部署 CRD，使用 <code>kubectl</code> 验证 Operator 的工作效果。</li>
+</ol>
+
+    </div>
+<div class="post_comments">
+  
+  
+    
+ <script src="https://utteranc.es/client.js"
+         repo="ZhangSIming-blyq/blogcommit"
+         issue-term="pathname"
+         theme="github-light"
+         crossorigin="anonymous"
+         async>
+ </script>
+ 
+  
+  
+</div>
+
+
+
+
+  </article>
+<aside class="sidebar">
+  <section class="sidebar_inner">
+    <br>
+    
+  
+  <div class="search">
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='post'>
+    <label for="find" class="search_label"><svg class="icon">
+  <title>search</title>
+  <use xlink:href="#search"></use>
+</svg>
+
+    </label>
+    
+    <div class="search_results results"></div>
+  </div>
+
+
+    
+    
+    <h2 class="mt-4">Featured Posts</h2>
+    <ul>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/operator/" class="nav-link" title="Kubernetes Operator 新手开发一文入门">Kubernetes Operator 新手开发一文入门</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/" class="nav-link" title="Deploy Kubernetes cluster via kubeadm">Deploy Kubernetes cluster via kubeadm</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/addnode/" class="nav-link" title="如何加节点到Kubernetes集群">如何加节点到Kubernetes集群</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/linux/etcd-tutorial/" class="nav-link" title="Etcd Tutorial">Etcd Tutorial</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/java/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF1/" class="nav-link" title="【Java入门系列】Java基础入门 --- 安装，数据类型，类">【Java入门系列】Java基础入门 --- 安装，数据类型，类</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/closure/" class="nav-link" title="Closures In Golang And Python">Closures In Golang And Python</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/gozap/" class="nav-link" title="使用zap打造你的golang日志库">使用zap打造你的golang日志库</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" class="nav-link" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+      </li>
+    </ul>
+    <h2 class="mt-4">Recent Posts</h2>
+    <ul class="flex-column">
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day9/" class="nav-link" title="【算法刷题系列】第9天 151. 反转字符串中的单词, 55. 右旋字符串, 459. 重复的子字符串">【算法刷题系列】第9天 151. 反转字符串中的单词, 55. 右旋字符串, 459. 重复的子字符串</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day8/" class="nav-link" title="【算法刷题系列】第8天 344. 反转字符串, 541. 反转字符串 II, 54. 替换数字（第八期模拟笔试）">【算法刷题系列】第8天 344. 反转字符串, 541. 反转字符串 II, 54. 替换数字（第八期模拟笔试）</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day7/" class="nav-link" title="【算法刷题系列】第7天 第454题.四数相加II, 383. 赎金信, 第15题. 三数之和，第18题. 四数之和">【算法刷题系列】第7天 第454题.四数相加II, 383. 赎金信, 第15题. 三数之和，第18题. 四数之和</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/" class="nav-link" title="【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和">【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day4/" class="nav-link" title="【算法刷题系列】第4天 24. 两两交换链表中的节点, 19. 删除链表的倒数第 N 个结点, 面试题 02.07. 链表相交, 142. 环形链表 II">【算法刷题系列】第4天 24. 两两交换链表中的节点, 19. 删除链表的倒数第 N 个结点, 面试题 02.07. 链表相交, 142. 环形链表 II</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/linux/etcd-tutorial/" class="nav-link" title="Etcd Tutorial">Etcd Tutorial</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/java/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF1/" class="nav-link" title="【Java入门系列】Java基础入门 --- 安装，数据类型，类">【Java入门系列】Java基础入门 --- 安装，数据类型，类</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/closure/" class="nav-link" title="Closures In Golang And Python">Closures In Golang And Python</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/gozap/" class="nav-link" title="使用zap打造你的golang日志库">使用zap打造你的golang日志库</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" class="nav-link" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+      </li>
+    </ul>
+    <div>
+      <h2 class="mt-4 taxonomy" id="categories-section">Categories</h2>
+      <nav class="tags_nav">
+        <a href='https://zhangsiming-blyq.github.io/categories/algorithm/' class="post_tag button button_translucent" title="algorithm">
+          ALGORITHM
+          <span class="button_tally">14</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
+          KUBERNETES
+          <span class="button_tally">9</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/shorthand/' class="post_tag button button_translucent" title="shorthand">
+          SHORTHAND
+          <span class="button_tally">4</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/golang/' class="post_tag button button_translucent" title="golang">
+          GOLANG
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/linux/' class="post_tag button button_translucent" title="linux">
+          LINUX
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/python/' class="post_tag button button_translucent" title="python">
+          PYTHON
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/ansible/' class="post_tag button button_translucent" title="ansible">
+          ANSIBLE
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/apigateway/' class="post_tag button button_translucent" title="apigateway">
+          APIGATEWAY
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/containerd/' class="post_tag button button_translucent" title="containerd">
+          CONTAINERD
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/docker/' class="post_tag button button_translucent" title="docker">
+          DOCKER
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/etcd/' class="post_tag button button_translucent" title="etcd">
+          ETCD
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/git/' class="post_tag button button_translucent" title="git">
+          GIT
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/java/' class="post_tag button button_translucent" title="java">
+          JAVA
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/vim/' class="post_tag button button_translucent" title="vim">
+          VIM
+          <span class="button_tally">1</span>
+        </a>
+        
+        
+      </nav>
+    </div>
+    <div>
+      <h2 class="mt-4 taxonomy" id="tags-section">Tags</h2>
+      <nav class="tags_nav">
+        <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class="post_tag button button_translucent" title="中文">
+          中文
+          <span class="button_tally">23</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class="post_tag button button_translucent" title="algorithm">
+          ALGORITHM
+          <span class="button_tally">14</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/english/' class="post_tag button button_translucent" title="english">
+          ENGLISH
+          <span class="button_tally">12</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
+          KUBERNETES
+          <span class="button_tally">10</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' class="post_tag button button_translucent" title="shorthand">
+          SHORTHAND
+          <span class="button_tally">4</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/golang/' class="post_tag button button_translucent" title="golang">
+          GOLANG
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/linux/' class="post_tag button button_translucent" title="linux">
+          LINUX
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/etcd/' class="post_tag button button_translucent" title="etcd">
+          ETCD
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/python/' class="post_tag button button_translucent" title="python">
+          PYTHON
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/about/' class="post_tag button button_translucent" title="about">
+          ABOUT
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/ansible/' class="post_tag button button_translucent" title="ansible">
+          ANSIBLE
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/apigateway/' class="post_tag button button_translucent" title="apigateway">
+          APIGATEWAY
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/apiserver/' class="post_tag button button_translucent" title="apiserver">
+          APISERVER
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/bailiyingqi/' class="post_tag button button_translucent" title="bailiyingqi">
+          BAILIYINGQI
+          <span class="button_tally">1</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All Tags</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/about/' class=" post_tag button button_translucent" data-position=1 title="about">ABOUT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class=" post_tag button button_translucent" data-position=14 title="algorithm">ALGORITHM<span class="button_tally">14</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/ansible/' class=" post_tag button button_translucent" data-position=1 title="ansible">ANSIBLE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/apigateway/' class=" post_tag button button_translucent" data-position=1 title="apigateway">APIGATEWAY<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/apiserver/' class=" post_tag button button_translucent" data-position=1 title="apiserver">APISERVER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/bailiyingqi/' class=" post_tag button button_translucent" data-position=1 title="bailiyingqi">BAILIYINGQI<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/containerd/' class=" post_tag button button_translucent" data-position=1 title="containerd">CONTAINERD<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/controller-manager/' class=" post_tag button button_translucent" data-position=1 title="controller-manager">CONTROLLER-MANAGER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/english/' class=" post_tag button button_translucent" data-position=12 title="english">ENGLISH<span class="button_tally">12</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/etcd/' class=" post_tag button button_translucent" data-position=2 title="etcd">ETCD<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/git/' class=" post_tag button button_translucent" data-position=1 title="git">GIT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/golang/' class=" post_tag button button_translucent" data-position=3 title="golang">GOLANG<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/java/' class=" post_tag button button_translucent" data-position=1 title="java">JAVA<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class=" post_tag button button_translucent" data-position=10 title="kubernetes">KUBERNETES<span class="button_tally">10</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/linux/' class=" post_tag button button_translucent" data-position=3 title="linux">LINUX<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/python/' class=" post_tag button button_translucent" data-position=2 title="python">PYTHON<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/scheduler/' class=" post_tag button button_translucent" data-position=1 title="scheduler">SCHEDULER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' class=" post_tag button button_translucent" data-position=4 title="shorthand">SHORTHAND<span class="button_tally">4</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/vim/' class=" post_tag button button_translucent" data-position=1 title="vim">VIM<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=23 title="中文">中文<span class="button_tally">23</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+</aside>
+
+  
+</div>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter">
+    <path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68 0 0 1-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043 0-1.924.366-2.643 1.078a3.56 3.56 0 0 0-1.076 2.605c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846 0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47 0 .929.273 1.705.82 2.388a3.623 3.623 0 0 0 2.115 1.291c-.312.08-.641.118-.979.118-.312 0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652 0 0 0 2.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422 0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139 0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77 0 0 0 1.172-4.892v-.468a7.788 7.788 0 0 0 1.84-1.921 8.142 8.142 0 0 1-2.11.593z"
+      ></path>
+  </symbol>
+  <symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail">
+    <path  d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar">
+    <path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916 0 100v352c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60V100c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028 0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028 0 20 8.972 20 20v48z"></path>
+    <path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github">
+    <path d="M255.968 5.329C114.624 5.329 0 120.401 0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384 0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008 0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992 0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584 0 34.368-.32 62.08-.32 70.496 0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" id="gitlab">
+    <path d="M12.3 74.7h54L43.3 3c-1-3.6-6.4-3.6-7.6 0L12.3 74.8z" />
+    <path d="M12.3 74.7L.5 111c-1 3.2 0 6.8 3 8.8l101.6 74-92.5-119z"/>
+    <path d="M105 193.7l-38.6-119h-54l92.7 119z"/>
+    <path d="M105 193.7l38.7-119H66.4l38.7 119z"/>
+    <path d="M105 193.7l38.7-119H198l-93 119z"/>
+    <path d="M198 74.7l11.6 36.2c1 3 0 6.6-3 8.6l-101.5 74 93-119z"/>
+    <path d="M198 74.7h-54.3L167 3c1.2-3.6 6.4-3.6 7.6 0L198 74.8z"/> 
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss">
+    <circle cx="3.429" cy="20.571" r="3.429"></circle>
+    <path d="M11.429 24h4.57C15.999 15.179 8.821 8.001 0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"></path>
+    <path d="M24 24C24 10.766 13.234 0 0 0v4.571c10.714 0 19.43 8.714 19.43 19.429z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h362c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="to-top">
+    <path d="M604.501 440.509L325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298 0 36.323s26.223 10.024 36.222 0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221 0 9.999-10.023 9.999-26.298 0-36.323z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly">
+    <path d="M504.971 239.029L448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c19.851 0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002 0 0 0 400 320v108c0 19.851-16.149 36-36 36h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c46.318 0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568 0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255 0 24-10.745 24-24S205.255 0 192 0h-44c-46.318 0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568 0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255 0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851 0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002 0 0 0 112 192z"></path>
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M23 2.75A2.75 2.75 0 0 0 20.25 0H8.75A2.75 2.75 0 0 0 6 2.75v13.5A2.75 2.75 0 0 0 8.75 19h11.5A2.75 2.75 0 0 0 23 16.25zM18.25 14.5h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5zm0-3h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5zm0-3h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5z"></path>
+    <path d="M8.75 20.5a4.255 4.255 0 0 1-4.25-4.25V2.75c0-.086.02-.166.025-.25H3.75A2.752 2.752 0 0 0 1 5.25v16A2.752 2.752 0 0 0 3.75 24h12a2.752 2.752 0 0 0 2.75-2.75v-.75z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme">
+    <path d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285a19.938 19.938 0 0 0 14.143 5.857 19.94 19.94 0 0 0 14.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu">
+    <path d="M492 236H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954 0 96s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="instagram">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id=youtube>
+    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="stackoverflow">
+    <path d="M21 27v-8h3v11H0V19h3v8h18z"></path><path d="M17.1.2L15 1.8l7.9 10.6 2.1-1.6L17.1.2zm3.7 14.7L10.6 6.4l1.7-2 10.2 8.5-1.7 2zM7.2 12.3l12 5.6 1.1-2.4-12-5.6-1.1 2.4zm-1.8 6.8l13.56 1.96.17-2.38-13.26-2.55-.47 2.97zM19 25H5v-3h14v3z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="xing">
+    <path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71 55" id="discord">
+    <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"/>
+  </symbol>
+</svg>
+
+
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <img src='https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png' class="icon icon_2 transparent" alt="">
+    <p>Copyright&nbsp;<span class="year"></span>&nbsp;. All Rights Reserved</p><a class="to_top" href="#documentTop">
+  <svg class="icon">
+  <title>to-top</title>
+  <use xlink:href="#to-top"></use>
+</svg>
+
+</a>
+
+  </div>
+</footer>
+
+<script type="text/javascript" src="https://zhangsiming-blyq.github.io/en/js/bundle.daf5d72d10b0f1e048706d4cb8d79d1ec41c3b5edcd83acfaa4df80252afff936252c1fa7804d8dcdb500eaf0f7d5adbb79cfe886cf7068f12f58cdebc05e1c3.js" integrity="sha512-2vXXLRCw8eBIcG1MuNedHsQcO17c2DrPqk34AlKv/5NiUsH6eATY3NtQDq8PfVrbt5z&#43;iGz3Bo8S9YzevAXhww==" crossorigin="anonymous"></script>
+
+  <script src="https://zhangsiming-blyq.github.io/js/search.min.9641a8a49c5a7dbd99f372bf456fc577a23b235fd157ee614ce2dab96b2e0f3687d5cc408d875f32e94405a2ccbca5c8bc43491cfce32471b72aa63e5315018d.js"></script>
+
+  </body>
+</html>

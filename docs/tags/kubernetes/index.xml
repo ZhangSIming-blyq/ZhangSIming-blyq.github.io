@@ -6,7 +6,27 @@
     <description>Recent content in kubernetes on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 10 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 15 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Operator 新手开发一文入门</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/operator/</link>
+      <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/operator/</guid>
+      <description>
+        
+          
+            概述 Kubernetes Operator 简介 Kubernetes Operator 是一类 Kubernetes 控制器，它能够自动化管理复杂的应用程序和其生命周期，通常被用来管理有状态应用（如数据库、缓存等）。通过扩展 Kubernetes API，Operator 可以将日常操作流程（如安装、升级、扩展、备份等）转换为 Kubernetes 原生对象，从而实现自动化和声明式管理。
+为什么使用 Operator Operator 通过将 DevOps 团队日常管理应用的运维知识和流程编码化，使复杂的应用程序管理变得简单和自动化。在 Kubernetes 中，Operator 可以持续监控自定义资源，并自动进行相应操作，确保应用程序的状态与用户期望一致。
+Operator 与 Controller 的关系 Operator 实际上是一个高级 Controller，它不仅负责监控和管理 Kubernetes 中的自定义资源 (CR)，还可以执行特定的业务逻辑。Controller 是 Kubernetes 架构中管理资源状态的核心组件，Operator 是对 Controller 的封装和扩展，专门用于复杂应用的生命周期管理。
+核心概念 自定义资源 (CR) 和自定义资源定义 (CRD) 什么是 CR 自定义资源 (Custom Resource, CR) 是 Kubernetes 用户可以定义的扩展对象，用于描述某个具体的应用或资源的期望状态。每个 CR 对象的结构基于其相应的 CRD (Custom Resource Definition)，通过 CR，用户可以声明他们希望 Kubernetes 管理的特定应用或服务。
+什么是 CRD CRD（自定义资源定义）是 Kubernetes 的一种扩展机制，允许用户向 Kubernetes API 添加新的对象类型。通过 CRD，用户可以定义新的资源种类（类似于内置的 Pod、Service 等），并指定这些资源的结构和行为。
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>Deploy Kubernetes cluster via kubeadm</title>
       <link>https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/</link>
