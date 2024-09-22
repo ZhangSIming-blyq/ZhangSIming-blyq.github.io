@@ -6,7 +6,26 @@
     <description>Recent content in kubernetes on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 21 Sep 2024 16:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Sep 2024 18:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/</link>
+      <pubDate>Sat, 21 Sep 2024 18:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/</guid>
+      <description>
+        
+          
+            在 Kubernetes 集群中，通过 NVIDIA GPU Operator 管理 GPU 资源，实现 GPU 虚拟化和显卡的分配。NVIDIA GPU Operator 通过协调 GPU 相关组件，确保 GPU 能够被 Kubernetes 中的 Pod 正常使用，并且能够动态申请显卡和显存资源。这一切通过容器化的方式进行封装和管理，使得 GPU 能够无缝融入 Kubernetes 的计算资源池中。
+1. GPU Operator 组件职能 NVIDIA GPU Operator 是一个 Kubernetes Operator，用来自动化 GPU 资源的管理。它通过以下四个主要组件实现 GPU 的启用、监控和分配：
+NVIDIA Driver Manager：此组件负责安装和管理 Kubernetes 节点上所需的 NVIDIA 驱动程序。通过安装 NVIDIA 驱动，使得 GPU 可以被宿主机和容器识别和使用。每个 Kubernetes 节点必须具备正确的 NVIDIA 驱动，确保 GPU 能够被 Kubernetes 节点访问。
+NVIDIA Container Toolkit (nvidia-docker)：负责将 GPU 能力暴露给容器。它为容器提供了一种与宿主机 GPU 通信的机制，使得容器内部的进程能够访问 GPU。这个组件还包括 nvidia-smi 工具的集成，使容器内部能够执行 GPU 状态检查（如显存使用情况、温度等）。
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>Kubernetes 中 Cilium 网络架构详解与流量处理流程</title>
       <link>https://zhangsiming-blyq.github.io/post/kubernetes/cilium/</link>

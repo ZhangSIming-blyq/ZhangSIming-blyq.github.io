@@ -4,10 +4,12 @@
   lang="en"
   data-figures=""
   
+    class="page"
+  
   
   >
   <head>
-<title>prometheus | </title>
+<title>Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述 | </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,25 +23,25 @@
 
 
 
+  
 <meta property="og:locale" content="en" />
 
 <meta property="og:type" content="article">
-<meta name="description" content="" />
+<meta name="description" content="在 Kubernetes 集群中，通过 NVIDIA GPU Operator 管理 GPU 资源，实现 GPU 虚拟化和显卡的分配。NVIDIA GPU Operator 通过协调 GPU 相关组件，确保 GPU 能够被 Kubernetes 中的 Pod 正常使用，并且能够动态申请显卡和显存资源。这一切通过容器化的 …" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:creator" content="@janedoe">
-<meta name="twitter:title" content="prometheus" />
+<meta name="twitter:title" content="Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述" />
 <meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
-<meta property="og:url" content="https://zhangsiming-blyq.github.io/tags/prometheus/" />
-<meta property="og:title" content="prometheus" />
-<meta property="og:description" content="" />
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/" />
+<meta property="og:title" content="Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述" />
+<meta property="og:description" content="在 Kubernetes 集群中，通过 NVIDIA GPU Operator 管理 GPU 资源，实现 GPU 虚拟化和显卡的分配。NVIDIA GPU Operator 通过协调 GPU 相关组件，确保 GPU 能够被 Kubernetes 中的 Pod 正常使用，并且能够动态申请显卡和显存资源。这一切通过容器化的 …" />
 <meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
 
 <link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
 <link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
 
-<link rel="canonical" href="https://zhangsiming-blyq.github.io/tags/prometheus/">
-<link rel="alternate" type="application/rss+xml" href="https://zhangsiming-blyq.github.io/tags/prometheus/index.xml" title="" />
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/">
 
 
 
@@ -146,19 +148,10 @@
 </header>
 
     <main>
-
-
-
+  
 <div class="grid-inverse wrap content">
-  <div>
-    <ul class="posts" id="posts">
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" title="基于Prometheus、Thanos与Grafana的监控体系详解">基于Prometheus、Thanos与Grafana的监控体系详解</a>
-      </h3>
-      
+  <article class="post_content">
+    <h1 class="post_title">Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述</h1>
   <div class="post_meta">
     <span><svg class="icon">
   <title>calendar</title>
@@ -167,21 +160,21 @@
 </span>
     <span class="post_date">
       Sep 21, 2024</span>
-    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/prometheus/' title="prometheus" class="post_tag button button_translucent">prometheus
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
         </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
         </a>
     </span>
     <span class="page_only">&nbsp;·
   <div class="post_share">
     Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e5%9f%ba%e4%ba%8ePrometheus%e3%80%81Thanos%e4%b8%8eGrafana%e7%9a%84%e7%9b%91%e6%8e%a7%e4%bd%93%e7%b3%bb%e8%af%a6%e8%a7%a3&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2flinux%2fprometheus%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+    <a href="https://twitter.com/intent/tweet?text=Kubernetes%20%e4%b8%ad%20GPU%20%e8%99%9a%e6%8b%9f%e5%8c%96%e4%b8%8e%20NVIDIA%20GPU%20Operator%20%e7%ae%a1%e7%90%86%e6%a6%82%e8%bf%b0&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fgpu-operator%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>twitter</title>
   <use xlink:href="#twitter"></use>
 </svg>
 
     </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2flinux%2fprometheus%2f&t=%e5%9f%ba%e4%ba%8ePrometheus%e3%80%81Thanos%e4%b8%8eGrafana%e7%9a%84%e7%9b%91%e6%8e%a7%e4%bd%93%e7%b3%bb%e8%af%a6%e8%a7%a3" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fkubernetes%2fgpu-operator%2f&t=Kubernetes%20%e4%b8%ad%20GPU%20%e8%99%9a%e6%8b%9f%e5%8c%96%e4%b8%8e%20NVIDIA%20GPU%20Operator%20%e7%ae%a1%e7%90%86%e6%a6%82%e8%bf%b0" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
       <svg class="icon">
   <title>facebook</title>
   <use xlink:href="#facebook"></use>
@@ -195,7 +188,7 @@
 </svg>
 
     </a>
-    <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" title="Copy Link" class="link link_yank">
+    <a href="https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/" title="Copy Link" class="link link_yank">
       <svg class="icon">
   <title>copy</title>
   <use xlink:href="#copy"></use>
@@ -206,30 +199,115 @@
   </span>
   </div>
 
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>Grafana通过Thanos Query从所有Prometheus实例中获取数据。 Thanos Query聚合来自两个集群（每个集群包含4个Prometheus实例）的监控数据。 每个Prometheus实例都有一个与之相连的Thanos Sidecar，Thanos Sidecar将Prometheus数据暴露给Thanos Query。 两个Thanos Sidecar组件分别处理不同集群中的Prometheus实例。 1 +-------------+ 2 | Grafana | 3 +------+------+ 4 | 5 v 6 +-------------+ 7 | Thanos Query| 8 …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
+      <div class="post_toc">
+        <h2>Overview</h2>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
       </div>
-    </div>
-  </li>
+    
+    <div class="post_body"><p>在 Kubernetes 集群中，通过 <strong>NVIDIA GPU Operator</strong> 管理 GPU 资源，实现 GPU 虚拟化和显卡的分配。NVIDIA GPU Operator 通过协调 GPU 相关组件，确保 GPU 能够被 Kubernetes 中的 Pod 正常使用，并且能够动态申请显卡和显存资源。这一切通过容器化的方式进行封装和管理，使得 GPU 能够无缝融入 Kubernetes 的计算资源池中。</p>
+<h4 id="1-gpu-operator-组件职能"><strong>1. GPU Operator 组件职能</strong></h4>
+<p>NVIDIA GPU Operator 是一个 Kubernetes Operator，用来自动化 GPU 资源的管理。它通过以下四个主要组件实现 GPU 的启用、监控和分配：</p>
+<ol>
+<li>
+<p><strong>NVIDIA Driver Manager</strong>：此组件负责安装和管理 Kubernetes 节点上所需的 NVIDIA 驱动程序。通过安装 NVIDIA 驱动，使得 GPU 可以被宿主机和容器识别和使用。每个 Kubernetes 节点必须具备正确的 NVIDIA 驱动，确保 GPU 能够被 Kubernetes 节点访问。</p>
+</li>
+<li>
+<p><strong>NVIDIA Container Toolkit (nvidia-docker)</strong>：负责将 GPU 能力暴露给容器。它为容器提供了一种与宿主机 GPU 通信的机制，使得容器内部的进程能够访问 GPU。这个组件还包括 <code>nvidia-smi</code> 工具的集成，使容器内部能够执行 GPU 状态检查（如显存使用情况、温度等）。</p>
+</li>
+<li>
+<p><strong>NVIDIA Device Plugin</strong>：该插件负责在 Kubernetes 集群中暴露 GPU 资源。Device Plugin 将 GPU 资源报告给 Kubernetes 的 <code>kubelet</code>，使得 Kubernetes 能够识别 GPU，并将其分配给 Pod。这个插件还支持多种 GPU 资源分配模式（如共享显卡、分片虚拟化等），实现 GPU 资源的灵活管理。</p>
+</li>
+<li>
+<p><strong>NVIDIA DCGM（Data Center GPU Manager）</strong>：DCGM 是用于监控和管理 GPU 健康状态的组件。它可以采集 GPU 的性能指标（如温度、功耗、利用率等），并提供 API 接口供 Kubernetes 集群中的其他工具调用，确保 GPU 的稳定性。</p>
+</li>
+</ol>
+<h4 id="2-nvidia-smi-在-pod-中的实现原理"><strong>2. <code>nvidia-smi</code> 在 Pod 中的实现原理</strong></h4>
+<p>要在 Kubernetes 的 Pod 中使用 <code>nvidia-smi</code> 并查看 GPU 设备状态，NVIDIA GPU Operator 通过以下步骤实现：</p>
+<ol>
+<li>
+<p><strong>NVIDIA Driver 安装</strong>：首先，GPU Operator 在每个节点上自动安装 NVIDIA 驱动，使得 GPU 可以被操作系统识别。这是确保 GPU 被容器化应用使用的基础。</p>
+</li>
+<li>
+<p><strong>NVIDIA Container Toolkit</strong>：一旦驱动安装完成，<code>nvidia-docker</code> 工具将 GPU 能力挂载到容器中。这个过程通过设备插件暴露 GPU 资源，使得 GPU 设备在容器内可以被访问。<code>nvidia-docker</code> 工具会在 Pod 中提供对 <code>/dev/nvidia*</code> 设备的访问权限，允许 Pod 中的应用直接调用 GPU。</p>
+</li>
+<li>
+<p><strong>GPU 在 Pod 中的显示</strong>：当 Pod 请求使用 GPU 时，NVIDIA Device Plugin 将该请求转发给 <code>kubelet</code>，并分配相应的 GPU 资源给该 Pod。容器内部通过 NVIDIA Container Toolkit 访问 GPU，因此在容器内运行 <code>nvidia-smi</code> 就可以查看分配的 GPU 信息。</p>
+</li>
+<li>
+<p><strong>nvidia-smi 命令</strong>：<code>nvidia-smi</code> 是 NVIDIA 提供的用于显示 GPU 资源状态的命令行工具。通过 GPU Operator 的配置，容器内的应用能够执行 <code>nvidia-smi</code>，查看 GPU 设备、温度、显存使用情况等。该工具通过访问 <code>/dev/nvidia*</code> 设备文件与实际的 GPU 硬件交互，返回 GPU 的详细状态。</p>
+</li>
+</ol>
+<h4 id="3-gpu-资源虚拟化与管理"><strong>3. GPU 资源虚拟化与管理</strong></h4>
+<p>在 Kubernetes 中，GPU 资源的分配和管理是通过 NVIDIA Device Plugin 来实现的。GPU 虚拟化包括申请 GPU 资源、申请显存等多个过程：</p>
+<ol>
+<li>
+<p><strong>申请 GPU 资源</strong>：当用户创建 Pod 并申请 GPU 时，Pod 的资源需求通过 <code>limits</code> 或 <code>requests</code> 指定 GPU 数量。例如，用户可以在 Pod 定义中指定 <code>nvidia.com/gpu: 1</code>，表示需要分配一张 GPU 卡。Kubernetes 调度器会根据该资源需求，将 Pod 调度到具备足够 GPU 资源的节点上。</p>
+</li>
+<li>
+<p><strong>申请显存</strong>：部分高性能计算或机器学习任务不仅需要 GPU 卡本身，还需要大量的显存。通过 NVIDIA 的虚拟化技术，用户可以指定所需的显存大小，Kubernetes 和 Device Plugin 会根据显存需求合理分配 GPU 资源，确保每个 Pod 的显存使用符合预期。</p>
+</li>
+<li>
+<p><strong>GPU 资源共享与分片</strong>：NVIDIA Device Plugin 支持 GPU 的虚拟化和资源分片，允许多个 Pod 共享同一张物理 GPU。通过资源配额配置，用户可以指定 Pod 使用 GPU 的一部分，允许多个任务并发运行，提高 GPU 资源的利用率。</p>
+</li>
+</ol>
+<h4 id="4-operator-对-gpu-组件的控制与协调"><strong>4. Operator 对 GPU 组件的控制与协调</strong></h4>
+<p>NVIDIA GPU Operator 通过 Kubernetes 的 Operator 模式对所有与 GPU 相关的组件进行协调和管理。其主要职责如下：</p>
+<ol>
+<li>
+<p><strong>自动化部署与更新</strong>：Operator 负责自动安装和更新所有 GPU 相关的组件，包括 NVIDIA 驱动、Device Plugin、NVIDIA DCGM 和 Container Toolkit 等，确保集群中的 GPU 组件始终保持最新和稳定。</p>
+</li>
+<li>
+<p><strong>节点级资源配置</strong>：Operator 监控 Kubernetes 集群中各节点的 GPU 使用情况，并在必要时更新 GPU 的驱动、插件配置。通过这种方式，Operator 确保所有节点具备一致的 GPU 环境，使得 GPU 资源可以跨节点无缝调度。</p>
+</li>
+<li>
+<p><strong>故障监控与自愈</strong>：通过集成 DCGM，Operator 可以监控 GPU 的健康状态。如果某个 GPU 出现故障，Operator 会触发告警，并可以自动采取相应的恢复操作，例如隔离故障节点或重新调度工作负载。</p>
+</li>
+<li>
+<p><strong>GPU 配置与扩展</strong>：Operator 还支持高级的 GPU 资源配置与管理，包括 GPU 显存分配、GPU 性能配置等，帮助用户实现高效的 GPU 虚拟化。</p>
+</li>
+</ol>
+<h4 id="总结"><strong>总结</strong></h4>
+<p>通过 NVIDIA GPU Operator，Kubernetes 中的 GPU 资源得以自动化管理和分配。GPU Operator 协调了多个关键组件：NVIDIA 驱动、Container Toolkit、Device Plugin 和 DCGM，确保 GPU 资源能够被 Kubernetes 集群高效地使用。通过 <code>nvidia-docker</code> 实现 GPU 虚拟化，<code>nvidia-smi</code> 可以在 Pod 中直接查看和管理 GPU 资源。此外，NVIDIA Device Plugin 提供了强大的 GPU 资源管理功能，包括 GPU 共享、显存申请和资源调度。</p>
+<p><a href="https://github.com/NVIDIA/gpu-operator">https://github.com/NVIDIA/gpu-operator</a>
+<a href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/overview.html#about-the-nvidia-gpu-operator">https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/overview.html#about-the-nvidia-gpu-operator</a>
+<a href="https://github.com/NVIDIA/nvidia-docker">https://github.com/NVIDIA/nvidia-docker</a></p>
 
-      <li>
-      </li>
-    </ul>
-  </div>
+    </div>
+<div class="post_comments">
+  
+  
+    
+ <script src="https://utteranc.es/client.js"
+         repo="ZhangSIming-blyq/blogcommit"
+         issue-term="pathname"
+         theme="github-light"
+         crossorigin="anonymous"
+         async>
+ </script>
+ 
+  
+  
+</div>
+
+
+
+
+  </article>
 <aside class="sidebar">
   <section class="sidebar_inner">
     <br>
     
   
   <div class="search">
-    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='tags'>
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='post'>
     <label for="find" class="search_label"><svg class="icon">
   <title>search</title>
   <use xlink:href="#search"></use>
@@ -598,9 +676,8 @@
   </section>
 </aside>
 
+  
 </div>
-
-
     </main><svg width="0" height="0" class="hidden">
   <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
     <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
