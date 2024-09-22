@@ -6,7 +6,25 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 21 Sep 2024 15:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Sep 2024 16:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes 中 Cilium 网络架构详解与流量处理流程</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/cilium/</link>
+      <pubDate>Sat, 21 Sep 2024 16:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/cilium/</guid>
+      <description>
+        
+          
+            1. Cilium 和 Cilium-Operator 的网络架构 在 Kubernetes 集群中，我们使用 Cilium 作为网络插件，基于 eBPF 提供高效的网络功能，如流量控制、负载均衡、网络安全策略等。同时，Cilium-Operator 负责管理集群范围的 Cilium 操作，包括 IP 地址管理、服务发现、BGP 宣告和配置同步等。
+2. IP 分配与 Cilium-Host 的作用 2.1 Cilium 如何分配 IP 地址 Pod 创建时的 IP 分配：当 Kubernetes 中创建一个新的 Pod 时，Cilium 的 CNI 插件 负责为该 Pod 分配 IP 地址。这与 Kubernetes Controller Manager 协同完成。在我们公司的场景中，Cilium 使用的是公司内部的物理 IP 地址，这些地址是从公司内部的一个专门的 IP 地址池中分配的，以确保 Pod 在公司内部的网络中能够被识别和访问。
+通过 Cilium CNI 插件将 IP 分配到 Pod：Cilium 作为 Kubernetes 的 CNI 插件，负责为新创建的 Pod 分配 IP 地址，并将该 IP 绑定到 Pod 的虚拟网络接口（veth）。Cilium 通过 CNI 接口向 Kubernetes 报告这些信息，确保 Kubernetes 的网络配置与 Cilium 的 eBPF 配置一致。
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>两个有序集合的合并</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/mergeset/</link>
