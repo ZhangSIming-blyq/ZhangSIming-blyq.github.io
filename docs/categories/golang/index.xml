@@ -1,12 +1,74 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>golang on </title>
+    <title>Golang on </title>
     <link>https://zhangsiming-blyq.github.io/categories/golang/</link>
-    <description>Recent content in golang on </description>
+    <description>Recent content in Golang on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 10 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Sep 2024 10:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go `map` 底层实现与冲突处理</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/map/</link>
+      <pubDate>Sat, 21 Sep 2024 10:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/map/</guid>
+      <description>
+        
+          
+            Go语言中的map是一种哈希表（hash table）数据结构，支持键值对的高效存取。通过键（key）计算哈希值并将其映射到对应的存储桶（bucket）中，map可以在平均O(1)的时间复杂度下进行插入、查找和删除操作。Go的map底层实现非常精巧，结合了哈希表的基本思想，同时针对冲突和内存管理做了很多优化。
+1. Go map 的基本结构 在Go中，map通过哈希表实现，其底层结构主要由以下几个部分组成：
+1.1 Bucket（存储桶） 1Bucket 2+--------------------+---------------------+---------------------+ 3| keys (k1, k2, ...) | values (v1, v2, ...) | overflow bucket ptr | 4+--------------------+---------------------+---------------------+ 存储桶: 是一个固定长度的数组，用于存储键值对。每个桶中包含了多个键（key）和值（value）对，以及一个指向溢出桶（overflow bucket）的指针。 存储桶：map中的数据被存储在 bucket（存储桶） 中，Go的map默认使用2^B个桶（B是map的大小参数），每个桶可以存储多个键值对。 每个 bucket 是一个存储单元，可以存放多个键值对。多个 bucket 组成了整个哈希表的存储空间。bucket 是哈希表的基本存储单位 每个桶包含若干个键值对和一个溢出链表（overflow bucket），用于解决哈希冲突。桶中的元素通过链表或线性探测等方式处理冲突。 1.2 哈希函数 map通过哈希函数将键映射到一个哈希值，然后通过哈希值找到对应的bucket。 哈希值的前几位决定了元素应该放入的桶。 1.3 扩容机制 当map中的桶负载因子超过一定阈值时，Go会触发扩容（rehash），扩展哈希表的大小。扩容过程中会将旧桶中的数据重新分配到新的桶中，以减少哈希冲突。 Go map 存储和查找的完整流程（结合 bucket 结构） Go 中的 map 是通过哈希表实现的，使用 bucket（桶） 作为核心数据结构存储键值对。以下是 map 在存储和查找一个 key 时的完整流程，以及如何处理哈希冲突。
+2. Go map 查找和存储流程 Go map 的核心结构包含：
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Go Channel 是线程安全的吗？</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/channel/</link>
+      <pubDate>Sat, 21 Sep 2024 09:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/channel/</guid>
+      <description>
+        
+          
+            是的，Go的channel是线程安全的。
+Go中的channel是一种用于不同goroutine之间通信的原语，它可以在多个goroutine之间安全地传递数据，而不需要显式地使用锁机制（如mutex）来同步访问。Go语言的设计确保了channel在并发场景下是安全的，这使得它非常适合在多goroutine环境中用于数据传递和同步。
+Go Channel 的底层实现 Go语言的channel底层实现非常精巧，通过Go runtime（运行时）和调度器（scheduler）来保证其线程安全性。其主要的实现机制依赖于goroutine调度、队列和锁来保证数据的安全传递。下面我们详细解析channel的底层实现：
+1. Channel 的数据结构与机制 Go 的 channel 本质上是一个复杂的结构，主要由几个部分组成：
+发送队列（sendq）：用于存放等待发送数据的 goroutine。 接收队列（recvq）：用于存放等待接收数据的 goroutine。 缓冲区（buf）：如果是有缓冲的 channel，缓冲区用于存放已发送但还未被接收的数据。 锁（mutex）：每个 channel 都有一个锁，用于保护其状态，防止多个 goroutine 并发访问时发生数据竞争。 1type hchan struct { 2 qcount uint // 缓冲区中数据个数 3 dataqsiz uint // 缓冲区大小 4 buf unsafe.Pointer // 缓冲区的指针（有缓冲channel） 5 sendx uint // 下一个发送位置 6 recvx uint // 下一个接收位置 7 sendq waitq // 发送goroutine的等待队列 8 recvq waitq // 接收goroutine的等待队列 9 lock mutex // 保证线程安全的锁 10 closed uint32 // channel是否关闭 11} 2.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>Go内存逃逸与内存泄露详解</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/</link>
+      <pubDate>Sat, 21 Sep 2024 08:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/</guid>
+      <description>
+        
+          
+            1. 栈与堆内存分配 在Go语言中，栈和堆是两种主要的内存分配区域。理解它们的区别和作用，是理解内存逃逸的关键。
+栈（Stack）： 作用：栈是一种连续的内存区域，主要用于存储函数调用中的局部变量。栈的特点是后进先出（LIFO），当函数执行时，局部变量在栈上分配，函数执行结束后，栈上的内存会自动回收。 特点：栈上的内存分配非常快，分配和释放都是由系统自动完成的，空间占用小，适合短生命周期的局部变量。 局限：栈的大小是有限的，当变量的生命周期超出栈帧，或变量的大小超过栈的限制时，栈上的变量就会转移到堆上，这就是内存逃逸。 堆（Heap）： 作用：堆是一个动态内存区域，大小不受限制。Go的**垃圾回收器（GC）**负责自动管理堆内存，分配和释放变量。 特点：堆上的变量可以在程序的不同部分间共享，适用于生命周期较长的对象。 局限：堆的内存分配和释放开销较大。由于堆上的变量需要通过GC回收，因此频繁的堆分配会增加垃圾回收器的负担，影响性能。 总结：
+栈和堆因为内存管理方式不同，堆需要垃圾回收等机制，所以堆的分配和释放速度较慢。栈就是单纯的指针移动，速度快。 栈内存适合短期的、局部的变量，分配速度快，但容量有限。 堆内存适合长期存在的对象，尽管容量大，但垃圾回收的代价较高。 2. Go内存逃逸 内存逃逸是指Go语言中的局部变量从栈转移到堆的现象。当编译器发现某个变量的生命周期超出了当前函数的作用域时，它会将变量从栈转移到堆上分配。
+内存逃逸分析工具： 使用Go语言编译器的逃逸分析工具，可以检测代码中哪些变量发生了内存逃逸。
+1go build -gcflags=&amp;#34;-m&amp;#34; 该命令会在编译时显示哪些变量发生了内存逃逸。
+常见的内存逃逸场景： 简单来说，逃逸发生的原因是：数据在函数结束后还需要存在，无法继续保存在栈中，所以必须移到堆里去。
+2.1 闭包逃逸： 当变量被闭包捕获并在函数结束后继续使用时，编译器会将该变量分配到堆中，因为它的生命周期超出了函数的范围。
+1package main 2 3import &amp;#34;fmt&amp;#34; 4 5func closureEscape() func() int { 6 x := 10 7 return func() int { 8 return x // x 逃逸到堆中 9 } 10} 11 12func main() { 13 f := closureEscape() 14 fmt.Println(f()) // 输出 10 15} 在这个例子中，变量x被闭包捕获，虽然x是局部变量，但由于闭包需要在函数返回后继续使用x，所以x被分配到堆中。
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>Closures In Golang And Python</title>
       <link>https://zhangsiming-blyq.github.io/post/golang/closure/</link>

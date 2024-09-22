@@ -164,6 +164,428 @@
   <div class="excerpt">
     <div class="excerpt_header">
       <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/mergeset/" title="两个有序集合的合并">两个有序集合的合并</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 21, 2024</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=%e4%b8%a4%e4%b8%aa%e6%9c%89%e5%ba%8f%e9%9b%86%e5%90%88%e7%9a%84%e5%90%88%e5%b9%b6&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fmergeset%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fmergeset%2f&t=%e4%b8%a4%e4%b8%aa%e6%9c%89%e5%ba%8f%e9%9b%86%e5%90%88%e7%9a%84%e5%90%88%e5%b9%b6" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/algorithm/mergeset/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p>双指针法的解决思路： 初始化两个指针：分别指向两个有序集合的起始位置。 比较当前指针指向的元素： 如果集合1的元素小于集合2的元素，将集合1的元素放入结果集中，并将集合1的指针向后移动。 如果集合2的元素小于集合1的元素，将集合2的元素放入结果集中，并将集合2的指针向后移动。 如果两个集合的元素相等，则可以选择将其中一个元素加入结果集，然后两个指针都向后移动。 处理剩余元素：当其中一个集合的所有元素都已合并到结果集中，另一集合可能还有剩余元素。此时直接将剩余元素加入结果集中。 返回结果集：所有元素被合并后返回结果。 代码： 1package main 2 3import &quot;fmt&quot; 4 5func …</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/algorithm/mergeset/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/golang/map/" title="Go `map` 底层实现与冲突处理">Go <code>map</code> 底层实现与冲突处理</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 21, 2024</span>
+    <span class="post_time"> · 3 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/golang/' title="Golang" class="post_tag button button_translucent">Golang
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Go%20%60map%60%20%e5%ba%95%e5%b1%82%e5%ae%9e%e7%8e%b0%e4%b8%8e%e5%86%b2%e7%aa%81%e5%a4%84%e7%90%86&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fmap%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fmap%2f&t=Go%20%60map%60%20%e5%ba%95%e5%b1%82%e5%ae%9e%e7%8e%b0%e4%b8%8e%e5%86%b2%e7%aa%81%e5%a4%84%e7%90%86" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/golang/map/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p><p>Go语言中的map是一种哈希表（hash table）数据结构，支持键值对的高效存取。通过键（key）计算哈希值并将其映射到对应的存储桶（bucket）中，map可以在平均O(1)的时间复杂度下进行插入、查找和删除操作。Go的map底层实现非常精巧，结合了哈希表的基本思想，同时针对冲突和内存管理做了很多优化。</p>
+<ol>
+<li>Go map 的基本结构 在Go中，map通过哈希表实现，其底层结构主要由以下几个部分组成：
+1.1 Bucket（存储桶） 1Bucket 2+--------------------+---------------------+---------------------+ 3| keys (k1, k2, ...) …</li>
+</ol>
+</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/golang/map/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/golang/channel/" title="Go Channel 是线程安全的吗？">Go Channel 是线程安全的吗？</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 21, 2024</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/golang/' title="Golang" class="post_tag button button_translucent">Golang
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Go%20Channel%20%e6%98%af%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e5%90%97%ef%bc%9f&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fchannel%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fchannel%2f&t=Go%20Channel%20%e6%98%af%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e5%90%97%ef%bc%9f" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/golang/channel/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p><p>是的，Go的channel是线程安全的。
+Go中的channel是一种用于不同goroutine之间通信的原语，它可以在多个goroutine之间安全地传递数据，而不需要显式地使用锁机制（如mutex）来同步访问。Go语言的设计确保了channel在并发场景下是安全的，这使得它非常适合在多goroutine环境中用于数据传递和同步。
+Go Channel 的底层实现 Go语言的channel底层实现非常精巧，通过Go runtime（运行时）和调度器（scheduler）来保证其线程安全性。其主要的实现机制依赖于goroutine调度、队列和锁来保证数据的安全传递。下面我们详细解析channel的底层实现：</p>
+<ol>
+<li>Channel 的 …</li>
+</ol>
+</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/golang/channel/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/" title="Go内存逃逸与内存泄露详解">Go内存逃逸与内存泄露详解</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 21, 2024</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/golang/' title="Golang" class="post_tag button button_translucent">Golang
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Go%e5%86%85%e5%ad%98%e9%80%83%e9%80%b8%e4%b8%8e%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2%e8%af%a6%e8%a7%a3&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2f%25E5%2586%2585%25E5%25AD%2598%25E9%2580%2583%25E9%2580%25B8%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2f%25E5%2586%2585%25E5%25AD%2598%25E9%2580%2583%25E9%2580%25B8%2f&t=Go%e5%86%85%e5%ad%98%e9%80%83%e9%80%b8%e4%b8%8e%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2%e8%af%a6%e8%a7%a3" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p><ol>
+<li>栈与堆内存分配 在Go语言中，栈和堆是两种主要的内存分配区域。理解它们的区别和作用，是理解内存逃逸的关键。
+栈（Stack）： 作用：栈是一种连续的内存区域，主要用于存储函数调用中的局部变量。栈的特点是后进先出（LIFO），当函数执行时，局部变量在栈上分配，函数执行结束后，栈上的内存会自动回收。 特点：栈上的内存分配非常快，分配和释放都是由系统自动完成的，空间占用小，适合短生命周期的局部变量。 局限：栈的大小是有限的，当变量的生命周期超出栈帧，或变量的大小超过栈的限制时，栈上的变量就会转移到堆上，这就是内存逃逸。 堆（Heap）： 作用：堆是一个动态内存区域，大小不受限制。Go的**垃圾回收器（GC）**负责自动管理堆内存，分 …</li>
+</ol>
+</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" title="基于Prometheus、Thanos与Grafana的监控体系详解">基于Prometheus、Thanos与Grafana的监控体系详解</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 21, 2024</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/prometheus/' title="prometheus" class="post_tag button button_translucent">prometheus
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=%e5%9f%ba%e4%ba%8ePrometheus%e3%80%81Thanos%e4%b8%8eGrafana%e7%9a%84%e7%9b%91%e6%8e%a7%e4%bd%93%e7%b3%bb%e8%af%a6%e8%a7%a3&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2flinux%2fprometheus%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2flinux%2fprometheus%2f&t=%e5%9f%ba%e4%ba%8ePrometheus%e3%80%81Thanos%e4%b8%8eGrafana%e7%9a%84%e7%9b%91%e6%8e%a7%e4%bd%93%e7%b3%bb%e8%af%a6%e8%a7%a3" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p>Grafana通过Thanos Query从所有Prometheus实例中获取数据。 Thanos Query聚合来自两个集群（每个集群包含4个Prometheus实例）的监控数据。 每个Prometheus实例都有一个与之相连的Thanos Sidecar，Thanos Sidecar将Prometheus数据暴露给Thanos Query。 两个Thanos Sidecar组件分别处理不同集群中的Prometheus实例。 1 +-------------+ 2 | Grafana | 3 +------+------+ 4 | 5 v 6 +-------------+ 7 | Thanos Query| 8 …</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/tree/" title="树形结构详解及实际用途">树形结构详解及实际用途</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 21, 2024</span>
+    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=%e6%a0%91%e5%bd%a2%e7%bb%93%e6%9e%84%e8%af%a6%e8%a7%a3%e5%8f%8a%e5%ae%9e%e9%99%85%e7%94%a8%e9%80%94&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2ftree%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2ftree%2f&t=%e6%a0%91%e5%bd%a2%e7%bb%93%e6%9e%84%e8%af%a6%e8%a7%a3%e5%8f%8a%e5%ae%9e%e9%99%85%e7%94%a8%e9%80%94" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/algorithm/tree/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+      <div class="excerpt_footer">
+        <div class="pale">
+          
+            <p><p>树形结构是计算机科学中重要的数据结构，广泛用于存储、检索和排序数据。以下是常见的树结构：二叉树、红黑树、AVL树、B树和B+树。</p>
+<ol>
+<li>二叉树（Binary Tree） 定义： 二叉树是每个节点最多有两个子节点的树结构，通常称为左子树和右子树。
+插入、查询和删除的操作逻辑： 插入：从根节点开始，按照二叉搜索树的性质，插入较小的值到左子树，较大的值到右子树，递归进行。 查询：按照与插入相同的逻辑，递归查找对应的值。 删除：删除时有三种情况：删除叶子节点、删除有一个子节点的节点、删除有两个子节点的节点。对于有两个子节点的情况，需找到右子树中的最小值来替代被删除的节点。 形态图示： 1 10 2 / \ 3 5 15 4 / \ \ 5 …</li>
+</ol>
+</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/algorithm/tree/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
         <a href="https://zhangsiming-blyq.github.io/post/kubernetes/operator/" title="Kubernetes Operator 新手开发一文入门">Kubernetes Operator 新手开发一文入门</a>
       </h3>
       
@@ -519,427 +941,6 @@ Set up docker apt repository:
     </div>
   </li>
 
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day8/" title="【算法刷题系列】第8天 344. 反转字符串, 541. 反转字符串 II, 54. 替换数字（第八期模拟笔试）">【算法刷题系列】第8天 344. 反转字符串, 541. 反转字符串 II, 54. 替换数字（第八期模拟笔试）</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Sep 9, 2024</span>
-    <span class="post_time"> · 3 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac8%e5%a4%a9%20344.%20%e5%8f%8d%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2%2c%20541.%20%e5%8f%8d%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2%20II%2c%2054.%20%e6%9b%bf%e6%8d%a2%e6%95%b0%e5%ad%97%ef%bc%88%e7%ac%ac%e5%85%ab%e6%9c%9f%e6%a8%a1%e6%8b%9f%e7%ac%94%e8%af%95%ef%bc%89&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday8%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday8%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac8%e5%a4%a9%20344.%20%e5%8f%8d%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2%2c%20541.%20%e5%8f%8d%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2%20II%2c%2054.%20%e6%9b%bf%e6%8d%a2%e6%95%b0%e5%ad%97%ef%bc%88%e7%ac%ac%e5%85%ab%e6%9c%9f%e6%a8%a1%e6%8b%9f%e7%ac%94%e8%af%95%ef%bc%89" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day8/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>学习内容 收获总结 字符串和字节数组的转换：在 Go 语言中，字符串是不可变的。对于需要修改字符串的操作，如反转、替换等，我们通常会先将字符串转换为 []byte 类型。这是因为 []byte 是可变的，可以通过索引操作直接修改其内容。在许多字符串操作中，将字符串转换为字节数组是一个有效的优化策略，尤其是在需要大量的字符替换和处理时，这种转换能够提高性能和代码的可读性。
-unicode.IsDigit 和 rune 的用法：在处理字符串中数字字符时，使用 unicode.IsDigit 函数来判断字符是否为数字非常便捷。unicode.IsDigit 适用于所有 Unicode 字符，能够处理多字节字符，如中文或特殊字符。 …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day8/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day7/" title="【算法刷题系列】第7天 第454题.四数相加II, 383. 赎金信, 第15题. 三数之和，第18题. 四数之和">【算法刷题系列】第7天 第454题.四数相加II, 383. 赎金信, 第15题. 三数之和，第18题. 四数之和</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Aug 23, 2024</span>
-    <span class="post_time"> · 5 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac7%e5%a4%a9%20%e7%ac%ac454%e9%a2%98.%e5%9b%9b%e6%95%b0%e7%9b%b8%e5%8a%a0II%2c%20383.%20%e8%b5%8e%e9%87%91%e4%bf%a1%2c%20%e7%ac%ac15%e9%a2%98.%20%e4%b8%89%e6%95%b0%e4%b9%8b%e5%92%8c%ef%bc%8c%e7%ac%ac18%e9%a2%98.%20%e5%9b%9b%e6%95%b0%e4%b9%8b%e5%92%8c&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday7%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday7%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac7%e5%a4%a9%20%e7%ac%ac454%e9%a2%98.%e5%9b%9b%e6%95%b0%e7%9b%b8%e5%8a%a0II%2c%20383.%20%e8%b5%8e%e9%87%91%e4%bf%a1%2c%20%e7%ac%ac15%e9%a2%98.%20%e4%b8%89%e6%95%b0%e4%b9%8b%e5%92%8c%ef%bc%8c%e7%ac%ac18%e9%a2%98.%20%e5%9b%9b%e6%95%b0%e4%b9%8b%e5%92%8c" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day7/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>学习内容 学习文档： 哈希表理论基础 收获总结 哈希表的基本应用: 哈希表是一种通过键值对存储数据的数据结构，具有O(1)的平均查找时间复杂度。其优势在于能够快速判断一个元素是否存在于集合中。通过哈希函数将键映射到存储位置，我们可以在常数时间内完成插入、删除和查找操作。这在需要频繁查找或去重的算法问题中非常有用。
-哈希函数的理解与设计: 哈希函数是哈希表的核心，负责将输入（键）映射到特定的存储桶位置。一个好的哈希函数应当能够均匀地分布输入数据，避免哈希碰撞的发生。哈希碰撞是指不同的输入映射到了同一存储桶，这会导致性能下降。常用的哈希函数设计包括除留余数法、乘积法和平方取中法等。
-哈希碰撞及其处理策略: 哈希碰撞是无法完全避免的，因此 …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day7/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/" title="【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和">【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Aug 22, 2024</span>
-    <span class="post_time"> · 3 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac6%e5%a4%a9%20242.%20%e6%9c%89%e6%95%88%e7%9a%84%e5%ad%97%e6%af%8d%e5%bc%82%e4%bd%8d%e8%af%8d%2c%20349.%20%e4%b8%a4%e4%b8%aa%e6%95%b0%e7%bb%84%e7%9a%84%e4%ba%a4%e9%9b%86%2c%20202.%20%e5%bf%ab%e4%b9%90%e6%95%b0%2c%201.%20%e4%b8%a4%e6%95%b0%e4%b9%8b%e5%92%8c&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday6%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday6%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac6%e5%a4%a9%20242.%20%e6%9c%89%e6%95%88%e7%9a%84%e5%ad%97%e6%af%8d%e5%bc%82%e4%bd%8d%e8%af%8d%2c%20349.%20%e4%b8%a4%e4%b8%aa%e6%95%b0%e7%bb%84%e7%9a%84%e4%ba%a4%e9%9b%86%2c%20202.%20%e5%bf%ab%e4%b9%90%e6%95%b0%2c%201.%20%e4%b8%a4%e6%95%b0%e4%b9%8b%e5%92%8c" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>学习内容 学习文档：
-哈希表理论基础
-收获总结 Go中的rune类型: 在Go语言中，rune是一种别名类型，它表示一个Unicode码点，即一个整数，通常用于表示字符。Go的字符串是以字节数组的形式存储的，因此在处理多字节字符（如汉字、表情符号等）时，直接使用索引访问可能会得到不完整的字符。rune类型解决了这个问题，它能够正确处理和表示多字节的Unicode字符。这对于处理包含非ASCII字符的字符串时非常重要，尤其在国际化或多语言支持的应用中。通过这次学习，我们掌握了如何使用rune遍历字符串，确保对每个字符进行准确的操作。
-数组作为简单高效的哈希表: 在解决某些特定范围的哈希问题时，数组可以作为一种极为简单和高效的哈希表实现 …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day4/" title="【算法刷题系列】第4天 24. 两两交换链表中的节点, 19. 删除链表的倒数第 N 个结点, 面试题 02.07. 链表相交, 142. 环形链表 II">【算法刷题系列】第4天 24. 两两交换链表中的节点, 19. 删除链表的倒数第 N 个结点, 面试题 02.07. 链表相交, 142. 环形链表 II</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Aug 18, 2024</span>
-    <span class="post_time"> · 5 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac4%e5%a4%a9%2024.%20%e4%b8%a4%e4%b8%a4%e4%ba%a4%e6%8d%a2%e9%93%be%e8%a1%a8%e4%b8%ad%e7%9a%84%e8%8a%82%e7%82%b9%2c%2019.%20%e5%88%a0%e9%99%a4%e9%93%be%e8%a1%a8%e7%9a%84%e5%80%92%e6%95%b0%e7%ac%ac%20N%20%e4%b8%aa%e7%bb%93%e7%82%b9%2c%20%e9%9d%a2%e8%af%95%e9%a2%98%2002.07.%20%e9%93%be%e8%a1%a8%e7%9b%b8%e4%ba%a4%2c%20142.%20%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8%20II&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday4%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday4%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac4%e5%a4%a9%2024.%20%e4%b8%a4%e4%b8%a4%e4%ba%a4%e6%8d%a2%e9%93%be%e8%a1%a8%e4%b8%ad%e7%9a%84%e8%8a%82%e7%82%b9%2c%2019.%20%e5%88%a0%e9%99%a4%e9%93%be%e8%a1%a8%e7%9a%84%e5%80%92%e6%95%b0%e7%ac%ac%20N%20%e4%b8%aa%e7%bb%93%e7%82%b9%2c%20%e9%9d%a2%e8%af%95%e9%a2%98%2002.07.%20%e9%93%be%e8%a1%a8%e7%9b%b8%e4%ba%a4%2c%20142.%20%e7%8e%af%e5%bd%a2%e9%93%be%e8%a1%a8%20II" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day4/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>收获总结 虚拟头节点的使用：虚拟头节点（Dummy Head）是处理链表问题的一大利器，尤其在增删节点操作中。通过引入虚拟头节点，可以避免处理链表头部时遇到的特殊情况，如删除第一个节点或在第一个节点前插入新节点。这不仅简化了代码，还减少了需要额外考虑的边界条件。例如，在处理 19. 删除链表的倒数第 N 个结点 时，虚拟头节点能够让双指针操作统一化，避免对头节点的单独处理。
-双指针技术：双指针技术是链表问题中的核心工具，特别是在处理链表长度不一致、链表中查找特定节点、或检测链表是否存在环时。双指针通常有两种应用方式：
-快慢指针：通过让一个指针每次走两步（快指针），另一个指针每次走一步（慢指针），这种方法能有效检测链表中的环（ …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day4/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day3/" title="【算法刷题系列】第3天 203.移除链表元素, 707.设计链表, 206.反转链表">【算法刷题系列】第3天 203.移除链表元素, 707.设计链表, 206.反转链表</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Aug 16, 2024</span>
-    <span class="post_time"> · 4 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac3%e5%a4%a9%20203.%e7%a7%bb%e9%99%a4%e9%93%be%e8%a1%a8%e5%85%83%e7%b4%a0%2c%20707.%e8%ae%be%e8%ae%a1%e9%93%be%e8%a1%a8%2c%20206.%e5%8f%8d%e8%bd%ac%e9%93%be%e8%a1%a8&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday3%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday3%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac3%e5%a4%a9%20203.%e7%a7%bb%e9%99%a4%e9%93%be%e8%a1%a8%e5%85%83%e7%b4%a0%2c%20707.%e8%ae%be%e8%ae%a1%e9%93%be%e8%a1%a8%2c%20206.%e5%8f%8d%e8%bd%ac%e9%93%be%e8%a1%a8" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day3/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>学习内容 学习文档：
-链表讲解
-收获总结 链表概述 链表是一种基础的数据结构，由一系列节点组成，每个节点包含数据部分和指向下一个节点的指针（或引用）。链表的最后一个节点指向 null，表示链表的末尾。链表动态扩展性强，适合频繁插入和删除操作。
-链表的定义 链表有多种类型，最常见的是单链表和双链表。
-单链表：每个节点包含数据和指向下一个节点的指针 next。链表的头节点指向第一个节点，最后一个节点的 next 指向 null。
-Golang 单链表定义：
-1type ListNode struct { 2 Val int 3 Next *ListNode 4} 双链表：每个节点包含数据、指向下一个节点的指针 next 和指向前一个节点 …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day3/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
-        <li class="post_item">
-  <div class="excerpt">
-    <div class="excerpt_header">
-      <h3 class="post_link">
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/" title="【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II">【算法刷题系列】第2天 209. 长度最小的子数组, 59. 螺旋矩阵 II</a>
-      </h3>
-      
-  <div class="post_meta">
-    <span><svg class="icon">
-  <title>calendar</title>
-  <use xlink:href="#calendar"></use>
-</svg>
-</span>
-    <span class="post_date">
-      Aug 15, 2024</span>
-    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' title="algorithm" class="post_tag button button_translucent">algorithm
-        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
-        </a>
-    </span>
-    <span class="page_only">&nbsp;·
-  <div class="post_share">
-    Share on:
-    <a href="https://twitter.com/intent/tweet?text=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac2%e5%a4%a9%20209.%20%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84%2c%2059.%20%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5%20II&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday2%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>twitter</title>
-  <use xlink:href="#twitter"></use>
-</svg>
-
-    </a>
-    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2falgorithm%2fprogrammercarl%2fday2%2f&t=%e3%80%90%e7%ae%97%e6%b3%95%e5%88%b7%e9%a2%98%e7%b3%bb%e5%88%97%e3%80%91%e7%ac%ac2%e5%a4%a9%20209.%20%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84%2c%2059.%20%e8%9e%ba%e6%97%8b%e7%9f%a9%e9%98%b5%20II" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
-      <svg class="icon">
-  <title>facebook</title>
-  <use xlink:href="#facebook"></use>
-</svg>
-
-    </a>
-    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
-      <svg class="icon">
-  <title>linkedin</title>
-  <use xlink:href="#linkedin"></use>
-</svg>
-
-    </a>
-    <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/" title="Copy Link" class="link link_yank">
-      <svg class="icon">
-  <title>copy</title>
-  <use xlink:href="#copy"></use>
-</svg>
-
-    </a>
-  </div>
-  </span>
-  </div>
-
-    </div>
-      <div class="excerpt_footer">
-        <div class="pale">
-          
-            <p>学习内容 学习文档：
-长度最小子数组讲解
-螺旋矩阵II讲解
-收获总结 滑动窗口： 在某些情况下，滑动窗口可以看作是一种特殊的双指针技术，其中两个指针 i 和 j（即左指针和右指针）从同一端开始，但移动的条件有所不同。滑动窗口的核心思想是通过右指针 j 不断向右扩展窗口，同时左指针 i 尽量向右收缩窗口，以找到满足特定条件的最小或最大窗口。
-举例来说，假设你想找到数组 arr 中两个元素之间的差值等于 diff 的一对元素索引，这可以视为滑动窗口问题，右指针 j 用来扩展窗口，左指针 i 用来收缩窗口，直到找到满足条件的子数组。初始化时可以根据具体问题选择 i, j 都从 0, 0 开始，也可以 0, 1 这种情况。
-题目解析 题 …</p>
-          
-          <br>
-          <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day2/" title="Read More" class="excerpt_more button">Read More</a>
-        </div>
-      </div>
-    </div>
-  </li>
-
       <li>
     <ul class="pagination pagination-default">
       <li class="page-item disabled">
@@ -993,28 +994,28 @@ Golang 单链表定义：
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
       <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/mergeset/" class="nav-link" title="两个有序集合的合并">两个有序集合的合并</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/map/" class="nav-link" title="Go `map` 底层实现与冲突处理">Go <code>map</code> 底层实现与冲突处理</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/channel/" class="nav-link" title="Go Channel 是线程安全的吗？">Go Channel 是线程安全的吗？</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/" class="nav-link" title="Go内存逃逸与内存泄露详解">Go内存逃逸与内存泄露详解</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" class="nav-link" title="基于Prometheus、Thanos与Grafana的监控体系详解">基于Prometheus、Thanos与Grafana的监控体系详解</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/tree/" class="nav-link" title="树形结构详解及实际用途">树形结构详解及实际用途</a>
+      </li>
+      <li>
         <a href="https://zhangsiming-blyq.github.io/post/kubernetes/operator/" class="nav-link" title="Kubernetes Operator 新手开发一文入门">Kubernetes Operator 新手开发一文入门</a>
       </li>
       <li>
         <a href="https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/" class="nav-link" title="Deploy Kubernetes cluster via kubeadm">Deploy Kubernetes cluster via kubeadm</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/addnode/" class="nav-link" title="如何加节点到Kubernetes集群">如何加节点到Kubernetes集群</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/linux/etcd-tutorial/" class="nav-link" title="Etcd Tutorial">Etcd Tutorial</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/java/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF1/" class="nav-link" title="【Java入门系列】Java基础入门 --- 安装，数据类型，类">【Java入门系列】Java基础入门 --- 安装，数据类型，类</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/golang/closure/" class="nav-link" title="Closures In Golang And Python">Closures In Golang And Python</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/golang/gozap/" class="nav-link" title="使用zap打造你的golang日志库">使用zap打造你的golang日志库</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" class="nav-link" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
       </li>
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
@@ -1023,31 +1024,7 @@ Golang 单链表定义：
         <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day9/" class="nav-link" title="【算法刷题系列】第9天 151. 反转字符串中的单词, 55. 右旋字符串, 459. 重复的子字符串">【算法刷题系列】第9天 151. 反转字符串中的单词, 55. 右旋字符串, 459. 重复的子字符串</a>
       </li>
       <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day8/" class="nav-link" title="【算法刷题系列】第8天 344. 反转字符串, 541. 反转字符串 II, 54. 替换数字（第八期模拟笔试）">【算法刷题系列】第8天 344. 反转字符串, 541. 反转字符串 II, 54. 替换数字（第八期模拟笔试）</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day7/" class="nav-link" title="【算法刷题系列】第7天 第454题.四数相加II, 383. 赎金信, 第15题. 三数之和，第18题. 四数之和">【算法刷题系列】第7天 第454题.四数相加II, 383. 赎金信, 第15题. 三数之和，第18题. 四数之和</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day6/" class="nav-link" title="【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和">【算法刷题系列】第6天 242. 有效的字母异位词, 349. 两个数组的交集, 202. 快乐数, 1. 两数之和</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day4/" class="nav-link" title="【算法刷题系列】第4天 24. 两两交换链表中的节点, 19. 删除链表的倒数第 N 个结点, 面试题 02.07. 链表相交, 142. 环形链表 II">【算法刷题系列】第4天 24. 两两交换链表中的节点, 19. 删除链表的倒数第 N 个结点, 面试题 02.07. 链表相交, 142. 环形链表 II</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/linux/etcd-tutorial/" class="nav-link" title="Etcd Tutorial">Etcd Tutorial</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/java/java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF1/" class="nav-link" title="【Java入门系列】Java基础入门 --- 安装，数据类型，类">【Java入门系列】Java基础入门 --- 安装，数据类型，类</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/golang/closure/" class="nav-link" title="Closures In Golang And Python">Closures In Golang And Python</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/golang/gozap/" class="nav-link" title="使用zap打造你的golang日志库">使用zap打造你的golang日志库</a>
-      </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" class="nav-link" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/kubeadm/" class="nav-link" title="Deploy Kubernetes cluster via kubeadm">Deploy Kubernetes cluster via kubeadm</a>
       </li>
     </ul>
     <div>
@@ -1055,7 +1032,7 @@ Golang 单链表定义：
       <nav class="tags_nav">
         <a href='https://zhangsiming-blyq.github.io/categories/algorithm/' class="post_tag button button_translucent" title="algorithm">
           ALGORITHM
-          <span class="button_tally">14</span>
+          <span class="button_tally">15</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
@@ -1063,14 +1040,14 @@ Golang 单链表定义：
           <span class="button_tally">9</span>
         </a>
         
+        <a href='https://zhangsiming-blyq.github.io/categories/golang/' class="post_tag button button_translucent" title="golang">
+          GOLANG
+          <span class="button_tally">6</span>
+        </a>
+        
         <a href='https://zhangsiming-blyq.github.io/categories/shorthand/' class="post_tag button button_translucent" title="shorthand">
           SHORTHAND
           <span class="button_tally">4</span>
-        </a>
-        
-        <a href='https://zhangsiming-blyq.github.io/categories/golang/' class="post_tag button button_translucent" title="golang">
-          GOLANG
-          <span class="button_tally">3</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/categories/linux/' class="post_tag button button_translucent" title="linux">
@@ -1081,6 +1058,11 @@ Golang 单链表定义：
         <a href='https://zhangsiming-blyq.github.io/categories/python/' class="post_tag button button_translucent" title="python">
           PYTHON
           <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/algoiithm/' class="post_tag button button_translucent" title="algoiithm">
+          ALGOIITHM
+          <span class="button_tally">1</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/categories/ansible/' class="post_tag button button_translucent" title="ansible">
@@ -1118,12 +1100,82 @@ Golang 单链表定义：
           <span class="button_tally">1</span>
         </a>
         
-        <a href='https://zhangsiming-blyq.github.io/categories/vim/' class="post_tag button button_translucent" title="vim">
-          VIM
-          <span class="button_tally">1</span>
-        </a>
         
-        
+        <br>
+        <div class="post_tags_toggle button">All Categories</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/algoiithm/' class=" post_tag button button_translucent" data-position=1 title="algoiithm">ALGOIITHM<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/algorithm/' class=" post_tag button button_translucent" data-position=15 title="algorithm">ALGORITHM<span class="button_tally">15</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/ansible/' class=" post_tag button button_translucent" data-position=1 title="ansible">ANSIBLE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/apigateway/' class=" post_tag button button_translucent" data-position=1 title="apigateway">APIGATEWAY<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/containerd/' class=" post_tag button button_translucent" data-position=1 title="containerd">CONTAINERD<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/docker/' class=" post_tag button button_translucent" data-position=1 title="docker">DOCKER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/etcd/' class=" post_tag button button_translucent" data-position=1 title="etcd">ETCD<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/git/' class=" post_tag button button_translucent" data-position=1 title="git">GIT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/golang/' class=" post_tag button button_translucent" data-position=6 title="golang">GOLANG<span class="button_tally">6</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/java/' class=" post_tag button button_translucent" data-position=1 title="java">JAVA<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class=" post_tag button button_translucent" data-position=9 title="kubernetes">KUBERNETES<span class="button_tally">9</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/linux/' class=" post_tag button button_translucent" data-position=3 title="linux">LINUX<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/prometheus/' class=" post_tag button button_translucent" data-position=1 title="prometheus">PROMETHEUS<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/python/' class=" post_tag button button_translucent" data-position=2 title="python">PYTHON<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/shorthand/' class=" post_tag button button_translucent" data-position=4 title="shorthand">SHORTHAND<span class="button_tally">4</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/vim/' class=" post_tag button button_translucent" data-position=1 title="vim">VIM<span class="button_tally">1</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
       </nav>
     </div>
     <div>
@@ -1131,12 +1183,12 @@ Golang 单链表定义：
       <nav class="tags_nav">
         <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class="post_tag button button_translucent" title="中文">
           中文
-          <span class="button_tally">23</span>
+          <span class="button_tally">29</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class="post_tag button button_translucent" title="algorithm">
           ALGORITHM
-          <span class="button_tally">14</span>
+          <span class="button_tally">16</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/tags/english/' class="post_tag button button_translucent" title="english">
@@ -1149,14 +1201,14 @@ Golang 单链表定义：
           <span class="button_tally">10</span>
         </a>
         
+        <a href='https://zhangsiming-blyq.github.io/tags/golang/' class="post_tag button button_translucent" title="golang">
+          GOLANG
+          <span class="button_tally">6</span>
+        </a>
+        
         <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' class="post_tag button button_translucent" title="shorthand">
           SHORTHAND
           <span class="button_tally">4</span>
-        </a>
-        
-        <a href='https://zhangsiming-blyq.github.io/tags/golang/' class="post_tag button button_translucent" title="golang">
-          GOLANG
-          <span class="button_tally">3</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/tags/linux/' class="post_tag button button_translucent" title="linux">
@@ -1209,7 +1261,7 @@ Golang 单链表定义：
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class=" post_tag button button_translucent" data-position=14 title="algorithm">ALGORITHM<span class="button_tally">14</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class=" post_tag button button_translucent" data-position=16 title="algorithm">ALGORITHM<span class="button_tally">16</span>
             </a>
             
             
@@ -1249,7 +1301,7 @@ Golang 单链表定义：
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/golang/' class=" post_tag button button_translucent" data-position=3 title="golang">GOLANG<span class="button_tally">3</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/golang/' class=" post_tag button button_translucent" data-position=6 title="golang">GOLANG<span class="button_tally">6</span>
             </a>
             
             
@@ -1262,6 +1314,10 @@ Golang 单链表定义：
             
             
             <a href='https://zhangsiming-blyq.github.io/tags/linux/' class=" post_tag button button_translucent" data-position=3 title="linux">LINUX<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/prometheus/' class=" post_tag button button_translucent" data-position=1 title="prometheus">PROMETHEUS<span class="button_tally">1</span>
             </a>
             
             
@@ -1281,7 +1337,7 @@ Golang 单链表定义：
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=23 title="中文">中文<span class="button_tally">23</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=29 title="中文">中文<span class="button_tally">29</span>
             </a>
             
             <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>

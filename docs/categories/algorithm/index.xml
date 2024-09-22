@@ -6,7 +6,23 @@
     <description>Recent content in algorithm on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 10 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Sep 2024 15:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>两个有序集合的合并</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/mergeset/</link>
+      <pubDate>Sat, 21 Sep 2024 15:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/mergeset/</guid>
+      <description>
+        
+          
+            双指针法的解决思路： 初始化两个指针：分别指向两个有序集合的起始位置。 比较当前指针指向的元素： 如果集合1的元素小于集合2的元素，将集合1的元素放入结果集中，并将集合1的指针向后移动。 如果集合2的元素小于集合1的元素，将集合2的元素放入结果集中，并将集合2的指针向后移动。 如果两个集合的元素相等，则可以选择将其中一个元素加入结果集，然后两个指针都向后移动。 处理剩余元素：当其中一个集合的所有元素都已合并到结果集中，另一集合可能还有剩余元素。此时直接将剩余元素加入结果集中。 返回结果集：所有元素被合并后返回结果。 代码： 1package main 2 3import &amp;#34;fmt&amp;#34; 4 5func mergeSet(set1, set2 []int) []int { 6 result := []int{} 7 8 i, j := 0, 0 9 10 for i &amp;lt; len(set1) &amp;amp;&amp;amp; j &amp;lt; len(set2) { 11 // 1. 比较大小，小的先走 12 if set1[i] &amp;lt; set2[j] { 13 result = append(result, set1[i]) 14 i++ 15 } else if set1[i] &amp;gt; set2[j] { 16 // 2.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>【算法刷题系列】第9天 151. 反转字符串中的单词, 55. 右旋字符串, 459. 重复的子字符串</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day9/</link>

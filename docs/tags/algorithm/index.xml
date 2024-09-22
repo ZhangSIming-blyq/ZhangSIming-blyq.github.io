@@ -6,7 +6,44 @@
     <description>Recent content in algorithm on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 10 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 21 Sep 2024 15:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>两个有序集合的合并</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/mergeset/</link>
+      <pubDate>Sat, 21 Sep 2024 15:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/mergeset/</guid>
+      <description>
+        
+          
+            双指针法的解决思路： 初始化两个指针：分别指向两个有序集合的起始位置。 比较当前指针指向的元素： 如果集合1的元素小于集合2的元素，将集合1的元素放入结果集中，并将集合1的指针向后移动。 如果集合2的元素小于集合1的元素，将集合2的元素放入结果集中，并将集合2的指针向后移动。 如果两个集合的元素相等，则可以选择将其中一个元素加入结果集，然后两个指针都向后移动。 处理剩余元素：当其中一个集合的所有元素都已合并到结果集中，另一集合可能还有剩余元素。此时直接将剩余元素加入结果集中。 返回结果集：所有元素被合并后返回结果。 代码： 1package main 2 3import &amp;#34;fmt&amp;#34; 4 5func mergeSet(set1, set2 []int) []int { 6 result := []int{} 7 8 i, j := 0, 0 9 10 for i &amp;lt; len(set1) &amp;amp;&amp;amp; j &amp;lt; len(set2) { 11 // 1. 比较大小，小的先走 12 if set1[i] &amp;lt; set2[j] { 13 result = append(result, set1[i]) 14 i++ 15 } else if set1[i] &amp;gt; set2[j] { 16 // 2.
+          
+          
+        
+      </description>
+    </item>
+    
+    <item>
+      <title>树形结构详解及实际用途</title>
+      <link>https://zhangsiming-blyq.github.io/post/algorithm/tree/</link>
+      <pubDate>Sat, 21 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/algorithm/tree/</guid>
+      <description>
+        
+          
+            树形结构是计算机科学中重要的数据结构，广泛用于存储、检索和排序数据。以下是常见的树结构：二叉树、红黑树、AVL树、B树和B+树。
+1. 二叉树（Binary Tree） 定义： 二叉树是每个节点最多有两个子节点的树结构，通常称为左子树和右子树。
+插入、查询和删除的操作逻辑： 插入：从根节点开始，按照二叉搜索树的性质，插入较小的值到左子树，较大的值到右子树，递归进行。 查询：按照与插入相同的逻辑，递归查找对应的值。 删除：删除时有三种情况：删除叶子节点、删除有一个子节点的节点、删除有两个子节点的节点。对于有两个子节点的情况，需找到右子树中的最小值来替代被删除的节点。 形态图示： 1 10 2 / \ 3 5 15 4 / \ \ 5 2 7 20 应用场景： 表达式树：在编译器或解释器中，二叉树常用于解析复杂的算术表达式。每个操作符（如 +, *）是树中的内部节点，而操作数（如 3, 5）是叶子节点。编译器利用表达式树来解析并执行复杂表达式。例如表达式 (3 + (5 * 2)) 会被解析成一棵树，先执行乘法，再执行加法。通过二叉树，编译器能够确保按照正确的优先级顺序执行运算，方便表达式的解析与求值。
+决策树：在机器学习中，决策树用于分类和回归模型。每个内部节点表示一个决策条件（如 &amp;quot;是否年龄&amp;gt;30&amp;quot;），叶子节点表示决策的结果（如 &amp;quot;是&amp;quot; 或 &amp;quot;否&amp;quot;）。通过这种结构，机器学习模型能够递归地通过多个决策条件，得出最终分类或预测结果。
+2. 红黑树（Red-Black Tree） 定义： 红黑树是一种自平衡二叉搜索树，通过颜色（红色和黑色）标记来保持平衡。
+插入、查询和删除的操作逻辑： 插入：红黑树首先按二叉搜索树的方式插入节点，之后会根据颜色调整和旋转操作来维持树的平衡。红色节点不能连续存在，且路径中的黑色节点数量相同。 查询：与普通二叉树一样，根据值递归查找左右子树。 删除：删除后根据颜色规则调整，通过旋转和重新着色确保红黑树保持平衡。 形态图示： 1 10(B) 2 / \ 3 5(R) 15(B) 4 / \ 5 12(R) 20(R) 应用场景： 操作系统调度器（CFS）：在 Linux 操作系统中，完全公平调度器（CFS）是调度器子系统，用来管理多个正在运行的任务。CFS 使用红黑树存储所有等待运行的任务，以任务的虚拟运行时间为关键字。调度器每次会选择虚拟运行时间最短的任务来执行，并且在执行过程中，会定期更新任务的运行时间。红黑树通过自平衡保证在众多任务中高效查找和调度任务。通过红黑树，CFS 能够在 O(log n) 时间内找到虚拟运行时间最短的任务，确保多任务系统中的公平调度和高效运行。
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>【算法刷题系列】第9天 151. 反转字符串中的单词, 55. 右旋字符串, 459. 重复的子字符串</title>
       <link>https://zhangsiming-blyq.github.io/post/algorithm/programmercarl/day9/</link>
