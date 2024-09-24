@@ -6,7 +6,24 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 21 Sep 2024 18:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang 核心知识点详解文档</title>
+      <link>https://zhangsiming-blyq.github.io/post/golang/core/</link>
+      <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/golang/core/</guid>
+      <description>
+        
+          
+            1. GMP 调度模型 1.1 GMP 概述 Go 语言中的 GMP 模型是 Goroutine 的调度机制，通过三个核心概念实现并发任务的高效调度：
+G（Goroutine）：轻量级线程，每个 G 代表一个独立的任务。 M（Machine）：代表操作系统的线程，负责执行 G。 P（Processor）：逻辑处理器，管理 G 的队列，绑定 M 来调度 G。 1.2 调度模型的原理 工作窃取（Work Stealing）：当一个 P 没有要执行的 Goroutine 时，它会从其他 P 中窃取任务执行，以保持负载平衡。 Hand-off（任务交接）：Hand Off 是 Go 调度系统中的优化机制。当一个 M（Machine）由于执行系统调用、I/O 或锁等待等操作被阻塞时，P（Processor）会与 M 解除绑定，将 M 上的 Goroutine 放回全局队列或等待队列中，以便其他空闲的 M 或 P 能继续执行这些任务。通过这种任务交接的方式，Go 可以避免 Goroutine 长时间停留在阻塞的 M 上，保持高效的调度，确保系统资源得到充分利用。 抢占式调度：从 Go 1.14 开始，长时间占用 CPU 的 Goroutine 会被强制中断，允许其他 Goroutine 执行，避免单个 Goroutine 独占 CPU。 代码示例：Goroutine 调度 1package main 2 3import ( 4 &amp;#34;fmt&amp;#34; 5 &amp;#34;time&amp;#34; 6) 7 8func worker(id int) { 9 fmt.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述</title>
       <link>https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/</link>

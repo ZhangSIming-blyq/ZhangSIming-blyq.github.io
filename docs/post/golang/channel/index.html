@@ -162,7 +162,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
 </span>
     <span class="post_date">
       Sep 21, 2024</span>
-    <span class="post_time"> · 2 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/golang/' title="Golang" class="post_tag button button_translucent">Golang
+    <span class="post_time"> · 3 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/golang/' title="Golang" class="post_tag button button_translucent">Golang
         </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
         </a>
     </span>
@@ -213,6 +213,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
         <li><a href="#4-channel-的底层实现总结"><strong>4. Channel 的底层实现总结：</strong></a></li>
         <li><a href="#示例channel-实现并发的线程安全通信"><strong>示例：Channel 实现并发的线程安全通信</strong></a></li>
         <li><a href="#总结"><strong>总结：</strong></a></li>
+        <li><a href="#channel面试题总结"><strong>Channel面试题总结</strong></a></li>
       </ul>
     </li>
   </ul>
@@ -377,7 +378,103 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
 <li>Channel在Go语言的并发模型中是非常重要的原语，它避免了手动使用锁来管理并发操作，使得并发编程更加简洁和安全。</li>
 </ul>
 <p><strong>原子操作</strong>依赖于<strong>CPU指令</strong>，由硬件保证操作不可中断，适合简单的并发操作，<strong>速度快</strong>，无需操作系统调度。<strong>锁机制</strong>依赖于<strong>操作系统调度器</strong>，用于保护复杂的多线程操作，确保线程间的排他性访问，但会引入性能开销，如上下文切换和线程阻塞。</p>
-
+<h3 id="channel面试题总结"><strong>Channel面试题总结</strong></h3>
+<h4 id="1-有缓冲和无缓冲的-channel-特点"><strong>1. 有缓冲和无缓冲的 channel 特点</strong></h4>
+<ul>
+<li><strong>无缓冲 channel</strong>：发送操作会阻塞，直到有接收者。接收者会在有发送者时才会接收数据，因此无缓冲 channel 是同步的。</li>
+<li><strong>有缓冲 channel</strong>：只要缓冲区未满，发送操作不会阻塞。接收者只会在缓冲区为空时阻塞。</li>
+</ul>
+<hr>
+<h4 id="2-发送到-nil-和已关闭的-channel"><strong>2. 发送到 nil 和已关闭的 channel</strong></h4>
+<ul>
+<li><strong>发送到 nil channel</strong>：会导致永久阻塞，因为 nil channel 没有接收者。</li>
+<li><strong>发送到已关闭的 channel</strong>：会触发 panic。</li>
+</ul>
+<hr>
+<h4 id="3-接收数据从-nil-和已关闭的-channel"><strong>3. 接收数据从 nil 和已关闭的 channel</strong></h4>
+<ul>
+<li><strong>从 nil channel 接收</strong>：会导致永久阻塞。</li>
+<li><strong>从已关闭的 channel 接收</strong>：会立即返回 channel 类型的零值，不会阻塞。</li>
+</ul>
+<hr>
+<h4 id="4-goroutine-泄露原因"><strong>4. goroutine 泄露原因</strong></h4>
+<ul>
+<li><strong>goroutine 泄露</strong>：发生在 goroutine 因等待从 channel 接收/发送数据而无法退出，比如 channel 永远没有数据写入或读取，导致 goroutine 一直阻塞。</li>
+</ul>
+<hr>
+<h4 id="5-channel-发送步骤"><strong>5. channel 发送步骤</strong></h4>
+<ol>
+<li>检查 channel 是否关闭。</li>
+<li>如果是有缓冲 channel，检查缓冲区是否已满，满则阻塞。</li>
+<li>否则将数据写入缓冲区或直接传给接收方。</li>
+<li>如果有接收方，唤醒接收方。</li>
+</ol>
+<hr>
+<h4 id="6-channel-接收步骤"><strong>6. channel 接收步骤</strong></h4>
+<ol>
+<li>检查 channel 是否关闭。</li>
+<li>如果 channel 关闭且缓冲区为空，返回零值。</li>
+<li>如果缓冲区有数据，读取数据。</li>
+<li>如果无缓冲且无发送方，阻塞。</li>
+</ol>
+<hr>
+<h4 id="7-channel-发送指针引起内存泄露"><strong>7. channel 发送指针引起内存泄露</strong></h4>
+<ul>
+<li><strong>原因</strong>：发送指针数据时，如果发送方没有被正确清理，可能导致发送者占用的内存无法释放，因为引用仍存在于 channel 中。</li>
+</ul>
+<hr>
+<h4 id="8-代码题"><strong>8. 代码题</strong></h4>
+<h5 id="用-channel-实现一个任务池">用 channel 实现一个任务池</h5>
+<p>任务池就是多个任务可以分配给多个工作者（worker）进行并行处理。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">worker</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">tasks</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">wg</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="k">for</span> <span class="nx">task</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">tasks</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Worker %d processing task %d\n&#34;</span><span class="p">,</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">task</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1">// 具体使用
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">tasks</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="c1">// 创建 3 个 worker
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">        <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">        <span class="k">go</span> <span class="nf">worker</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">tasks</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">wg</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="c1">// 分配任务
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">        <span class="nx">tasks</span> <span class="o">&lt;-</span> <span class="nx">i</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="nb">close</span><span class="p">(</span><span class="nx">tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">
+</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="用-channel-控制-goroutine-数量">用 channel 控制 goroutine 数量</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">func</span> <span class="nf">worker</span><span class="p">(</span><span class="nx">sem</span> <span class="kd">chan</span> <span class="kd">struct</span><span class="p">{},</span> <span class="nx">wg</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="c1">// sem是一个容量为1的channel，用于控制goroutine数量；阻塞情况下，只有一个goroutine可以通过
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"></span>    <span class="nx">sem</span> <span class="o">&lt;-</span> <span class="kd">struct</span><span class="p">{}{}</span> <span class="c1">// 限制 goroutine 数量
+</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Processing&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="o">&lt;-</span><span class="nx">sem</span> <span class="c1">// 释放
+</span></span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"></span>    <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="用-channel-实现生产者-消费者模型">用 channel 实现生产者-消费者模型</h5>
+<p>生产者-消费者模型是经典的并发编程问题，生产者生成数据，消费者使用数据，二者通过 channel 协作。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">producer</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">        <span class="nx">out</span> <span class="o">&lt;-</span> <span class="nx">i</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="nb">close</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">func</span> <span class="nf">consumer</span><span class="p">(</span><span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="k">for</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">in</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Consumed:&#34;</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
     </div>
 <div class="post_comments">
   
@@ -422,6 +519,9 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
       <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/core/" class="nav-link" title="Golang 核心知识点详解文档">Golang 核心知识点详解文档</a>
+      </li>
+      <li>
         <a href="https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/" class="nav-link" title="Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述">Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述</a>
       </li>
       <li>
@@ -442,9 +542,6 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
       <li>
         <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" class="nav-link" title="基于Prometheus、Thanos与Grafana的监控体系详解">基于Prometheus、Thanos与Grafana的监控体系详解</a>
       </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/algorithm/tree/" class="nav-link" title="树形结构详解及实际用途">树形结构详解及实际用途</a>
-      </li>
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
@@ -464,7 +561,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
         
         <a href='https://zhangsiming-blyq.github.io/categories/golang/' class="post_tag button button_translucent" title="golang">
           GOLANG
-          <span class="button_tally">6</span>
+          <span class="button_tally">7</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/categories/shorthand/' class="post_tag button button_translucent" title="shorthand">
@@ -560,7 +657,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/categories/golang/' class=" post_tag button button_translucent" data-position=6 title="golang">GOLANG<span class="button_tally">6</span>
+            <a href='https://zhangsiming-blyq.github.io/categories/golang/' class=" post_tag button button_translucent" data-position=7 title="golang">GOLANG<span class="button_tally">7</span>
             </a>
             
             
@@ -605,7 +702,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
       <nav class="tags_nav">
         <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class="post_tag button button_translucent" title="中文">
           中文
-          <span class="button_tally">31</span>
+          <span class="button_tally">32</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class="post_tag button button_translucent" title="algorithm">
@@ -625,7 +722,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
         
         <a href='https://zhangsiming-blyq.github.io/tags/golang/' class="post_tag button button_translucent" title="golang">
           GOLANG
-          <span class="button_tally">6</span>
+          <span class="button_tally">7</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' class="post_tag button button_translucent" title="shorthand">
@@ -723,7 +820,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/golang/' class=" post_tag button button_translucent" data-position=6 title="golang">GOLANG<span class="button_tally">6</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/golang/' class=" post_tag button button_translucent" data-position=7 title="golang">GOLANG<span class="button_tally">7</span>
             </a>
             
             
@@ -759,7 +856,7 @@ Go中的channel是一种用于不同goroutine之间通信的原语，它可以�
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=31 title="中文">中文<span class="button_tally">31</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=32 title="中文">中文<span class="button_tally">32</span>
             </a>
             
             <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>

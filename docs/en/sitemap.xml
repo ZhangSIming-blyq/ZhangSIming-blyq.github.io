@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://zhangsiming-blyq.github.io/</loc>
-    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -16,7 +16,7 @@
                 />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/categories/</loc>
-    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -28,20 +28,20 @@
                 href="https://zhangsiming-blyq.github.io/categories/"
                 />
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
-    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+    <loc>https://zhangsiming-blyq.github.io/tags/golang/</loc>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
-    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+    <loc>https://zhangsiming-blyq.github.io/categories/golang/</loc>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/</loc>
-    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+    <loc>https://zhangsiming-blyq.github.io/post/golang/core/</loc>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/</loc>
-    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/</loc>
-    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh-cn"
@@ -54,6 +54,15 @@
                 />
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/</loc>
+    <lastmod>2024-09-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/tags/kubernetes/</loc>
+    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/categories/kubernetes/</loc>
+    <lastmod>2024-09-21T18:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/</loc>
     <lastmod>2024-09-21T18:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/kubernetes/cilium/</loc>
@@ -69,12 +78,6 @@
     <lastmod>2024-09-21T15:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/golang/map/</loc>
-    <lastmod>2024-09-21T10:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/tags/golang/</loc>
-    <lastmod>2024-09-21T10:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://zhangsiming-blyq.github.io/categories/golang/</loc>
     <lastmod>2024-09-21T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://zhangsiming-blyq.github.io/post/golang/channel/</loc>

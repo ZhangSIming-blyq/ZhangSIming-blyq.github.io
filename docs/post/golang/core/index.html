@@ -1,0 +1,1253 @@
+
+<!DOCTYPE html>
+<html
+  lang="en"
+  data-figures=""
+  
+    class="page"
+  
+  
+  >
+  <head>
+<title>Golang 核心知识点详解文档 | </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script async src="https://www.googletagmanager.com/gtag/js?id=XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'XXXXXXXXXX');
+</script>
+
+
+
+  
+<meta property="og:locale" content="en" />
+
+<meta property="og:type" content="article">
+<meta name="description" content="1. GMP 调度模型 1.1 GMP 概述 Go 语言中的 GMP 模型是 Goroutine 的调度机制，通过三个核心概念实现并发任务的高效调度：
+G（Goroutine）：轻量级线程，每个 G 代表一个独立的任务。 M（Machine）：代表操作系统的线程，负责执行 G。 P（Processor）：逻辑处理器，管 …" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@janedoe">
+<meta name="twitter:title" content="Golang 核心知识点详解文档" />
+<meta name="twitter:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png"/>
+<meta property="og:url" content="https://zhangsiming-blyq.github.io/post/golang/core/" />
+<meta property="og:title" content="Golang 核心知识点详解文档" />
+<meta property="og:description" content="1. GMP 调度模型 1.1 GMP 概述 Go 语言中的 GMP 模型是 Goroutine 的调度机制，通过三个核心概念实现并发任务的高效调度：
+G（Goroutine）：轻量级线程，每个 G 代表一个独立的任务。 M（Machine）：代表操作系统的线程，负责执行 G。 P（Processor）：逻辑处理器，管 …" />
+<meta property="og:image" content="https://zhangsiming-blyq.github.io/images/thumbnail.png" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zhangsiming-blyq.github.io/icons/favicon-32x32.png">
+<link rel="manifest" href="https://zhangsiming-blyq.github.io/icons/site.webmanifest">
+
+<link rel="canonical" href="https://zhangsiming-blyq.github.io/post/golang/core/">
+
+
+
+<link rel="preload" href="https://zhangsiming-blyq.github.io/css/styles.42e2c5f6d8cf9c52872666f8d8b2678ad0c426978b9d78aff3c33b7a1e7f6f97f54bcdaf0518a25fb0fe26367d04f8b07c683b3b38b331cb098daadee06b1f3e.css" integrity = "sha512-QuLF9tjPnFKHJmb42LJnitDEJpeLnXiv88M7eh5/b5f1S82vBRiiX7D&#43;JjZ9BPiwfGg7OzizMcsJjare4GsfPg==" as="style" crossorigin="anonymous">
+
+
+
+<link rel="preload" href="https://zhangsiming-blyq.github.io/en/js/bundle.daf5d72d10b0f1e048706d4cb8d79d1ec41c3b5edcd83acfaa4df80252afff936252c1fa7804d8dcdb500eaf0f7d5adbb79cfe886cf7068f12f58cdebc05e1c3.js" as="script" integrity=
+"sha512-2vXXLRCw8eBIcG1MuNedHsQcO17c2DrPqk34AlKv/5NiUsH6eATY3NtQDq8PfVrbt5z&#43;iGz3Bo8S9YzevAXhww==" crossorigin="anonymous">
+
+
+<link rel="stylesheet" type="text/css" href="https://zhangsiming-blyq.github.io/css/styles.42e2c5f6d8cf9c52872666f8d8b2678ad0c426978b9d78aff3c33b7a1e7f6f97f54bcdaf0518a25fb0fe26367d04f8b07c683b3b38b331cb098daadee06b1f3e.css" integrity="sha512-QuLF9tjPnFKHJmb42LJnitDEJpeLnXiv88M7eh5/b5f1S82vBRiiX7D&#43;JjZ9BPiwfGg7OzizMcsJjare4GsfPg==" crossorigin="anonymous">
+
+
+  </head>
+  <body
+    data-code="100000"
+    data-lines="false"
+    id="documentTop"
+    data-lang="en"
+  >
+
+<header class="nav_header" >
+  <nav class="nav"><a href='https://zhangsiming-blyq.github.io/' class="nav_brand nav_item" title="">
+  <img src="https://zhangsiming-blyq.github.io/logos/bailiyingqi.png" class="logo" alt="">
+  <div class="nav_close">
+    <div><svg class="icon">
+  <title>open-menu</title>
+  <use xlink:href="#open-menu"></use>
+</svg>
+<svg class="icon">
+  <title>closeme</title>
+  <use xlink:href="#closeme"></use>
+</svg>
+</div>
+  </div>
+</a>
+
+    <div class='nav_body nav_body_left'>
+      
+      
+      
+        
+
+  <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/" class="nav_item" title="Home">Home </a>
+  </div>
+  <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/archives/" class="nav_item" title="Archives">Archives </a>
+  </div>
+  <div class="nav_parent">
+    <a href="https://zhangsiming-blyq.github.io/about/" class="nav_item" title="About">About </a>
+  </div>
+      
+      <div class="nav_parent">
+        <a href="#" class="nav_item"></a>
+        <div class="nav_sub">
+          <span class="nav_child"></span>
+          
+          <a href="https://zhangsiming-blyq.github.io/" class="nav_child nav_item"></a>
+          
+          <a href="https://zhangsiming-blyq.github.io/zh-cn/" class="nav_child nav_item"></a>
+          
+        </div>
+      </div>
+<div class='follow'>
+  <a href="https://www.instagram.com/zhangsiming_bailiyingqi/">
+    <svg class="icon">
+  <title>instagram</title>
+  <use xlink:href="#instagram"></use>
+</svg>
+
+  </a>
+  <a href="https://twitter.com/Siming78740702">
+    <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+  </a>
+  <a href="https://github.com/ZhangSIming-blyq">
+    <svg class="icon">
+  <title>github</title>
+  <use xlink:href="#github"></use>
+</svg>
+
+  </a>
+    
+  <a href="https://zhangsiming-blyq.github.io/index.xml">
+    <svg class="icon">
+  <title>rss</title>
+  <use xlink:href="#rss"></use>
+</svg>
+
+  </a>
+<div class="color_mode">
+  <input type="checkbox" class="color_choice" id="mode">
+</div>
+
+</div>
+
+    </div>
+  </nav>
+</header>
+
+    <main>
+  
+<div class="grid-inverse wrap content">
+  <article class="post_content">
+    <h1 class="post_title">Golang 核心知识点详解文档</h1>
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      Sep 22, 2024</span>
+    <span class="post_time"> · 8 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/golang/' title="Golang" class="post_tag button button_translucent">Golang
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=Golang%20%e6%a0%b8%e5%bf%83%e7%9f%a5%e8%af%86%e7%82%b9%e8%af%a6%e8%a7%a3%e6%96%87%e6%a1%a3&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fcore%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fcore%2f&t=Golang%20%e6%a0%b8%e5%bf%83%e7%9f%a5%e8%af%86%e7%82%b9%e8%af%a6%e8%a7%a3%e6%96%87%e6%a1%a3" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/golang/core/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+      <div class="post_toc">
+        <h2>Overview</h2>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-gmp-调度模型"><strong>1. GMP 调度模型</strong></a>
+      <ul>
+        <li><a href="#11-gmp-概述"><strong>1.1 GMP 概述</strong></a></li>
+        <li><a href="#12-调度模型的原理"><strong>1.2 调度模型的原理</strong></a></li>
+        <li><a href="#代码示例goroutine-调度"><strong>代码示例：Goroutine 调度</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#2-sync-包"><strong>2. sync 包</strong></a>
+      <ul>
+        <li><a href="#21-syncwaitgroup"><strong>2.1 sync.WaitGroup</strong></a></li>
+        <li><a href="#22-syncmutex"><strong>2.2 sync.Mutex</strong></a></li>
+        <li><a href="#23-synccond"><strong>2.3 sync.Cond</strong></a></li>
+        <li><a href="#24-synconce"><strong>2.4 sync.Once</strong></a></li>
+        <li><a href="#25-syncpool"><strong>2.5 sync.Pool</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#3-context-包"><strong>3. context 包</strong></a>
+      <ul>
+        <li><a href="#31-contextcontext"><strong>3.1 context.Context</strong></a></li>
+        <li><a href="#32-常见的-context-类型"><strong>3.2 常见的 context 类型</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#4-go-反射"><strong>4. Go 反射</strong></a>
+      <ul>
+        <li><a href="#41-反射简介"><strong>4.1 反射简介</strong></a></li>
+        <li><a href="#区别"><strong>区别</strong>：</a></li>
+        <li><a href="#42-反射的基本使用"><strong>4.2 反射的基本使用</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#5-unsafe-包"><strong>5. unsafe 包</strong></a>
+      <ul>
+        <li><a href="#51-unsafe-包简介"><strong>5.1 unsafe 包简介</strong></a></li>
+        <li><a href="#52-uintptr-和-unsafepointer-的区别"><strong>5.2 uintptr 和 unsafe.Pointer 的区别</strong></a></li>
+        <li><a href="#53-go-对象内存对齐"><strong>5.3 Go 对象内存对齐</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#高频面试题总结">高频面试题总结</a>
+      <ul>
+        <li><a href="#1-gmp-调度模型-1"><strong>1. GMP 调度模型</strong></a></li>
+        <li><a href="#2-sync-包详解"><strong>2. sync 包详解</strong></a></li>
+        <li><a href="#3-context-包-1"><strong>3. context 包</strong></a></li>
+        <li><a href="#4-synccond"><strong>4. sync.Cond</strong></a></li>
+        <li><a href="#5-go-反射"><strong>5. Go 反射</strong></a></li>
+        <li><a href="#6-unsafe-包"><strong>6. unsafe 包</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+      </div>
+    
+    <div class="post_body"><h2 id="1-gmp-调度模型"><strong>1. GMP 调度模型</strong></h2>
+<h3 id="11-gmp-概述"><strong>1.1 GMP 概述</strong></h3>
+<p>Go 语言中的 GMP 模型是 Goroutine 的调度机制，通过三个核心概念实现并发任务的高效调度：</p>
+<ul>
+<li><strong>G（Goroutine）</strong>：轻量级线程，每个 G 代表一个独立的任务。</li>
+<li><strong>M（Machine）</strong>：代表操作系统的线程，负责执行 G。</li>
+<li><strong>P（Processor）</strong>：逻辑处理器，管理 G 的队列，绑定 M 来调度 G。</li>
+</ul>
+<h3 id="12-调度模型的原理"><strong>1.2 调度模型的原理</strong></h3>
+<ul>
+<li><strong>工作窃取（Work Stealing）</strong>：当一个 P 没有要执行的 Goroutine 时，它会从其他 P 中窃取任务执行，以保持负载平衡。</li>
+<li><strong>Hand-off（任务交接）</strong>：Hand Off 是 Go 调度系统中的优化机制。当一个 M（Machine）由于执行系统调用、I/O 或锁等待等操作被阻塞时，P（Processor）会与 M 解除绑定，将 M 上的 Goroutine 放回全局队列或等待队列中，以便其他空闲的 M 或 P 能继续执行这些任务。通过这种任务交接的方式，Go 可以避免 Goroutine 长时间停留在阻塞的 M 上，保持高效的调度，确保系统资源得到充分利用。</li>
+<li><strong>抢占式调度</strong>：从 Go 1.14 开始，长时间占用 CPU 的 Goroutine 会被强制中断，允许其他 Goroutine 执行，避免单个 Goroutine 独占 CPU。</li>
+</ul>
+<h3 id="代码示例goroutine-调度"><strong>代码示例：Goroutine 调度</strong></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;time&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">func</span> <span class="nf">worker</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Worker %d is running\n&#34;</span><span class="p">,</span> <span class="nx">id</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">        <span class="k">go</span> <span class="nf">worker</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span> <span class="c1">// 等待 Goroutine 完成
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h2 id="2-sync-包"><strong>2. sync 包</strong></h2>
+<h3 id="21-syncwaitgroup"><strong>2.1 sync.WaitGroup</strong></h3>
+<p><code>sync.WaitGroup</code> 用于等待一组 Goroutine 完成。通过 <code>Add</code> 增加任务计数，<code>Done</code> 完成任务，<code>Wait</code> 等待所有任务结束。</p>
+<p><code>sync.WaitGroup</code> 的底层原理是通过一个 <strong>计数器</strong> 和 <strong>信号机制</strong> 来协调 Goroutine 之间的同步。它有一个内部的 <code>state</code> 字段，包含计数器和 Goroutine 的等待状态。当调用 <code>Add(n)</code> 方法时，计数器增加 <code>n</code>，表示有 <code>n</code> 个 Goroutine 需要等待完成。当 Goroutine 完成任务后，调用 <code>Done()</code> 方法，内部的计数器减一。</p>
+<p><code>WaitGroup</code> 的核心在于 <strong><code>runtime_Semacquire</code> 和 <code>runtime_Semrelease</code></strong> 系统调用，用来挂起和唤醒 Goroutine。当计数器为 0 时，<code>Wait()</code> 方法调用 <code>runtime_Semrelease</code> 来唤醒等待的 Goroutine。Goroutine 在 <code>Wait()</code> 方法时调用 <code>runtime_Semacquire</code> 挂起，直到所有任务完成，计数器归 0，等待中的 Goroutine 被唤醒继续执行。这个机制保证了多个 Goroutine 能够正确同步执行。</p>
+<p><strong>关键流程：</strong></p>
+<ol>
+<li><strong>Add(n)</strong> 增加计数器，表示有 <code>n</code> 个 Goroutine 需要等待完成。</li>
+<li><strong>Done()</strong> 减少计数器，每次 Goroutine 完成时调用。</li>
+<li><strong>Wait()</strong> 等待所有 Goroutine 完成，当计数器为 0 时唤醒等待的 Goroutine。</li>
+</ol>
+<h4 id="代码示例syncwaitgroup"><strong>代码示例：sync.WaitGroup</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">func</span> <span class="nf">worker</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">wg</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Worker %d is done\n&#34;</span><span class="p">,</span> <span class="nx">id</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">        <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">        <span class="k">go</span> <span class="nf">worker</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">wg</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span> <span class="c1">// 等待所有 Goroutine 结束
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h3 id="22-syncmutex"><strong>2.2 sync.Mutex</strong></h3>
+<p><code>sync.Mutex</code> 是用于控制并发访问的互斥锁，用于防止多个 Goroutine 同时访问共享资源。</p>
+<p><code>sync.Mutex</code> 的底层原理是通过 <strong>自旋锁</strong> 和 <strong>信号量机制</strong> 来实现 Goroutine 间的互斥访问。<code>Mutex</code> 包含一个内部的状态字段 <code>state</code> 和一个等待队列。当 Goroutine 尝试获取锁时，<code>Mutex</code> 会检查 <code>state</code> 字段，如果锁是空闲的，则将锁状态标记为已占用，当前 Goroutine 获得锁。如果锁已经被占用，则进入 <strong>自旋</strong> 阶段，即尝试多次获取锁，若多次自旋失败，才会将当前 Goroutine 挂起。</p>
+<p>挂起 Goroutine 是通过 <code>runtime_Semacquire</code> 系统调用实现的，等待其他 Goroutine 释放锁时会被阻塞。当锁被释放时，<code>runtime_Semrelease</code> 会被调用来唤醒等待的 Goroutine。</p>
+<p><code>Mutex</code> 有两种模式：</p>
+<ol>
+<li><strong>正常模式</strong>：短暂的锁竞争会通过自旋快速获取锁。</li>
+<li><strong>饥饿模式</strong>：当有 Goroutine 长时间等待锁时，进入饥饿模式，此时锁优先分配给等待最久的 Goroutine，避免长时间的锁等待。</li>
+</ol>
+<p>这种设计避免了频繁的上下文切换，既保证了锁的高效性，又防止了饥饿问题。</p>
+<p><strong><font color=chocolate>另外：<code>runtime_Semacquire</code> 和 <code>runtime_Semrelease</code> 是 Go 语言运行时的系统调用，用于挂起和唤醒 Goroutine。</font></strong></p>
+<p><strong>死锁</strong> 是指在并发程序中，两个或多个 Goroutine（或线程）因相互等待对方释放资源（如锁、channel），导致所有相关的 Goroutine 都无法继续执行，从而进入无限等待的状态。简而言之，死锁是由于相互依赖的资源竞争引起的，程序陷入无法进展的局面。</p>
+<h4 id="代码示例syncmutex"><strong>代码示例：sync.Mutex</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">var</span> <span class="nx">counter</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="kd">var</span> <span class="nx">mu</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="kd">func</span> <span class="nf">increment</span><span class="p">(</span><span class="nx">wg</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="nx">counter</span><span class="o">++</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">        <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">        <span class="k">go</span> <span class="nf">increment</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">wg</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Final counter:&#34;</span><span class="p">,</span> <span class="nx">counter</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="23-synccond"><strong>2.3 sync.Cond</strong></h3>
+<p><code>sync.Cond</code> 是条件变量，用于 Goroutine 之间的信号同步。通过 <code>Wait</code> 让 Goroutine 等待，通过 <code>Signal</code> 或 <code>Broadcast</code> 唤醒等待的 Goroutine。Signal 会唤醒一个 Goroutine，Broadcast 会唤醒所有 Goroutine。</p>
+<p>这里是 <code>sync.Cond</code> 中的 <code>signal</code> 和 <code>broadcast</code> 操作与锁的简明流程说明：</p>
+<p><strong>流程说明</strong>：</p>
+<ol>
+<li>
+<p><strong>持有锁</strong>：在调用 <code>Wait()</code> 前，消费者 Goroutine <strong>必须持有锁</strong>。调用 <code>Wait()</code> 后，Goroutine 会<strong>释放锁</strong>，进入等待状态，直到被 <code>signal</code> 或 <code>broadcast</code> 唤醒。</p>
+</li>
+<li>
+<p><strong>等待时释放锁</strong>：当消费者调用 <code>cond.Wait()</code> 时，<strong>自动释放锁</strong>，以便让其他 Goroutine 可以修改共享资源（例如队列）。消费者会进入等待状态。</p>
+</li>
+<li>
+<p><strong>唤醒时重新获取锁</strong>：当生产者调用 <code>signal()</code> 或 <code>broadcast()</code> 唤醒消费者时，消费者 Goroutine 会尝试重新获取锁，获取锁成功后，才会继续检查条件并执行后续逻辑。</p>
+</li>
+<li>
+<p><strong>生产者持有锁</strong>：生产者在修改共享资源（如向队列中添加数据）时，<strong>必须持有锁</strong>，确保数据的并发安全。</p>
+</li>
+<li>
+<p><strong>释放锁</strong>：生产者在完成对共享资源的修改后，调用 <code>signal()</code> 或 <code>broadcast()</code>，唤醒等待中的消费者，随后<strong>释放锁</strong>。</p>
+</li>
+</ol>
+<h4 id="代码示例synccond"><strong>代码示例：sync.Cond</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="s">&#34;time&#34;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="kd">type</span> <span class="nx">Queue</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">data</span> <span class="p">[]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="nx">cond</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">Queue</span><span class="p">)</span> <span class="nf">Enqueue</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="nx">q</span><span class="p">.</span><span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="nx">q</span><span class="p">.</span><span class="nx">data</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Enqueued:&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="nx">q</span><span class="p">.</span><span class="nx">cond</span><span class="p">.</span><span class="nf">Signal</span><span class="p">()</span> <span class="c1">// 唤醒等待的消费者
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span>    <span class="nx">q</span><span class="p">.</span><span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">Queue</span><span class="p">)</span> <span class="nf">Dequeue</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="nx">q</span><span class="p">.</span><span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Queue is empty, waiting for data...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">        <span class="nx">q</span><span class="p">.</span><span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span> <span class="c1">// 等待数据被添加
+</span></span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">    <span class="nx">val</span> <span class="o">:=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">    <span class="nx">q</span><span class="p">.</span><span class="nx">data</span> <span class="p">=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Dequeued:&#34;</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">31</span><span class="cl">    <span class="nx">q</span><span class="p">.</span><span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">
+</span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">    <span class="nx">q</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Queue</span><span class="p">{</span><span class="nx">cond</span><span class="p">:</span> <span class="nx">sync</span><span class="p">.</span><span class="nf">NewCond</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">{})}</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">
+</span></span><span class="line"><span class="ln">37</span><span class="cl">    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">38</span><span class="cl">        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">            <span class="nx">q</span><span class="p">.</span><span class="nf">Enqueue</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">            <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="ln">42</span><span class="cl">    <span class="p">}()</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl">
+</span></span><span class="line"><span class="ln">44</span><span class="cl">    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">46</span><span class="cl">            <span class="nx">q</span><span class="p">.</span><span class="nf">Dequeue</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl">            <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="ln">49</span><span class="cl">    <span class="p">}()</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl">
+</span></span><span class="line"><span class="ln">51</span><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">52</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="24-synconce"><strong>2.4 sync.Once</strong></h3>
+<p><code>sync.Once</code> 用于确保某个操作只会执行一次，常用于初始化操作。</p>
+<p><strong>总结流程</strong></p>
+<ol>
+<li>Do(f) 方法首先通过原子操作检查 done 值。</li>
+<li>如果 done == 1，操作已经执行过，直接返回。</li>
+<li>如果 done == 0，进入慢路径 doSlow(f)。</li>
+<li>在 doSlow(f) 中，首先获取互斥锁，保证操作的并发安全。</li>
+<li>再次检查 done，确保操作只会执行一次。</li>
+<li>执行传入的函数 f()，然后将 done 设置为 1，表示操作已经完成。</li>
+</ol>
+<h4 id="代码示例synconce"><strong>代码示例：sync.Once</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">var</span> <span class="nx">once</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Once</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="kd">func</span> <span class="nf">initialize</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Initialized&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">        <span class="nx">once</span><span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="nx">initialize</span><span class="p">)</span> <span class="c1">// 只会执行一次
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="25-syncpool"><strong>2.5 sync.Pool</strong></h3>
+<p><code>sync.Pool</code> 是对象池，用于缓存和重用临时对象，减少 GC 负担。</p>
+<p><code>sync.Pool</code> 是 Go 中的对象池，用于缓存和复用临时对象，从而减少频繁的内存分配和垃圾回收开销。它为每个 <code>P</code>（逻辑处理器）维护一个本地缓存，确保对象能够就近复用，减少跨线程的争用。当池中没有可用对象时，会通过 <code>New</code> 方法生成新的对象，并将其缓存。GC（垃圾回收）时，池中的对象会被清空，因此适用于短生命周期的临时对象。</p>
+<p><strong><code>sync.Pool</code> 不是线程池</strong>。它只用于管理和缓存对象，减少内存分配压力，而线程池是用来管理 Goroutine 或线程的执行。<code>sync.Pool</code> 解决的是对象的高效复用问题，而线程池则负责任务的调度和执行。</p>
+<h4 id="代码示例syncpool"><strong>代码示例：sync.Pool</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">var</span> <span class="nx">pool</span> <span class="p">=</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Pool</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="nx">New</span><span class="p">:</span> <span class="kd">func</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">        <span class="k">return</span> <span class="nb">new</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">pool</span><span class="p">.</span><span class="nf">Get</span><span class="p">().(</span><span class="o">*</span><span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="o">*</span><span class="nx">v</span> <span class="p">=</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Value:&#34;</span><span class="p">,</span> <span class="o">*</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="nx">pool</span><span class="p">.</span><span class="nf">Put</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="3-context-包"><strong>3. context 包</strong></h2>
+<h3 id="31-contextcontext"><strong>3.1 context.Context</strong></h3>
+<p><code>context.Context</code> 是 Go 中用于传递请求上下文、控制 Goroutine 生命周期的机制。常见用法包括超时控制、取消操作、传递元数据等。</p>
+<p><code>context.Context</code> 是 Go 中用于在 Goroutine 之间传递请求上下文和控制其生命周期的机制，内部通过树状结构组织不同的 <code>context</code> 实例。每个 <code>Context</code> 可以有父 <code>Context</code> 和子 <code>Context</code>，父 <code>Context</code> 可以通过 <code>cancel()</code> 取消所有子 <code>Context</code>，从而终止与该上下文相关联的所有 Goroutine。常见的 <code>Context</code> 结构包括 <code>cancelCtx</code>（用于取消操作）和 <code>timerCtx</code>（用于超时控制），每个 <code>Context</code> 都包含一个 <code>Done</code> 通道用于通知取消事件。</p>
+<p><code>context</code> 的核心部分包括 <code>Deadline()</code>、<code>Done()</code>、<code>Err()</code> 和 <code>Value()</code> 四个主要方法。<code>Done</code> 通道是控制机制的关键，当父 <code>Context</code> 调用 <code>cancel()</code> 或定时器触发超时时，<code>Done</code> 通道会关闭，通知所有监听的 Goroutine 停止操作。通过这种方式，<code>context</code> 实现了跨 Goroutine 的超时、取消和数据传递控制。</p>
+<p><strong><font color=green>子context会从父context继承Done通道，当父context的Done通道关闭时，子context的Done通道也会关闭，从而通知子context的Goroutine停止操作。</font></strong></p>
+<h3 id="32-常见的-context-类型"><strong>3.2 常见的 context 类型</strong></h3>
+<ul>
+<li><strong>context.Background()</strong>：根 context，通常用于主函数。</li>
+<li><strong>context.WithCancel()</strong>：创建一个可取消的 context，子 Goroutine 可以通过接收信号来终止操作。</li>
+<li><strong>context.WithTimeout()</strong>：创建带有超时时间的 context，超时后自动取消操作。</li>
+</ul>
+<h4 id="代码示例context-控制-goroutine-取消"><strong>代码示例：context 控制 Goroutine 取消</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="s">&#34;time&#34;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="kd">func</span> <span class="nf">task</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Task completed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">Done</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Task cancelled:&#34;</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">Err</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="nx">ctx</span><span class="p">,</span> <span class="nx">cancel</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">WithCancel</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">())</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="k">go</span> <span class="nf">task</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="nf">cancel</span><span class="p">()</span> <span class="c1">// 取消操作
+</span></span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="c1"></span>    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="4-go-反射"><strong>4. Go 反射</strong></h2>
+<h3 id="41-反射简介"><strong>4.1 反射简介</strong></h3>
+<p>反射是 Go 语言在运行时动态检查和操作类型和变量的机制。通过 <code>reflect</code> 包，开发者可以获取变量的类型、值并进行修改。</p>
+<p>反射是 Go 语言在运行时提供的一种机制，允许开发者动态检查变量的类型和值，并在运行时对其进行操作。这通过 <code>reflect</code> 包实现，提供了 <code>reflect.Type</code> 和 <code>reflect.Value</code> 两个关键类型，分别用于获取变量的类型信息和值信息。反射在高级框架（如依赖注入、ORM）中非常常用，因为它允许在编译时无法确定类型的情况下操作对象。</p>
+<p>由于反射需要在运行时操作对象，Go 会将涉及到的变量分配到堆上，这导致了 <strong>内存逃逸</strong>。例如，当使用 <code>reflect.ValueOf(&amp;x)</code> 传递变量时，Go 会将变量 <code>x</code> 从栈中逃逸到堆中，以便在运行时通过指针引用和修改。反射带来的内存逃逸会增加垃圾回收的负担，因此在性能敏感的场景中，滥用反射可能导致效率降低。</p>
+<h4 id="反射与断言">反射与断言</h4>
+<p><strong>断言</strong> 是 Go 语言中用于将接口类型变量转换为具体类型的机制。接口可以保存任意类型的值，断言允许从接口中提取实际的底层类型。如果断言成功，它返回具体类型的值；如果失败，可以通过安全断言避免程序崩溃。断言通常用于编译时知道具体类型的情况下，适合处理固定类型的接口。</p>
+<p><strong>反射</strong> 是 Go 语言在运行时动态检查和操作变量类型和值的机制。通过 <code>reflect</code> 包，开发者可以获取变量的类型 (<code>reflect.Type</code>) 和值 (<code>reflect.Value</code>)，并进行操作，如修改值或调用方法。反射在运行时处理不确定类型的变量，适用于框架开发等复杂场景。由于反射是在运行时执行的，它可能引发性能开销和内存逃逸。</p>
+<h3 id="区别"><strong>区别</strong>：</h3>
+<ul>
+<li><strong>断言</strong> 只适用于接口类型，编译时使用，性能高，通常不会引发内存逃逸。</li>
+<li><strong>反射</strong> 可以处理任意类型，运行时使用，灵活性强，但性能较低，通常会引发内存逃逸。</li>
+</ul>
+<h3 id="42-反射的基本使用"><strong>4.2 反射的基本使用</strong></h3>
+<ul>
+<li><code>reflect.TypeOf()</code>：获取变量的类型。</li>
+<li><code>reflect.ValueOf()</code>：获取变量的值。</li>
+<li><code>reflect.Set()</code>：通过反射修改变量的值。</li>
+</ul>
+<h4 id="代码示例反射修改结构体字段"><strong>代码示例：反射修改结构体字段</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;reflect&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">type</span> <span class="nx">Person</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="nx">Name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">Age</span>  <span class="kt">int</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="nx">p</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Person</span><span class="p">{</span><span class="s">&#34;John&#34;</span><span class="p">,</span> <span class="mi">30</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nf">Elem</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="nx">v</span><span class="p">.</span><span class="nf">FieldByName</span><span class="p">(</span><span class="s">&#34;Name&#34;</span><span class="p">).</span><span class="nf">SetString</span><span class="p">(</span><span class="s">&#34;Jane&#34;</span><span class="p">)</span> <span class="c1">// 修改字段
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="5-unsafe-包"><strong>5. unsafe 包</strong></h2>
+<h3 id="51-unsafe-包简介"><strong>5.1 unsafe 包简介</strong></h3>
+<p><code>unsafe</code> 包提供了一些绕过 Go 类型安全检查的功能，用于 <strong><font color=tomato>直接操作内存地址</font></strong>。常用于高性能或需要与 C 语言交互的场景。</p>
+<p><code>unsafe</code> 包是 Go 语言中的一个特殊包，它允许开发者绕过 Go 的类型安全机制，直接操作内存地址。通常情况下，Go 语言会严格检查变量类型并自动管理内存，以确保程序安全。但在一些性能敏感场景下（如与 C 语言交互、高性能内存操作等），我们需要手动操作内存，这时可以通过 <code>unsafe</code> 包来实现。</p>
+<p><strong>通俗解释 <code>unsafe</code> 包：</strong></p>
+<ul>
+<li><strong>直接操作内存</strong>：<code>unsafe.Pointer</code> 可以将任意类型的指针转换为内存地址，并允许我们在地址上读写数据。它打破了 Go 的类型安全性，提供类似 C 语言中指针操作的能力。</li>
+<li><strong>非类型安全</strong>：使用 <code>unsafe</code> 的操作是不安全的，意味着你可以访问任意内存区域，可能导致内存泄漏、程序崩溃等问题。</li>
+</ul>
+<h3 id="52-uintptr-和-unsafepointer-的区别"><strong>5.2 uintptr 和 unsafe.Pointer 的区别</strong></h3>
+<ul>
+<li><strong>uintptr</strong>：表示一个内存地址的数值，但不能直接用于内存读写操作。</li>
+<li><strong>unsafe.Pointer</strong>：通用指针类型，可以将其转换为任意类型的指针，用于内存操作。</li>
+</ul>
+<h4 id="代码示例使用-unsafepointer"><strong>代码示例：使用 unsafe.Pointer</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="s">&#34;unsafe&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="kd">var</span> <span class="nx">x</span> <span class="kt">int</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">ptr</span> <span class="o">:=</span> <span class="nx">unsafe</span><span class="p">.</span><span class="nf">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Value at pointer: %d\n&#34;</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="kt">int</span><span class="p">)(</span><span class="nx">ptr</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="53-go-对象内存对齐"><strong>5.3 Go 对象内存对齐</strong></h3>
+<p>Go 中对象的内存分配遵循系统字长对齐规则，保证数据访问的高效性。不同类型的数据会根据其大小和对齐要求进行排列，避免内存访问开销。</p>
+<p><strong>内存对齐：</strong>
+<strong><font color=amber>内存对齐是指编译器为了提高 CPU 的内存访问效率，会将数据按特定字节边界存放。例如，32 位系统中，一个 4 字节的整数通常存放在 4 字节对齐的内存地址上，这样 CPU 读取时可以一次性读取 4 字节数据，而无需拆分多次访问。</font></strong></p>
+<ul>
+<li><strong>对齐的好处</strong>：提高 CPU 访问速度，减少不必要的内存访问。</li>
+<li><strong><code>unsafe</code> 与对齐</strong>：使用 <code>unsafe</code> 包时，你可以手动操作内存地址，可能会忽略对齐要求，这在某些平台上可能导致性能下降甚至程序错误。因此，在使用 <code>unsafe</code> 包时，开发者需要注意内存对齐问题，以避免潜在问题。</li>
+</ul>
+<p>简而言之，<code>unsafe</code> 包给了开发者更大的控制权，但也带来了更多的责任，特别是在处理内存对齐和跨平台兼容性问题时需要谨慎。</p>
+<h2 id="高频面试题总结">高频面试题总结</h2>
+<h3 id="1-gmp-调度模型-1"><strong>1. GMP 调度模型</strong></h3>
+<ol>
+<li>
+<p><strong>GMP 是什么？</strong></p>
+<p>GMP 是 Go 语言并发模型的核心组成部分，分别代表 <strong>Goroutine（G）</strong>、<strong>Machine（M）</strong> 和 <strong>Processor（P）</strong>。每个 Goroutine 是一个轻量级线程，P 是逻辑处理器，M 是底层操作系统线程。每个 P 负责管理一组 Goroutine，P 和 M 绑定后，M 执行 P 中的 Goroutine。P 处理的是 Go 语言的任务队列（即 Goroutine 列表），M 是与操作系统的实际线程绑定的实体。Go 语言通过 GMP 模型实现了高效的 <strong><font color=tomato>并发调度</font></strong>，使得大量 Goroutine 可以并发执行。</p>
+</li>
+<li>
+<p><strong>Work Stealing 是什么？</strong></p>
+<p>工作窃取（Work Stealing）是一种调度策略，用于在多处理器环境下均衡任务负载。在 Go 语言的 GMP 模型中，如果一个 P 没有可执行的 Goroutine，它会尝试 <strong><font color=tomato>从其他 P 的队列中窃取任务执行</font></strong>。工作窃取的目的是为了确保多核 CPU 的资源能够被充分利用，减少 CPU 核心空闲时间，同时保证任务执行的并行性。在实践中，P 通过从其他 P 的任务队列末尾窃取 Goroutine，避免全局队列的竞争，提升并发效率。</p>
+</li>
+<li>
+<p><strong>Hand-off（任务交接）是怎么做的？</strong></p>
+<p>在 Go 调度模型中，<strong><font color=tomato>当一个 Goroutine 被阻塞（例如等待 I/O 操作、锁等）时，P 将该 Goroutine 从执行队列中移除(M不阻塞了再恢复)</font></strong>，并尝试调度其他 Goroutine。如果 P 没有可用的 Goroutine，它会将执行权交还给全局调度器或窃取其他 P 的 Goroutine。这种任务交接机制保证了 Goroutine 的高效执行，避免长时间的任务阻塞影响整个系统的运行。同时，P 还可能将任务移交给其他 M 绑定的 P 来执行，以提升系统的并发性能。</p>
+</li>
+<li>
+<p><strong>抢占式调度是如何工作的？</strong></p>
+<p>抢占式调度是指调度器可以在 Goroutine 长时间运行时，强制中断它的执行，给其他 Goroutine 机会执行。Go 语言在 1.14 版本引入了抢占式调度机制，解决了 Goroutine 长时间占用 CPU 的问题。通过这种方式，调度器可以定期检查 Goroutine 的执行时间，如果某个 Goroutine 占用 CPU 过长，它会被挂起，允许其他等待的 Goroutine 执行。抢占式调度的引入确保了 Goroutine 不会独占 CPU 资源，改善了系统的响应能力。</p>
+</li>
+<li>
+<p><strong>正常模式和饥饿模式的区别？</strong></p>
+<p>正常模式是 Go 调度器默认的锁争夺模式，在这种模式下，新来的 Goroutine 也可以竞争锁资源，获得执行机会。饥饿模式是在锁被某些 Goroutine 长时间持有的情况下，为避免其他 Goroutine 永远无法获得锁而设计的。<strong><font color=tomato>当锁进入饥饿模式时，锁优先分配给等待最久的 Goroutine</font></strong>，而不是新来的 Goroutine。这确保了在极端情况下 Goroutine 不会被饿死。Go 的 Mutex 锁会根据锁竞争的情况在这两种模式之间切换，以平衡性能和公平性。</p>
+</li>
+</ol>
+<h3 id="2-sync-包详解"><strong>2. sync 包详解</strong></h3>
+<ol>
+<li>
+<p><strong>为什么 Go 的锁是非公平锁？</strong></p>
+<p>Go 语言的 Mutex 是非公平锁。非公平锁意味着 Goroutine 获取锁的顺序 <strong><font color=tomato>并不完全按照 Goroutine 请求锁的顺序来分配</font></strong>。设计非公平锁的目的是为了提高系统性能，减少线程间的竞争开销。公平锁会严格按照 Goroutine 请求锁的顺序分配锁，这会导致更多的上下文切换，从而增加 CPU 的调度负担，降低系统的整体吞吐量。非公平锁通过减少 Goroutine 之间的等待和竞争，避免频繁的锁切换，从而提高并发性能。</p>
+</li>
+<li>
+<p><strong>Mutex 的两种模式是什么？</strong></p>
+<ul>
+<li>
+<p><strong>正常模式</strong>：当锁的竞争不激烈时，Go 使用正常模式，在这种模式下，新来的 Goroutine 有可能比正在等待锁的 Goroutine 先获取锁，从而减少锁竞争。</p>
+</li>
+<li>
+<p><strong>饥饿模式</strong>：当锁的竞争激烈且某个 Goroutine 长时间无法获得锁时，Mutex 会进入饥饿模式。在饥饿模式下，锁优先分配给等待最久的 Goroutine，而不会让新来的 Goroutine 直接获取锁。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Mutex 为什么需要这两种模式？</strong></p>
+<p>Mutex 设计为非公平锁，以提升锁的获取速度，减少 Goroutine 之间的竞争和上下文切换的开销。当锁竞争不激烈时，<strong><font color=tomato>正常模式可以确保 Goroutine 快速获取锁，提高性能</font></strong>；当锁竞争激烈时，饥饿模式确保等待时间长的 Goroutine 可以优先获得锁，防止 Goroutine 被长期饿死。这两种模式的设计折中考虑了系统的性能和公平性需求。</p>
+</li>
+<li>
+<p><strong>等待队列中的 Goroutine 能直接拿到锁吗？</strong></p>
+<p>是的，新来的 Goroutine 有可能在等待队列中的 Goroutine 获取锁之前抢先获得锁。这是因为 Go 的 Mutex 是非公平锁，新来的 Goroutine 有机会直接参与锁的竞争，而不用等待队列中的所有 Goroutine 先获取锁。</p>
+</li>
+<li>
+<p><strong>Mutex 是可重入锁吗？</strong></p>
+<p><strong><font color=tomato>Go 的 Mutex 不是可重入锁</font></strong>。可重入锁允许同一个 Goroutine 多次获取同一把锁，而不发生死锁。而 Go 的 Mutex 如果同一个 Goroutine 在持有锁的情况下再次请求锁，则会发生死锁。因此，Go 的 Mutex 不适合在递归函数中使用。</p>
+</li>
+<li>
+<p><strong>RWMutex 和 Mutex 有什么区别？</strong></p>
+<p>RWMutex 是读写锁，允许多个 Goroutine 同时读取，但写操作是互斥的；Mutex 是普通的互斥锁，不允许并发读写。<strong><font color=tomato>RWMutex 更适合读操作频繁、写操作较少的场景</font></strong>，它可以提高读操作的并发度，提升系统性能。如果写操作较多，Mutex 的性能会更好，因为 RWMutex 在写操作时仍然需要独占锁。</p>
+</li>
+<li>
+<p><strong>Mutex 如何挂起和唤醒 Goroutine？</strong></p>
+<p>当 Goroutine 试图获取已经被其他 Goroutine 持有的 Mutex 时，它会被挂起。Go 语言的挂起和唤醒机制是基于信号量（semaphore）实现的。具体来说，<code>runtime_Semacquire</code> 会将 Goroutine 挂起等待锁，<code>runtime_Semrelease</code> 会唤醒等待锁的 Goroutine，使其继续执行。</p>
+</li>
+<li>
+<p><strong>sync.Pool 和 GC 的关系是什么？</strong></p>
+<p><code>sync.Pool</code> 是 Go 语言中的对象池，常用于缓存短生命周期的对象，<strong><font color=tomato>以减少频繁的内存分配和回收</font></strong>。<code>sync.Pool</code> 在 GC（垃圾回收）时会清理 <code>local</code> 缓存，并将未被使用的对象转移到 <code>victim</code> 区域。在下次对象请求时，<code>P</code> 可以从 <code>victim</code> 区域获取对象，减少内存分配的开销。</p>
+</li>
+<li>
+<p><strong>什么时候 P 会用 victim 数据？</strong></p>
+<p>当 P 的 <strong><font color=tomato>本地 <code>local</code> 池中没有可用对象时</font></strong>，P 会尝试从 <code>victim</code> 区域获取对象。如果 <code>victim</code> 区域中也没有可用对象，则需要从全局池中分配新的对象。</p>
+</li>
+<li>
+<p><strong>为什么不设计全局共享队列？</strong></p>
+<p>全局共享队列会导致锁的激烈竞争，从而降低并发性能。而 Go 通过 <code>poolChain</code> 和 P 本地缓存来减少锁的竞争，提升对象池的并发性能。<code>poolChain</code> 结合 Go 的 P 模型，使得 <strong><font color=tomato>每个 P 都有自己的本地缓存</font></strong>，减少了全局锁的争用。</p>
+</li>
+<li>
+<p><strong>sync.Pool 的优缺点是什么？</strong></p>
+<ul>
+<li><strong>优点</strong>：<code>sync.Pool</code> 提供了高效的对象缓存机制，减少了频繁的内存分配和垃圾回收压力，提高了程序的性能。</li>
+<li><strong>缺点</strong>：<code>sync.Pool</code> 的内存使用量难以控制，GC 后即使从 <code>victim</code> 恢复对象，性能仍略有下降。同时，大量缓存的对象可能导致程序使用 <strong><font color=tomato>更多的内存</font></strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>sync.Once 的作用是什么？</strong></p>
+<p><code>sync.Once</code> 保证某个操作在整个程序生命周期中只执行一次。典型的使用场景包括单例模式的初始化函数。<code>sync.Once</code> 通过内部的状态变量和锁机制，确保操作只执行一次，并且即使多个 Goroutine 同时调用，也不会重复执行。<strong><font color=tomato>先原子操作检查状态，再加锁，再检查状态，再执行操作，最后解锁。</font></strong></p>
+</li>
+<li>
+<p><strong>WaitGroup 的使用场景是什么？</strong></p>
+<p><code>WaitGroup</code> 用于等待一组 Goroutine 完成。它提供了一种 <strong><font color=tomato>计数器机制</font></strong>，调用 <code>Add</code> 方法增加计数器，调用 <code>Done</code> 方法减少计数器，调用 <code>Wait</code> 方法阻塞，直到计数器归零。这非常适合用来协调并发任务的执行顺序，确保主 Goroutine 等待所有子 Goroutine 执行完毕后再继续执行。</p>
+</li>
+</ol>
+<h3 id="3-context-包-1"><strong>3. context 包</strong></h3>
+<ol>
+<li>
+<p><strong>context.Context 的使用场景是什么？</strong></p>
+<p><code>context.Context</code> 用于在 <strong><font color=tomato>Goroutine 之间传递取消信号、超时控制或键值对数据</font></strong>。常见的使用场景包括：传递 HTTP 请求的上下文，控制子任务的取消，超时处理等。它是管理并发任务生命周期的核心工具，特别是在复杂的 Goroutine 链条中。</p>
+</li>
+<li>
+<p><strong>context.Context 的原理是什么？</strong></p>
+<p><code>context.Context</code> 的实现是 <strong><font color=tomato>树状结构</font></strong>。父 <code>context</code> 可以通过 <code>context.WithCancel</code>、<code>context.WithTimeout</code> 或 <code>context.WithValue</code> 创建子 <code>context</code>，当父 <code>context</code> 被取消或超时时，所有子 <code>context</code> 都会自动取消(<strong><font color=tomato>子context共享父context的Done()</font></strong>)。</p>
+</li>
+<li>
+<p><strong>父子 Context 的关系是什么？</strong></p>
+<p>每个子 <code>context</code> 都由父 <code>context</code> 创建，并继承了父 <code>context</code> 的取消信号和超时信息。当父 <code>context</code> 被取消时，所有子 <code>context</code> 会接收到同样的取消信号，并终止相应的操作。</p>
+</li>
+<li>
+<p><strong>valueCtx 和 timeCtx 的原理是什么？</strong></p>
+<ul>
+<li>
+<p><strong>valueCtx</strong>：用于在 Goroutine 之间传递键值对数据。它允许在多个 Goroutine 之间共享配置信息或其他上下文信息。</p>
+</li>
+<li>
+<p><strong>timeCtx</strong>：用于设置任务的超时时间。通过 <code>context.WithTimeout</code> 或 <code>context.WithDeadline</code> 创建 <code>timeCtx</code>，一旦超时，任务会被取消。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-synccond"><strong>4. sync.Cond</strong></h3>
+<ol>
+<li>
+<p><strong>sync.Cond 的作用是什么？</strong></p>
+<p><code>sync.Cond</code> 是 Go 中用于 Goroutine 之间同步的机制，通常用于协调多个 Goroutine 的执行顺序。<code>sync.Cond</code> 提供了 <code>Wait</code>、<code>Signal</code> 和 <code>Broadcast</code> 方法，用于在 Goroutine 之间传递信号，协调它们的执行。<code>Wait</code> 方法阻塞当前 Goroutine，直到收到信号为止，<code>Signal</code> 唤醒一个等待中的 Goroutine，而 <code>Broadcast</code> 则唤醒所有等待中的 Goroutine。常用于生产者消费者模型</p>
+</li>
+</ol>
+<h3 id="5-go-反射"><strong>5. Go 反射</strong></h3>
+<ol>
+<li>
+<p><strong>反射是什么？</strong></p>
+<p>反射是 Go 语言提供的用于在 <strong><font color=tomato>运行时动态检查、获取或修改类型和对象的功能</font></strong>。通过反射，程序可以在不知道类型的情况下操作对象。</p>
+</li>
+<li>
+<p><strong>反射的使用场景？</strong></p>
+<p>反射广泛应用于框架、库、工具等场景，尤其是那些需要处理不确定类型的数据场景，比如序列化库、ORM 框架等。</p>
+</li>
+<li>
+<p><strong>反射能修改方法吗？</strong></p>
+<p>Go 的反射机制 <strong><font color=tomato>不允许修改方法</font></strong>。这是因为方法属于不可变的函数，Go 运行时并没有暴露修改它们的能力。</p>
+</li>
+<li>
+<p><strong>什么样的字段能被反射修改？</strong></p>
+<p><strong><font color=tomato>只有导出的（首字母大写）且是可寻址（addressable）的字段才能通过反射修改</font></strong>。通过 <code>reflect.Value.CanSet()</code> 方法可以判断字段是否可以被修改。</p>
+</li>
+</ol>
+<h3 id="6-unsafe-包"><strong>6. unsafe 包</strong></h3>
+<ol>
+<li>
+<p><strong>uintptr 和 unsafe.Pointer 有什么区别？</strong></p>
+<ul>
+<li><strong>uintptr</strong> 是一个整数类型，表示具体的内存地址，但它只是一个数字，不是指针。</li>
+<li><strong>unsafe.Pointer</strong> 是一个通用的指针，可以用于不同类型的指针之间相互转换，允许直接操作内存。</li>
+</ul>
+</li>
+<li>
+<p><strong>Go 对象如何对齐？</strong></p>
+<p>Go 对象按照系统字长对齐，这意味着对象的字段在内存中的排列方式符合系统的内存访问规则，以提高内存访问效率。比如在 64 位系统上，字段通常按 8 字节对齐。字段的偏移量是根据其大小计算的。</p>
+</li>
+<li>
+<p><strong>如何计算对象的地址？</strong></p>
+<p>对象的地址可以通过 <code>unsafe.Pointer</code> 获取，并结合字段的偏移量来计算字段的地址。<code>unsafe.Offsetof</code> 方法可以获取字段的偏移量，结合对象的起始地址进行计算。</p>
+</li>
+<li>
+<p><strong>为什么 unsafe 比反射高效？</strong></p>
+<p><code>unsafe</code> 可以 <strong><font color=tomato>直接操作内存，跳过了 Go 的类型系统和边界检查</font></strong>，因此它比反射更加高效。不过，使用 <code>unsafe</code> 的代码更加容易出错，需要开发者自己负责内存安全。</p>
+</li>
+</ol>
+
+    </div>
+<div class="post_comments">
+  
+  
+    
+ <script src="https://utteranc.es/client.js"
+         repo="ZhangSIming-blyq/blogcommit"
+         issue-term="pathname"
+         theme="github-light"
+         crossorigin="anonymous"
+         async>
+ </script>
+ 
+  
+  
+</div>
+
+
+
+
+  </article>
+<aside class="sidebar">
+  <section class="sidebar_inner">
+    <br>
+    
+  
+  <div class="search">
+    <input type="search" class="search_field form_field" placeholder='Search...' id="find" autocomplete="off" data-scope='post'>
+    <label for="find" class="search_label"><svg class="icon">
+  <title>search</title>
+  <use xlink:href="#search"></use>
+</svg>
+
+    </label>
+    
+    <div class="search_results results"></div>
+  </div>
+
+
+    
+    
+    <h2 class="mt-4">Featured Posts</h2>
+    <ul>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/core/" class="nav-link" title="Golang 核心知识点详解文档">Golang 核心知识点详解文档</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/" class="nav-link" title="Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述">Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/cilium/" class="nav-link" title="Kubernetes 中 Cilium 网络架构详解与流量处理流程">Kubernetes 中 Cilium 网络架构详解与流量处理流程</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/algorithm/mergeset/" class="nav-link" title="两个有序集合的合并">两个有序集合的合并</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/map/" class="nav-link" title="Go `map` 底层实现与冲突处理">Go <code>map</code> 底层实现与冲突处理</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/channel/" class="nav-link" title="Go Channel 是线程安全的吗？">Go Channel 是线程安全的吗？</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/" class="nav-link" title="Go内存逃逸与内存泄露详解">Go内存逃逸与内存泄露详解</a>
+      </li>
+      <li>
+        <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" class="nav-link" title="基于Prometheus、Thanos与Grafana的监控体系详解">基于Prometheus、Thanos与Grafana的监控体系详解</a>
+      </li>
+    </ul>
+    <h2 class="mt-4">Recent Posts</h2>
+    <ul class="flex-column">
+    </ul>
+    <div>
+      <h2 class="mt-4 taxonomy" id="categories-section">Categories</h2>
+      <nav class="tags_nav">
+        <a href='https://zhangsiming-blyq.github.io/categories/algorithm/' class="post_tag button button_translucent" title="algorithm">
+          ALGORITHM
+          <span class="button_tally">15</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
+          KUBERNETES
+          <span class="button_tally">11</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/golang/' class="post_tag button button_translucent" title="golang">
+          GOLANG
+          <span class="button_tally">7</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/shorthand/' class="post_tag button button_translucent" title="shorthand">
+          SHORTHAND
+          <span class="button_tally">4</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/linux/' class="post_tag button button_translucent" title="linux">
+          LINUX
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/python/' class="post_tag button button_translucent" title="python">
+          PYTHON
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/algoiithm/' class="post_tag button button_translucent" title="algoiithm">
+          ALGOIITHM
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/ansible/' class="post_tag button button_translucent" title="ansible">
+          ANSIBLE
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/apigateway/' class="post_tag button button_translucent" title="apigateway">
+          APIGATEWAY
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/containerd/' class="post_tag button button_translucent" title="containerd">
+          CONTAINERD
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/docker/' class="post_tag button button_translucent" title="docker">
+          DOCKER
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/etcd/' class="post_tag button button_translucent" title="etcd">
+          ETCD
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/git/' class="post_tag button button_translucent" title="git">
+          GIT
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/categories/java/' class="post_tag button button_translucent" title="java">
+          JAVA
+          <span class="button_tally">1</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All Categories</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/algoiithm/' class=" post_tag button button_translucent" data-position=1 title="algoiithm">ALGOIITHM<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/algorithm/' class=" post_tag button button_translucent" data-position=15 title="algorithm">ALGORITHM<span class="button_tally">15</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/ansible/' class=" post_tag button button_translucent" data-position=1 title="ansible">ANSIBLE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/apigateway/' class=" post_tag button button_translucent" data-position=1 title="apigateway">APIGATEWAY<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/containerd/' class=" post_tag button button_translucent" data-position=1 title="containerd">CONTAINERD<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/docker/' class=" post_tag button button_translucent" data-position=1 title="docker">DOCKER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/etcd/' class=" post_tag button button_translucent" data-position=1 title="etcd">ETCD<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/git/' class=" post_tag button button_translucent" data-position=1 title="git">GIT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/golang/' class=" post_tag button button_translucent" data-position=7 title="golang">GOLANG<span class="button_tally">7</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/java/' class=" post_tag button button_translucent" data-position=1 title="java">JAVA<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class=" post_tag button button_translucent" data-position=11 title="kubernetes">KUBERNETES<span class="button_tally">11</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/linux/' class=" post_tag button button_translucent" data-position=3 title="linux">LINUX<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/prometheus/' class=" post_tag button button_translucent" data-position=1 title="prometheus">PROMETHEUS<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/python/' class=" post_tag button button_translucent" data-position=2 title="python">PYTHON<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/shorthand/' class=" post_tag button button_translucent" data-position=4 title="shorthand">SHORTHAND<span class="button_tally">4</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/categories/vim/' class=" post_tag button button_translucent" data-position=1 title="vim">VIM<span class="button_tally">1</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div>
+      <h2 class="mt-4 taxonomy" id="tags-section">Tags</h2>
+      <nav class="tags_nav">
+        <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class="post_tag button button_translucent" title="中文">
+          中文
+          <span class="button_tally">32</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class="post_tag button button_translucent" title="algorithm">
+          ALGORITHM
+          <span class="button_tally">16</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/english/' class="post_tag button button_translucent" title="english">
+          ENGLISH
+          <span class="button_tally">12</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
+          KUBERNETES
+          <span class="button_tally">12</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/golang/' class="post_tag button button_translucent" title="golang">
+          GOLANG
+          <span class="button_tally">7</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' class="post_tag button button_translucent" title="shorthand">
+          SHORTHAND
+          <span class="button_tally">4</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/linux/' class="post_tag button button_translucent" title="linux">
+          LINUX
+          <span class="button_tally">3</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/etcd/' class="post_tag button button_translucent" title="etcd">
+          ETCD
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/python/' class="post_tag button button_translucent" title="python">
+          PYTHON
+          <span class="button_tally">2</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/about/' class="post_tag button button_translucent" title="about">
+          ABOUT
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/ansible/' class="post_tag button button_translucent" title="ansible">
+          ANSIBLE
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/apigateway/' class="post_tag button button_translucent" title="apigateway">
+          APIGATEWAY
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/apiserver/' class="post_tag button button_translucent" title="apiserver">
+          APISERVER
+          <span class="button_tally">1</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/bailiyingqi/' class="post_tag button button_translucent" title="bailiyingqi">
+          BAILIYINGQI
+          <span class="button_tally">1</span>
+        </a>
+        
+        
+        <br>
+        <div class="post_tags_toggle button">All Tags</div>
+        <div class="post_tags">
+          <div class="tags_list">
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/about/' class=" post_tag button button_translucent" data-position=1 title="about">ABOUT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class=" post_tag button button_translucent" data-position=16 title="algorithm">ALGORITHM<span class="button_tally">16</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/ansible/' class=" post_tag button button_translucent" data-position=1 title="ansible">ANSIBLE<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/apigateway/' class=" post_tag button button_translucent" data-position=1 title="apigateway">APIGATEWAY<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/apiserver/' class=" post_tag button button_translucent" data-position=1 title="apiserver">APISERVER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/bailiyingqi/' class=" post_tag button button_translucent" data-position=1 title="bailiyingqi">BAILIYINGQI<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/containerd/' class=" post_tag button button_translucent" data-position=1 title="containerd">CONTAINERD<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/controller-manager/' class=" post_tag button button_translucent" data-position=1 title="controller-manager">CONTROLLER-MANAGER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/english/' class=" post_tag button button_translucent" data-position=12 title="english">ENGLISH<span class="button_tally">12</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/etcd/' class=" post_tag button button_translucent" data-position=2 title="etcd">ETCD<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/git/' class=" post_tag button button_translucent" data-position=1 title="git">GIT<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/golang/' class=" post_tag button button_translucent" data-position=7 title="golang">GOLANG<span class="button_tally">7</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/java/' class=" post_tag button button_translucent" data-position=1 title="java">JAVA<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class=" post_tag button button_translucent" data-position=12 title="kubernetes">KUBERNETES<span class="button_tally">12</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/linux/' class=" post_tag button button_translucent" data-position=3 title="linux">LINUX<span class="button_tally">3</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/prometheus/' class=" post_tag button button_translucent" data-position=1 title="prometheus">PROMETHEUS<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/python/' class=" post_tag button button_translucent" data-position=2 title="python">PYTHON<span class="button_tally">2</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/scheduler/' class=" post_tag button button_translucent" data-position=1 title="scheduler">SCHEDULER<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/shorthand/' class=" post_tag button button_translucent" data-position=4 title="shorthand">SHORTHAND<span class="button_tally">4</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/vim/' class=" post_tag button button_translucent" data-position=1 title="vim">VIM<span class="button_tally">1</span>
+            </a>
+            
+            
+            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=32 title="中文">中文<span class="button_tally">32</span>
+            </a>
+            
+            <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+            </div>
+            <span class="tags_hide"><svg class="icon">
+            <use xlink:href="#closeme"></use>
+          </svg></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+</aside>
+
+  
+</div>
+    </main><svg width="0" height="0" class="hidden">
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter">
+    <path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68 0 0 1-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043 0-1.924.366-2.643 1.078a3.56 3.56 0 0 0-1.076 2.605c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846 0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47 0 .929.273 1.705.82 2.388a3.623 3.623 0 0 0 2.115 1.291c-.312.08-.641.118-.979.118-.312 0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652 0 0 0 2.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422 0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139 0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77 0 0 0 1.172-4.892v-.468a7.788 7.788 0 0 0 1.84-1.921 8.142 8.142 0 0 1-2.11.593z"
+      ></path>
+  </symbol>
+  <symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail">
+    <path  d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar">
+    <path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916 0 100v352c0 33.084 26.916 60 60 60h392c33.084 0 60-26.916 60-60V100c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028 0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028 0 20 8.972 20 20v48z"></path>
+    <path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github">
+    <path d="M255.968 5.329C114.624 5.329 0 120.401 0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384 0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008 0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992 0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584 0 34.368-.32 62.08-.32 70.496 0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" id="gitlab">
+    <path d="M12.3 74.7h54L43.3 3c-1-3.6-6.4-3.6-7.6 0L12.3 74.8z" />
+    <path d="M12.3 74.7L.5 111c-1 3.2 0 6.8 3 8.8l101.6 74-92.5-119z"/>
+    <path d="M105 193.7l-38.6-119h-54l92.7 119z"/>
+    <path d="M105 193.7l38.7-119H66.4l38.7 119z"/>
+    <path d="M105 193.7l38.7-119H198l-93 119z"/>
+    <path d="M198 74.7l11.6 36.2c1 3 0 6.6-3 8.6l-101.5 74 93-119z"/>
+    <path d="M198 74.7h-54.3L167 3c1.2-3.6 6.4-3.6 7.6 0L198 74.8z"/> 
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss">
+    <circle cx="3.429" cy="20.571" r="3.429"></circle>
+    <path d="M11.429 24h4.57C15.999 15.179 8.821 8.001 0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"></path>
+    <path d="M24 24C24 10.766 13.234 0 0 0v4.571c10.714 0 19.43 8.714 19.43 19.429z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin">
+    <path d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h362c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="to-top">
+    <path d="M604.501 440.509L325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298 0 36.323s26.223 10.024 36.222 0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221 0 9.999-10.023 9.999-26.298 0-36.323z"></path>
+  </symbol>
+  <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly">
+    <path d="M504.971 239.029L448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c19.851 0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002 0 0 0 400 320v108c0 19.851-16.149 36-36 36h-44c-13.255 0-24 10.745-24 24s10.745 24 24 24h44c46.318 0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568 0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255 0 24-10.745 24-24S205.255 0 192 0h-44c-46.318 0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568 0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255 0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851 0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002 0 0 0 112 192z"></path>
+  </symbol>
+  <symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="copy">
+    <path d="M23 2.75A2.75 2.75 0 0 0 20.25 0H8.75A2.75 2.75 0 0 0 6 2.75v13.5A2.75 2.75 0 0 0 8.75 19h11.5A2.75 2.75 0 0 0 23 16.25zM18.25 14.5h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5zm0-3h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5zm0-3h-7.5a.75.75 0 0 1 0-1.5h7.5a.75.75 0 0 1 0 1.5z"></path>
+    <path d="M8.75 20.5a4.255 4.255 0 0 1-4.25-4.25V2.75c0-.086.02-.166.025-.25H3.75A2.752 2.752 0 0 0 1 5.25v16A2.752 2.752 0 0 0 3.75 24h12a2.752 2.752 0 0 0 2.75-2.75v-.75z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme">
+    <path d="M284.286 256.002L506.143 34.144c7.811-7.811 7.811-20.475 0-28.285-7.811-7.81-20.475-7.811-28.285 0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285 0-7.81 7.811-7.811 20.475 0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475 0 28.285a19.938 19.938 0 0 0 14.143 5.857 19.94 19.94 0 0 0 14.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475 0-28.285L284.286 256.002z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu">
+    <path d="M492 236H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954 0 96s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046 0-20 8.954-20 20s8.954 20 20 20h472c11.046 0 20-8.954 20-20s-8.954-20-20-20z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="instagram">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id=youtube>
+    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="stackoverflow">
+    <path d="M21 27v-8h3v11H0V19h3v8h18z"></path><path d="M17.1.2L15 1.8l7.9 10.6 2.1-1.6L17.1.2zm3.7 14.7L10.6 6.4l1.7-2 10.2 8.5-1.7 2zM7.2 12.3l12 5.6 1.1-2.4-12-5.6-1.1 2.4zm-1.8 6.8l13.56 1.96.17-2.38-13.26-2.55-.47 2.97zM19 25H5v-3h14v3z"></path>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="xing">
+    <path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71 55" id="discord">
+    <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"/>
+  </symbol>
+</svg>
+
+
+<footer class="footer">
+  <div class="footer_inner wrap pale">
+    <img src='https://zhangsiming-blyq.github.io/icons/apple-touch-icon.png' class="icon icon_2 transparent" alt="">
+    <p>Copyright&nbsp;<span class="year"></span>&nbsp;. All Rights Reserved</p><a class="to_top" href="#documentTop">
+  <svg class="icon">
+  <title>to-top</title>
+  <use xlink:href="#to-top"></use>
+</svg>
+
+</a>
+
+  </div>
+</footer>
+
+<script type="text/javascript" src="https://zhangsiming-blyq.github.io/en/js/bundle.daf5d72d10b0f1e048706d4cb8d79d1ec41c3b5edcd83acfaa4df80252afff936252c1fa7804d8dcdb500eaf0f7d5adbb79cfe886cf7068f12f58cdebc05e1c3.js" integrity="sha512-2vXXLRCw8eBIcG1MuNedHsQcO17c2DrPqk34AlKv/5NiUsH6eATY3NtQDq8PfVrbt5z&#43;iGz3Bo8S9YzevAXhww==" crossorigin="anonymous"></script>
+
+  <script src="https://zhangsiming-blyq.github.io/js/search.min.9641a8a49c5a7dbd99f372bf456fc577a23b235fd157ee614ce2dab96b2e0f3687d5cc408d875f32e94405a2ccbca5c8bc43491cfce32471b72aa63e5315018d.js"></script>
+
+  </body>
+</html>
