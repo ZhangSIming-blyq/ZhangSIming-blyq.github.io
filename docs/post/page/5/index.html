@@ -156,6 +156,103 @@
   <div class="excerpt">
     <div class="excerpt_header">
       <h3 class="post_link">
+        <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" title="client-go watch接口隔一段时间自动退出怎么办？">client-go watch接口隔一段时间自动退出怎么办？</a>
+      </h3>
+      
+  <div class="post_meta">
+    <span><svg class="icon">
+  <title>calendar</title>
+  <use xlink:href="#calendar"></use>
+</svg>
+</span>
+    <span class="post_date">
+      May 28, 2022</span>
+    <span class="post_time"> · 5 min read</span><span>&nbsp;· <a href='https://zhangsiming-blyq.github.io/tags/golang/' title="golang" class="post_tag button button_translucent">golang
+        </a><a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' title="kubernetes" class="post_tag button button_translucent">kubernetes
+        </a><a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' title="中文" class="post_tag button button_translucent">中文
+        </a>
+    </span>
+    <span class="page_only">&nbsp;·
+  <div class="post_share">
+    Share on:
+    <a href="https://twitter.com/intent/tweet?text=client-go%20watch%e6%8e%a5%e5%8f%a3%e9%9a%94%e4%b8%80%e6%ae%b5%e6%97%b6%e9%97%b4%e8%87%aa%e5%8a%a8%e9%80%80%e5%87%ba%e6%80%8e%e4%b9%88%e5%8a%9e%ef%bc%9f&url=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fretrywatcher%2f&tw_p=tweetbutton" class="twitter" title="Share on Twitter" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>twitter</title>
+  <use xlink:href="#twitter"></use>
+</svg>
+
+    </a>
+    <a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fzhangsiming-blyq.github.io%2fpost%2fgolang%2fretrywatcher%2f&t=client-go%20watch%e6%8e%a5%e5%8f%a3%e9%9a%94%e4%b8%80%e6%ae%b5%e6%97%b6%e9%97%b4%e8%87%aa%e5%8a%a8%e9%80%80%e5%87%ba%e6%80%8e%e4%b9%88%e5%8a%9e%ef%bc%9f" class="facebook" title="Share on Facebook" target="_blank" rel="nofollow">
+      <svg class="icon">
+  <title>facebook</title>
+  <use xlink:href="#facebook"></use>
+</svg>
+
+    </a>
+    <a href="#linkedinshare" id = "linkedinshare" class="linkedin" title="Share on LinkedIn" rel="nofollow">
+      <svg class="icon">
+  <title>linkedin</title>
+  <use xlink:href="#linkedin"></use>
+</svg>
+
+    </a>
+    <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" title="Copy Link" class="link link_yank">
+      <svg class="icon">
+  <title>copy</title>
+  <use xlink:href="#copy"></use>
+</svg>
+
+    </a>
+  </div>
+  </span>
+  </div>
+
+    </div>
+    <div class="excerpt_footer partition">
+      <div class="excerpt_thumbnail"><figure>
+  <picture>
+
+    
+      
+        
+        
+        
+        
+        
+        
+    <img
+      loading="lazy"
+      decoding="async"
+      alt="client-go watch接口隔一段时间自动退出怎么办？"
+      
+        class="image_figure image_thumbnail image_internal image_unprocessed"
+        src="/gohan.jpg"
+      
+      
+    />
+
+    </picture>
+</figure>
+
+      </div>
+      
+        <div class="pale">
+          
+            <p>在使用client-go的watch接口时候碰到异常退出问题，查了一下google没有多少信息，于是扒了一下代码，把自己踩的坑记录下来方便以后自查自纠。
+使用client-go watch接口 💡 全局的mycluster都等于*kubernetes.Clientset 1. 如何watch 由于kubernetes整合了etcd的watch功能，我们可以通过watch操作去建立一个长连接，不断的接收数据；这种方式要优于普通的反复轮询请求，降低server端的压力;
+使用client-go调用对应对象的Watch()方法之后，会返回一个watch.Event对象，可以对其使用ResultChan()接受watch到的对象。 …</p>
+          
+          <br>
+          <a href="https://zhangsiming-blyq.github.io/post/golang/retrywatcher/" title="Read More" class="excerpt_more button">Read More</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+        <li class="post_item">
+  <div class="excerpt">
+    <div class="excerpt_header">
+      <h3 class="post_link">
         <a href="https://zhangsiming-blyq.github.io/post/python/python-yield/" title="Python Yield">Python Yield</a>
       </h3>
       
@@ -418,6 +515,9 @@ Iterators Python object implements iter() and next() methods, we become iterable
     <h2 class="mt-4">Featured Posts</h2>
     <ul>
       <li>
+        <a href="https://zhangsiming-blyq.github.io/post/kubernetes/storage/" class="nav-link" title="Kubernetes 存储管理">Kubernetes 存储管理</a>
+      </li>
+      <li>
         <a href="https://zhangsiming-blyq.github.io/post/golang/core/" class="nav-link" title="Golang 核心知识点详解文档">Golang 核心知识点详解文档</a>
       </li>
       <li>
@@ -438,9 +538,6 @@ Iterators Python object implements iter() and next() methods, we become iterable
       <li>
         <a href="https://zhangsiming-blyq.github.io/post/golang/%E5%86%85%E5%AD%98%E9%80%83%E9%80%B8/" class="nav-link" title="Go内存逃逸与内存泄露详解">Go内存逃逸与内存泄露详解</a>
       </li>
-      <li>
-        <a href="https://zhangsiming-blyq.github.io/post/linux/prometheus/" class="nav-link" title="基于Prometheus、Thanos与Grafana的监控体系详解">基于Prometheus、Thanos与Grafana的监控体系详解</a>
-      </li>
     </ul>
     <h2 class="mt-4">Recent Posts</h2>
     <ul class="flex-column">
@@ -455,7 +552,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
         
         <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
           KUBERNETES
-          <span class="button_tally">11</span>
+          <span class="button_tally">12</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/categories/golang/' class="post_tag button button_translucent" title="golang">
@@ -564,7 +661,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class=" post_tag button button_translucent" data-position=11 title="kubernetes">KUBERNETES<span class="button_tally">11</span>
+            <a href='https://zhangsiming-blyq.github.io/categories/kubernetes/' class=" post_tag button button_translucent" data-position=12 title="kubernetes">KUBERNETES<span class="button_tally">12</span>
             </a>
             
             
@@ -601,7 +698,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
       <nav class="tags_nav">
         <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class="post_tag button button_translucent" title="中文">
           中文
-          <span class="button_tally">32</span>
+          <span class="button_tally">33</span>
         </a>
         
         <a href='https://zhangsiming-blyq.github.io/tags/algorithm/' class="post_tag button button_translucent" title="algorithm">
@@ -609,13 +706,13 @@ Iterators Python object implements iter() and next() methods, we become iterable
           <span class="button_tally">16</span>
         </a>
         
-        <a href='https://zhangsiming-blyq.github.io/tags/english/' class="post_tag button button_translucent" title="english">
-          ENGLISH
-          <span class="button_tally">12</span>
-        </a>
-        
         <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class="post_tag button button_translucent" title="kubernetes">
           KUBERNETES
+          <span class="button_tally">13</span>
+        </a>
+        
+        <a href='https://zhangsiming-blyq.github.io/tags/english/' class="post_tag button button_translucent" title="english">
+          ENGLISH
           <span class="button_tally">12</span>
         </a>
         
@@ -727,7 +824,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class=" post_tag button button_translucent" data-position=12 title="kubernetes">KUBERNETES<span class="button_tally">12</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/kubernetes/' class=" post_tag button button_translucent" data-position=13 title="kubernetes">KUBERNETES<span class="button_tally">13</span>
             </a>
             
             
@@ -755,7 +852,7 @@ Iterators Python object implements iter() and next() methods, we become iterable
             </a>
             
             
-            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=32 title="中文">中文<span class="button_tally">32</span>
+            <a href='https://zhangsiming-blyq.github.io/tags/%E4%B8%AD%E6%96%87/' class=" post_tag button button_translucent" data-position=33 title="中文">中文<span class="button_tally">33</span>
             </a>
             
             <div class="tags_sort"><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>

@@ -6,7 +6,27 @@
     <description>Recent content in kubernetes on </description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 21 Sep 2024 18:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Oct 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://zhangsiming-blyq.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes 存储管理</title>
+      <link>https://zhangsiming-blyq.github.io/post/kubernetes/storage/</link>
+      <pubDate>Tue, 08 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhangsiming-blyq.github.io/post/kubernetes/storage/</guid>
+      <description>
+        
+          
+            1. Dynamic Provisioner 例子与完整流程介绍 原理概述 在 Kubernetes 中，动态 provisioner 是一个实现了 Provisioner 接口的控制器，用于自动化存储卷的创建。当用户提交 PVC (PersistentVolumeClaim) 时，provisioner 根据定义的 StorageClass，自动创建相应的 PV (PersistentVolume)。这种自动化存储管理机制大大简化了卷的生命周期管理，减少了手动操作的复杂性。
+流程概述 自定义动态 provisioner 的流程包括以下几个步骤：
+创建自定义的 Provisioner 逻辑，负责监听 PVC 的创建事件，并生成 PV。 编写自定义的 StorageClass，使用该 Provisioner 动态创建卷。 编写控制器代码，处理卷的创建与删除。 部署自定义 provisioner 到 Kubernetes 集群中，并验证其功能。 步骤 1: 自定义 Provisioner 代码实现 https://github.com/ZhangSIming-blyq/custom-provisioner
+首先，我们通过 Go 语言编写一个简单的自定义 provisioner，模拟卷的创建和删除过程。核心是自定义Provisioner结构体，实现Provision和Delete方法。Provision方法用于创建卷，Delete方法用于删除卷。
+1package main 2 3import ( 4	&amp;#34;context&amp;#34; 5	&amp;#34;fmt&amp;#34; 6	corev1 &amp;#34;k8s.io/api/core/v1&amp;#34; 7	metav1 &amp;#34;k8s.io/apimachinery/pkg/apis/meta/v1&amp;#34; 8	&amp;#34;k8s.io/client-go/kubernetes&amp;#34; 9	&amp;#34;k8s.io/client-go/rest&amp;#34; 10	&amp;#34;k8s.io/klog&amp;#34; 11	&amp;#34;os&amp;#34; 12	&amp;#34;sigs.
+          
+          
+        
+      </description>
+    </item>
+    
     <item>
       <title>Kubernetes 中 GPU 虚拟化与 NVIDIA GPU Operator 管理概述</title>
       <link>https://zhangsiming-blyq.github.io/post/kubernetes/gpu-operator/</link>
